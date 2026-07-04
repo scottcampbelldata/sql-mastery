@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8 - Performance</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="m8">
+<header class="site"><div class="bar">
+  <span class="brand">sql://<b>mastery-path</b></span>
+  <nav class="mods">
+    <a href="index.html">Home</a><a href="schemas.html">0</a><a href="m1-fundamentals.html">1</a><a href="m2-aggregation.html">2</a><a href="m3-joins.html">3</a><a href="m4-transformation.html">4</a><a href="m5-subqueries-ctes.html">5</a><a href="m6-window-functions.html">6</a><a href="m7-interview-patterns.html">7</a><a href="m8-performance.html" class="here">8</a><a href="mock-interviews.html">Mocks</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<p class="eyebrow">-- module 8 / three sessions / <span id="done-count"></span></p>
+<h1>Performance</h1>
+<p class="lede">At senior level nobody expects you to be a DBA. They expect you to (a) read an EXPLAIN plan without panic, (b) know what an index does and when it helps, (c) not write queries that defeat indexes, and (d) talk about all three calmly. Your Stack Overflow and NYC Taxi databases are big enough to make every one of these lessons visible on a stopwatch.</p>
+
+<h2>8.1 EXPLAIN and EXPLAIN ANALYZE</h2>
+<pre><span class="c">-- EXPLAIN shows the plan; EXPLAIN ANALYZE runs the query and shows reality:</span>
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> trips <span class="k">WHERE</span> fare_amount > <span class="n">200</span> <span class="k">AND</span> trip_distance < <span class="n">1</span>;</pre>
+<p>How to read the output, in the order that matters:</p>
+<ul>
+<li><strong>The node types.</strong> <code>Seq Scan</code> = read the whole table. <code>Index Scan</code> = walk the index to the matching rows. <code>Index Only Scan</code> = the index alone answered it. <code>Bitmap Heap Scan</code> = index found many scattered rows, fetched in batches.</li>
+<li><strong>Join strategies.</strong> <code>Nested Loop</code> (good for few rows with an index on the inner side), <code>Hash Join</code> (build a hash of one side; the default for big unsorted inputs), <code>Merge Join</code> (both sides sorted).</li>
+<li><strong>Estimated vs actual rows.</strong> <code>rows=1000</code> estimated but <code>actual rows=2000000</code> means stale statistics led the planner astray - <code>ANALYZE tablename;</code> refreshes them. Spotting a bad estimate is a genuinely impressive interview move.</li>
+<li><strong>Where the milliseconds went.</strong> The deepest expensive node is usually the story.</li>
+</ul>
+<div class="tip"><span class="tag">Interview script</span>
+"My first move on a slow query is EXPLAIN ANALYZE. I look for sequential scans on large tables that a filter should have narrowed, then check whether an index exists and whether my predicate is written so the index can be used, then check row estimates against actuals." That paragraph, delivered calmly, passes most performance screens on its own.</div>
+
+<h2>8.2 Indexes in one page</h2>
+<pre><span class="c">-- A B-tree index is a sorted lookup structure on one or more columns:</span>
+<span class="k">CREATE INDEX</span> idx_trips_pickup <span class="k">ON</span> trips (pickup_datetime);
+<span class="k">CREATE INDEX</span> idx_posts_owner_type <span class="k">ON</span> posts (owner_user_id, post_type_id);</pre>
+<ul>
+<li><strong>Helps:</strong> equality and range predicates on the leading column(s), JOIN keys, ORDER BY matching the index order.</li>
+<li><strong>Column order matters:</strong> an index on (a, b) serves <code>WHERE a = ...</code> and <code>WHERE a = ... AND b = ...</code>, but not <code>WHERE b = ...</code> alone. Rule of thumb: equality columns first, then the range column.</li>
+<li><strong>Costs:</strong> every index slows INSERT/UPDATE/DELETE and takes disk. Analysts reading from a warehouse rarely pay this, but say it to show you know writes exist.</li>
+<li><strong>Won't help:</strong> low-selectivity predicates (<code>WHERE payment_type = 1</code> matching 60% of rows - the planner rightly prefers a full scan), tiny tables, or predicates that wrap the column in a function.</li>
+</ul>
+
+<h2>8.3 Sargability: don't handcuff the index</h2>
+<p>A predicate is sargable ("search-argument-able") when the column stands alone on one side of the comparison. Wrap the column in a function and the index on it becomes useless.</p>
+<pre><span class="c">-- NOT sargable: the function hides the column from the index</span>
+<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> pickup_datetime) = <span class="n">2016</span>
+<span class="k">WHERE</span> pickup_datetime::date = <span class="s">'2016-01-15'</span>
+<span class="k">WHERE</span> <span class="f">LOWER</span>(display_name) = <span class="s">'jon skeet'</span>
+
+<span class="c">-- Sargable rewrites: move the work to the constant side</span>
+<span class="k">WHERE</span> pickup_datetime >= <span class="s">'2016-01-01'</span> <span class="k">AND</span> pickup_datetime < <span class="s">'2017-01-01'</span>
+<span class="k">WHERE</span> pickup_datetime >= <span class="s">'2016-01-15'</span> <span class="k">AND</span> pickup_datetime < <span class="s">'2016-01-16'</span>
+<span class="c">-- (for the LOWER case: create an expression index ON users (LOWER(display_name)))</span></pre>
+<p>This is why every date filter in this curriculum used half-open ranges. It was performance training in disguise.</p>
+
+<h2>8.4 The talking points that round out senior answers</h2>
+<ul>
+<li><strong>Filter early, join late:</strong> reduce rows in a CTE before joining, especially before joining two big tables.</li>
+<li><strong>SELECT only what you need:</strong> <code>SELECT *</code> on wide tables drags dead columns through every node and can prevent index-only scans.</li>
+<li><strong>COUNT(DISTINCT x) is expensive</strong> on big data (requires dedup); approximate counts exist in warehouses (HLL) - name-dropping that shows range.</li>
+<li><strong>CTEs and the optimizer:</strong> since PostgreSQL 12, plain CTEs are inlined (no artificial fence) unless you write <code>WITH x AS MATERIALIZED (...)</code> to force materialization - useful when a CTE is referenced many times. Knowing this kills the outdated "CTEs are slow" myth interviewers sometimes probe with.</li>
+<li><strong>EXISTS vs IN vs JOIN:</strong> usually the same plan; choose for correctness and readability (Modules 3 and 5).</li>
+<li><strong>LIMIT is not free</strong> if there is an ORDER BY on an unindexed column - the whole set must be sorted before the top rows are known.</li>
+</ul>
+
+<h2>Drills (all timed against your own hardware)</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.1</span><span class="db">nyctaxi</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p8-1"></div>
+  <div class="pbody"><p>Baseline read: run <code>EXPLAIN ANALYZE</code> on the P1.5 query (fare &gt; 200, distance &lt; 1). Identify the scan type, total runtime, and estimated vs actual rows. Write the three numbers down.</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> pickup_datetime, trip_distance, fare_amount, tip_amount
+<span class="k">FROM</span> trips
+<span class="k">WHERE</span> fare_amount > <span class="n">200</span> <span class="k">AND</span> trip_distance < <span class="n">1</span>
+<span class="k">ORDER BY</span> fare_amount <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">25</span>;</pre>
+<p>Expect a Seq Scan (possibly parallel) - no index covers these columns - followed by a Sort feeding the Limit (probably reported as top-N heapsort). This is your "before" picture for P8.2.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.2</span><span class="db">nyctaxi</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-2"></div>
+  <div class="pbody"><p>Create an index on <code>fare_amount</code>, rerun P8.1's EXPLAIN ANALYZE, and compare. Then answer honestly: did it help much, and why or why not?</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">CREATE INDEX</span> idx_trips_fare <span class="k">ON</span> trips (fare_amount);
+<span class="k">ANALYZE</span> trips;
+<span class="c">-- rerun the EXPLAIN ANALYZE from P8.1</span></pre>
+<p>fare_amount &gt; 200 is highly selective (few trips), so the planner should switch to an Index Scan or Bitmap Heap Scan and the runtime should drop hard. The distance predicate is then applied as a filter on the fetched rows. If your planner still chooses Seq Scan, check that ANALYZE ran and consider how selective &gt; 200 actually is in your data - reasoning about that is the drill. Clean up after: <code>DROP INDEX idx_trips_fare;</code> if you want a pristine baseline later.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.3</span><span class="db">nyctaxi</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-3"></div>
+  <div class="pbody"><p>Sargability, on a stopwatch: with an index on pickup_datetime in place, time <code>EXTRACT(YEAR FROM pickup_datetime) = 2016 AND EXTRACT(MONTH ...) = 3</code> against the half-open range version for March 2016. Compare plans and runtimes.</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">CREATE INDEX IF NOT EXISTS</span> idx_trips_pickup <span class="k">ON</span> trips (pickup_datetime);
+
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> trips
+<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> pickup_datetime) = <span class="n">2016</span>
+  <span class="k">AND</span> <span class="f">EXTRACT</span>(<span class="k">MONTH FROM</span> pickup_datetime) = <span class="n">3</span>;
+
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> trips
+<span class="k">WHERE</span> pickup_datetime >= <span class="s">'2016-03-01'</span>
+  <span class="k">AND</span> pickup_datetime <  <span class="s">'2016-04-01'</span>;</pre>
+<p>Version 1: Seq Scan, every row evaluated. Version 2: index range scan. Same answer, different orders of magnitude. This before/after is the single best performance story you can tell in an interview, because you have personally measured it.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.4</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-4"></div>
+  <div class="pbody"><p>Join strategy safari: EXPLAIN (no ANALYZE needed) the P3.10 query (badge earners who never posted). Which join strategies did the planner pick for the JOIN and for the NOT EXISTS? Why do they make sense?</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<p>Typical plan: a Hash Join between users and badges (both large, unsorted - hash the smaller side), and the NOT EXISTS appears as a <strong>Hash Anti Join</strong> against posts. The word "anti join" in the plan is the payoff: the planner recognizes NOT EXISTS as a first-class operation, which is exactly the argument for preferring it over NOT IN. Screenshot-level familiarity with these plan node names is what "can read a plan" means at interview time.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.5</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-5"></div>
+  <div class="pbody"><p>Composite index design: you frequently run "answers by user X, newest first" - <code>WHERE owner_user_id = ? AND post_type_id = 2 ORDER BY creation_date DESC</code>. Design the best single index, create it, and prove with EXPLAIN that the sort disappears.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Equality columns first (both of them), then the ORDER BY column. Three columns total.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">CREATE INDEX</span> idx_posts_owner_type_date
+    <span class="k">ON</span> posts (owner_user_id, post_type_id, creation_date <span class="k">DESC</span>);
+
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> id, title, score, creation_date
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> owner_user_id = <span class="n">22656</span>
+  <span class="k">AND</span> post_type_id = <span class="n">2</span>
+<span class="k">ORDER BY</span> creation_date <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<p>The plan should show an Index Scan on the new index with <strong>no separate Sort node</strong> - the index already delivers rows in the right order, so LIMIT 20 stops after 20 rows. "Index serves the filter AND the sort" is the sentence to say.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.6</span><span class="db">nyctaxi</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p8-6"></div>
+  <div class="pbody"><p>Aggregation cost: time <code>COUNT(*)</code>, <code>COUNT(DISTINCT passenger_count)</code>, and <code>COUNT(DISTINCT pickup_datetime)</code> on the full trips table. Rank them by cost and explain the ranking.</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">EXPLAIN ANALYZE SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> trips;
+<span class="k">EXPLAIN ANALYZE SELECT</span> <span class="f">COUNT</span>(<span class="k">DISTINCT</span> passenger_count) <span class="k">FROM</span> trips;
+<span class="k">EXPLAIN ANALYZE SELECT</span> <span class="f">COUNT</span>(<span class="k">DISTINCT</span> pickup_datetime) <span class="k">FROM</span> trips;</pre>
+<p>COUNT(*) is a scan and a counter (parallelizes well). COUNT(DISTINCT low-cardinality) adds cheap dedup over a handful of values. COUNT(DISTINCT high-cardinality) must track millions of distinct timestamps - sort or hash, memory pressure, possibly spilling to disk - and is the slow one. The general lesson: DISTINCT's cost scales with cardinality, which is why warehouses offer approximate distinct counts.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.7</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p8-7"></div>
+  <div class="pbody"><p>Refactor for speed: "top 10 users by total answer score in 2018" can be written join-first or filter-first. Write both, EXPLAIN ANALYZE both, and report which wins and by how much.</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="c">-- A: join everything, then filter and aggregate</span>
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> u.display_name, <span class="f">SUM</span>(p.score) <span class="k">AS</span> total_score
+<span class="k">FROM</span> users u
+<span class="k">JOIN</span> posts p <span class="k">ON</span> p.owner_user_id = u.id
+<span class="k">WHERE</span> p.post_type_id = <span class="n">2</span>
+  <span class="k">AND</span> p.creation_date >= <span class="s">'2018-01-01'</span> <span class="k">AND</span> p.creation_date < <span class="s">'2019-01-01'</span>
+<span class="k">GROUP BY</span> u.id, u.display_name
+<span class="k">ORDER BY</span> total_score <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="n">10</span>;
+
+<span class="c">-- B: aggregate posts down to 10 user ids first, join last</span>
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">WITH</span> top_scorers <span class="k">AS</span> (
+    <span class="k">SELECT</span> owner_user_id, <span class="f">SUM</span>(score) <span class="k">AS</span> total_score
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> post_type_id = <span class="n">2</span>
+      <span class="k">AND</span> creation_date >= <span class="s">'2018-01-01'</span> <span class="k">AND</span> creation_date < <span class="s">'2019-01-01'</span>
+    <span class="k">GROUP BY</span> owner_user_id
+    <span class="k">ORDER BY</span> total_score <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="n">10</span>
+)
+<span class="k">SELECT</span> u.display_name, t.total_score
+<span class="k">FROM</span> top_scorers t
+<span class="k">JOIN</span> users u <span class="k">ON</span> u.id = t.owner_user_id
+<span class="k">ORDER BY</span> t.total_score <span class="k">DESC</span>;</pre>
+<p>B joins 10 rows to users instead of millions; on most hardware it wins clearly. The principle - shrink the data before the join - is the highest-leverage rewrite an analyst controls, and now you have your own measured numbers to cite when you say so.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.8</span><span class="db">any</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-8"></div>
+  <div class="pbody"><p>Verbal drill (no SQL): a stakeholder says the daily report "suddenly got slow this week." Give your diagnostic plan out loud in under 90 seconds. Record yourself. Then compare against the model answer.</p>
+  <details class="sol"><summary>model answer</summary><div class="sbody">
+<p>"First I would establish what changed: is the query slower, or is there more data, or is the server busier? I would run EXPLAIN ANALYZE and compare against the plan from when it was fast if we have it. Common culprits in rough order: the table grew past a threshold and the planner changed strategy on stale statistics - ANALYZE fixes that; an index was dropped or a query change made a predicate non-sargable; a join started fanning out because upstream data introduced duplicates - I would check row counts at each step; or concurrent load. I would fix the cheapest probable cause first, measure, and only then consider new indexes, since those carry write costs and need a DBA conversation." That covers method, causes, and judgment - the three things being graded.</p></div></details>
+  </div>
+</div>
+
+<div class="pager">
+  <a href="m7-interview-patterns.html">&larr; Module 7</a>
+  <a href="mock-interviews.html">Mock Interviews &rarr;</a>
+</div>
+</div>
+<script src="shared.js"></script>
+</body>
+</html>
