@@ -8,6 +8,7 @@ function createApp(options = {}) {
   const queryService = options.queryService || createQueryService();
   const curriculumService = options.curriculumService || { buildCurriculum };
   const staticDir = options.staticDir || path.join(__dirname, '..');
+  const contentDir = options.contentDir || path.join(__dirname, '..', 'content');
 
   app.disable('x-powered-by');
   app.use(express.json({ limit: '1mb' }));
@@ -18,7 +19,7 @@ function createApp(options = {}) {
 
   app.get('/api/curriculum', (request, response) => {
     try {
-      response.json(curriculumService.buildCurriculum({ rootDir: staticDir }));
+      response.json(curriculumService.buildCurriculum({ rootDir: contentDir }));
     } catch (error) {
       response.status(500).json({
         error: error.message || 'Curriculum could not be loaded.',
@@ -102,6 +103,10 @@ function createApp(options = {}) {
       });
     }
   });
+
+  app.use(express.static(contentDir, {
+    extensions: ['html']
+  }));
 
   app.use(express.static(staticDir, {
     extensions: ['html']

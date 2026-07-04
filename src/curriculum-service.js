@@ -371,7 +371,7 @@ function buildWeeks(sessions) {
 }
 
 function buildCurriculum(options = {}) {
-  const rootDir = options.rootDir || path.join(__dirname, '..');
+  const rootDir = options.rootDir || path.join(__dirname, '..', 'content');
   const exercises = [
     ...getAcademyExpansionExercises(),
     ...getSchemaOrientationExercises(),
