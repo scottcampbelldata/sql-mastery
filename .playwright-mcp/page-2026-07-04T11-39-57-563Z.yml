@@ -1,0 +1,60 @@
+- generic [ref=f7e2]:
+  - complementary [ref=f7e3]:
+    - generic [ref=f7e4]:
+      - generic [ref=f7e5]: SQL Mastery Path
+      - strong [ref=f7e6]: Analyst cockpit
+      - emphasis [ref=f7e7]: 16 weeks. Local data. Interview proof.
+    - navigation [ref=f7e8]:
+      - button "Dashboard" [ref=f7e9] [cursor=pointer]
+      - button "Today's session" [ref=f7e10] [cursor=pointer]
+      - link "Reference lessons" [ref=f7e11] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=f7e12]:
+      - generic [ref=f7e13]: Course progress
+      - generic [ref=f7e14]: 0%
+  - main [ref=f7e16]:
+    - generic [ref=f7e17]:
+      - generic [ref=f7e18]:
+        - text: Active session
+        - 'heading "Know Your Schemas: first pass" [level=1] [ref=f7e19]'
+        - paragraph [ref=f7e20]: Week 1, session 1. Complete 3 graded attempts and repair every miss before moving on.
+      - generic [ref=f7e21]:
+        - button "Dashboard" [ref=f7e22] [cursor=pointer]
+        - link "Open source lesson" [ref=f7e23] [cursor=pointer]:
+          - /url: schemas.html
+    - generic [ref=f7e24]:
+      - complementary [ref=f7e25]:
+        - button "Schema Recon 1 Know Your Schemas - chinook" [ref=f7e26] [cursor=pointer]:
+          - strong [ref=f7e27]: Schema Recon 1
+          - generic [ref=f7e28]: Know Your Schemas - chinook
+        - button "Schema Recon 2 Know Your Schemas - northwind" [ref=f7e29] [cursor=pointer]:
+          - strong [ref=f7e30]: Schema Recon 2
+          - generic [ref=f7e31]: Know Your Schemas - northwind
+        - button "Schema Recon 3 Know Your Schemas - stackoverflow" [ref=f7e32] [cursor=pointer]:
+          - strong [ref=f7e33]: Schema Recon 3
+          - generic [ref=f7e34]: Know Your Schemas - stackoverflow
+      - article [ref=f7e35]:
+        - generic [ref=f7e36]:
+          - generic [ref=f7e37]: Orient
+          - generic [ref=f7e38]: Know Your Schemas
+          - generic [ref=f7e39]: schema recon
+          - generic [ref=f7e40]: graded
+        - heading "Schema Recon 1" [level=2] [ref=f7e41]
+        - generic [ref=f7e42]:
+          - generic [ref=f7e43]: "Database: chinook"
+          - generic [ref=f7e44]: Session 1 of 64
+        - paragraph [ref=f7e45]: List every user table available in the Chinook database. Show schema and table name, sorted alphabetically.
+        - button "Hint" [ref=f7e46] [cursor=pointer]
+        - generic [ref=f7e47]:
+          - generic [ref=f7e48]:
+            - generic [ref=f7e49]: Your SQL
+            - generic [ref=f7e50]: chinook
+          - textbox "Your SQL" [ref=f7e51]:
+            - /placeholder: SELECT table_schema, table_name
+        - generic [ref=f7e52]:
+          - button "Run and check" [ref=f7e53] [cursor=pointer]
+          - button "Reveal model answer" [ref=f7e54] [cursor=pointer]
+          - button "Next step" [ref=f7e55] [cursor=pointer]
+        - generic [ref=f7e56]:
+          - strong [ref=f7e57]: Ready when you are.
+          - paragraph [ref=f7e58]: Write the query, run it, read the feedback, revise, then run it again.

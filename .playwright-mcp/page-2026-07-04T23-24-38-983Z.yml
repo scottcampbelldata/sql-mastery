@@ -1,0 +1,339 @@
+- generic [ref=f21e2]:
+  - complementary [ref=f21e3]:
+    - generic [ref=f21e4]:
+      - generic [ref=f21e5]: SQL Mastery Path
+      - strong [ref=f21e6]: Analyst cockpit
+      - emphasis [ref=f21e7]: 36 weeks. Local data. Interview proof.
+    - navigation [ref=f21e8]:
+      - button "Dashboard" [ref=f21e9] [cursor=pointer]
+      - button "Today's session" [ref=f21e10] [cursor=pointer]
+      - link "Reference lessons" [ref=f21e11] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=f21e12]:
+      - generic [ref=f21e13]: Course progress
+      - generic [ref=f21e14]: 0%
+  - main [ref=f21e16]:
+    - generic [ref=f21e17]:
+      - generic [ref=f21e18]:
+        - text: Active session
+        - 'heading "Know Your Schemas: first pass" [level=1] [ref=f21e19]'
+        - paragraph [ref=f21e20]: Week 1, session 1. Complete the graded attempt, then rerun it cold before moving on.
+      - generic [ref=f21e21]:
+        - button "Dashboard" [ref=f21e22] [cursor=pointer]
+        - link "Open source lesson" [ref=f21e23] [cursor=pointer]:
+          - /url: index.html
+    - generic [ref=f21e24]:
+      - complementary [ref=f21e25]:
+        - button "Zero SQL 1 Complete Know Your Schemas - chinook" [ref=f21e26] [cursor=pointer]:
+          - strong [ref=f21e27]: Zero SQL 1 Complete
+          - generic [ref=f21e28]: Know Your Schemas - chinook
+      - article [ref=f21e29]:
+        - generic [ref=f21e30]:
+          - generic [ref=f21e31]: Orient
+          - generic [ref=f21e32]: Know Your Schemas
+          - generic [ref=f21e33]: absolute beginner
+          - generic [ref=f21e34]: graded
+        - heading "Zero SQL 1" [level=2] [ref=f21e35]
+        - generic [ref=f21e36]:
+          - generic [ref=f21e37]: "Database: chinook"
+          - generic [ref=f21e38]: Session 1 of 144
+        - paragraph [ref=f21e39]: What is a database? List the user tables in Chinook so you can see what raw material SQL can query.
+        - region "Lesson brief" [ref=f21e40]:
+          - generic [ref=f21e41]:
+            - generic [ref=f21e42]: What you are learning
+            - paragraph [ref=f21e43]: A database is a collection of related tables. A table is rows and columns stored so you can ask precise questions.
+          - generic [ref=f21e44]:
+            - generic [ref=f21e45]: Why it matters
+            - paragraph [ref=f21e46]: Before you write SQL, you need to know what tables exist. Senior analysts do not guess; they inspect.
+          - generic [ref=f21e47]:
+            - generic [ref=f21e48]: Mental model
+            - paragraph [ref=f21e49]: Think of the database as a workbook, each table as a spreadsheet tab, each row as a record, and each column as one attribute.
+          - generic [ref=f21e50]:
+            - generic [ref=f21e51]: Worked example
+            - paragraph [ref=f21e52]: To inspect tables, query information_schema.tables and exclude PostgreSQL system schemas.
+          - generic [ref=f21e53]:
+            - generic [ref=f21e54]: How to approach it
+            - list [ref=f21e55]:
+              - listitem [ref=f21e56]: Ask PostgreSQL for its list of tables.
+              - listitem [ref=f21e57]: Remove system tables from pg_catalog and information_schema.
+              - listitem [ref=f21e58]: Sort the result so the schema is easy to scan.
+          - generic [ref=f21e59]:
+            - generic [ref=f21e60]: Common mistakes
+            - list [ref=f21e61]:
+              - listitem [ref=f21e62]: Starting with SELECT * from a guessed table name.
+              - listitem [ref=f21e63]: Ignoring schema names when a database has multiple schemas.
+              - listitem [ref=f21e64]: Treating the database like one giant table.
+          - generic [ref=f21e65]:
+            - generic [ref=f21e66]: Interview angle
+            - paragraph [ref=f21e67]: "In an interview, schema recon shows maturity: you learn the data shape before writing business logic."
+        - button "Hint" [ref=f21e68] [cursor=pointer]
+        - generic [ref=f21e69]:
+          - generic [ref=f21e70]:
+            - generic [ref=f21e71]: Your SQL
+            - generic [ref=f21e72]: chinook
+          - textbox "Your SQL" [ref=f21e73]:
+            - /placeholder: SELECT table_schema, table_name
+            - text: SELECT table_schema, table_name FROM information_schema.tables WHERE table_schema NOT IN ('pg_catalog', 'information_schema') AND table_type = 'BASE TABLE' ORDER BY table_schema, table_name;
+        - generic [ref=f21e74]:
+          - button "Run and check" [ref=f21e75] [cursor=pointer]
+          - button "Reveal model answer" [ref=f21e76] [cursor=pointer]
+          - button "Next step" [ref=f21e77] [cursor=pointer]
+        - generic [ref=f21e78]:
+          - strong [ref=f21e79]: Ready when you are.
+          - paragraph [ref=f21e80]: Write the query, run it, read the feedback, revise, then run it again.
+        - region "Query output and database reference" [ref=f21e81]:
+          - generic [ref=f21e82]:
+            - button "Query results" [ref=f21e83] [cursor=pointer]
+            - 'button "Database: chinook" [ref=f21e84] [cursor=pointer]'
+          - generic [ref=f21e86]:
+            - generic [ref=f21e87]:
+              - generic [ref=f21e88]:
+                - text: Current database
+                - heading "chinook" [level=3] [ref=f21e89]
+              - generic [ref=f21e90]:
+                - generic [ref=f21e91]: 11 tables
+                - generic [ref=f21e92]: 64 columns
+            - generic "chinook tables" [ref=f21e93]:
+              - button "album public · ~347 rows" [ref=f21e94] [cursor=pointer]:
+                - strong [ref=f21e95]: album
+                - generic [ref=f21e96]: public · ~347 rows
+              - button "artist public · ~275 rows" [ref=f21e97] [cursor=pointer]:
+                - strong [ref=f21e98]: artist
+                - generic [ref=f21e99]: public · ~275 rows
+              - button "customer public · ~59 rows" [ref=f21e100] [cursor=pointer]:
+                - strong [ref=f21e101]: customer
+                - generic [ref=f21e102]: public · ~59 rows
+              - button "employee public · ~-1 rows" [ref=f21e103] [cursor=pointer]:
+                - strong [ref=f21e104]: employee
+                - generic [ref=f21e105]: public · ~-1 rows
+              - button "genre public · ~-1 rows" [ref=f21e106] [cursor=pointer]:
+                - strong [ref=f21e107]: genre
+                - generic [ref=f21e108]: public · ~-1 rows
+              - button "invoice public · ~412 rows" [ref=f21e109] [cursor=pointer]:
+                - strong [ref=f21e110]: invoice
+                - generic [ref=f21e111]: public · ~412 rows
+              - button "invoice_line public · ~2,240 rows" [ref=f21e112] [cursor=pointer]:
+                - strong [ref=f21e113]: invoice_line
+                - generic [ref=f21e114]: public · ~2,240 rows
+              - button "media_type public · ~-1 rows" [ref=f21e115] [cursor=pointer]:
+                - strong [ref=f21e116]: media_type
+                - generic [ref=f21e117]: public · ~-1 rows
+              - button "playlist public · ~-1 rows" [ref=f21e118] [cursor=pointer]:
+                - strong [ref=f21e119]: playlist
+                - generic [ref=f21e120]: public · ~-1 rows
+              - button "playlist_track public · ~8,715 rows" [ref=f21e121] [cursor=pointer]:
+                - strong [ref=f21e122]: playlist_track
+                - generic [ref=f21e123]: public · ~8,715 rows
+              - button "track public · ~3,503 rows" [ref=f21e124] [cursor=pointer]:
+                - strong [ref=f21e125]: track
+                - generic [ref=f21e126]: public · ~3,503 rows
+            - generic [ref=f21e127]:
+              - region "customer columns" [ref=f21e128]:
+                - generic [ref=f21e129]:
+                  - generic [ref=f21e130]: Columns
+                  - heading "public.customer" [level=4] [ref=f21e131]
+                - generic [ref=f21e132]:
+                  - generic [ref=f21e133]:
+                    - generic [ref=f21e134]:
+                      - strong [ref=f21e135]: customer_id
+                      - generic [ref=f21e136]: integer · required
+                    - emphasis [ref=f21e138]: PK
+                  - generic [ref=f21e140]:
+                    - strong [ref=f21e141]: first_name
+                    - generic [ref=f21e142]: character varying(40) · required
+                  - generic [ref=f21e144]:
+                    - strong [ref=f21e145]: last_name
+                    - generic [ref=f21e146]: character varying(20) · required
+                  - generic [ref=f21e148]:
+                    - strong [ref=f21e149]: company
+                    - generic [ref=f21e150]: character varying(80) · nullable
+                  - generic [ref=f21e152]:
+                    - strong [ref=f21e153]: address
+                    - generic [ref=f21e154]: character varying(70) · nullable
+                  - generic [ref=f21e156]:
+                    - strong [ref=f21e157]: city
+                    - generic [ref=f21e158]: character varying(40) · nullable
+                  - generic [ref=f21e160]:
+                    - strong [ref=f21e161]: state
+                    - generic [ref=f21e162]: character varying(40) · nullable
+                  - generic [ref=f21e164]:
+                    - strong [ref=f21e165]: country
+                    - generic [ref=f21e166]: character varying(40) · nullable
+                  - generic [ref=f21e168]:
+                    - strong [ref=f21e169]: postal_code
+                    - generic [ref=f21e170]: character varying(10) · nullable
+                  - generic [ref=f21e172]:
+                    - strong [ref=f21e173]: phone
+                    - generic [ref=f21e174]: character varying(24) · nullable
+                  - generic [ref=f21e176]:
+                    - strong [ref=f21e177]: fax
+                    - generic [ref=f21e178]: character varying(24) · nullable
+                  - generic [ref=f21e180]:
+                    - strong [ref=f21e181]: email
+                    - generic [ref=f21e182]: character varying(60) · required
+                  - generic [ref=f21e183]:
+                    - generic [ref=f21e184]:
+                      - strong [ref=f21e185]: support_rep_id
+                      - generic [ref=f21e186]: integer · nullable
+                    - emphasis [ref=f21e188]: FK employee.employee_id
+              - region "customer sample rows" [ref=f21e189]:
+                - generic [ref=f21e190]:
+                  - generic [ref=f21e191]: Sample rows
+                  - heading "customer" [level=4] [ref=f21e192]
+                - table [ref=f21e193]:
+                  - rowgroup [ref=f21e194]:
+                    - row "customer_id first_name last_name company address city state country postal_code phone fax email support_rep_id" [ref=f21e195]:
+                      - columnheader "customer_id" [ref=f21e196]
+                      - columnheader "first_name" [ref=f21e197]
+                      - columnheader "last_name" [ref=f21e198]
+                      - columnheader "company" [ref=f21e199]
+                      - columnheader "address" [ref=f21e200]
+                      - columnheader "city" [ref=f21e201]
+                      - columnheader "state" [ref=f21e202]
+                      - columnheader "country" [ref=f21e203]
+                      - columnheader "postal_code" [ref=f21e204]
+                      - columnheader "phone" [ref=f21e205]
+                      - columnheader "fax" [ref=f21e206]
+                      - columnheader "email" [ref=f21e207]
+                      - columnheader "support_rep_id" [ref=f21e208]
+                  - rowgroup [ref=f21e209]:
+                    - row "1 Luís Gonçalves Embraer - Empresa Brasileira de Aeronáutica S.A. Av. Brigadeiro Faria Lima, 2170 São José dos Campos SP Brazil 12227-000 +55 (12) 3923-5555 +55 (12) 3923-5566 luisg@embraer.com.br 3" [ref=f21e210]:
+                      - cell "1" [ref=f21e211]
+                      - cell "Luís" [ref=f21e212]
+                      - cell "Gonçalves" [ref=f21e213]
+                      - cell "Embraer - Empresa Brasileira de Aeronáutica S.A." [ref=f21e214]
+                      - cell "Av. Brigadeiro Faria Lima, 2170" [ref=f21e215]
+                      - cell "São José dos Campos" [ref=f21e216]
+                      - cell "SP" [ref=f21e217]
+                      - cell "Brazil" [ref=f21e218]
+                      - cell "12227-000" [ref=f21e219]
+                      - cell "+55 (12) 3923-5555" [ref=f21e220]
+                      - cell "+55 (12) 3923-5566" [ref=f21e221]
+                      - cell "luisg@embraer.com.br" [ref=f21e222]
+                      - cell "3" [ref=f21e223]
+                    - row "2 Leonie Köhler NULL Theodor-Heuss-Straße 34 Stuttgart NULL Germany 70174 +49 0711 2842222 NULL leonekohler@surfeu.de 5" [ref=f21e224]:
+                      - cell "2" [ref=f21e225]
+                      - cell "Leonie" [ref=f21e226]
+                      - cell "Köhler" [ref=f21e227]
+                      - cell "NULL" [ref=f21e228]
+                      - cell "Theodor-Heuss-Straße 34" [ref=f21e229]
+                      - cell "Stuttgart" [ref=f21e230]
+                      - cell "NULL" [ref=f21e231]
+                      - cell "Germany" [ref=f21e232]
+                      - cell "70174" [ref=f21e233]
+                      - cell "+49 0711 2842222" [ref=f21e234]
+                      - cell "NULL" [ref=f21e235]
+                      - cell "leonekohler@surfeu.de" [ref=f21e236]
+                      - cell "5" [ref=f21e237]
+                    - row "3 François Tremblay NULL 1498 rue Bélanger Montréal QC Canada H2G 1A7 +1 (514) 721-4711 NULL ftremblay@gmail.com 3" [ref=f21e238]:
+                      - cell "3" [ref=f21e239]
+                      - cell "François" [ref=f21e240]
+                      - cell "Tremblay" [ref=f21e241]
+                      - cell "NULL" [ref=f21e242]
+                      - cell "1498 rue Bélanger" [ref=f21e243]
+                      - cell "Montréal" [ref=f21e244]
+                      - cell "QC" [ref=f21e245]
+                      - cell "Canada" [ref=f21e246]
+                      - cell "H2G 1A7" [ref=f21e247]
+                      - cell "+1 (514) 721-4711" [ref=f21e248]
+                      - cell "NULL" [ref=f21e249]
+                      - cell "ftremblay@gmail.com" [ref=f21e250]
+                      - cell "3" [ref=f21e251]
+                    - row "4 Bjørn Hansen NULL Ullevålsveien 14 Oslo NULL Norway 0171 +47 22 44 22 22 NULL bjorn.hansen@yahoo.no 4" [ref=f21e252]:
+                      - cell "4" [ref=f21e253]
+                      - cell "Bjørn" [ref=f21e254]
+                      - cell "Hansen" [ref=f21e255]
+                      - cell "NULL" [ref=f21e256]
+                      - cell "Ullevålsveien 14" [ref=f21e257]
+                      - cell "Oslo" [ref=f21e258]
+                      - cell "NULL" [ref=f21e259]
+                      - cell "Norway" [ref=f21e260]
+                      - cell "0171" [ref=f21e261]
+                      - cell "+47 22 44 22 22" [ref=f21e262]
+                      - cell "NULL" [ref=f21e263]
+                      - cell "bjorn.hansen@yahoo.no" [ref=f21e264]
+                      - cell "4" [ref=f21e265]
+                    - row "5 František Wichterlová JetBrains s.r.o. Klanova 9/506 Prague NULL Czech Republic 14700 +420 2 4172 5555 +420 2 4172 5555 frantisekw@jetbrains.com 4" [ref=f21e266]:
+                      - cell "5" [ref=f21e267]
+                      - cell "František" [ref=f21e268]
+                      - cell "Wichterlová" [ref=f21e269]
+                      - cell "JetBrains s.r.o." [ref=f21e270]
+                      - cell "Klanova 9/506" [ref=f21e271]
+                      - cell "Prague" [ref=f21e272]
+                      - cell "NULL" [ref=f21e273]
+                      - cell "Czech Republic" [ref=f21e274]
+                      - cell "14700" [ref=f21e275]
+                      - cell "+420 2 4172 5555" [ref=f21e276]
+                      - cell "+420 2 4172 5555" [ref=f21e277]
+                      - cell "frantisekw@jetbrains.com" [ref=f21e278]
+                      - cell "4" [ref=f21e279]
+                    - row "6 Helena Holý NULL Rilská 3174/6 Prague NULL Czech Republic 14300 +420 2 4177 0449 NULL hholy@gmail.com 5" [ref=f21e280]:
+                      - cell "6" [ref=f21e281]
+                      - cell "Helena" [ref=f21e282]
+                      - cell "Holý" [ref=f21e283]
+                      - cell "NULL" [ref=f21e284]
+                      - cell "Rilská 3174/6" [ref=f21e285]
+                      - cell "Prague" [ref=f21e286]
+                      - cell "NULL" [ref=f21e287]
+                      - cell "Czech Republic" [ref=f21e288]
+                      - cell "14300" [ref=f21e289]
+                      - cell "+420 2 4177 0449" [ref=f21e290]
+                      - cell "NULL" [ref=f21e291]
+                      - cell "hholy@gmail.com" [ref=f21e292]
+                      - cell "5" [ref=f21e293]
+                    - row "7 Astrid Gruber NULL Rotenturmstraße 4, 1010 Innere Stadt Vienne NULL Austria 1010 +43 01 5134505 NULL astrid.gruber@apple.at 5" [ref=f21e294]:
+                      - cell "7" [ref=f21e295]
+                      - cell "Astrid" [ref=f21e296]
+                      - cell "Gruber" [ref=f21e297]
+                      - cell "NULL" [ref=f21e298]
+                      - cell "Rotenturmstraße 4, 1010 Innere Stadt" [ref=f21e299]
+                      - cell "Vienne" [ref=f21e300]
+                      - cell "NULL" [ref=f21e301]
+                      - cell "Austria" [ref=f21e302]
+                      - cell "1010" [ref=f21e303]
+                      - cell "+43 01 5134505" [ref=f21e304]
+                      - cell "NULL" [ref=f21e305]
+                      - cell "astrid.gruber@apple.at" [ref=f21e306]
+                      - cell "5" [ref=f21e307]
+                    - row "8 Daan Peeters NULL Grétrystraat 63 Brussels NULL Belgium 1000 +32 02 219 03 03 NULL daan_peeters@apple.be 4" [ref=f21e308]:
+                      - cell "8" [ref=f21e309]
+                      - cell "Daan" [ref=f21e310]
+                      - cell "Peeters" [ref=f21e311]
+                      - cell "NULL" [ref=f21e312]
+                      - cell "Grétrystraat 63" [ref=f21e313]
+                      - cell "Brussels" [ref=f21e314]
+                      - cell "NULL" [ref=f21e315]
+                      - cell "Belgium" [ref=f21e316]
+                      - cell "1000" [ref=f21e317]
+                      - cell "+32 02 219 03 03" [ref=f21e318]
+                      - cell "NULL" [ref=f21e319]
+                      - cell "daan_peeters@apple.be" [ref=f21e320]
+                      - cell "4" [ref=f21e321]
+                    - row "9 Kara Nielsen NULL Sønder Boulevard 51 Copenhagen NULL Denmark 1720 +453 3331 9991 NULL kara.nielsen@jubii.dk 4" [ref=f21e322]:
+                      - cell "9" [ref=f21e323]
+                      - cell "Kara" [ref=f21e324]
+                      - cell "Nielsen" [ref=f21e325]
+                      - cell "NULL" [ref=f21e326]
+                      - cell "Sønder Boulevard 51" [ref=f21e327]
+                      - cell "Copenhagen" [ref=f21e328]
+                      - cell "NULL" [ref=f21e329]
+                      - cell "Denmark" [ref=f21e330]
+                      - cell "1720" [ref=f21e331]
+                      - cell "+453 3331 9991" [ref=f21e332]
+                      - cell "NULL" [ref=f21e333]
+                      - cell "kara.nielsen@jubii.dk" [ref=f21e334]
+                      - cell "4" [ref=f21e335]
+                    - row "10 Eduardo Martins Woodstock Discos Rua Dr. Falcão Filho, 155 São Paulo SP Brazil 01007-010 +55 (11) 3033-5446 +55 (11) 3033-4564 eduardo@woodstock.com.br 4" [ref=f21e336]:
+                      - cell "10" [ref=f21e337]
+                      - cell "Eduardo" [ref=f21e338]
+                      - cell "Martins" [ref=f21e339]
+                      - cell "Woodstock Discos" [ref=f21e340]
+                      - cell "Rua Dr. Falcão Filho, 155" [ref=f21e341]
+                      - cell "São Paulo" [ref=f21e342]
+                      - cell "SP" [ref=f21e343]
+                      - cell "Brazil" [ref=f21e344]
+                      - cell "01007-010" [ref=f21e345]
+                      - cell "+55 (11) 3033-5446" [ref=f21e346]
+                      - cell "+55 (11) 3033-4564" [ref=f21e347]
+                      - cell "eduardo@woodstock.com.br" [ref=f21e348]
+                      - cell "4" [ref=f21e349]

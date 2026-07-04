@@ -1,0 +1,128 @@
+- generic [ref=f4e2]:
+  - complementary [ref=f4e341]:
+    - generic [ref=f4e342]:
+      - generic [ref=f4e343]: SQL Mastery Path
+      - strong [ref=f4e344]: Analyst cockpit
+      - emphasis [ref=f4e345]: 16 weeks. Local data. Interview proof.
+    - navigation [ref=f4e346]:
+      - button "Dashboard" [ref=f4e347] [cursor=pointer]
+      - button "Today's session" [ref=f4e348] [cursor=pointer]
+      - link "Reference lessons" [ref=f4e349] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=f4e350]:
+      - generic [ref=f4e351]: Course progress
+      - generic [ref=f4e352]: 0%
+  - main [ref=f4e354]:
+    - generic [ref=f4e355]:
+      - generic [ref=f4e356]:
+        - text: Active session
+        - 'heading "Fundamentals: first pass" [level=1] [ref=f4e357]'
+        - paragraph [ref=f4e358]: Week 1, session 3. Complete 3 graded attempts and repair every miss before moving on.
+      - generic [ref=f4e359]:
+        - button "Dashboard" [ref=f4e360] [cursor=pointer]
+        - link "Open source lesson" [ref=f4e361] [cursor=pointer]:
+          - /url: m1-fundamentals.html
+    - generic [ref=f4e362]:
+      - complementary [ref=f4e363]:
+        - button "P1.1 Complete Fundamentals - chinook" [ref=f4e364] [cursor=pointer]:
+          - strong [ref=f4e365]: P1.1 Complete
+          - generic [ref=f4e366]: Fundamentals - chinook
+        - button "P1.2 Fundamentals - northwind" [ref=f4e367] [cursor=pointer]:
+          - strong [ref=f4e368]: P1.2
+          - generic [ref=f4e369]: Fundamentals - northwind
+        - button "P1.3 Fundamentals - northwind" [ref=f4e370] [cursor=pointer]:
+          - strong [ref=f4e371]: P1.3
+          - generic [ref=f4e372]: Fundamentals - northwind
+      - article [ref=f4e373]:
+        - generic [ref=f4e374]:
+          - generic [ref=f4e375]: Foundations
+          - generic [ref=f4e376]: Fundamentals
+          - generic [ref=f4e377]: warmup
+          - generic [ref=f4e378]: graded
+        - heading "P1.1" [level=2] [ref=f4e379]
+        - generic [ref=f4e380]:
+          - generic [ref=f4e381]: "Database: chinook"
+          - generic [ref=f4e382]: Session 3 of 64
+        - paragraph [ref=f4e383]: List the 15 longest tracks. Show the track name, its length in whole minutes (rounded to 1 decimal), and its unit price. Longest first.
+        - button "Hint" [ref=f4e384] [cursor=pointer]
+        - generic [ref=f4e385]:
+          - generic [ref=f4e386]:
+            - generic [ref=f4e387]: Your SQL
+            - generic [ref=f4e388]: chinook
+          - textbox "Your SQL" [ref=f4e389]:
+            - /placeholder: SELECT name,
+            - text: SELECT name, ROUND(milliseconds / 60000.0, 1) AS minutes, unit_price FROM track ORDER BY milliseconds DESC LIMIT 15;
+        - generic [ref=f4e390]:
+          - button "Run and check" [ref=f4e391] [cursor=pointer]
+          - button "Reveal model answer" [ref=f4e392] [cursor=pointer]
+          - button "Next step" [ref=f4e393] [cursor=pointer]
+        - generic [ref=f4e394]:
+          - strong [ref=f4e395]: You got it right.
+          - paragraph [ref=f4e396]: Your columns, row count, row values, and row order match the model answer on this database.
+        - table [ref=f4e398]:
+          - rowgroup [ref=f4e399]:
+            - row "name minutes unit_price" [ref=f4e400]:
+              - columnheader "name" [ref=f4e401]
+              - columnheader "minutes" [ref=f4e402]
+              - columnheader "unit_price" [ref=f4e403]
+          - rowgroup [ref=f4e404]:
+            - row "Occupation / Precipice 88.1 1.99" [ref=f4e405]:
+              - cell "Occupation / Precipice" [ref=f4e406]
+              - cell "88.1" [ref=f4e407]
+              - cell "1.99" [ref=f4e408]
+            - row "Through a Looking Glass 84.8 1.99" [ref=f4e409]:
+              - cell "Through a Looking Glass" [ref=f4e410]
+              - cell "84.8" [ref=f4e411]
+              - cell "1.99" [ref=f4e412]
+            - row "Greetings from Earth, Pt. 1 49.3 1.99" [ref=f4e413]:
+              - cell "Greetings from Earth, Pt. 1" [ref=f4e414]
+              - cell "49.3" [ref=f4e415]
+              - cell "1.99" [ref=f4e416]
+            - row "The Man With Nine Lives 49.3 1.99" [ref=f4e417]:
+              - cell "The Man With Nine Lives" [ref=f4e418]
+              - cell "49.3" [ref=f4e419]
+              - cell "1.99" [ref=f4e420]
+            - row "Battlestar Galactica, Pt. 2 49.3 1.99" [ref=f4e421]:
+              - cell "Battlestar Galactica, Pt. 2" [ref=f4e422]
+              - cell "49.3" [ref=f4e423]
+              - cell "1.99" [ref=f4e424]
+            - row "Battlestar Galactica, Pt. 1 49.2 1.99" [ref=f4e425]:
+              - cell "Battlestar Galactica, Pt. 1" [ref=f4e426]
+              - cell "49.2" [ref=f4e427]
+              - cell "1.99" [ref=f4e428]
+            - row "Murder On the Rising Star 48.9 1.99" [ref=f4e429]:
+              - cell "Murder On the Rising Star" [ref=f4e430]
+              - cell "48.9" [ref=f4e431]
+              - cell "1.99" [ref=f4e432]
+            - row "Battlestar Galactica, Pt. 3 48.8 1.99" [ref=f4e433]:
+              - cell "Battlestar Galactica, Pt. 3" [ref=f4e434]
+              - cell "48.8" [ref=f4e435]
+              - cell "1.99" [ref=f4e436]
+            - row "Take the Celestra 48.8 1.99" [ref=f4e437]:
+              - cell "Take the Celestra" [ref=f4e438]
+              - cell "48.8" [ref=f4e439]
+              - cell "1.99" [ref=f4e440]
+            - row "Fire In Space 48.8 1.99" [ref=f4e441]:
+              - cell "Fire In Space" [ref=f4e442]
+              - cell "48.8" [ref=f4e443]
+              - cell "1.99" [ref=f4e444]
+            - row "The Long Patrol 48.8 1.99" [ref=f4e445]:
+              - cell "The Long Patrol" [ref=f4e446]
+              - cell "48.8" [ref=f4e447]
+              - cell "1.99" [ref=f4e448]
+            - row "The Magnificent Warriors 48.7 1.99" [ref=f4e449]:
+              - cell "The Magnificent Warriors" [ref=f4e450]
+              - cell "48.7" [ref=f4e451]
+              - cell "1.99" [ref=f4e452]
+            - row "The Living Legend, Pt. 1 48.7 1.99" [ref=f4e453]:
+              - cell "The Living Legend, Pt. 1" [ref=f4e454]
+              - cell "48.7" [ref=f4e455]
+              - cell "1.99" [ref=f4e456]
+            - row "The Gun On Ice Planet Zero, Pt. 2 48.7 1.99" [ref=f4e457]:
+              - cell "The Gun On Ice Planet Zero, Pt. 2" [ref=f4e458]
+              - cell "48.7" [ref=f4e459]
+              - cell "1.99" [ref=f4e460]
+            - row "The Hand of God 48.7 1.99" [ref=f4e461]:
+              - cell "The Hand of God" [ref=f4e462]
+              - cell "48.7" [ref=f4e463]
+              - cell "1.99" [ref=f4e464]

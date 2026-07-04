@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 0 - Know Your Schemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="m0">
+<header class="site"><div class="bar">
+  <span class="brand">sql://<b>mastery-path</b></span>
+  <nav class="mods">
+    <a href="index.html">Home</a><a href="schemas.html" class="here">0</a><a href="m1-fundamentals.html">1</a><a href="m2-aggregation.html">2</a><a href="m3-joins.html">3</a><a href="m4-transformation.html">4</a><a href="m5-subqueries-ctes.html">5</a><a href="m6-window-functions.html">6</a><a href="m7-interview-patterns.html">7</a><a href="m8-performance.html">8</a><a href="mock-interviews.html">Mocks</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<p class="eyebrow">-- module 0 / one session</p>
+<h1>Know Your Schemas</h1>
+<p class="lede">Interviewers hand you unfamiliar tables and watch what you do first. The right first move is always the same: inspect the schema, sample the data, check for NULLs and duplicates. This module makes that reflex automatic and builds your reference map for the other eight modules.</p>
+
+<h2>The exploration toolkit</h2>
+<p>These work in every PostgreSQL database. Memorize the first three - you will type them hundreds of times.</p>
+
+<pre><span class="c">-- 1. What tables exist? (psql shortcut: \dt or \dt *.* for all schemas)</span>
+<span class="k">SELECT</span> table_schema, table_name
+<span class="k">FROM</span> information_schema.tables
+<span class="k">WHERE</span> table_type = <span class="s">'BASE TABLE'</span>
+  <span class="k">AND</span> table_schema <span class="k">NOT IN</span> (<span class="s">'pg_catalog'</span>, <span class="s">'information_schema'</span>)
+<span class="k">ORDER BY</span> table_schema, table_name;</pre>
+
+<pre><span class="c">-- 2. What columns does a table have? (psql shortcut: \d tablename)</span>
+<span class="k">SELECT</span> column_name, data_type, is_nullable
+<span class="k">FROM</span> information_schema.columns
+<span class="k">WHERE</span> table_name = <span class="s">'orders'</span>
+<span class="k">ORDER BY</span> ordinal_position;</pre>
+
+<pre><span class="c">-- 3. What does the data actually look like?</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">LIMIT</span> <span class="n">10</span>;</pre>
+
+<pre><span class="c">-- 4. How big is it, and is the key really unique?</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">AS</span> total_rows,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> order_id) <span class="k">AS</span> distinct_keys
+<span class="k">FROM</span> orders;
+<span class="c">-- If these two numbers differ, order_id is not unique. Say that out loud in an interview.</span></pre>
+
+<pre><span class="c">-- 5. Where are the NULLs hiding?</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) - <span class="f">COUNT</span>(shipped_date) <span class="k">AS</span> null_shipped_dates
+<span class="k">FROM</span> orders;
+<span class="c">-- COUNT(column) skips NULLs; COUNT(*) does not. The difference is the NULL count.</span></pre>
+
+<div class="tip"><span class="tag">Interview habit</span>
+When handed a new table, narrate: "First I want to confirm the grain of this table - what does one row represent? Then I will check whether the join key is unique and whether the date column has NULLs." That one sentence signals senior before you have written any SQL.</div>
+
+<h2>Reference map: the tables you will use most</h2>
+<div class="warn"><span class="tag">Verify locally</span>
+Community ports of these datasets vary slightly in column naming (for example <code>OrderDate</code> vs <code>orderdate</code> vs <code>order_date</code>). Run <code>\d tablename</code> on each table below and pencil in any differences now. Every query in Modules 1-8 uses the names listed here; adapting them is a 10-second fix once you know your local names.</div>
+
+<h3>northwind (public schema, snake_case)</h3>
+<table>
+  <tr><th>Table</th><th>Key columns</th></tr>
+  <tr><td><code>customers</code></td><td>customer_id, company_name, contact_name, city, country</td></tr>
+  <tr><td><code>orders</code></td><td>order_id, customer_id, employee_id, order_date, required_date, shipped_date, freight, ship_country</td></tr>
+  <tr><td><code>order_details</code></td><td>order_id, product_id, unit_price, quantity, discount</td></tr>
+  <tr><td><code>products</code></td><td>product_id, product_name, supplier_id, category_id, unit_price, units_in_stock, discontinued</td></tr>
+  <tr><td><code>categories</code></td><td>category_id, category_name</td></tr>
+  <tr><td><code>employees</code></td><td>employee_id, first_name, last_name, title, hire_date, reports_to</td></tr>
+  <tr><td><code>suppliers</code></td><td>supplier_id, company_name, country</td></tr>
+</table>
+<p>The money math: line revenue = <code>unit_price * quantity * (1 - discount)</code> from <code>order_details</code>. The hierarchy: <code>employees.reports_to</code> points at another <code>employee_id</code>.</p>
+
+<h3>chinook (public schema, snake_case)</h3>
+<table>
+  <tr><th>Table</th><th>Key columns</th></tr>
+  <tr><td><code>artist</code></td><td>artist_id, name</td></tr>
+  <tr><td><code>album</code></td><td>album_id, title, artist_id</td></tr>
+  <tr><td><code>track</code></td><td>track_id, name, album_id, genre_id, composer, milliseconds, unit_price</td></tr>
+  <tr><td><code>genre</code></td><td>genre_id, name</td></tr>
+  <tr><td><code>customer</code></td><td>customer_id, first_name, last_name, country, support_rep_id</td></tr>
+  <tr><td><code>invoice</code></td><td>invoice_id, customer_id, invoice_date, billing_country, total</td></tr>
+  <tr><td><code>invoice_line</code></td><td>invoice_line_id, invoice_id, track_id, unit_price, quantity</td></tr>
+  <tr><td><code>employee</code></td><td>employee_id, first_name, last_name, title, reports_to</td></tr>
+</table>
+<div class="note"><span class="tag">Naming caveat</span>
+Older Chinook ports use PascalCase (<code>Artist</code>, <code>ArtistId</code>). If <code>SELECT * FROM artist</code> fails, try <code>SELECT * FROM "Artist"</code> - and note that quoted identifiers in Postgres are case-sensitive.</div>
+
+<h3>adventureworks (multiple schemas, lowercase)</h3>
+<p>This is the one interviewers love because navigating multiple schemas is realistic. Always schema-qualify: <code>sales.salesorderheader</code>, not <code>salesorderheader</code>.</p>
+<table>
+  <tr><th>Table</th><th>Key columns</th></tr>
+  <tr><td><code>sales.salesorderheader</code></td><td>salesorderid, orderdate, duedate, shipdate, customerid, territoryid, subtotal, taxamt, freight, totaldue, onlineorderflag</td></tr>
+  <tr><td><code>sales.salesorderdetail</code></td><td>salesorderid, salesorderdetailid, productid, orderqty, unitprice, unitpricediscount, linetotal</td></tr>
+  <tr><td><code>sales.customer</code></td><td>customerid, personid, storeid, territoryid</td></tr>
+  <tr><td><code>sales.salesterritory</code></td><td>territoryid, name, countryregioncode, "group"</td></tr>
+  <tr><td><code>production.product</code></td><td>productid, name, productnumber, color, standardcost, listprice, productsubcategoryid</td></tr>
+  <tr><td><code>production.productsubcategory</code></td><td>productsubcategoryid, productcategoryid, name</td></tr>
+  <tr><td><code>production.productcategory</code></td><td>productcategoryid, name</td></tr>
+  <tr><td><code>person.person</code></td><td>businessentityid, firstname, lastname</td></tr>
+  <tr><td><code>humanresources.employee</code></td><td>businessentityid, jobtitle, hiredate, birthdate</td></tr>
+</table>
+<pre><span class="c">-- List every schema in adventureworks to orient yourself:</span>
+<span class="k">SELECT</span> schema_name <span class="k">FROM</span> information_schema.schemata
+<span class="k">WHERE</span> schema_name <span class="k">NOT IN</span> (<span class="s">'pg_catalog'</span>,<span class="s">'information_schema'</span>);</pre>
+
+<h3>stackoverflow (public schema)</h3>
+<table>
+  <tr><th>Table</th><th>Key columns</th></tr>
+  <tr><td><code>users</code></td><td>id, display_name, reputation, creation_date, location, up_votes, down_votes</td></tr>
+  <tr><td><code>posts</code></td><td>id, post_type_id (1=question, 2=answer), owner_user_id, parent_id (answers point at their question), accepted_answer_id, creation_date, score, view_count, title, tags</td></tr>
+  <tr><td><code>badges</code></td><td>id, user_id, name, date</td></tr>
+  <tr><td><code>comments</code></td><td>id, post_id, user_id, score, creation_date</td></tr>
+  <tr><td><code>votes</code></td><td>id, post_id, vote_type_id, creation_date</td></tr>
+</table>
+<p>The relationships worth memorizing: an answer's <code>parent_id</code> is its question's <code>id</code>, and a question's <code>accepted_answer_id</code> points at one answer. Both enable self-joins on <code>posts</code>, which is a classic interview move.</p>
+
+<h3>nyctaxi (public schema)</h3>
+<table>
+  <tr><th>Table</th><th>Key columns</th></tr>
+  <tr><td><code>trips</code></td><td>trip_id, vendor_id, pickup_datetime, dropoff_datetime, passenger_count, trip_distance, fare_amount, tip_amount, total_amount, payment_type</td></tr>
+</table>
+<p>One wide table, tens of millions of rows. Perfect for time-series work (Module 4), percentiles (Module 7), and performance drills (Module 8). Always <code>LIMIT</code> your exploratory queries here.</p>
+
+<h2>Session 0 exercise (do it now, ~15 min)</h2>
+<div class="problem">
+  <div class="phead"><span class="pid">P0.1</span><span class="db">all five DBs</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p0-1"></div>
+  <div class="pbody">
+    <p>Connect to each of the five databases in turn and, without looking at the tables above, produce for each: (a) the list of tables, (b) the column list of its biggest table, (c) a 10-row sample, (d) the row count of that table. Write down any column name that differs from this page's reference map.</p>
+    <details class="sol"><summary>solution sketch</summary><div class="sbody">
+<pre><span class="c">-- (a)</span> \dt *.*
+<span class="c">-- (b)</span> \d sales.salesorderheader
+<span class="c">-- (c)</span> <span class="k">SELECT</span> * <span class="k">FROM</span> sales.salesorderheader <span class="k">LIMIT</span> <span class="n">10</span>;
+<span class="c">-- (d)</span> <span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> sales.salesorderheader;</pre>
+<p>The point is not the answers - it is that these four moves become muscle memory. In an interview you will do them on a whiteboard schema in your head.</p>
+    </div></details>
+  </div>
+</div>
+
+<div class="pager">
+  <a href="index.html">&larr; Home</a>
+  <a href="m1-fundamentals.html">Module 1: Fundamentals &rarr;</a>
+</div>
+</div>
+<script src="shared.js"></script>
+</body>
+</html>

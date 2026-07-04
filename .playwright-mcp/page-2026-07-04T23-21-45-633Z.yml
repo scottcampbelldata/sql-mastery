@@ -1,0 +1,238 @@
+- generic [ref=f20e2]:
+  - complementary [ref=f20e3]:
+    - generic [ref=f20e4]:
+      - generic [ref=f20e5]: SQL Mastery Path
+      - strong [ref=f20e6]: Analyst cockpit
+      - emphasis [ref=f20e7]: 36 weeks. Local data. Interview proof.
+    - navigation [ref=f20e8]:
+      - button "Dashboard" [ref=f20e9] [cursor=pointer]
+      - button "Today's session" [ref=f20e10] [cursor=pointer]
+      - link "Reference lessons" [ref=f20e11] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=f20e12]:
+      - generic [ref=f20e13]: Course progress
+      - generic [ref=f20e14]: 0%
+  - main [ref=f20e16]:
+    - generic [ref=f20e17]:
+      - generic [ref=f20e18]:
+        - text: Active session
+        - 'heading "Know Your Schemas: first pass" [level=1] [ref=f20e19]'
+        - paragraph [ref=f20e20]: Week 1, session 1. Complete the graded attempt, then rerun it cold before moving on.
+      - generic [ref=f20e21]:
+        - button "Dashboard" [ref=f20e22] [cursor=pointer]
+        - link "Open source lesson" [ref=f20e23] [cursor=pointer]:
+          - /url: index.html
+    - generic [ref=f20e24]:
+      - complementary [ref=f20e25]:
+        - button "Zero SQL 1 Know Your Schemas - chinook" [ref=f20e26] [cursor=pointer]:
+          - strong [ref=f20e27]: Zero SQL 1
+          - generic [ref=f20e28]: Know Your Schemas - chinook
+      - article [ref=f20e29]:
+        - generic [ref=f20e30]:
+          - generic [ref=f20e31]: Orient
+          - generic [ref=f20e32]: Know Your Schemas
+          - generic [ref=f20e33]: absolute beginner
+          - generic [ref=f20e34]: graded
+        - heading "Zero SQL 1" [level=2] [ref=f20e35]
+        - generic [ref=f20e36]:
+          - generic [ref=f20e37]: "Database: chinook"
+          - generic [ref=f20e38]: Session 1 of 144
+        - paragraph [ref=f20e39]: What is a database? List the user tables in Chinook so you can see what raw material SQL can query.
+        - region "Lesson brief" [ref=f20e40]:
+          - generic [ref=f20e41]:
+            - generic [ref=f20e42]: What you are learning
+            - paragraph [ref=f20e43]: A database is a collection of related tables. A table is rows and columns stored so you can ask precise questions.
+          - generic [ref=f20e44]:
+            - generic [ref=f20e45]: Why it matters
+            - paragraph [ref=f20e46]: Before you write SQL, you need to know what tables exist. Senior analysts do not guess; they inspect.
+          - generic [ref=f20e47]:
+            - generic [ref=f20e48]: Mental model
+            - paragraph [ref=f20e49]: Think of the database as a workbook, each table as a spreadsheet tab, each row as a record, and each column as one attribute.
+          - generic [ref=f20e50]:
+            - generic [ref=f20e51]: Worked example
+            - paragraph [ref=f20e52]: To inspect tables, query information_schema.tables and exclude PostgreSQL system schemas.
+          - generic [ref=f20e53]:
+            - generic [ref=f20e54]: How to approach it
+            - list [ref=f20e55]:
+              - listitem [ref=f20e56]: Ask PostgreSQL for its list of tables.
+              - listitem [ref=f20e57]: Remove system tables from pg_catalog and information_schema.
+              - listitem [ref=f20e58]: Sort the result so the schema is easy to scan.
+          - generic [ref=f20e59]:
+            - generic [ref=f20e60]: Common mistakes
+            - list [ref=f20e61]:
+              - listitem [ref=f20e62]: Starting with SELECT * from a guessed table name.
+              - listitem [ref=f20e63]: Ignoring schema names when a database has multiple schemas.
+              - listitem [ref=f20e64]: Treating the database like one giant table.
+          - generic [ref=f20e65]:
+            - generic [ref=f20e66]: Interview angle
+            - paragraph [ref=f20e67]: "In an interview, schema recon shows maturity: you learn the data shape before writing business logic."
+        - button "Hint" [ref=f20e68] [cursor=pointer]
+        - generic [ref=f20e69]:
+          - generic [ref=f20e70]:
+            - generic [ref=f20e71]: Your SQL
+            - generic [ref=f20e72]: chinook
+          - textbox "Your SQL" [ref=f20e73]:
+            - /placeholder: SELECT table_schema, table_name
+        - generic [ref=f20e74]:
+          - button "Run and check" [ref=f20e75] [cursor=pointer]
+          - button "Reveal model answer" [ref=f20e76] [cursor=pointer]
+          - button "Next step" [ref=f20e77] [cursor=pointer]
+        - generic [ref=f20e78]:
+          - strong [ref=f20e79]: Ready when you are.
+          - paragraph [ref=f20e80]: Write the query, run it, read the feedback, revise, then run it again.
+        - region "Query output and database reference" [ref=f20e81]:
+          - generic [ref=f20e82]:
+            - button "Query results" [ref=f20e83] [cursor=pointer]
+            - 'button "Database: chinook" [ref=f20e84] [cursor=pointer]'
+          - generic [ref=f20e86]:
+            - generic [ref=f20e87]:
+              - generic [ref=f20e88]:
+                - text: Current database
+                - heading "chinook" [level=3] [ref=f20e89]
+              - generic [ref=f20e90]:
+                - generic [ref=f20e91]: 11 tables
+                - generic [ref=f20e92]: 64 columns
+            - generic "chinook tables" [ref=f20e93]:
+              - button "album public · ~347 rows" [ref=f20e94] [cursor=pointer]:
+                - strong [ref=f20e95]: album
+                - generic [ref=f20e96]: public · ~347 rows
+              - button "artist public · ~275 rows" [ref=f20e97] [cursor=pointer]:
+                - strong [ref=f20e98]: artist
+                - generic [ref=f20e99]: public · ~275 rows
+              - button "customer public · ~59 rows" [ref=f20e100] [cursor=pointer]:
+                - strong [ref=f20e101]: customer
+                - generic [ref=f20e102]: public · ~59 rows
+              - button "employee public · ~-1 rows" [ref=f20e103] [cursor=pointer]:
+                - strong [ref=f20e104]: employee
+                - generic [ref=f20e105]: public · ~-1 rows
+              - button "genre public · ~-1 rows" [ref=f20e106] [cursor=pointer]:
+                - strong [ref=f20e107]: genre
+                - generic [ref=f20e108]: public · ~-1 rows
+              - button "invoice public · ~412 rows" [ref=f20e109] [cursor=pointer]:
+                - strong [ref=f20e110]: invoice
+                - generic [ref=f20e111]: public · ~412 rows
+              - button "invoice_line public · ~2240 rows" [ref=f20e112] [cursor=pointer]:
+                - strong [ref=f20e113]: invoice_line
+                - generic [ref=f20e114]: public · ~2240 rows
+              - button "media_type public · ~-1 rows" [ref=f20e115] [cursor=pointer]:
+                - strong [ref=f20e116]: media_type
+                - generic [ref=f20e117]: public · ~-1 rows
+              - button "playlist public · ~-1 rows" [ref=f20e118] [cursor=pointer]:
+                - strong [ref=f20e119]: playlist
+                - generic [ref=f20e120]: public · ~-1 rows
+              - button "playlist_track public · ~8715 rows" [ref=f20e121] [cursor=pointer]:
+                - strong [ref=f20e122]: playlist_track
+                - generic [ref=f20e123]: public · ~8715 rows
+              - button "track public · ~3503 rows" [ref=f20e124] [cursor=pointer]:
+                - strong [ref=f20e125]: track
+                - generic [ref=f20e126]: public · ~3503 rows
+            - generic [ref=f20e127]:
+              - region "album columns" [ref=f20e128]:
+                - generic [ref=f20e129]:
+                  - generic [ref=f20e130]: Columns
+                  - heading "public.album" [level=4] [ref=f20e131]
+                - generic [ref=f20e132]:
+                  - generic [ref=f20e133]:
+                    - generic [ref=f20e134]:
+                      - strong [ref=f20e135]: album_id
+                      - generic [ref=f20e136]: integer · required
+                    - emphasis [ref=f20e138]: PK
+                  - generic [ref=f20e140]:
+                    - strong [ref=f20e141]: title
+                    - generic [ref=f20e142]: character varying(160) · required
+                  - generic [ref=f20e143]:
+                    - generic [ref=f20e144]:
+                      - strong [ref=f20e145]: artist_id
+                      - generic [ref=f20e146]: integer · required
+                    - emphasis [ref=f20e148]: FK artist.artist_id
+              - region "album sample rows" [ref=f20e149]:
+                - generic [ref=f20e150]:
+                  - generic [ref=f20e151]: Sample rows
+                  - heading "album" [level=4] [ref=f20e152]
+                - table [ref=f20e153]:
+                  - rowgroup [ref=f20e154]:
+                    - row "album_id title artist_id" [ref=f20e155]:
+                      - columnheader "album_id" [ref=f20e156]
+                      - columnheader "title" [ref=f20e157]
+                      - columnheader "artist_id" [ref=f20e158]
+                  - rowgroup [ref=f20e159]:
+                    - row "1 For Those About To Rock We Salute You 1" [ref=f20e160]:
+                      - cell "1" [ref=f20e161]
+                      - cell "For Those About To Rock We Salute You" [ref=f20e162]
+                      - cell "1" [ref=f20e163]
+                    - row "2 Balls to the Wall 2" [ref=f20e164]:
+                      - cell "2" [ref=f20e165]
+                      - cell "Balls to the Wall" [ref=f20e166]
+                      - cell "2" [ref=f20e167]
+                    - row "3 Restless and Wild 2" [ref=f20e168]:
+                      - cell "3" [ref=f20e169]
+                      - cell "Restless and Wild" [ref=f20e170]
+                      - cell "2" [ref=f20e171]
+                    - row "4 Let There Be Rock 1" [ref=f20e172]:
+                      - cell "4" [ref=f20e173]
+                      - cell "Let There Be Rock" [ref=f20e174]
+                      - cell "1" [ref=f20e175]
+                    - row "5 Big Ones 3" [ref=f20e176]:
+                      - cell "5" [ref=f20e177]
+                      - cell "Big Ones" [ref=f20e178]
+                      - cell "3" [ref=f20e179]
+                    - row "6 Jagged Little Pill 4" [ref=f20e180]:
+                      - cell "6" [ref=f20e181]
+                      - cell "Jagged Little Pill" [ref=f20e182]
+                      - cell "4" [ref=f20e183]
+                    - row "7 Facelift 5" [ref=f20e184]:
+                      - cell "7" [ref=f20e185]
+                      - cell "Facelift" [ref=f20e186]
+                      - cell "5" [ref=f20e187]
+                    - row "8 Warner 25 Anos 6" [ref=f20e188]:
+                      - cell "8" [ref=f20e189]
+                      - cell "Warner 25 Anos" [ref=f20e190]
+                      - cell "6" [ref=f20e191]
+                    - row "9 Plays Metallica By Four Cellos 7" [ref=f20e192]:
+                      - cell "9" [ref=f20e193]
+                      - cell "Plays Metallica By Four Cellos" [ref=f20e194]
+                      - cell "7" [ref=f20e195]
+                    - row "10 Audioslave 8" [ref=f20e196]:
+                      - cell "10" [ref=f20e197]
+                      - cell "Audioslave" [ref=f20e198]
+                      - cell "8" [ref=f20e199]
+                    - row "11 Out Of Exile 8" [ref=f20e200]:
+                      - cell "11" [ref=f20e201]
+                      - cell "Out Of Exile" [ref=f20e202]
+                      - cell "8" [ref=f20e203]
+                    - row "12 BackBeat Soundtrack 9" [ref=f20e204]:
+                      - cell "12" [ref=f20e205]
+                      - cell "BackBeat Soundtrack" [ref=f20e206]
+                      - cell "9" [ref=f20e207]
+                    - row "13 The Best Of Billy Cobham 10" [ref=f20e208]:
+                      - cell "13" [ref=f20e209]
+                      - cell "The Best Of Billy Cobham" [ref=f20e210]
+                      - cell "10" [ref=f20e211]
+                    - row "14 Alcohol Fueled Brewtality Live! [Disc 1] 11" [ref=f20e212]:
+                      - cell "14" [ref=f20e213]
+                      - cell "Alcohol Fueled Brewtality Live! [Disc 1]" [ref=f20e214]
+                      - cell "11" [ref=f20e215]
+                    - row "15 Alcohol Fueled Brewtality Live! [Disc 2] 11" [ref=f20e216]:
+                      - cell "15" [ref=f20e217]
+                      - cell "Alcohol Fueled Brewtality Live! [Disc 2]" [ref=f20e218]
+                      - cell "11" [ref=f20e219]
+                    - row "16 Black Sabbath 12" [ref=f20e220]:
+                      - cell "16" [ref=f20e221]
+                      - cell "Black Sabbath" [ref=f20e222]
+                      - cell "12" [ref=f20e223]
+                    - row "17 Black Sabbath Vol. 4 (Remaster) 12" [ref=f20e224]:
+                      - cell "17" [ref=f20e225]
+                      - cell "Black Sabbath Vol. 4 (Remaster)" [ref=f20e226]
+                      - cell "12" [ref=f20e227]
+                    - row "18 Body Count 13" [ref=f20e228]:
+                      - cell "18" [ref=f20e229]
+                      - cell "Body Count" [ref=f20e230]
+                      - cell "13" [ref=f20e231]
+                    - row "19 Chemical Wedding 14" [ref=f20e232]:
+                      - cell "19" [ref=f20e233]
+                      - cell "Chemical Wedding" [ref=f20e234]
+                      - cell "14" [ref=f20e235]
+                    - row "20 The Best Of Buddy Guy - The Millenium Collection 15" [ref=f20e236]:
+                      - cell "20" [ref=f20e237]
+                      - cell "The Best Of Buddy Guy - The Millenium Collection" [ref=f20e238]
+                      - cell "15" [ref=f20e239]

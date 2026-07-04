@@ -1,0 +1,88 @@
+- generic [ref=f23e2]:
+  - complementary [ref=f23e3]:
+    - generic [ref=f23e4]:
+      - generic [ref=f23e5]: SQL Mastery Path
+      - strong [ref=f23e6]: Analyst cockpit
+      - emphasis [ref=f23e7]: 36 weeks. Local data. Interview proof.
+    - navigation [ref=f23e8]:
+      - button "Dashboard" [ref=f23e9] [cursor=pointer]
+      - button "Today's session" [ref=f23e10] [cursor=pointer]
+      - link "Reference lessons" [ref=f23e11] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=f23e12]:
+      - generic [ref=f23e13]: Course progress
+      - generic [ref=f23e14]: 0%
+  - main [ref=f23e16]:
+    - generic [ref=f23e17]:
+      - generic [ref=f23e18]:
+        - text: Active session
+        - 'heading "Know Your Schemas: first pass" [level=1] [ref=f23e19]'
+        - paragraph [ref=f23e20]: Week 1, session 1. Complete the graded attempt, then rerun it cold before moving on.
+      - generic [ref=f23e21]:
+        - button "Dashboard" [ref=f23e22] [cursor=pointer]
+        - link "Open source lesson" [ref=f23e23] [cursor=pointer]:
+          - /url: index.html
+    - generic [ref=f23e24]:
+      - complementary [ref=f23e25]:
+        - button "Zero SQL 1 Complete Know Your Schemas - chinook" [ref=f23e26] [cursor=pointer]:
+          - strong [ref=f23e27]: Zero SQL 1 Complete
+          - generic [ref=f23e28]: Know Your Schemas - chinook
+      - article [ref=f23e29]:
+        - generic [ref=f23e30]:
+          - generic [ref=f23e31]: Orient
+          - generic [ref=f23e32]: Know Your Schemas
+          - generic [ref=f23e33]: absolute beginner
+          - generic [ref=f23e34]: graded
+        - heading "Zero SQL 1" [level=2] [ref=f23e35]
+        - generic [ref=f23e36]:
+          - generic [ref=f23e37]: "Database: chinook"
+          - generic [ref=f23e38]: Session 1 of 144
+        - paragraph [ref=f23e39]: What is a database? List the user tables in Chinook so you can see what raw material SQL can query.
+        - region "Lesson brief" [ref=f23e40]:
+          - generic [ref=f23e41]:
+            - generic [ref=f23e42]: What you are learning
+            - paragraph [ref=f23e43]: A database is a collection of related tables. A table is rows and columns stored so you can ask precise questions.
+          - generic [ref=f23e44]:
+            - generic [ref=f23e45]: Why it matters
+            - paragraph [ref=f23e46]: Before you write SQL, you need to know what tables exist. Senior analysts do not guess; they inspect.
+          - generic [ref=f23e47]:
+            - generic [ref=f23e48]: Mental model
+            - paragraph [ref=f23e49]: Think of the database as a workbook, each table as a spreadsheet tab, each row as a record, and each column as one attribute.
+          - generic [ref=f23e50]:
+            - generic [ref=f23e51]: Worked example
+            - paragraph [ref=f23e52]: To inspect tables, query information_schema.tables and exclude PostgreSQL system schemas.
+          - generic [ref=f23e53]:
+            - generic [ref=f23e54]: How to approach it
+            - list [ref=f23e55]:
+              - listitem [ref=f23e56]: Ask PostgreSQL for its list of tables.
+              - listitem [ref=f23e57]: Remove system tables from pg_catalog and information_schema.
+              - listitem [ref=f23e58]: Sort the result so the schema is easy to scan.
+          - generic [ref=f23e59]:
+            - generic [ref=f23e60]: Common mistakes
+            - list [ref=f23e61]:
+              - listitem [ref=f23e62]: Starting with SELECT * from a guessed table name.
+              - listitem [ref=f23e63]: Ignoring schema names when a database has multiple schemas.
+              - listitem [ref=f23e64]: Treating the database like one giant table.
+          - generic [ref=f23e65]:
+            - generic [ref=f23e66]: Interview angle
+            - paragraph [ref=f23e67]: "In an interview, schema recon shows maturity: you learn the data shape before writing business logic."
+        - button "Hint" [ref=f23e68] [cursor=pointer]
+        - generic [ref=f23e69]:
+          - generic [ref=f23e70]:
+            - generic [ref=f23e71]: Your SQL
+            - generic [ref=f23e72]: chinook
+          - textbox "Your SQL" [ref=f23e73]:
+            - /placeholder: SELECT table_schema, table_name
+            - text: SELECT table_schema, table_name FROM information_schema.tables WHERE table_schema NOT IN ('pg_catalog', 'information_schema') AND table_type = 'BASE TABLE' ORDER BY table_schema, table_name;
+        - generic [ref=f23e74]:
+          - button "Run and check" [ref=f23e75] [cursor=pointer]
+          - button "Reveal model answer" [ref=f23e76] [cursor=pointer]
+          - button "Next step" [ref=f23e77] [cursor=pointer]
+        - generic [ref=f23e78]:
+          - strong [ref=f23e79]: Ready when you are.
+          - paragraph [ref=f23e80]: Write the query, run it, read the feedback, revise, then run it again.
+        - region "Query output and database reference" [ref=f23e81]:
+          - generic [ref=f23e82]:
+            - button "Query results" [ref=f23e83] [cursor=pointer]
+            - 'button "Database: chinook" [ref=f23e84] [cursor=pointer]'
+          - generic [ref=f23e87]: Run your SQL to see rows, columns, and checker output here.

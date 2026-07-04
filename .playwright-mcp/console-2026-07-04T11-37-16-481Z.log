@@ -1,0 +1,3 @@
+[      36ms] TypeError: Cannot read properties of undefined (reading 'sourceFile')
+    at renderSession (http://127.0.0.1:3000/app.js:228:61)
+    at render (http://127.0.0.1:3000/app.js:106:43)

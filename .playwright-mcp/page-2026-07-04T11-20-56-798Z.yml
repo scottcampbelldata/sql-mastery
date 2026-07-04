@@ -1,0 +1,202 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: SQL Mastery Path
+      - strong [ref=e6]: Analyst training cockpit
+      - emphasis [ref=e7]: 16 weeks. Real data. Graded SQL.
+    - navigation [ref=e8]:
+      - button "Dashboard" [ref=e9] [cursor=pointer]
+      - button "Today's session" [ref=e10] [cursor=pointer]
+      - link "Reference lessons" [ref=e11] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=e12]:
+      - generic [ref=e13]: Course progress
+      - generic [ref=e14]: 0%
+  - main [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - heading "Beginner to expert SQL, paced like a real course" [level=1] [ref=e19]
+        - paragraph [ref=e20]: 4 sessions per week, 35-45 minutes per session
+      - generic [ref=e21]:
+        - button "Reset progress" [ref=e22] [cursor=pointer]
+        - button "Continue" [ref=e23] [cursor=pointer]
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - text: Commercial course mode
+        - heading "A 16-week guided SQL training product built on your real PostgreSQL databases." [level=2] [ref=e26]
+        - paragraph [ref=e27]: Work one session at a time. Every checkable exercise runs against your local PostgreSQL data and grades the result, not just the text you typed.
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - strong [ref=e30]: "16"
+            - generic [ref=e31]: weeks
+          - generic [ref=e32]:
+            - strong [ref=e33]: "64"
+            - generic [ref=e34]: sessions
+          - generic [ref=e35]:
+            - strong [ref=e36]: "215"
+            - generic [ref=e37]: exercises
+          - generic [ref=e38]:
+            - strong [ref=e39]: 645+
+            - generic [ref=e40]: attempts
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: Week 1
+          - generic [ref=e44]: 35 min
+          - generic [ref=e45]: 0 / 3 solved
+        - 'heading "Fundamentals: first pass" [level=3] [ref=e46]'
+        - paragraph [ref=e47]: Complete 3 graded attempts and repair every miss before moving on.
+        - button "Start session" [ref=e48] [cursor=pointer]
+    - generic [ref=e49]:
+      - heading "16-week mastery map" [level=3] [ref=e50]
+      - generic [ref=e51]:
+        - button "Week 1 Schema recon and first selects Read unfamiliar databases before writing serious SQL." [ref=e52] [cursor=pointer]:
+          - text: Week 1
+          - heading "Schema recon and first selects" [level=3] [ref=e53]
+          - paragraph [ref=e54]: Read unfamiliar databases before writing serious SQL.
+        - button "Week 2 Fundamentals fluency Filter, sort, limit, and reason about NULL without hesitation." [ref=e56] [cursor=pointer]:
+          - text: Week 2
+          - heading "Fundamentals fluency" [level=3] [ref=e57]
+          - paragraph [ref=e58]: Filter, sort, limit, and reason about NULL without hesitation.
+        - button "Week 3 Aggregation foundations Collapse rows into business metrics with confidence." [ref=e60] [cursor=pointer]:
+          - text: Week 3
+          - heading "Aggregation foundations" [level=3] [ref=e61]
+          - paragraph [ref=e62]: Collapse rows into business metrics with confidence.
+        - button "Week 4 Aggregation under pressure Use HAVING, buckets, ratios, and sanity checks." [ref=e64] [cursor=pointer]:
+          - text: Week 4
+          - heading "Aggregation under pressure" [level=3] [ref=e65]
+          - paragraph [ref=e66]: Use HAVING, buckets, ratios, and sanity checks.
+        - button "Week 5 Join mechanics Combine tables while controlling grain and fan-out." [ref=e68] [cursor=pointer]:
+          - text: Week 5
+          - heading "Join mechanics" [level=3] [ref=e69]
+          - paragraph [ref=e70]: Combine tables while controlling grain and fan-out.
+        - button "Week 6 Join judgment Use outer joins, anti-joins, and self-joins deliberately." [ref=e72] [cursor=pointer]:
+          - text: Week 6
+          - heading "Join judgment" [level=3] [ref=e73]
+          - paragraph [ref=e74]: Use outer joins, anti-joins, and self-joins deliberately.
+        - button "Week 7 Data transformation Clean, cast, bucket, and format data for analysis." [ref=e76] [cursor=pointer]:
+          - text: Week 7
+          - heading "Data transformation" [level=3] [ref=e77]
+          - paragraph [ref=e78]: Clean, cast, bucket, and format data for analysis.
+        - button "Week 8 Date and text work Handle real-world timestamps, strings, and messy values." [ref=e80] [cursor=pointer]:
+          - text: Week 8
+          - heading "Date and text work" [level=3] [ref=e81]
+          - paragraph [ref=e82]: Handle real-world timestamps, strings, and messy values.
+        - button "Week 9 Subquery thinking Break multi-step questions into testable pieces." [ref=e84] [cursor=pointer]:
+          - text: Week 9
+          - heading "Subquery thinking" [level=3] [ref=e85]
+          - paragraph [ref=e86]: Break multi-step questions into testable pieces.
+        - button "Week 10 CTE composition Write readable multi-stage SQL and recursive patterns." [ref=e88] [cursor=pointer]:
+          - text: Week 10
+          - heading "CTE composition" [level=3] [ref=e89]
+          - paragraph [ref=e90]: Write readable multi-stage SQL and recursive patterns.
+        - button "Week 11 Window foundations Rank, lag, lead, and calculate running values." [ref=e92] [cursor=pointer]:
+          - text: Week 11
+          - heading "Window foundations" [level=3] [ref=e93]
+          - paragraph [ref=e94]: Rank, lag, lead, and calculate running values.
+        - button "Week 12 Window mastery Use frames and partitions in interview-grade problems." [ref=e96] [cursor=pointer]:
+          - text: Week 12
+          - heading "Window mastery" [level=3] [ref=e97]
+          - paragraph [ref=e98]: Use frames and partitions in interview-grade problems.
+        - button "Week 13 Business patterns Recognize retention, growth, dedup, and gaps-and-islands shapes." [ref=e100] [cursor=pointer]:
+          - text: Week 13
+          - heading "Business patterns" [level=3] [ref=e101]
+          - paragraph [ref=e102]: Recognize retention, growth, dedup, and gaps-and-islands shapes.
+        - button "Week 14 Advanced interview patterns Combine patterns into complete analyst answers." [ref=e104] [cursor=pointer]:
+          - text: Week 14
+          - heading "Advanced interview patterns" [level=3] [ref=e105]
+          - paragraph [ref=e106]: Combine patterns into complete analyst answers.
+        - button "Week 15 Performance and proof Read plans, test indexes, and explain tradeoffs." [ref=e108] [cursor=pointer]:
+          - text: Week 15
+          - heading "Performance and proof" [level=3] [ref=e109]
+          - paragraph [ref=e110]: Read plans, test indexes, and explain tradeoffs.
+        - button "Week 16 Mock interview readiness Run timed simulations and repair weak spots." [ref=e112] [cursor=pointer]:
+          - text: Week 16
+          - heading "Mock interview readiness" [level=3] [ref=e113]
+          - paragraph [ref=e114]: Run timed simulations and repair weak spots.
+    - generic [ref=e116]:
+      - heading "Session queue" [level=3] [ref=e117]
+      - generic [ref=e118]:
+        - 'button "Week 1.1 35 min 0/0 Know Your Schemas: first pass Complete the graded attempt, then rerun it cold before moving on." [ref=e119] [cursor=pointer]':
+          - generic [ref=e120]:
+            - generic [ref=e121]: Week 1.1
+            - generic [ref=e122]: 35 min
+            - generic [ref=e123]: 0/0
+          - 'heading "Know Your Schemas: first pass" [level=3] [ref=e124]'
+          - paragraph [ref=e125]: Complete the graded attempt, then rerun it cold before moving on.
+        - 'button "Week 1.2 35 min 0/0 Know Your Schemas: review and proof Complete the graded attempt, then rerun it cold before moving on." [ref=e126] [cursor=pointer]':
+          - generic [ref=e127]:
+            - generic [ref=e128]: Week 1.2
+            - generic [ref=e129]: 35 min
+            - generic [ref=e130]: 0/0
+          - 'heading "Know Your Schemas: review and proof" [level=3] [ref=e131]'
+          - paragraph [ref=e132]: Complete the graded attempt, then rerun it cold before moving on.
+        - 'button "Week 1.3 35 min 0/3 Fundamentals: first pass Complete 3 graded attempts and repair every miss before moving on." [ref=e133] [cursor=pointer]':
+          - generic [ref=e134]:
+            - generic [ref=e135]: Week 1.3
+            - generic [ref=e136]: 35 min
+            - generic [ref=e137]: 0/3
+          - 'heading "Fundamentals: first pass" [level=3] [ref=e138]'
+          - paragraph [ref=e139]: Complete 3 graded attempts and repair every miss before moving on.
+        - 'button "Week 1.4 35 min 0/4 Fundamentals: session 2 Complete 4 graded attempts and repair every miss before moving on." [ref=e140] [cursor=pointer]':
+          - generic [ref=e141]:
+            - generic [ref=e142]: Week 1.4
+            - generic [ref=e143]: 35 min
+            - generic [ref=e144]: 0/4
+          - 'heading "Fundamentals: session 2" [level=3] [ref=e145]'
+          - paragraph [ref=e146]: Complete 4 graded attempts and repair every miss before moving on.
+        - 'button "Week 2.1 35 min 0/3 Fundamentals: session 3 Complete 3 graded attempts and repair every miss before moving on." [ref=e147] [cursor=pointer]':
+          - generic [ref=e148]:
+            - generic [ref=e149]: Week 2.1
+            - generic [ref=e150]: 35 min
+            - generic [ref=e151]: 0/3
+          - 'heading "Fundamentals: session 3" [level=3] [ref=e152]'
+          - paragraph [ref=e153]: Complete 3 graded attempts and repair every miss before moving on.
+        - 'button "Week 2.2 35 min 0/4 Fundamentals: session 4 Complete 4 graded attempts and repair every miss before moving on." [ref=e154] [cursor=pointer]':
+          - generic [ref=e155]:
+            - generic [ref=e156]: Week 2.2
+            - generic [ref=e157]: 35 min
+            - generic [ref=e158]: 0/4
+          - 'heading "Fundamentals: session 4" [level=3] [ref=e159]'
+          - paragraph [ref=e160]: Complete 4 graded attempts and repair every miss before moving on.
+        - 'button "Week 2.3 35 min 0/3 Fundamentals: session 5 Complete 3 graded attempts and repair every miss before moving on." [ref=e161] [cursor=pointer]':
+          - generic [ref=e162]:
+            - generic [ref=e163]: Week 2.3
+            - generic [ref=e164]: 35 min
+            - generic [ref=e165]: 0/3
+          - 'heading "Fundamentals: session 5" [level=3] [ref=e166]'
+          - paragraph [ref=e167]: Complete 3 graded attempts and repair every miss before moving on.
+        - 'button "Week 2.4 35 min 0/4 Fundamentals: review and proof Complete 4 graded attempts and repair every miss before moving on." [ref=e168] [cursor=pointer]':
+          - generic [ref=e169]:
+            - generic [ref=e170]: Week 2.4
+            - generic [ref=e171]: 35 min
+            - generic [ref=e172]: 0/4
+          - 'heading "Fundamentals: review and proof" [level=3] [ref=e173]'
+          - paragraph [ref=e174]: Complete 4 graded attempts and repair every miss before moving on.
+        - 'button "Week 3.1 35 min 0/5 Aggregation: first pass Complete 5 graded attempts and repair every miss before moving on." [ref=e175] [cursor=pointer]':
+          - generic [ref=e176]:
+            - generic [ref=e177]: Week 3.1
+            - generic [ref=e178]: 35 min
+            - generic [ref=e179]: 0/5
+          - 'heading "Aggregation: first pass" [level=3] [ref=e180]'
+          - paragraph [ref=e181]: Complete 5 graded attempts and repair every miss before moving on.
+        - 'button "Week 3.2 35 min 0/5 Aggregation: session 2 Complete 5 graded attempts and repair every miss before moving on." [ref=e182] [cursor=pointer]':
+          - generic [ref=e183]:
+            - generic [ref=e184]: Week 3.2
+            - generic [ref=e185]: 35 min
+            - generic [ref=e186]: 0/5
+          - 'heading "Aggregation: session 2" [level=3] [ref=e187]'
+          - paragraph [ref=e188]: Complete 5 graded attempts and repair every miss before moving on.
+        - 'button "Week 3.3 35 min 0/5 Aggregation: session 3 Complete 5 graded attempts and repair every miss before moving on." [ref=e189] [cursor=pointer]':
+          - generic [ref=e190]:
+            - generic [ref=e191]: Week 3.3
+            - generic [ref=e192]: 35 min
+            - generic [ref=e193]: 0/5
+          - 'heading "Aggregation: session 3" [level=3] [ref=e194]'
+          - paragraph [ref=e195]: Complete 5 graded attempts and repair every miss before moving on.
+        - 'button "Week 3.4 35 min 0/6 Aggregation: session 4 Complete 6 graded attempts and repair every miss before moving on." [ref=e196] [cursor=pointer]':
+          - generic [ref=e197]:
+            - generic [ref=e198]: Week 3.4
+            - generic [ref=e199]: 35 min
+            - generic [ref=e200]: 0/6
+          - 'heading "Aggregation: session 4" [level=3] [ref=e201]'
+          - paragraph [ref=e202]: Complete 6 graded attempts and repair every miss before moving on.

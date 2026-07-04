@@ -1,0 +1,60 @@
+- generic [ref=f5e2]:
+  - complementary [ref=f5e229]:
+    - generic [ref=f5e230]:
+      - generic [ref=f5e231]: SQL Mastery Path
+      - strong [ref=f5e232]: Analyst cockpit
+      - emphasis [ref=f5e233]: 16 weeks. Local data. Interview proof.
+    - navigation [ref=f5e234]:
+      - button "Dashboard" [ref=f5e235] [cursor=pointer]
+      - button "Today's session" [ref=f5e236] [cursor=pointer]
+      - link "Reference lessons" [ref=f5e237] [cursor=pointer]:
+        - /url: m1-fundamentals.html
+    - generic [ref=f5e238]:
+      - generic [ref=f5e239]: Course progress
+      - generic [ref=f5e240]: 0%
+  - main [ref=f5e242]:
+    - generic [ref=f5e243]:
+      - generic [ref=f5e244]:
+        - text: Active session
+        - 'heading "Fundamentals: first pass" [level=1] [ref=f5e245]'
+        - paragraph [ref=f5e246]: Week 1, session 3. Complete 3 graded attempts and repair every miss before moving on.
+      - generic [ref=f5e247]:
+        - button "Dashboard" [ref=f5e248] [cursor=pointer]
+        - link "Open source lesson" [ref=f5e249] [cursor=pointer]:
+          - /url: m1-fundamentals.html
+    - generic [ref=f5e250]:
+      - complementary [ref=f5e251]:
+        - button "P1.1 Fundamentals - chinook" [ref=f5e252] [cursor=pointer]:
+          - strong [ref=f5e253]: P1.1
+          - generic [ref=f5e254]: Fundamentals - chinook
+        - button "P1.2 Fundamentals - northwind" [ref=f5e255] [cursor=pointer]:
+          - strong [ref=f5e256]: P1.2
+          - generic [ref=f5e257]: Fundamentals - northwind
+        - button "P1.3 Fundamentals - northwind" [ref=f5e258] [cursor=pointer]:
+          - strong [ref=f5e259]: P1.3
+          - generic [ref=f5e260]: Fundamentals - northwind
+      - article [ref=f5e261]:
+        - generic [ref=f5e262]:
+          - generic [ref=f5e263]: Foundations
+          - generic [ref=f5e264]: Fundamentals
+          - generic [ref=f5e265]: warmup
+          - generic [ref=f5e266]: graded
+        - heading "P1.1" [level=2] [ref=f5e267]
+        - generic [ref=f5e268]:
+          - generic [ref=f5e269]: "Database: chinook"
+          - generic [ref=f5e270]: Session 3 of 64
+        - paragraph [ref=f5e271]: List the 15 longest tracks. Show the track name, its length in whole minutes (rounded to 1 decimal), and its unit price. Longest first.
+        - button "Hint" [ref=f5e272] [cursor=pointer]
+        - generic [ref=f5e273]:
+          - generic [ref=f5e274]:
+            - generic [ref=f5e275]: Your SQL
+            - generic [ref=f5e276]: chinook
+          - textbox "Your SQL" [ref=f5e277]:
+            - /placeholder: SELECT name,
+        - generic [ref=f5e278]:
+          - button "Run and check" [ref=f5e279] [cursor=pointer]
+          - button "Reveal model answer" [ref=f5e280] [cursor=pointer]
+          - button "Next step" [ref=f5e281] [cursor=pointer]
+        - generic [ref=f5e282]:
+          - strong [ref=f5e283]: Ready when you are.
+          - paragraph [ref=f5e284]: Write the query, run it, read the feedback, revise, then run it again.
