@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCurriculum } from '../../state/CurriculumContext.jsx';
 import { api } from '../../lib/api.js';
@@ -8,6 +8,9 @@ import { Button, Pill, Callout } from '../../components/ui.jsx';
 import { SqlEditor } from '../../components/SqlEditor.jsx';
 import { LearnAccordion } from './LearnAccordion.jsx';
 import { OutputDock } from './OutputDock.jsx';
+
+const isMac = navigator.platform.toUpperCase().includes('MAC');
+const FEEDBACK_TONE = { ok: 'tip', err: 'warn', warn: 'caution' }; // anything else → default info
 
 export function Workbench({ exercise, session, nextTarget }) {
   const { progress, updateProgress } = useCurriculum();
@@ -21,12 +24,34 @@ export function Workbench({ exercise, session, nextTarget }) {
   const attempted = Boolean(progress.attempts[exercise.id] || progress.completed[exercise.id]);
   const done = Boolean(progress.completed[exercise.id]);
 
+  /* Persist SQL with a debounce: setSql updates the editor immediately, but writing to
+     the progress store (localStorage + a re-render of every context consumer) waits
+     ~400ms after the last keystroke. Pending text is flushed before a check runs and
+     on unmount so nothing is lost. */
+  const persistTimer = useRef(null);
+  const pendingSql = useRef(null);
+
+  function flushPendingSql() {
+    if (persistTimer.current) { clearTimeout(persistTimer.current); persistTimer.current = null; }
+    if (pendingSql.current === null) return;
+    const value = pendingSql.current;
+    pendingSql.current = null;
+    updateProgress((p) => { p.lastSql[exercise.id] = value; });
+  }
+  const flushRef = useRef(flushPendingSql);
+  flushRef.current = flushPendingSql;
+  useEffect(() => () => flushRef.current(), []); // flush on unmount
+
   function persistSql(value) {
     setSql(value);
-    updateProgress((p) => { p.lastSql[exercise.id] = value; });
+    pendingSql.current = value;
+    if (persistTimer.current) clearTimeout(persistTimer.current);
+    persistTimer.current = setTimeout(() => { persistTimer.current = null; flushPendingSql(); }, 400);
   }
 
   async function runCheck() {
+    if (checking || !exercise.checkable) return;
+    flushPendingSql(); // persist the current editor value synchronously before posting
     const trimmed = sql.trim();
     if (!trimmed) {
       setFeedback({ tone: 'warn', title: 'Type a query first', message: 'Use the task statement to decide your SELECT, FROM, filters, sort, and limit.' });
@@ -49,6 +74,7 @@ export function Workbench({ exercise, session, nextTarget }) {
         });
       }
     } catch (error) {
+      setResult(null);
       setFeedback({ tone: 'err', title: 'The checker could not run', message: `${error.message}${error.hint ? ` — ${error.hint}` : ''}` });
     } finally {
       setChecking(false);
@@ -72,18 +98,20 @@ export function Workbench({ exercise, session, nextTarget }) {
         placeholder={(exercise.expectedSql || '').split('\n')[0] || 'SELECT ...'} />
       <div className="wb-actions">
         <Button variant="primary" onClick={runCheck} disabled={!exercise.checkable || checking}>
-          {checking ? 'Checking…' : 'Run & check  ⌘⏎'}
+          {checking ? 'Checking…' : `Run & check  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
         </Button>
         {exercise.hint ? <Button onClick={() => setHintShown(true)} disabled={hintShown}>Hint</Button> : null}
         <Button onClick={() => setAnswerOpen(!answerOpen)}>{answerOpen ? 'Hide answer' : 'Reveal answer'}</Button>
         {nextTarget ? <Link to={nextTarget.to} className="btn btn-secondary wb-next">{nextTarget.label} →</Link> : null}
       </div>
       {hintShown && exercise.hint ? <Callout tone="tip" title="Hint">{exercise.hint}</Callout> : null}
-      {feedback ? (
-        <Callout tone={feedback.tone === 'ok' ? 'tip' : feedback.tone === 'err' ? 'warn' : 'info'} title={feedback.title}>
-          {feedback.message}
-        </Callout>
-      ) : null}
+      <div role="status" aria-live="polite">
+        {feedback ? (
+          <Callout tone={FEEDBACK_TONE[feedback.tone] || 'info'} title={feedback.title}>
+            {feedback.message}
+          </Callout>
+        ) : null}
+      </div>
       {answerOpen ? <pre className="answer">{exercise.expectedSql || exercise.solutionNote || 'This exercise is manually reviewed.'}</pre> : null}
       <OutputDock exercise={exercise} result={result} />
     </article>
