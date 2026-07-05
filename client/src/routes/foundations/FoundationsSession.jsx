@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { AppShell } from '../../components/AppShell.jsx';
 import { EmptyState, Button } from '../../components/ui.jsx';
 import { useFoundations } from '../../state/FoundationsContext.jsx';
@@ -25,8 +25,10 @@ export default function FoundationsSession() {
   const [finished, setFinished] = useState(false);
 
   if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading…" /></AppShell>;
-  if (plan.main.kind === 'checkpoint') { navigate(`/learn/checkpoint/${plan.main.checkpoint.id}`, { replace: true }); return null; }
-  if (plan.main.kind === 'graduated') { navigate('/learn', { replace: true }); return null; }
+  // Declarative redirects (safe during render) for the boundary cases: a checkpoint is due,
+  // or the learner has graduated and has no lesson queued.
+  if (plan.main.kind === 'checkpoint') return <Navigate to={`/learn/checkpoint/${plan.main.checkpoint.id}`} replace />;
+  if (plan.main.kind === 'graduated') return <Navigate to="/learn" replace />;
 
   function completeSession() {
     update((s) => advanceSession(s));
