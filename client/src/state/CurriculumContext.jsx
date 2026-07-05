@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import { api } from '../lib/api.js';
-import { loadProgress, saveProgress, ACTIVE_SESSION_KEY } from '../lib/progress.js';
+import { loadProgress, saveProgress, safeGet, safeSet, ACTIVE_SESSION_KEY } from '../lib/progress.js';
 
 const Ctx = createContext(null);
 export const useCurriculum = () => useContext(Ctx);
@@ -9,7 +9,7 @@ export function CurriculumProvider({ children }) {
   const [curriculum, setCurriculum] = useState(null);
   const [error, setError] = useState('');
   const [progress, setProgress] = useState(loadProgress);
-  const [activeSessionId, setActiveSessionIdState] = useState(() => localStorage.getItem(ACTIVE_SESSION_KEY) || '');
+  const [activeSessionId, setActiveSessionIdState] = useState(() => safeGet(ACTIVE_SESSION_KEY) || '');
 
   useEffect(() => {
     let cancelled = false;
@@ -30,7 +30,7 @@ export function CurriculumProvider({ children }) {
   }, []);
 
   const setActiveSessionId = useCallback((id) => {
-    localStorage.setItem(ACTIVE_SESSION_KEY, id);
+    safeSet(ACTIVE_SESSION_KEY, id);
     setActiveSessionIdState(id);
   }, []);
 
