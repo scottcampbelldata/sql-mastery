@@ -7,7 +7,6 @@ function createApp(options = {}) {
   const app = express();
   const queryService = options.queryService || createQueryService();
   const curriculumService = options.curriculumService || { buildCurriculum };
-  const staticDir = options.staticDir || path.join(__dirname, '..');
   const contentDir = options.contentDir || path.join(__dirname, '..', 'content');
   const clientDir = options.clientDir || path.join(__dirname, '..', 'client', 'dist');
 
@@ -108,10 +107,6 @@ function createApp(options = {}) {
   app.use(express.static(clientDir));
 
   app.use(express.static(contentDir, {
-    extensions: ['html']
-  }));
-
-  app.use(express.static(staticDir, {
     extensions: ['html']
   }));
 
