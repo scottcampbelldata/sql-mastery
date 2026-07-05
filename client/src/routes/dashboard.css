@@ -1,4 +1,17 @@
 .kicker { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); }
+
+.welcome-card { margin-bottom: var(--s-4); border-color: var(--line-strong); }
+.welcome-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; }
+.welcome-head h2 { font-size: var(--text-lg); }
+.welcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-top: var(--s-3); }
+.welcome-grid strong { display: block; color: var(--ink-strong); margin-bottom: var(--s-1); }
+.welcome-grid p { margin: 0; font-size: var(--text-sm); color: var(--ink-dim); }
+.welcome-num {
+  display: inline-grid; place-items: center; width: 22px; height: 22px; margin-bottom: var(--s-2);
+  border-radius: 50%; background: var(--brand-soft); color: var(--brand);
+  font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600;
+}
+@media (max-width: 860px) { .welcome-grid { grid-template-columns: 1fr; gap: var(--s-4); } }
 .continue-card { display: grid; grid-template-columns: 1fr 280px; gap: var(--s-6); padding: var(--s-6); }
 .continue-copy h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-2); }
 .continue-copy .goal { color: var(--ink-dim); max-width: 60ch; margin-bottom: var(--s-4); }
