@@ -12,8 +12,8 @@ export function OutputDock({ exercise, result }) {
   return (
     <section className="dock">
       <Tabs active={tab} onChange={setTab} tabs={[
-        { id: 'results', label: 'Results' },
-        { id: 'schema', label: hasDb ? `Schema · ${exercise.database}` : 'Schema', disabled: !hasDb }
+        { id: 'results', label: 'Query results' },
+        { id: 'schema', label: 'Database', disabled: !hasDb }
       ]} />
       <div className="dock-panel">
         {tab === 'schema'
