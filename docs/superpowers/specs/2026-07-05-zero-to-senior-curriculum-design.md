@@ -10,17 +10,18 @@ Today the app has two disconnected halves: the new **Foundations** track (excell
 
 ## Decisions (made with owner)
 
-- **One continuous taught course on one dataset (Chinook).** Every phase uses the Foundations method (teach → scaffolded practice that fades → spaced review → interleaved checkpoints → graduation) and stays on Chinook so the learner internalizes one schema deeply, from `SELECT *` to cohort analysis.
+- **One continuous taught course; a two-dataset progression.** Every phase uses the Foundations method (teach → scaffolded practice that fades → spaced review → interleaved checkpoints → graduation). Phases **1–5 (Foundations → Window functions) stay on Chinook** — small, clean, self-joins, the friendliest on-ramp. Phases **6–7 (Analytical patterns, Interview mode) use the Olist Brazilian-ecommerce dataset** (~100k orders 2016–2018; customers, order_items, products, sellers, payments, reviews, + a marketing-funnel table) because senior analyst interviews are ecommerce/product-flavored and Chinook (a low-repeat-purchase catalog) makes cohorts/retention/funnels feel contrived. Starting small-and-clean then graduating to big-and-realistic mirrors how a real analyst grows. **Prerequisite for phase 6:** load Olist into the local Postgres and add it to the app's database allowlist (`SQL_MASTERY_DATABASES` / `src/db-config.js` `DEFAULT_DATABASES`); this is its own small setup task in the phase-6 cycle, with a provided load script/steps.
 - **Seven phases** (Foundations is phase 1, already shipped): Foundations → Joins → Aggregation depth → Subqueries & CTEs → Window functions → Analytical patterns → Interview mode.
 - **The engine generalizes** to multi-phase, with **cross-phase spaced review** (a Joins learner still gets occasional WHERE/GROUP BY warm-ups, so early skills never rust). Graduating a phase unlocks the next.
 - **Interview mode adds new exercise types** beyond graded SQL (explain-your-approach, spot-the-bug, define-the-metric, timed mixed sets).
 - **The 36-week academy is demoted** to an optional "Extra problems" bank (kept reachable at `/academy`, relabeled), not deleted. The taught 7-phase path is the spine.
 - **Per-phase delivery:** this document is the master plan. Each phase after Foundations gets its own implementation plan + build + review + live verification, reusing the shared engine and components.
 
-## Why Chinook carries the whole path (verified against the live DB)
+## Datasets (verified against the live DB)
 
-Chinook's foreign-key graph supports every phase:
-`album.artist_id→artist`, `track.album_id→album`, `track.genre_id→genre`, `track.media_type_id→media_type`, `invoice.customer_id→customer`, `invoice_line.invoice_id→invoice`, `invoice_line.track_id→track`, `playlist_track→playlist/track`, plus **self-references** `customer.support_rep_id→employee` and `employee.reports_to→employee` (self-joins / hierarchy). `invoice.invoice_date` + `invoice_line` give revenue **time-series, cohorts, and retention**. So joins, aggregation-across-joins, window functions, and analytical patterns all have real, non-trivial material on one schema. (Northwind's `orders` 1996–1998 remains available as an optional secondary source for a few analytical-pattern exercises, but the taught path stays on Chinook.)
+**Chinook (phases 1–5).** Foreign-key graph supports the whole core: `album.artist_id→artist`, `track.album_id→album`, `track.genre_id→genre`, `track.media_type_id→media_type`, `invoice.customer_id→customer`, `invoice_line.invoice_id→invoice`, `invoice_line.track_id→track`, `playlist_track→playlist/track`, plus **self-references** `customer.support_rep_id→employee` and `employee.reports_to→employee` (self-joins / hierarchy). Small tables (25-row `genre`) keep the first queries eyeballable. This carries joins, aggregation-across-joins, subqueries/CTEs, and window functions with real material.
+
+**Olist (phases 6–7).** Loaded as a new practice database for the senior analytical layer. Interconnected tables (orders, order_items, customers, products, sellers, payments, reviews, geolocation, + marketing funnel) with real `order_purchase_timestamp` and delivery timestamps across 2016–2018 make **time-series, cohorts, retention, funnels, and segmentation** authentic rather than synthetic. The phase-6 build begins by loading Olist and validating its schema, exactly as Foundations validated Chinook.
 
 ## The curriculum backbone (concepts per phase)
 
@@ -63,13 +64,14 @@ Each concept is a taught lesson with a bank of graded reps (like Foundations). S
 - `moving-average` — windowed frames (`ROWS BETWEEN ...`).
 - Checkpoints: after `top-n-per-group`, after `moving-average`.
 
-### Phase 6 — Analytical patterns
-- `time-series` — revenue by month/year; MoM and YoY with `LAG`.
+### Phase 6 — Analytical patterns (on Olist)
+- `time-series` — revenue/orders by month; MoM and YoY with `LAG`.
 - `cohorts` — group customers by first-purchase month; activity by cohort.
 - `retention` — did a cohort come back in later periods.
-- `segmentation` — bucket customers/tracks (RFM-lite, price tiers) with `CASE` + windows.
-- `funnel` — ordered-step conversion (browse→purchase proxy via playlist→invoice).
+- `segmentation` — bucket customers (RFM-lite, spend tiers) with `CASE` + windows.
+- `funnel` — ordered-step conversion using order status / the Olist marketing-funnel table.
 - Checkpoint after `retention`, capstone checkpoint after `funnel`.
+- (Begins with the Olist load + schema-validation setup task.)
 
 ### Phase 7 — Interview mode
 Not new SQL topics — the **meta-skills** that pass the room, using new exercise types (below):
@@ -111,7 +113,7 @@ Rendering reuses the existing rep/checkpoint views; `FoundationsRep` gains a bra
 ## Testing
 
 - **Engine (Vitest):** extend the existing engine tests for multi-phase — cross-phase review selection, phase gating (phase-2 first concept locked until Foundations' Checkpoint B), per-phase + overall graduation, migration from `sqlm:foundations:v1`.
-- **Content (node:test):** each phase's authored SQL validated against the live Chinook DB by an extended `scripts/validate-foundations.js` (renamed/parameterized to validate the whole learning path): every `sql`/`debug` exercise runs, is non-empty, deterministic (ordered by a unique key); every skill/checkpoint reference resolves; self-assessed exercises have a `modelAnswer`.
+- **Content (node:test):** each phase's authored SQL validated against its live database (Chinook for 1–5, Olist for 6–7) by an extended `scripts/validate-foundations.js` (renamed/parameterized to validate the whole learning path across databases): every `sql`/`debug` exercise runs, is non-empty, deterministic (ordered by a unique key); every skill/checkpoint reference resolves; self-assessed exercises have a `modelAnswer`.
 - **Per-phase visual verification** against the production build, as done for Foundations.
 
 ## Per-phase build process (how this master plan gets executed)
@@ -123,6 +125,6 @@ Rendering reuses the existing rep/checkpoint views; `FoundationsRep` gains a bra
 ## Out of scope (for the whole curriculum effort)
 
 - Server-side accounts / cross-device progress (state stays in localStorage; noted as a separate future feature).
-- Production hardening for public deployment (tracked separately — read-only DB role, rate limiting).
-- New databases beyond Chinook for the taught path (Northwind optional for a few Phase-6 exercises only).
+- Production hardening for public deployment (tracked separately — read-only DB role, rate limiting). Note: adding Olist as a queryable database slightly widens the public SQL surface, so the hardening pass must scope the read-only role to Olist too.
+- New databases beyond Chinook (phases 1–5) and Olist (phases 6–7) for the taught path.
 - Rewriting or expanding the existing academy content.
