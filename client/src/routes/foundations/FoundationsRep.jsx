@@ -19,6 +19,7 @@ export function editorPlaceholder(exercise) {
 // onCorrect: called once when this rep is first answered correctly (to advance the queue).
 export function FoundationsRep({ exercise, label, kind, onCorrect }) {
   const { update } = useFoundations();
+  const [hintOpen, setHintOpen] = useState(false);
   const check = useSqlCheck(exercise, {
     onAttempt: () => update((s) => recordAttempt(s, exercise.id)),
     onResult: (correct) => { if (correct) { update((s) => recordCorrect(s, exercise)); onCorrect?.(); } }
@@ -26,34 +27,33 @@ export function FoundationsRep({ exercise, label, kind, onCorrect }) {
 
   return (
     <article className="fnd-rep">
-      <div className="fnd-rep-head">
-        <Pill tone={kind === 'review' ? 'info' : 'brand'}>{label}</Pill>
-        <Pill tone="info">chinook</Pill>
+      <div className="rep-split">
+        <div className="rep-left">
+          <div className="fnd-rep-head">
+            <Pill tone={kind === 'review' ? 'info' : 'brand'}>{label}</Pill>
+            <Pill tone="info">chinook</Pill>
+          </div>
+          <p className="fnd-task">{exercise.task}</p>
+          <div className="rep-editor">
+            <span className="wb-editor-label" aria-hidden="true">Your SQL</span>
+            <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
+              placeholder={editorPlaceholder(exercise)} ariaLabel="SQL editor" minHeight="240px" />
+          </div>
+          <div className="fnd-actions">
+            <Button variant="primary" onClick={check.runCheck} disabled={check.checking}>
+              {check.checking ? 'Checking…' : `Run & check  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
+            </Button>
+            {exercise.hint ? <Button onClick={() => setHintOpen(true)} disabled={hintOpen}>Hint</Button> : null}
+          </div>
+          {hintOpen && exercise.hint ? <Callout tone="tip" title="Hint">{exercise.hint}</Callout> : null}
+          <div role="status" aria-live="polite">
+            {check.feedback ? <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout> : null}
+          </div>
+        </div>
+        <div className="rep-right">
+          <OutputDock exercise={exercise} result={check.result} />
+        </div>
       </div>
-      <p className="fnd-task">{exercise.task}</p>
-      <span className="wb-editor-label" aria-hidden="true">Your SQL — write your answer here</span>
-      <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
-        placeholder={editorPlaceholder(exercise)} ariaLabel="SQL editor" />
-      <div className="fnd-actions">
-        <Button variant="primary" onClick={check.runCheck} disabled={check.checking}>
-          {check.checking ? 'Checking…' : `Run & check  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
-        </Button>
-        {exercise.hint ? <HintButton hint={exercise.hint} /> : null}
-      </div>
-      <div role="status" aria-live="polite">
-        {check.feedback ? <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout> : null}
-      </div>
-      <OutputDock exercise={exercise} result={check.result} />
     </article>
-  );
-}
-
-function HintButton({ hint }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setOpen(true)} disabled={open}>Hint</Button>
-      {open ? <Callout tone="tip" title="Hint">{hint}</Callout> : null}
-    </>
   );
 }
