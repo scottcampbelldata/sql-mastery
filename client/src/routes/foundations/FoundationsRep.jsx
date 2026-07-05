@@ -2,11 +2,18 @@ import { useState } from 'react';
 import { useFoundations } from '../../state/FoundationsContext.jsx';
 import { useSqlCheck } from '../../lib/useSqlCheck.js';
 import { recordCorrect, recordAttempt } from '../../lib/foundations.js';
+import { starterSqlForExercise } from '../../lib/sqlScaffold.js';
 import { SqlEditor } from '../../components/SqlEditor.jsx';
 import { OutputDock } from '../session/OutputDock.jsx';
 import { Button, Callout, Pill } from '../../components/ui.jsx';
 
 const isMac = navigator.platform.toUpperCase().includes('MAC');
+
+export function editorPlaceholder(exercise) {
+  return starterSqlForExercise(exercise)
+    ? 'Replace ____ in the starter SQL, then run it.'
+    : 'Type your SQL here...';
+}
 
 // label: e.g. "Review: Sort and take the top rows" or "New — Rep 2 of 3".
 // onCorrect: called once when this rep is first answered correctly (to advance the queue).
@@ -26,7 +33,7 @@ export function FoundationsRep({ exercise, label, kind, onCorrect }) {
       <p className="fnd-task">{exercise.task}</p>
       <span className="wb-editor-label" aria-hidden="true">Your SQL — write your answer here</span>
       <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
-        placeholder={(exercise.expectedSql || '').split('\n')[0]} ariaLabel="SQL editor" />
+        placeholder={editorPlaceholder(exercise)} ariaLabel="SQL editor" />
       <div className="fnd-actions">
         <Button variant="primary" onClick={check.runCheck} disabled={check.checking}>
           {check.checking ? 'Checking…' : `Run & check  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}

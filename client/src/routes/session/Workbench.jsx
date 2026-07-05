@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useCurriculum } from '../../state/CurriculumContext.jsx';
 import { api } from '../../lib/api.js';
 import { markComplete } from '../../lib/progress.js';
+import { hasSqlBlank, starterSqlForExercise } from '../../lib/sqlScaffold.js';
 import { lessonSlug } from '../../lib/curriculum.js';
 import { Button, Pill, Callout } from '../../components/ui.jsx';
 import { SqlEditor } from '../../components/SqlEditor.jsx';
@@ -12,9 +13,14 @@ import { OutputDock } from './OutputDock.jsx';
 const isMac = navigator.platform.toUpperCase().includes('MAC');
 const FEEDBACK_TONE = { ok: 'tip', err: 'warn', warn: 'caution' }; // anything else → default info
 
+export function initialWorkbenchSql(exercise, progress) {
+  const saved = progress?.lastSql?.[exercise.id];
+  return typeof saved === 'string' && saved.trim() ? saved : starterSqlForExercise(exercise);
+}
+
 export function Workbench({ exercise, session, nextTarget }) {
   const { progress, updateProgress } = useCurriculum();
-  const [sql, setSql] = useState(progress.lastSql[exercise.id] || '');
+  const [sql, setSql] = useState(() => initialWorkbenchSql(exercise, progress));
   const [feedback, setFeedback] = useState(null); // {tone, title, message}
   const [result, setResult] = useState(null);
   const [checking, setChecking] = useState(false);
@@ -58,6 +64,11 @@ export function Workbench({ exercise, session, nextTarget }) {
       setFeedback({ tone: 'warn', title: 'Write your query first', message: 'Type your SQL in the editor above, then press Run & check. Not sure how to start? Open "Learn this first" or press Hint.' });
       return;
     }
+    if (hasSqlBlank(trimmed)) {
+      updateProgress((p) => { p.attempts[exercise.id] = (p.attempts[exercise.id] || 0) + 1; });
+      setFeedback({ tone: 'warn', title: 'Fill the blanks', message: 'Replace every ____ marker with the missing SQL, or clear the editor and type the whole query.' });
+      return;
+    }
     setChecking(true);
     setFeedback({ tone: 'info', title: 'Checking…', message: 'Running your SQL and the model answer on the same database.' });
     updateProgress((p) => { p.attempts[exercise.id] = (p.attempts[exercise.id] || 0) + 1; });
@@ -99,7 +110,7 @@ export function Workbench({ exercise, session, nextTarget }) {
         {/* The editor announces itself via its own aria-label; this is the visual cue. */}
         <span className="wb-editor-label" aria-hidden="true">Your SQL — write your answer here</span>
         <SqlEditor value={sql} onChange={persistSql} onSubmit={runCheck}
-          placeholder={(exercise.expectedSql || '').split('\n')[0] || 'SELECT ...'} />
+          placeholder="Type SQL here..." />
       </div>
       <div className="wb-actions">
         <Button variant="primary" onClick={runCheck} disabled={!exercise.checkable || checking}>
