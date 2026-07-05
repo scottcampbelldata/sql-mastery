@@ -6,6 +6,7 @@ import { SqlEditor } from '../components/SqlEditor.jsx';
 import { DataTable } from '../components/DataTable.jsx';
 import { Button, Callout, Pill, cx } from '../components/ui.jsx';
 import { safeGet, safeSet } from '../lib/progress.js';
+import { useDbSchema } from '../lib/dbSchema.js';
 import './session/session.css';
 import './databases.css';
 
@@ -21,6 +22,7 @@ export default function Databases() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [running, setRunning] = useState(false);
+  const dbSchema = useDbSchema(active);
   const activeRef = useRef(active);
   activeRef.current = active;
 
@@ -72,7 +74,7 @@ export default function Databases() {
       {active ? (
         <>
           <SqlEditor value={sql} onChange={setSql} onSubmit={run}
-            placeholder="SELECT * FROM orders LIMIT 20;" ariaLabel="Scratch query editor" />
+            placeholder="SELECT * FROM orders LIMIT 20;" ariaLabel="Scratch query editor" schema={dbSchema} />
           <div className="db-action-row">
             <Button variant="primary" onClick={run} disabled={running || !sql.trim()}>
               {running ? 'Running…' : `Run  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
