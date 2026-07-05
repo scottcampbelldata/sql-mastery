@@ -3,13 +3,22 @@ import { useCurriculum } from '../state/CurriculumContext.jsx';
 import { AppShell } from '../components/AppShell.jsx';
 import { Button, Pill, ProgressMeter, EmptyState } from '../components/ui.jsx';
 import { percent, completedCount, sessionComplete, currentSession } from '../lib/curriculum.js';
+import { safeGet, safeSet } from '../lib/progress.js';
 import { useState } from 'react';
 import './dashboard.css';
+
+const WELCOME_KEY = 'sqlm:welcome-dismissed:v1';
 
 export default function Dashboard() {
   const { curriculum, progress, activeSessionId } = useCurriculum();
   const navigate = useNavigate();
   const [queueOpen, setQueueOpen] = useState(false);
+  const [welcomeDismissed, setWelcomeDismissed] = useState(() => safeGet(WELCOME_KEY) === '1');
+
+  function dismissWelcome() {
+    safeSet(WELCOME_KEY, '1');
+    setWelcomeDismissed(true);
+  }
 
   const done = Object.keys(progress.completed).length;
   const total = curriculum.exercises.length;
@@ -29,6 +38,31 @@ export default function Dashboard() {
 
   return (
     <AppShell breadcrumb={<span className="here">Dashboard</span>}>
+      {!welcomeDismissed && done < 5 ? (
+        <section className="welcome-card card" aria-label="How this app works">
+          <div className="welcome-head">
+            <h2>New here? Three things to know</h2>
+            <Button variant="ghost" onClick={dismissWelcome}>Got it, hide this</Button>
+          </div>
+          <div className="welcome-grid">
+            <div>
+              <span className="welcome-num">1</span>
+              <strong>Practice sessions</strong>
+              <p>Press the big button below. Each session gives you a small task, teaches the idea, and checks your answer instantly. No setup, no grading anxiety — try, miss, retry.</p>
+            </div>
+            <div>
+              <span className="welcome-num">2</span>
+              <strong>Lessons</strong>
+              <p>Prefer reading first? The Lessons list in the menu holds the full textbook — every concept explained with examples you can copy.</p>
+            </div>
+            <div>
+              <span className="welcome-num">3</span>
+              <strong>Databases</strong>
+              <p>All practice runs on real sample databases (music shop, trading company, taxi trips). Open Databases in the menu anytime to poke around freely.</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
       <section className="continue-card card">
         <div className="continue-copy">
           <span className="kicker">{started ? 'Continue' : 'Start here'}</span>

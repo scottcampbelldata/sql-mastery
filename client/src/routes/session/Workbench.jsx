@@ -52,9 +52,10 @@ export function Workbench({ exercise, session, nextTarget }) {
   async function runCheck() {
     if (checking || !exercise.checkable) return;
     flushPendingSql(); // persist the current editor value synchronously before posting
+    setHintShown(false); // one message at a time: a new run replaces the hint
     const trimmed = sql.trim();
     if (!trimmed) {
-      setFeedback({ tone: 'warn', title: 'Type a query first', message: 'Use the task statement to decide your SELECT, FROM, filters, sort, and limit.' });
+      setFeedback({ tone: 'warn', title: 'Write your query first', message: 'Type your SQL in the editor above, then press Run & check. Not sure how to start? Open "Learn this first" or press Hint.' });
       return;
     }
     setChecking(true);
@@ -86,27 +87,30 @@ export function Workbench({ exercise, session, nextTarget }) {
   return (
     <article className="workbench">
       <div className="wb-meta">
-        <Pill tone="brand">{exercise.stage}</Pill>
-        <Pill>{exercise.moduleTitle}</Pill>
-        {exercise.database ? <Pill tone="info">{exercise.database}</Pill> : <Pill>verbal</Pill>}
-        <Pill tone={exercise.checkable ? 'ok' : 'neutral'}>{exercise.checkable ? 'graded' : 'manual'}</Pill>
-        {done ? <Pill tone="ok">solved</Pill> : null}
-        <Link className="wb-lesson-link" to={`/lessons/${lessonSlug(exercise.sourceFile)}`}>Open lesson ↗</Link>
+        {exercise.database ? <Pill tone="info">database: {exercise.database}</Pill> : <Pill>discussion exercise</Pill>}
+        <Pill tone={exercise.checkable ? 'ok' : 'neutral'}>{exercise.checkable ? 'auto-graded' : 'self-check'}</Pill>
+        {done ? <Pill tone="ok">✓ solved</Pill> : null}
+        <Link className="wb-lesson-link" to={`/lessons/${lessonSlug(exercise.sourceFile)}`}>Read the full lesson ↗</Link>
       </div>
       <h2>{exercise.title}</h2>
       <p className="wb-task">{exercise.task}</p>
       <LearnAccordion exercise={exercise} defaultOpen={!attempted} />
-      <SqlEditor value={sql} onChange={persistSql} onSubmit={runCheck}
-        placeholder={(exercise.expectedSql || '').split('\n')[0] || 'SELECT ...'} />
+      <div>
+        {/* The editor announces itself via its own aria-label; this is the visual cue. */}
+        <span className="wb-editor-label" aria-hidden="true">Your SQL — write your answer here</span>
+        <SqlEditor value={sql} onChange={persistSql} onSubmit={runCheck}
+          placeholder={(exercise.expectedSql || '').split('\n')[0] || 'SELECT ...'} />
+      </div>
       <div className="wb-actions">
         <Button variant="primary" onClick={runCheck} disabled={!exercise.checkable || checking}>
           {checking ? 'Checking…' : `Run & check  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
         </Button>
-        {exercise.hint ? <Button onClick={() => setHintShown(true)} disabled={hintShown}>Hint</Button> : null}
-        <Button onClick={() => setAnswerOpen(!answerOpen)}>{answerOpen ? 'Hide answer' : 'Reveal answer'}</Button>
+        {exercise.hint ? <Button onClick={() => { setHintShown(true); setFeedback(null); }} disabled={hintShown && !feedback}>Hint</Button> : null}
+        <Button variant="ghost" onClick={() => setAnswerOpen(!answerOpen)}>{answerOpen ? 'Hide answer' : 'Show me the answer'}</Button>
         {nextTarget ? <Link to={nextTarget.to} className="btn btn-secondary wb-next">{nextTarget.label} →</Link> : null}
       </div>
-      {hintShown && exercise.hint ? <Callout tone="tip" title="Hint">{exercise.hint}</Callout> : null}
+      {/* One message at a time: the hint hides while grading feedback is fresh. */}
+      {hintShown && !feedback && exercise.hint ? <Callout tone="tip" title="Hint">{exercise.hint}</Callout> : null}
       <div role="status" aria-live="polite">
         {feedback ? (
           <Callout tone={FEEDBACK_TONE[feedback.tone] || 'info'} title={feedback.title}>
