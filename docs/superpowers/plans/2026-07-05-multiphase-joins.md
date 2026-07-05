@@ -257,7 +257,7 @@ Everything else in the script is unchanged (it already reads `exercise.database`
 - [ ] **Step 3: Start the server and validate**
 
 Run: `node server.js &` (wait 3s), then `node scripts/validate-foundations.js`
-Expected: `47/47 exercises valid.` (27 Foundations + 20 Joins), exit 0, every line `ok`. If any Joins line fails: fix its `expectedSql` (zero rows → wrong filter; non-deterministic → the ORDER BY is not on a unique key). Stop the server after (`Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where CommandLine -like '*server.js*' | Stop-Process -Force`, or `pkill` on POSIX).
+Expected: `42/42 exercises valid.` (27 Foundations + 15 Joins: 5 join concepts x 3 exercises each), exit 0, every line `ok`. If any Joins line fails: fix its `expectedSql` (zero rows → wrong filter; non-deterministic → the ORDER BY is not on a unique key). Stop the server after (`Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where CommandLine -like '*server.js*' | Stop-Process -Force`, or `pkill` on POSIX).
 
 - [ ] **Step 4: Commit Tasks 1 + 2 together**
 

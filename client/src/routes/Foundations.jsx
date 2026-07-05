@@ -1,44 +1,40 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../components/AppShell.jsx';
 import { EmptyState, Button, ProgressMeter } from '../components/ui.jsx';
 import { useFoundations } from '../state/FoundationsContext.jsx';
 import { skillLevel, buildTodaySession, graduationStatus } from '../lib/foundations.js';
+import { currentPhase, phaseGraduation } from '../lib/learning-path.js';
 import './foundations/foundations.css';
 
 export default function Foundations() {
-  const { track, state } = useFoundations();
+  const { track, phases, state } = useFoundations();
   const navigate = useNavigate();
-
-  if (!track) {
-    return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading Foundations…" /></AppShell>;
-  }
+  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading your path…" /></AppShell>;
 
   const grad = graduationStatus(track, state);
   const session = buildTodaySession(track, state);
+  const active = currentPhase(phases, state);
   const started = Object.values(state.skillCorrect).some((a) => a.length);
 
-  const todayLabel = session.main.kind === 'graduated' ? 'All done'
+  const todayLabel = session.main.kind === 'graduated' ? 'All phases complete'
     : session.main.kind === 'checkpoint' ? `Checkpoint: ${session.main.checkpoint.title}`
-    : `${session.reviews.length ? `${session.reviews.length} quick review${session.reviews.length > 1 ? 's' : ''} + ` : ''}New lesson: ${session.main.concept.title}`;
+    : `${session.reviews.length ? `${session.reviews.length} review${session.reviews.length > 1 ? 's' : ''} + ` : ''}New: ${session.main.concept.title}`;
 
   return (
-    <AppShell breadcrumb={<span className="here">Learn — Foundations</span>}>
+    <AppShell breadcrumb={<span className="here">Learn — your path</span>}>
       <div className="fnd-home-head">
         <span className="teach-kicker">{started ? 'Keep going' : 'Start here'}</span>
-        <h1>SQL Foundations</h1>
-        <p className="goal">Learn to query a database one step at a time, on a real music-store dataset. Each concept comes back for review so it sticks.</p>
+        <h1>Your SQL path</h1>
+        <p className="goal">From your first query to senior-level analysis, one dataset, one step at a time — with everything you learn coming back for review so it sticks.</p>
       </div>
 
       <section className="card" style={{ marginBottom: 'var(--s-4)' }}>
-        <ProgressMeter value={Math.round((grad.strongSkills / grad.totalSkills) * 100)} label="Foundations mastery" />
+        <ProgressMeter value={Math.round((grad.strongSkills / grad.totalSkills) * 100)} label="Overall mastery" />
         <p style={{ color: 'var(--ink-dim)', fontSize: 'var(--text-sm)', margin: 'var(--s-2) 0 var(--s-3)' }}>
-          {grad.strongSkills} of {grad.totalSkills} skills strong · {grad.checkpointsPassed.length}/2 checkpoints passed
+          {grad.strongSkills} of {grad.totalSkills} skills strong · {grad.checkpointsPassed.length} checkpoints passed
         </p>
-        {grad.graduated ? (
-          <>
-            <p style={{ color: 'var(--ok)' }}>You have single-table fluency. Ready for the interview academy.</p>
-            <Button variant="primary" onClick={() => navigate('/academy')}>Go to the Academy →</Button>
-          </>
+        {session.main.kind === 'graduated' ? (
+          <p style={{ color: 'var(--ok)' }}>You have completed every phase. Senior-ready. 🎉</p>
         ) : (
           <>
             <p style={{ color: 'var(--ink-strong)', marginBottom: 'var(--s-3)' }}>Today: {todayLabel}</p>
@@ -49,33 +45,49 @@ export default function Foundations() {
         )}
       </section>
 
-      <h2 style={{ fontSize: 'var(--text-lg)', margin: 'var(--s-4) 0 var(--s-2)' }}>Your path</h2>
-      <div className="fnd-path">
-        {track.concepts.map((c) => {
-          const lvl = skillLevel(state, c.skill);
-          return (
-            <div key={c.id} className={`fnd-step ${lvl.tier === 'strong' ? 'strong' : ''}`}>
-              <span className="fnd-step-num">{lvl.tier === 'strong' ? '✓' : c.order}</span>
-              <div className="fnd-step-body">
-                <strong>{c.title}</strong>
-                <div className="fnd-step-meter"><span style={{ width: `${Math.min(100, (lvl.count / 3) * 100)}%` }} /></div>
+      {phases.map((phase) => {
+        const pg = phaseGraduation(phase, state);
+        const isActive = phase.id === active.id;
+        const locked = phase.order > active.order;
+        return (
+          <section key={phase.id} className={`fnd-phase ${isActive ? 'active' : ''} ${locked ? 'locked' : ''}`}>
+            <div className="fnd-phase-head">
+              <div>
+                <span className="fnd-phase-kicker">Phase {phase.order}{locked ? ' · locked' : pg.complete ? ' · complete' : isActive ? ' · in progress' : ''}</span>
+                <h2>{phase.title}</h2>
+                <p>{phase.goal}</p>
               </div>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--ink-dim)' }}>
-                {lvl.tier === 'strong' ? 'strong' : lvl.tier === 'learning' ? `${lvl.count}/3` : 'new'}
-              </span>
+              <span className="fnd-phase-score">{pg.strong}/{pg.total}</span>
             </div>
-          );
-        })}
-        {track.checkpoints.map((cp) => (
-          <div key={cp.id} className={`fnd-step fnd-checkpoint-row ${state.checkpointsPassed.includes(cp.id) ? 'strong' : ''}`}>
-            <span className="fnd-step-num">{state.checkpointsPassed.includes(cp.id) ? '✓' : '★'}</span>
-            <div className="fnd-step-body"><strong>{cp.title}</strong></div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--ink-dim)' }}>
-              {state.checkpointsPassed.includes(cp.id) ? 'passed' : 'checkpoint'}
-            </span>
-          </div>
-        ))}
-      </div>
+            {!locked ? (
+              <div className="fnd-path">
+                {phase.concepts.map((c) => {
+                  const lvl = skillLevel(state, c.skill);
+                  return (
+                    <div key={c.id} className={`fnd-step ${lvl.tier === 'strong' ? 'strong' : ''}`}>
+                      <span className="fnd-step-num">{lvl.tier === 'strong' ? '✓' : c.order}</span>
+                      <div className="fnd-step-body">
+                        <strong>{c.title}</strong>
+                        <div className="fnd-step-meter"><span style={{ width: `${Math.min(100, (lvl.count / 3) * 100)}%` }} /></div>
+                      </div>
+                      <span className="fnd-step-tier">{lvl.tier === 'strong' ? 'strong' : lvl.tier === 'learning' ? `${lvl.count}/3` : 'new'}</span>
+                    </div>
+                  );
+                })}
+                {phase.checkpoints.map((cp) => (
+                  <div key={cp.id} className={`fnd-step fnd-checkpoint-row ${state.checkpointsPassed.includes(cp.id) ? 'strong' : ''}`}>
+                    <span className="fnd-step-num">{state.checkpointsPassed.includes(cp.id) ? '✓' : '★'}</span>
+                    <div className="fnd-step-body"><strong>{cp.title}</strong></div>
+                    <span className="fnd-step-tier">{state.checkpointsPassed.includes(cp.id) ? 'passed' : 'checkpoint'}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="fnd-phase-lockmsg">Unlocks when you finish {phases.find((p) => p.order === phase.order - 1).title}.</p>
+            )}
+          </section>
+        );
+      })}
     </AppShell>
   );
 }
