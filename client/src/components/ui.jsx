@@ -1,50 +1,54 @@
 import './components.css';
 
-export function Button({ variant = 'secondary', children, ...rest }) {
-  return <button className={`btn btn-${variant}`} {...rest}>{children}</button>;
+const cx = (...parts) => parts.filter(Boolean).join(' ');
+
+export function Button({ variant = 'secondary', className, children, ...rest }) {
+  return <button type="button" className={cx('btn', `btn-${variant}`, className)} {...rest}>{children}</button>;
 }
 
-export function Pill({ tone = 'neutral', children }) {
-  return <span className={`pill pill-${tone}`}>{children}</span>;
+export function Pill({ tone = 'neutral', className, children }) {
+  return <span className={cx('pill', `pill-${tone}`, className)}>{children}</span>;
 }
 
-export function Card({ as: Tag = 'div', className = '', children, ...rest }) {
-  return <Tag className={`card ${className}`} {...rest}>{children}</Tag>;
+export function Card({ as: Tag = 'div', className, children, ...rest }) {
+  return <Tag className={cx('card', className)} {...rest}>{children}</Tag>;
 }
 
-export function Callout({ tone = 'info', title, children }) {
+export function Callout({ tone = 'info', title, className, children }) {
   return (
-    <div className={`callout callout-${tone}`}>
+    <div className={cx('callout', `callout-${tone}`, className)}>
       {title ? <span className="callout-tag">{title}</span> : null}
       <div>{children}</div>
     </div>
   );
 }
 
-export function EmptyState({ title, children }) {
+export function EmptyState({ title, className, children }) {
   return (
-    <div className="empty-state">
+    <div className={cx('empty-state', className)}>
       <h3>{title}</h3>
       {children ? <p>{children}</p> : null}
     </div>
   );
 }
 
-export function ProgressMeter({ value, label }) {
+export function ProgressMeter({ value, label, className }) {
   return (
-    <div className="meter" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
+    <div className={cx('meter', className)} role="progressbar"
+      aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}
+      aria-label={label ? undefined : 'progress'}>
       {label ? <div className="meter-head"><span>{label}</span><strong>{value}%</strong></div> : null}
       <div className="meter-track"><div className="meter-fill" style={{ width: `${value}%` }} /></div>
     </div>
   );
 }
 
-export function Tabs({ tabs, active, onChange }) {
+export function Tabs({ tabs, active, onChange, className }) {
   return (
-    <div className="tab-bar" role="tablist">
+    <div className={cx('tab-bar', className)} role="tablist">
       {tabs.map((tab) => (
-        <button key={tab.id} role="tab" aria-selected={tab.id === active}
-          className={`tab ${tab.id === active ? 'active' : ''}`}
+        <button key={tab.id} type="button" role="tab" aria-selected={tab.id === active}
+          className={cx('tab', tab.id === active && 'active')}
           disabled={tab.disabled} onClick={() => onChange(tab.id)}>
           {tab.label}
         </button>
