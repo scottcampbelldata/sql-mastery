@@ -4,6 +4,9 @@ import { HashRouter } from 'react-router-dom';
 import App from './App.jsx';
 import './theme/tokens.css';
 import './theme/global.css';
+import { initTheme } from './theme/theme.js';
+
+initTheme();
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

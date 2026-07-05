@@ -44,7 +44,17 @@
 .crumbs a { color: var(--ink-dim); } .crumbs a:hover { color: var(--ink-strong); text-decoration: none; }
 .crumbs .sep { color: var(--ink-faint); }
 .crumbs .here { color: var(--ink-strong); }
-.main { padding: var(--s-5) var(--s-6) var(--s-8); max-width: 1200px; width: 100%; margin: 0 auto; }
+.topbar-spacer { flex: 1; }
+.main { padding: var(--s-6) var(--s-7) var(--s-8); max-width: var(--content-max); width: 100%; margin: 0 auto; }
+
+/* Theme toggle — round icon button, in the topbar and mobile bar. */
+.theme-toggle {
+  width: 34px; height: 34px; flex: none; display: grid; place-items: center;
+  border: 1px solid var(--line); background: var(--surface-1); color: var(--ink-dim);
+  border-radius: 50%; cursor: pointer; font-size: 15px; transition: color var(--ease), border-color var(--ease), background var(--ease);
+}
+.theme-toggle:hover { color: var(--brand); border-color: var(--line-strong); }
+.mobile-bar-actions { display: flex; align-items: center; gap: var(--s-2); }
 
 @media (max-width: 860px) {
   .shell, .shell.collapsed { grid-template-columns: 1fr; }
