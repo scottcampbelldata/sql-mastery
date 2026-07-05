@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "npm --prefix client run dev",
-    "build": "npm --prefix client run build",
+    "extract-lessons": "node scripts/extract-lessons.js",
+    "build": "node scripts/extract-lessons.js && npm --prefix client run build",
     "test": "node --test test/*.test.js && npm --prefix client test"
   },
   "dependencies": {
