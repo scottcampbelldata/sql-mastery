@@ -49,8 +49,8 @@ export function AppShell({ children, breadcrumb }) {
             <NavLink to="/learn" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">◎</span><span className="nav-label">Foundations</span></NavLink>
           </div>
           <div className="nav-group">
-            <span className="nav-group-label">Practice</span>
-            <NavLink to="/academy" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">◆</span><span className="nav-label">Dashboard</span></NavLink>
+            <span className="nav-group-label">Extra problems</span>
+            <NavLink to="/academy" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">◆</span><span className="nav-label">Interview problem bank</span></NavLink>
             {/* Continue is a section indicator: active for any /session path, not a per-URL match. */}
             {cont ? <NavLink to={`/session/${cont.id}`} className={() => cx('nav-item', location.pathname.startsWith('/session') && 'active')}><span className="nav-ico">▶</span><span className="nav-label">Continue</span></NavLink> : null}
           </div>
