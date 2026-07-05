@@ -23,6 +23,10 @@ describe('curriculum helpers', () => {
     expect(currentSession(sessions, completed, '').id).toBe('s2');
     expect(currentSession(sessions, { a: {}, b: {}, c: {} }, '').id).toBe('s1');
   });
+  it('currentSession returns null when sessions is empty', () => {
+    expect(currentSession([], {}, '')).toBe(null);
+    expect(currentSession(null, {}, '')).toBe(null);
+  });
   it('lessonSlug strips .html from sourceFile', () => {
     expect(lessonSlug('m1-fundamentals.html')).toBe('m1-fundamentals');
   });

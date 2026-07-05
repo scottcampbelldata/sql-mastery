@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { loadProgress, saveProgress, markComplete, isLessonBoxChecked, setLessonBox } from './progress.js';
 
 describe('progress store', () => {
@@ -31,5 +31,19 @@ describe('progress store', () => {
     expect(isLessonBoxChecked('m1', 'p1-1')).toBe(true);
     setLessonBox('m1', 'p1-1', false);
     expect(localStorage.getItem('sqlm:m1:p1-1')).toBe(null);
+  });
+
+  it('saveProgress does not throw when localStorage.setItem throws', () => {
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    try {
+      expect(() => saveProgress({ completed: {}, attempts: {}, lastSql: {} })).not.toThrow();
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  it('loadProgress coerces non-object subkeys to {}', () => {
+    localStorage.setItem('sqlm:product-progress:v1', JSON.stringify({ completed: 'oops', attempts: 7, lastSql: null }));
+    expect(loadProgress()).toEqual({ completed: {}, attempts: {}, lastSql: {} });
   });
 });
