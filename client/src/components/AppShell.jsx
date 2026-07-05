@@ -2,14 +2,14 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useCurriculum } from '../state/CurriculumContext.jsx';
 import { currentSession, percent } from '../lib/curriculum.js';
-import { SIDEBAR_KEY } from '../lib/progress.js';
+import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress.js';
 import { ProgressMeter, cx } from './ui.jsx';
 import { LESSONS } from '../lessons/manifest.js';
 import './appshell.css';
 
 export function AppShell({ children, breadcrumb }) {
   const { curriculum, progress, activeSessionId } = useCurriculum();
-  const [collapsed, setCollapsed] = useState(() => localStorage.getItem(SIDEBAR_KEY) === '1');
+  const [collapsed, setCollapsed] = useState(() => safeGet(SIDEBAR_KEY) === '1');
   const location = useLocation();
 
   const done = curriculum ? Object.keys(progress.completed).length : 0;
@@ -18,7 +18,7 @@ export function AppShell({ children, breadcrumb }) {
 
   function toggle() {
     const next = !collapsed;
-    localStorage.setItem(SIDEBAR_KEY, next ? '1' : '0');
+    safeSet(SIDEBAR_KEY, next ? '1' : '0');
     setCollapsed(next);
   }
 

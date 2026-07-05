@@ -4,14 +4,14 @@ export const SIDEBAR_KEY = 'sqlm:sidebar-collapsed:v1';
 
 /* localStorage can throw (Safari private mode, quota, disabled storage) —
    like the legacy shared.js, treat storage as best-effort. */
-function safeGet(key) {
+export function safeGet(key) {
   try {
     return localStorage.getItem(key);
   } catch {
     return null;
   }
 }
-function safeSet(key, value) {
+export function safeSet(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch { /* best-effort: ignore */ }

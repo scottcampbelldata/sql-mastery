@@ -5,26 +5,14 @@ import { SchemaExplorer } from './session/SchemaExplorer.jsx';
 import { SqlEditor } from '../components/SqlEditor.jsx';
 import { DataTable } from '../components/DataTable.jsx';
 import { Button, Callout, Pill, cx } from '../components/ui.jsx';
+import { safeGet, safeSet } from '../lib/progress.js';
 import './session/session.css';
 import './databases.css';
 
 const RUNNER_SQL_KEY = 'sqlm:runner:sql';
 const RUNNER_DB_KEY = 'sqlm:runner:db';
 
-/* localStorage can throw (Safari private mode, quota, disabled storage) —
-   treat storage as best-effort, same convention as lib/progress.js. */
-function safeGet(key) {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-function safeSet(key, value) {
-  try {
-    localStorage.setItem(key, value);
-  } catch { /* best-effort: ignore */ }
-}
+const isMac = navigator.platform.toUpperCase().includes('MAC');
 
 export default function Databases() {
   const [databases, setDatabases] = useState([]);
@@ -87,7 +75,7 @@ export default function Databases() {
             placeholder="SELECT * FROM orders LIMIT 20;" ariaLabel="Scratch query editor" />
           <div className="db-action-row">
             <Button variant="primary" onClick={run} disabled={running || !sql.trim()}>
-              {running ? 'Running…' : 'Run  ⌘⏎'}
+              {running ? 'Running…' : `Run  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
             </Button>
             {result ? <Pill tone="ok">{result.command} · {result.rowCount} rows · {result.durationMs} ms</Pill> : null}
           </div>
