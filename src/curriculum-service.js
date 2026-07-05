@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { getAcademyExpansionExercises } = require('./academy-expansion');
 const { getInterviewExpansionExercises } = require('./interview-expansion');
+const { getFoundations } = require('./foundations');
 
 const MODULES = [
   { id: 'm0', file: 'schemas.html', title: 'Know Your Schemas', stage: 'Orient' },
@@ -381,6 +382,7 @@ function buildCurriculum(options = {}) {
   const sessions = buildSessions(exercises);
   const weeks = buildWeeks(sessions);
   const checkableExercises = exercises.filter((exercise) => exercise.checkable).length;
+  const foundations = getFoundations();
 
   return {
     product: {
@@ -391,6 +393,7 @@ function buildCurriculum(options = {}) {
     weeks,
     sessions,
     exercises,
+    foundations,
     stats: {
       totalWeeks: weeks.length,
       totalSessions: sessions.length,
