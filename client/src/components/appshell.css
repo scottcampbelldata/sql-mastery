@@ -32,6 +32,7 @@
 .topbar {
   position: sticky; top: 0; z-index: var(--z-topbar); height: var(--topbar-h);
   display: flex; align-items: center; gap: var(--s-4); padding: 0 var(--s-5);
+  background: var(--bg);
   background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -45,5 +46,6 @@
   .shell, .shell.collapsed { grid-template-columns: 1fr; }
   .sidebar { position: static; height: auto; flex-direction: row; align-items: center; gap: var(--s-3); overflow-x: auto; }
   .side-nav { flex-direction: row; }
-  .nav-group, .sidebar-foot { display: none; }
+  .nav-group { display: contents; }
+  .nav-group-label, .sidebar-foot { display: none; }
 }

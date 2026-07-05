@@ -3,18 +3,18 @@ import { useState } from 'react';
 import { useCurriculum } from '../state/CurriculumContext.jsx';
 import { currentSession, percent } from '../lib/curriculum.js';
 import { SIDEBAR_KEY } from '../lib/progress.js';
-import { ProgressMeter } from './ui.jsx';
+import { ProgressMeter, cx } from './ui.jsx';
 import { LESSONS } from '../lessons/manifest.js';
 import './appshell.css';
 
 export function AppShell({ children, breadcrumb }) {
-  const { curriculum, progress } = useCurriculum();
+  const { curriculum, progress, activeSessionId } = useCurriculum();
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem(SIDEBAR_KEY) === '1');
   const location = useLocation();
 
   const done = curriculum ? Object.keys(progress.completed).length : 0;
   const total = curriculum ? curriculum.exercises.length : 0;
-  const cont = curriculum ? currentSession(curriculum.sessions, progress.completed, '') : null;
+  const cont = curriculum ? currentSession(curriculum.sessions, progress.completed, activeSessionId) : null;
 
   function toggle() {
     const next = !collapsed;
@@ -32,16 +32,17 @@ export function AppShell({ children, breadcrumb }) {
           </button>
         </div>
         <nav className="side-nav">
-          <NavLink to="/" end className="nav-item"><span className="nav-ico">◆</span><span className="nav-label">Dashboard</span></NavLink>
-          {cont ? <NavLink to={`/session/${cont.id}`} className={() => `nav-item ${location.pathname.startsWith('/session') ? 'active' : ''}`}><span className="nav-ico">▶</span><span className="nav-label">Continue</span></NavLink> : null}
+          <NavLink to="/" end className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">◆</span><span className="nav-label">Dashboard</span></NavLink>
+          {/* Continue is a section indicator: active for any /session path, not a per-URL match. */}
+          {cont ? <NavLink to={`/session/${cont.id}`} className={() => cx('nav-item', location.pathname.startsWith('/session') && 'active')}><span className="nav-ico">▶</span><span className="nav-label">Continue</span></NavLink> : null}
           <div className="nav-group"><span className="nav-group-label">Lessons</span>
             {LESSONS.map((l) => (
-              <NavLink key={l.slug} to={`/lessons/${l.slug}`} className="nav-item nav-sub">
+              <NavLink key={l.slug} to={`/lessons/${l.slug}`} className={({ isActive }) => cx('nav-item', 'nav-sub', isActive && 'active')}>
                 <span className="nav-ico">{l.short}</span><span className="nav-label">{l.title}</span>
               </NavLink>
             ))}
           </div>
-          <NavLink to="/databases" className="nav-item"><span className="nav-ico">⛁</span><span className="nav-label">Databases</span></NavLink>
+          <NavLink to="/databases" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">⛁</span><span className="nav-label">Databases</span></NavLink>
         </nav>
         <div className="sidebar-foot">
           {total ? <ProgressMeter value={percent(done, total)} label="Course" /> : null}

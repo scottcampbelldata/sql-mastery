@@ -1,6 +1,6 @@
 import './components.css';
 
-const cx = (...parts) => parts.filter(Boolean).join(' ');
+export const cx = (...parts) => parts.filter(Boolean).join(' ');
 
 export function Button({ variant = 'secondary', className, children, ...rest }) {
   return <button type="button" className={cx('btn', `btn-${variant}`, className)} {...rest}>{children}</button>;
