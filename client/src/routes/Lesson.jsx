@@ -40,7 +40,7 @@ export default function Lesson() {
 
   return (
     <AppShell breadcrumb={<>
-      <Link to="/">Dashboard</Link><span className="sep">/</span>
+      <Link to="/academy">Dashboard</Link><span className="sep">/</span>
       <span>Lessons</span><span className="sep">/</span>
       <span className="here">{meta.title}</span>
     </>}>
