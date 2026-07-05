@@ -5,6 +5,7 @@ import { api } from '../../lib/api.js';
 import { markComplete } from '../../lib/progress.js';
 import { hasSqlBlank, starterSqlForExercise } from '../../lib/sqlScaffold.js';
 import { lessonSlug } from '../../lib/curriculum.js';
+import { useDbSchema } from '../../lib/dbSchema.js';
 import { Button, Pill, Callout } from '../../components/ui.jsx';
 import { SqlEditor } from '../../components/SqlEditor.jsx';
 import { LearnAccordion } from './LearnAccordion.jsx';
@@ -26,6 +27,7 @@ export function Workbench({ exercise, session, nextTarget }) {
   const [checking, setChecking] = useState(false);
   const [hintShown, setHintShown] = useState(false);
   const [answerOpen, setAnswerOpen] = useState(false);
+  const dbSchema = useDbSchema(exercise.database);
 
   const attempted = Boolean(progress.attempts[exercise.id] || progress.completed[exercise.id]);
   const done = Boolean(progress.completed[exercise.id]);
@@ -110,7 +112,7 @@ export function Workbench({ exercise, session, nextTarget }) {
         {/* The editor announces itself via its own aria-label; this is the visual cue. */}
         <span className="wb-editor-label" aria-hidden="true">Your SQL — write your answer here</span>
         <SqlEditor value={sql} onChange={persistSql} onSubmit={runCheck}
-          placeholder="Type SQL here..." />
+          placeholder="Type SQL here..." schema={dbSchema} />
       </div>
       <div className="wb-actions">
         <Button variant="primary" onClick={runCheck} disabled={!exercise.checkable || checking}>
