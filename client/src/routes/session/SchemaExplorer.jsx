@@ -38,6 +38,7 @@ export function SchemaExplorer({ database }) {
       <div className="table-strip">
         {schema.tables.map((t) => (
           <button key={`${t.schema}.${t.name}`}
+            aria-pressed={Boolean(activeTable && t.name === activeTable.name && t.schema === activeTable.schema)}
             className={`table-chip ${activeTable && t.name === activeTable.name && t.schema === activeTable.schema ? 'active' : ''}`}
             onClick={() => setActiveTable(t)}>
             <strong>{t.name}</strong>
