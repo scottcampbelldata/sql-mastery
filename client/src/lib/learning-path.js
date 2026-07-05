@@ -38,11 +38,14 @@ export function loadLearning() {
 
 export function saveLearning(state) { safeSet(LEARNING_KEY, JSON.stringify(state)); }
 
-// The first phase that still has a not-strong concept (or the last phase if all strong).
+// The first phase that has not yet fully graduated (any concept not-strong OR any
+// checkpoint unpassed), or the last phase if every phase is complete. A phase whose
+// concepts are all strong but whose trailing checkpoint has not passed stays active,
+// so later phases stay locked — matching the engine's checkpoint/concept gating.
 export function currentPhase(phases, state) {
   const ordered = [...phases].sort((a, b) => a.order - b.order);
   for (const phase of ordered) {
-    if (phase.concepts.some((c) => !isSkillStrong(state, c.skill))) return phase;
+    if (!phaseGraduation(phase, state).complete) return phase;
   }
   return ordered[ordered.length - 1];
 }
