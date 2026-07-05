@@ -1,0 +1,52 @@
+.lesson-layout { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: var(--s-6); align-items: start; }
+.lesson-toc { position: sticky; top: calc(var(--topbar-h) + var(--s-4)); display: flex; flex-direction: column; gap: var(--s-1); font-size: var(--text-sm); border-left: 1px solid var(--line); padding-left: var(--s-4); }
+.toc-label { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: var(--s-1); }
+.lesson-toc a { color: var(--ink-dim); line-height: 1.4; padding: 2px 0; }
+.lesson-toc a:hover { color: var(--ink-strong); text-decoration: none; }
+@media (max-width: 1000px) { .lesson-layout { grid-template-columns: 1fr; } .lesson-toc { display: none; } }
+
+.lesson-body { min-width: 0; }
+.lesson-body h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-3); }
+.lesson-body h2 { font-size: var(--text-xl); margin: var(--s-7) 0 var(--s-3); padding-top: var(--s-4); border-top: 1px solid var(--line); }
+.lesson-body h3 { font-size: var(--text-lg); margin: var(--s-5) 0 var(--s-2); }
+.lesson-body .eyebrow { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); margin: 0 0 var(--s-1); }
+.lesson-body .lede { color: var(--ink-dim); font-size: 1.05rem; max-width: 64ch; }
+
+.lesson-body .note, .lesson-body .warn, .lesson-body .tip {
+  border: 1px solid var(--line); border-left: 3px solid var(--info);
+  background: var(--surface-1); border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4); margin: var(--s-4) 0; font-size: var(--text-sm);
+}
+.lesson-body .warn { border-left-color: var(--err); }
+.lesson-body .tip { border-left-color: var(--ok); }
+.lesson-body .tag { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: var(--s-1); color: var(--info); }
+.lesson-body .warn .tag { color: var(--err); }
+.lesson-body .tip .tag { color: var(--ok); }
+
+.lesson-body table { border-collapse: collapse; width: 100%; margin: var(--s-4) 0; font-size: var(--text-sm); }
+.lesson-body th, .lesson-body td { border: 1px solid var(--line); padding: var(--s-2) var(--s-3); text-align: left; vertical-align: top; }
+.lesson-body th { background: var(--surface-2); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); }
+
+.lesson-body .problem { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-1); margin: var(--s-4) 0; overflow: hidden; }
+.lesson-body .phead { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-2) var(--s-4); border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.lesson-body .pid { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--brand); }
+.lesson-body .db { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-dim); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 1px 7px; }
+.lesson-body .pbody { padding: var(--s-2) var(--s-4) var(--s-4); }
+.lesson-body .chip { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.05em; text-transform: uppercase; border-radius: var(--r-sm); padding: 2px var(--s-2); margin-left: auto; }
+.lesson-body .chip.warmup { background: var(--ok-soft); color: var(--ok); }
+.lesson-body .chip.core { background: var(--info-soft); color: var(--info); }
+.lesson-body .chip.interview { background: var(--brand-soft); color: var(--brand); }
+.lesson-body .chip.hard { background: var(--err-soft); color: var(--err); }
+.lesson-body .done { margin-left: var(--s-2); accent-color: var(--ok); width: 15px; height: 15px; cursor: pointer; }
+
+.lesson-body details.sol, .lesson-body details.hint { margin-top: var(--s-3); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); }
+.lesson-body details.hint { border-style: dashed; background: transparent; }
+.lesson-body details summary { cursor: pointer; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; padding: var(--s-2) var(--s-4); user-select: none; }
+.lesson-body details.sol summary { color: var(--ok); }
+.lesson-body details.hint summary { color: var(--brand); }
+.lesson-body details[open] summary { border-bottom: 1px solid var(--line); }
+.lesson-body details .sbody { padding: var(--s-1) var(--s-4) var(--s-3); font-size: var(--text-sm); }
+.lesson-body details.sol pre { border: none; background: transparent; padding: var(--s-2) 0; margin: var(--s-1) 0; }
+
+.lesson-body .session { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-1); padding: var(--s-3) var(--s-4); margin: var(--s-3) 0; }
+.lesson-body .shead { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--brand); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--s-1); }
