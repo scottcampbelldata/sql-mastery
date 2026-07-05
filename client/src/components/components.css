@@ -36,6 +36,7 @@
 .callout-tag { display: block; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--info); margin-bottom: var(--s-1); }
 .callout-warn { border-left-color: var(--err); } .callout-warn .callout-tag { color: var(--err); }
 .callout-tip { border-left-color: var(--ok); } .callout-tip .callout-tag { color: var(--ok); }
+.callout-caution { border-left-color: var(--brand); } .callout-caution .callout-tag { color: var(--brand); }
 
 /* empty state */
 .empty-state { text-align: center; padding: var(--s-7) var(--s-5); color: var(--ink-dim); }
@@ -74,3 +75,9 @@
 
 /* sql editor */
 .sql-editor-frame { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+
+/* a11y */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

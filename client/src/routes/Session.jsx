@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useCurriculum } from '../state/CurriculumContext.jsx';
 import { AppShell } from '../components/AppShell.jsx';
@@ -20,6 +20,18 @@ export default function Session() {
   const firstIncomplete = session.exerciseIds.find((id) => !progress.completed[id]) || session.exerciseIds[0];
   const activeId = exerciseId && session.exerciseIds.includes(exerciseId) ? exerciseId : firstIncomplete;
   const exercise = curriculum.exercises.find((e) => e.id === activeId);
+
+  // Canonicalize a bad exercise id in the URL instead of silently diverging from it.
+  if (exerciseId && exerciseId !== activeId) {
+    return <Navigate replace to={`/session/${session.id}/${activeId}`} />;
+  }
+  if (!exercise) {
+    return (
+      <AppShell breadcrumb={<span className="here">{session.title}</span>}>
+        <EmptyState title="Exercise not found" />
+      </AppShell>
+    );
+  }
 
   const goTo = (exId) => navigate(`/session/${session.id}/${exId}`);
   const nextTarget = (() => {
