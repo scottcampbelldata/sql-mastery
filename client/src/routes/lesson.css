@@ -7,7 +7,7 @@
 
 .lesson-body { min-width: 0; }
 .lesson-body h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-3); }
-.lesson-body h2 { font-size: var(--text-xl); margin: var(--s-7) 0 var(--s-3); padding-top: var(--s-4); border-top: 1px solid var(--line); }
+.lesson-body h2 { font-size: var(--text-xl); margin: var(--s-7) 0 var(--s-3); padding-top: var(--s-4); border-top: 1px solid var(--line); scroll-margin-top: calc(var(--topbar-h) + var(--s-2)); }
 .lesson-body h3 { font-size: var(--text-lg); margin: var(--s-5) 0 var(--s-2); }
 .lesson-body .eyebrow { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); margin: 0 0 var(--s-1); }
 .lesson-body .lede { color: var(--ink-dim); font-size: 1.05rem; max-width: 64ch; }
