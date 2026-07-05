@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useCurriculum } from '../state/CurriculumContext.jsx';
 import { AppShell } from '../components/AppShell.jsx';
-import { Button, Pill, Card, ProgressMeter, EmptyState } from '../components/ui.jsx';
+import { Button, Pill, ProgressMeter, EmptyState } from '../components/ui.jsx';
 import { percent, completedCount, sessionComplete, currentSession } from '../lib/curriculum.js';
 import { useState } from 'react';
 import './dashboard.css';
