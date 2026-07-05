@@ -30,12 +30,15 @@ describe('learning-path client helpers', () => {
     expect(JSON.parse(localStorage.getItem(LEARNING_KEY)).sessionCounter).toBe(4); // migrated + persisted
   });
 
-  it('currentPhase is the first phase with a not-strong concept', () => {
+  it('currentPhase stays on a phase until its concepts are strong AND its checkpoints pass', () => {
     const s = loadLearning();
     expect(currentPhase(phases, s).id).toBe('foundations');
     strong(s, 'select-all', ['a', 'b', 'c']);
     strong(s, 'where', ['a', 'b', 'c']);
-    expect(currentPhase(phases, s).id).toBe('joins'); // foundations skills all strong
+    // Concepts all strong, but cpB is not yet passed → foundations is not left, joins stays locked.
+    expect(currentPhase(phases, s).id).toBe('foundations');
+    recordCheckpointResult(s, phases[0].checkpoints[0], 6); // pass cpB
+    expect(currentPhase(phases, s).id).toBe('joins'); // now foundations has fully graduated
   });
 
   it('phaseGraduation reports per-phase strong counts and completion', () => {
