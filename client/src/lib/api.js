@@ -1,9 +1,20 @@
 async function request(url, options) {
-  const response = await fetch(url, options);
+  let response;
+  try {
+    response = await fetch(url, options);
+  } catch {
+    const error = new Error('Could not reach the local server. Is `npm start` running?');
+    error.code = 'NETWORK';
+    throw error;
+  }
+  // Server always sends JSON; tolerate non-JSON bodies (proxies, hard crashes) with an empty object.
   const body = await response.json().catch(() => ({}));
   if (!response.ok) {
     const error = new Error(body.error || 'Request failed');
-    Object.assign(error, { code: body.code, hint: body.hint, position: body.position, detail: body.detail });
+    const extras = { code: body.code, hint: body.hint, position: body.position, detail: body.detail };
+    for (const [key, value] of Object.entries(extras)) {
+      if (value !== undefined) error[key] = value;
+    }
     throw error;
   }
   return body;
