@@ -2,7 +2,7 @@
 // execution. Requires `npm start` running on PORT (default 3000). Fails loudly on any
 // query that errors, returns zero rows, or is non-deterministic (differs across two runs).
 const http = require('http');
-const { getFoundations } = require('../src/foundations');
+const { getLearningPath } = require('../src/learning-path');
 
 const PORT = process.env.PORT || 3000;
 
@@ -30,7 +30,7 @@ function runQuery(database, sql) {
 }
 
 async function main() {
-  const { exercises } = getFoundations();
+  const { exercises } = getLearningPath();
   let failures = 0;
   for (const exercise of exercises) {
     try {
