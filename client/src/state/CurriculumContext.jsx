@@ -12,9 +12,14 @@ export function CurriculumProvider({ children }) {
   const [activeSessionId, setActiveSessionIdState] = useState(() => localStorage.getItem(ACTIVE_SESSION_KEY) || '');
 
   useEffect(() => {
-    api.curriculum().then(setCurriculum).catch((e) => setError(e.message));
+    let cancelled = false;
+    api.curriculum()
+      .then((data) => { if (!cancelled) setCurriculum(data); })
+      .catch((e) => { if (!cancelled) setError(e.message); });
+    return () => { cancelled = true; };
   }, []);
 
+  // Mutators must assign new leaf objects (never mutate existing leaves) — only the top-level maps are cloned.
   const updateProgress = useCallback((mutate) => {
     setProgress((prev) => {
       const next = { completed: { ...prev.completed }, attempts: { ...prev.attempts }, lastSql: { ...prev.lastSql } };
