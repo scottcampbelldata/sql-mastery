@@ -34,3 +34,14 @@
 .cp-dot.pass { background: var(--ok); border-color: transparent; }
 .cp-dot.fail { background: var(--err); border-color: transparent; }
 .cp-dot.current { border-color: var(--brand); }
+
+.fnd-phase { border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s-4) var(--s-5); margin-bottom: var(--s-4); background: var(--surface-1); }
+.fnd-phase.active { border-color: var(--brand); }
+.fnd-phase.locked { opacity: 0.6; }
+.fnd-phase-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-3); }
+.fnd-phase-kicker { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand); }
+.fnd-phase-head h2 { font-size: var(--text-lg); margin: var(--s-1) 0; }
+.fnd-phase-head p { color: var(--ink-dim); font-size: var(--text-sm); margin: 0; max-width: 60ch; }
+.fnd-phase-score { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--ink-dim); flex: none; }
+.fnd-phase-lockmsg { color: var(--ink-faint); font-size: var(--text-sm); margin: var(--s-2) 0 0; }
+.fnd-step-tier { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-dim); }
