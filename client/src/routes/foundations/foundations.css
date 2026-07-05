@@ -1,0 +1,36 @@
+.fnd-home-head h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-2); }
+.fnd-home-head .goal { color: var(--ink-dim); max-width: 65ch; }
+
+.teach-card { background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s-5); margin-bottom: var(--s-4); }
+.teach-kicker { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); }
+.teach-card h2 { font-size: var(--text-xl); margin: var(--s-1) 0 var(--s-3); }
+.teach-plain { color: var(--ink-strong); max-width: 70ch; }
+.teach-model { color: var(--ink); max-width: 70ch; }
+.teach-example { margin-top: var(--s-3); border-left: 3px solid var(--brand); padding-left: var(--s-4); }
+.teach-example-label { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
+.teach-example pre { margin: var(--s-2) 0; }
+.teach-example p { color: var(--ink-dim); font-size: var(--text-sm); margin: 0; }
+
+.fnd-rep { display: flex; flex-direction: column; gap: var(--s-3); border-top: 1px solid var(--line); padding-top: var(--s-4); margin-top: var(--s-4); }
+.fnd-rep-head { display: flex; gap: var(--s-2); align-items: center; }
+.fnd-task { color: var(--ink-strong); font-size: var(--text-md); max-width: 75ch; margin: 0; }
+.fnd-actions { display: flex; gap: var(--s-2); align-items: center; flex-wrap: wrap; }
+
+.fnd-path { display: flex; flex-direction: column; gap: var(--s-2); margin: var(--s-4) 0; }
+.fnd-step { display: flex; align-items: center; gap: var(--s-3); background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s-3) var(--s-4); }
+.fnd-step.strong { border-color: var(--ok); }
+.fnd-step .fnd-step-num { display: grid; place-items: center; width: 26px; height: 26px; flex: none; border-radius: 50%; font-family: var(--font-mono); font-size: var(--text-xs); border: 1px solid var(--line); color: var(--ink-dim); }
+.fnd-step.strong .fnd-step-num { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.fnd-step-body { flex: 1; min-width: 0; }
+.fnd-step-body strong { color: var(--ink-strong); display: block; font-size: var(--text-sm); }
+.fnd-step-meter { height: 4px; border-radius: 2px; background: var(--surface-2); margin-top: 6px; overflow: hidden; }
+.fnd-step-meter span { display: block; height: 100%; background: var(--brand); }
+.fnd-checkpoint-row { border-style: dashed; }
+
+.fnd-session-progress { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--s-3); }
+.fnd-done { text-align: center; padding: var(--s-7) var(--s-5); }
+.cp-dots { display: flex; gap: var(--s-2); margin: var(--s-3) 0; }
+.cp-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--line); }
+.cp-dot.pass { background: var(--ok); border-color: transparent; }
+.cp-dot.fail { background: var(--err); border-color: transparent; }
+.cp-dot.current { border-color: var(--brand); }
