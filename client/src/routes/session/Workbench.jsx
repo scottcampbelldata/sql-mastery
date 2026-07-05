@@ -70,7 +70,9 @@ export function Workbench({ exercise, session, nextTarget }) {
         setFeedback({
           tone: body.feedbackType === 'error' ? 'err' : 'warn',
           title: body.feedbackType === 'error' ? 'Your SQL did not run' : 'Close, but not correct yet',
-          message: body.hint || body.message
+          message: body.feedbackType === 'error'
+            ? [body.message, body.hint].filter(Boolean).join(' — ')
+            : (body.hint || body.message)
         });
       }
     } catch (error) {
