@@ -1,0 +1,34 @@
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--text-md); line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink-strong); line-height: 1.25; margin: 0; }
+p { margin: var(--s-2) 0; }
+a { color: var(--info); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+  font-family: var(--font-mono); font-size: 0.88em; color: var(--ink-strong);
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 0.08em 0.35em;
+}
+pre {
+  background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: var(--s-4); overflow-x: auto; font-family: var(--font-mono);
+  font-size: var(--text-sm); line-height: 1.6; color: var(--ink);
+}
+/* legacy lesson syntax spans keep working */
+pre .k { color: var(--syn-keyword); font-weight: 600; }
+pre .f { color: var(--syn-function); }
+pre .s { color: var(--syn-string); }
+pre .c { color: var(--syn-comment); font-style: italic; }
+pre .n { color: var(--syn-number); }
+kbd {
+  font-family: var(--font-mono); font-size: 0.8em; background: var(--surface-2);
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: var(--r-sm); padding: 1px 6px;
+}
+::selection { background: var(--brand-soft); }
+:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+button { font-family: inherit; }

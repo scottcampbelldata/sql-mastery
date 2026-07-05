@@ -6,7 +6,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test test/*.test.js"
+    "dev": "npm --prefix client run dev",
+    "extract-lessons": "node scripts/extract-lessons.js",
+    "build": "node scripts/extract-lessons.js && npm --prefix client run build",
+    "test": "node --test test/*.test.js && npm --prefix client test"
   },
   "dependencies": {
     "dotenv": "^17.2.3",

@@ -4,7 +4,7 @@ const path = require('node:path');
 
 const { buildCurriculum } = require('../src/curriculum-service');
 
-const rootDir = path.join(__dirname, '..');
+const rootDir = path.join(__dirname, '..', 'content');
 
 test('buildCurriculum parses the existing workbook into many guided exercises', () => {
   const curriculum = buildCurriculum({ rootDir });

@@ -1,0 +1,40 @@
+.kicker { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); }
+.continue-card { display: grid; grid-template-columns: 1fr 280px; gap: var(--s-6); padding: var(--s-6); }
+.continue-copy h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-2); }
+.continue-copy .goal { color: var(--ink-dim); max-width: 60ch; margin-bottom: var(--s-4); }
+.continue-stats { display: flex; flex-direction: column; gap: var(--s-4); justify-content: center; border-left: 1px solid var(--line); padding-left: var(--s-6); }
+.stat-row { display: flex; gap: var(--s-5); }
+.stat-row div { display: flex; flex-direction: column; }
+.stat-row strong { font-family: var(--font-display); font-size: var(--text-xl); color: var(--ink-strong); }
+.stat-row span { font-size: var(--text-xs); color: var(--ink-dim); }
+
+.dash-section { margin-top: var(--s-6); }
+.dash-section h2 { font-size: var(--text-lg); margin-bottom: var(--s-3); }
+
+.week-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--s-3); }
+.week-card {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4); color: var(--ink); transition: border-color var(--ease);
+}
+.week-card:hover { border-color: var(--line-strong); text-decoration: none; }
+.week-card.current { border-color: var(--brand); }
+.week-card.done .week-num { color: var(--ok); }
+.week-num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-dim); }
+.week-card strong { color: var(--ink-strong); font-size: var(--text-sm); line-height: 1.35; }
+
+.queue { display: flex; flex-direction: column; gap: var(--s-2); margin-bottom: var(--s-3); }
+.queue-row {
+  display: flex; align-items: center; gap: var(--s-4);
+  background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4); color: var(--ink); transition: border-color var(--ease);
+}
+.queue-row:hover { border-color: var(--line-strong); text-decoration: none; }
+.queue-copy { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.queue-copy strong { color: var(--ink-strong); font-size: var(--text-sm); }
+.queue-copy span { color: var(--ink-dim); font-size: var(--text-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 860px) {
+  .continue-card { grid-template-columns: 1fr; }
+  .continue-stats { border-left: none; padding-left: 0; }
+}
