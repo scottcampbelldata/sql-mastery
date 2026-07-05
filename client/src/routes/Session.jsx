@@ -43,7 +43,7 @@ export default function Session() {
 
   return (
     <AppShell breadcrumb={<>
-      <Link to="/">Dashboard</Link><span className="sep">/</span>
+      <Link to="/academy">Dashboard</Link><span className="sep">/</span>
       <span>Week {session.week}</span><span className="sep">/</span>
       <span className="here">{session.title}</span>
     </>}>
