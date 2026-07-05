@@ -9,6 +9,7 @@ function createApp(options = {}) {
   const curriculumService = options.curriculumService || { buildCurriculum };
   const staticDir = options.staticDir || path.join(__dirname, '..');
   const contentDir = options.contentDir || path.join(__dirname, '..', 'content');
+  const clientDir = options.clientDir || path.join(__dirname, '..', 'client', 'dist');
 
   app.disable('x-powered-by');
   app.use(express.json({ limit: '1mb' }));
@@ -103,6 +104,8 @@ function createApp(options = {}) {
       });
     }
   });
+
+  app.use(express.static(clientDir));
 
   app.use(express.static(contentDir, {
     extensions: ['html']
