@@ -3,9 +3,24 @@ import { useEffect, useState } from 'react';
 import { useCurriculum } from '../state/CurriculumContext.jsx';
 import { currentSession, percent } from '../lib/curriculum.js';
 import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress.js';
+import { getTheme, setTheme } from '../theme/theme.js';
 import { ProgressMeter, cx } from './ui.jsx';
 import { LESSONS } from '../lessons/manifest.js';
 import './appshell.css';
+
+function ThemeToggle() {
+  const [theme, setThemeState] = useState(getTheme);
+  function flip() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    setThemeState(next);
+  }
+  return (
+    <button className="theme-toggle" onClick={flip} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} title="Toggle light / dark">
+      <span aria-hidden="true">{theme === 'dark' ? '☾' : '☀'}</span>
+    </button>
+  );
+}
 
 export function AppShell({ children, breadcrumb }) {
   const { curriculum, progress, activeSessionId } = useCurriculum();
@@ -30,10 +45,13 @@ export function AppShell({ children, breadcrumb }) {
     <div className={cx('shell', collapsed && 'collapsed', menuOpen && 'menu-open')}>
       <header className="mobile-bar">
         <Link to="/" className="brand-mark">SQL<span>/</span>Mastery</Link>
-        <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}
-          aria-expanded={menuOpen} aria-controls="app-sidebar" aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
-          {menuOpen ? '✕ Close' : '☰ Menu'}
-        </button>
+        <div className="mobile-bar-actions">
+          <ThemeToggle />
+          <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen} aria-controls="app-sidebar" aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
+            {menuOpen ? '✕ Close' : '☰ Menu'}
+          </button>
+        </div>
       </header>
       {menuOpen ? <div className="drawer-backdrop" onClick={() => setMenuOpen(false)} aria-hidden="true" /> : null}
       <aside id="app-sidebar" className="sidebar">
@@ -74,6 +92,8 @@ export function AppShell({ children, breadcrumb }) {
       <div className="main-col">
         <header className="topbar">
           <div className="crumbs">{breadcrumb}</div>
+          <div className="topbar-spacer" />
+          <ThemeToggle />
         </header>
         <main className="main">{children}</main>
       </div>

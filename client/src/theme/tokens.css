@@ -1,51 +1,63 @@
+/* Theme tokens. Light is the default (:root); dark overrides flip on [data-theme="dark"].
+   Component CSS consumes only these semantic names, so both themes come "for free". */
 :root {
-  /* palette */
-  --bg: #0b0e14;
-  --surface-1: #11151d;      /* cards, panels */
-  --surface-2: #171c26;      /* nested panels, table heads, inputs */
-  --line: #232a37;           /* default 1px border */
-  --line-strong: #303948;
-  --ink: #c8d3e0;            /* body text */
-  --ink-strong: #eff4fb;     /* headings, emphasis */
-  --ink-dim: #808ea3;        /* secondary text */
-  --ink-faint: #6d7c92;      /* placeholders, disabled (AA 4.55:1 on --bg) */
+  /* ground + surfaces (warm off-white "Daylight") */
+  --bg: #faf8f3;
+  --surface-1: #ffffff;      /* cards, panels */
+  --surface-2: #f4f1e9;      /* nested panels, table heads, inputs */
+  --surface-3: #efeadf;      /* deeper nesting */
+  --line: #eae4d8;           /* default hairline */
+  --line-strong: #ddd6c7;    /* hover / emphasis */
 
-  /* brand + semantics (meaning only, never decoration) */
-  --brand: #e8a33d;
-  --brand-ink: #1a1206;      /* text on brand */
-  --brand-soft: rgba(232, 163, 61, 0.12);
-  --ok: #4cc38a;
-  --ok-soft: rgba(76, 195, 138, 0.12);
-  --err: #e5645f;
-  --err-soft: rgba(229, 100, 95, 0.12);
-  --info: #6cb2f7;
-  --info-soft: rgba(108, 178, 247, 0.12);
+  /* ink */
+  --ink: #20222b;            /* body text */
+  --ink-strong: #14161c;     /* headings */
+  --ink-dim: #5c5f6b;        /* secondary text */
+  --ink-faint: #93959f;      /* placeholders, disabled, captions */
 
-  /* syntax (code blocks + editor theme) */
-  --syn-keyword: #b180d7;
-  --syn-function: #6cb2f7;
-  --syn-string: #4cc38a;
-  --syn-number: #e8a33d;
-  --syn-comment: #6f809a;    /* AA 4.55:1 on --surface-1 */
+  /* brand (green = growth/progress) */
+  --brand: #0e8f73;
+  --brand-ink: #ffffff;      /* text on solid brand */
+  --brand-soft: #e4f2ec;     /* tint background */
+
+  /* semantics — meaning only */
+  --ok: #0e8f73;   --ok-soft: #e4f2ec;
+  --err: #c0392b;  --err-soft: #f8e7e4;
+  --info: #2b6fb3; --info-soft: #e7eef8;
+  --accent2: #c9701f;  --accent2-soft: #f8ecdb;   /* warm amber — active / streaks */
+
+  /* syntax (light editor: dark ink on light) */
+  --syn-keyword: #0e8f73;
+  --syn-function: #2b6fb3;
+  --syn-string: #b0632a;
+  --syn-number: #9a5417;
+  --syn-comment: #8a8a80;
+
+  /* depth (the old design was flat; give surfaces gentle lift) */
+  --shadow-sm: 0 1px 2px rgba(28, 26, 20, 0.05);
+  --shadow-md: 0 6px 20px -10px rgba(28, 26, 20, 0.18);
+  --shadow-lg: 0 20px 50px -24px rgba(28, 26, 20, 0.30);
 
   /* type */
+  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
-  --text-xs: 0.72rem;   /* mono labels, pills */
-  --text-sm: 0.84rem;   /* code, table cells, secondary */
-  --text-md: 0.95rem;   /* body */
-  --text-lg: 1.15rem;   /* h3 */
-  --text-xl: 1.5rem;    /* h2 / page section */
-  --text-2xl: 2rem;     /* h1 */
+  --text-xs: 0.72rem;
+  --text-sm: 0.84rem;
+  --text-md: 0.95rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.4rem;
 
   /* space (8px grid) */
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
   --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
 
   /* radius + motion */
-  --r-sm: 4px; --r-md: 8px; --r-lg: 12px;
-  --ease: 140ms ease-out;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 18px;
+  --ease: 150ms ease-out;
 
   /* z-index scale */
   --z-raised: 1;
@@ -53,7 +65,42 @@
   --z-overlay: 100;
 
   /* layout */
-  --sidebar-w: 232px;
+  --sidebar-w: 236px;
   --sidebar-w-collapsed: 64px;
-  --topbar-h: 52px;
+  --topbar-h: 56px;
+  --content-max: 1180px;
+}
+
+:root[data-theme="dark"] {
+  /* ground + surfaces (rich "Midnight") */
+  --bg: #0b0c11;
+  --surface-1: #14161f;
+  --surface-2: #191c27;
+  --surface-3: #1e2230;
+  --line: #242736;
+  --line-strong: #2f3446;
+
+  --ink: #eceef5;
+  --ink-strong: #ffffff;
+  --ink-dim: #9aa0b3;
+  --ink-faint: #626879;
+
+  --brand: #4ade9a;
+  --brand-ink: #062015;
+  --brand-soft: rgba(74, 222, 154, 0.13);
+
+  --ok: #4ade9a;   --ok-soft: rgba(74, 222, 154, 0.13);
+  --err: #f2726b;  --err-soft: rgba(242, 114, 107, 0.14);
+  --info: #8b7bff; --info-soft: rgba(139, 123, 255, 0.14);
+  --accent2: #f5b13f;  --accent2-soft: rgba(245, 177, 63, 0.14);
+
+  --syn-keyword: #4ade9a;
+  --syn-function: #8b7bff;
+  --syn-string: #f5b13f;
+  --syn-number: #f5b13f;
+  --syn-comment: #6f809a;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 22px 55px -26px rgba(0, 0, 0, 0.65);
 }
