@@ -25,6 +25,11 @@
 .wb-lesson-link { margin-left: auto; font-family: var(--font-mono); font-size: var(--text-xs); }
 .workbench h2 { font-size: var(--text-xl); }
 .wb-task { color: var(--ink-strong); font-size: var(--text-md); max-width: 75ch; margin: 0; }
+.wb-editor-label {
+  display: block; margin-bottom: var(--s-1);
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim);
+}
 .wb-actions { display: flex; gap: var(--s-2); align-items: center; flex-wrap: wrap; }
 .wb-next { margin-left: auto; display: inline-flex; align-items: center; text-decoration: none; }
 .answer { margin: 0; }

@@ -5,6 +5,10 @@
   background: var(--surface-1); border-right: 1px solid var(--line);
   padding: var(--s-4) var(--s-3); overflow-y: auto;
 }
+/* Mobile-only header bar; hidden on desktop. */
+.mobile-bar { display: none; }
+.drawer-backdrop { display: none; }
+
 .brand { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s-5); }
 .brand-mark { font-family: var(--font-display); font-weight: 700; color: var(--ink-strong); font-size: 1.02rem; white-space: nowrap; }
 .brand-mark span { color: var(--brand); }
@@ -23,7 +27,7 @@
 .nav-item.active { background: var(--brand-soft); color: var(--brand); }
 .nav-ico { font-family: var(--font-mono); font-size: var(--text-xs); width: 18px; text-align: center; flex: none; }
 .collapsed .nav-label, .collapsed .nav-group-label, .collapsed .sidebar-foot { display: none; }
-.nav-group { margin: var(--s-3) 0; }
+.nav-group { margin: 0 0 var(--s-3); }
 .nav-group-label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); padding: var(--s-2) var(--s-3) var(--s-1); }
 .nav-sub { padding-top: 5px; padding-bottom: 5px; }
 .sidebar-foot { padding: var(--s-3); border-top: 1px solid var(--line); }
@@ -44,8 +48,41 @@
 
 @media (max-width: 860px) {
   .shell, .shell.collapsed { grid-template-columns: 1fr; }
-  .sidebar { position: static; height: auto; flex-direction: row; align-items: center; gap: var(--s-3); overflow-x: auto; }
-  .side-nav { flex-direction: row; }
-  .nav-group { display: contents; }
-  .nav-group-label, .sidebar-foot { display: none; }
+
+  /* Compact header with a menu button replaces the sidebar. */
+  .mobile-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: var(--z-topbar);
+    height: var(--topbar-h); padding: 0 var(--s-4);
+    background: var(--surface-1); border-bottom: 1px solid var(--line);
+  }
+  .menu-btn {
+    border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+    border-radius: var(--r-md); padding: var(--s-1) var(--s-3);
+    font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+  }
+  .menu-btn:hover { color: var(--ink-strong); border-color: var(--line-strong); }
+
+  /* The full sidebar becomes an off-canvas drawer — every destination stays reachable. */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw);
+    z-index: calc(var(--z-overlay) + 1);
+    transform: translateX(-105%); transition: transform 180ms ease-out;
+    box-shadow: none;
+  }
+  .menu-open .sidebar { transform: translateX(0); border-right: 1px solid var(--line-strong); }
+  .drawer-backdrop {
+    display: block; position: fixed; inset: 0; z-index: var(--z-overlay);
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  /* The drawer always shows full labels and the progress meter, even if the
+     desktop sidebar was collapsed to an icon rail. */
+  .collapsed .sidebar .nav-label,
+  .collapsed .sidebar .nav-group-label,
+  .collapsed .sidebar .sidebar-foot { display: block; }
+  .collapsed .sidebar .brand-mark { display: inline; }
+  .collapse-btn { display: none; }
+
+  .main { padding: var(--s-4) var(--s-4) var(--s-7); }
 }
