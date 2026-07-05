@@ -11,10 +11,24 @@
 .teach-example pre { margin: var(--s-2) 0; }
 .teach-example p { color: var(--ink-dim); font-size: var(--text-sm); margin: 0; }
 
-.fnd-rep { display: flex; flex-direction: column; gap: var(--s-3); border-top: 1px solid var(--line); padding-top: var(--s-4); margin-top: var(--s-4); }
+.fnd-rep { margin-top: var(--s-4); }
 .fnd-rep-head { display: flex; gap: var(--s-2); align-items: center; }
-.fnd-task { color: var(--ink-strong); font-size: var(--text-md); max-width: 75ch; margin: 0; }
+.fnd-task { color: var(--ink-strong); font-size: var(--text-lg); font-weight: 500; line-height: 1.4; max-width: 60ch; margin: 0; }
 .fnd-actions { display: flex; gap: var(--s-2); align-items: center; flex-wrap: wrap; }
+
+/* Two-pane workbench: write on the left, see results on the right (no scrolling between). */
+.rep-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-5); align-items: start; }
+.rep-left { display: flex; flex-direction: column; gap: var(--s-4); min-width: 0; }
+.rep-editor { display: flex; flex-direction: column; }
+.rep-right { min-width: 0; position: sticky; top: calc(var(--topbar-h) + var(--s-4)); }
+.rep-right .dock { margin-top: 0; background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+.rep-right .dock .tab-bar { padding: var(--s-2) var(--s-4) 0; }
+.rep-right .dock-panel { max-height: 62vh; padding: var(--s-4); }
+.rep-right .table-note { padding: var(--s-6) var(--s-4); text-align: center; }
+@media (max-width: 900px) {
+  .rep-split { grid-template-columns: 1fr; }
+  .rep-right { position: static; }
+}
 
 .fnd-path { display: flex; flex-direction: column; gap: var(--s-2); margin: var(--s-4) 0; }
 .fnd-step { display: flex; align-items: center; gap: var(--s-3); background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s-3) var(--s-4); }
