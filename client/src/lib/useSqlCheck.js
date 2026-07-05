@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from './api.js';
+import { hasSqlBlank, starterSqlForExercise } from './sqlScaffold.js';
 
 const TONE = { ok: 'tip', err: 'warn', warn: 'caution', info: 'info' };
 
 // Runs one graded SQL check against an exercise's expectedSql. onResult(correct, body)
 // lets the caller record mastery / advance. Feedback tone maps to Callout tones.
 export function useSqlCheck(exercise, { onResult, onAttempt } = {}) {
-  const [sql, setSql] = useState(exercise.starterSql || '');
+  const [sql, setSql] = useState(() => starterSqlForExercise(exercise));
   const [feedback, setFeedback] = useState(null);
   const [result, setResult] = useState(null);
   const [checking, setChecking] = useState(false);
 
+  useEffect(() => {
+    setSql(starterSqlForExercise(exercise));
+    setFeedback(null);
+    setResult(null);
+    setChecking(false);
+  }, [exercise.id, exercise.starterSql, exercise.expectedSql]);
+
   async function runCheck() {
     if (checking) return;
     const trimmed = sql.trim();
-    if (!trimmed || trimmed === (exercise.starterSql || '').trim()) {
-      setFeedback({ toneClass: TONE.warn, title: 'Write your query first', message: 'Replace the blank (____) or type your SQL, then run it.' });
+    if (!trimmed) {
+      setFeedback({ toneClass: TONE.warn, title: 'Write your query first', message: 'Use the scaffold or type your full SQL, then run it.' });
+      return;
+    }
+    if (hasSqlBlank(trimmed)) {
+      onAttempt?.();
+      setFeedback({ toneClass: TONE.warn, title: 'Fill the blanks', message: 'Replace every ____ marker with the missing SQL, or clear the editor and type the whole query.' });
       return;
     }
     setChecking(true);
