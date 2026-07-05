@@ -383,20 +383,9 @@ function buildCurriculum(options = {}) {
   const weeks = buildWeeks(sessions);
   const checkableExercises = exercises.filter((exercise) => exercise.checkable).length;
 
-  // Task 1/2 make src/foundations.js a shim over the full multi-phase learning path.
-  // Task 3 will expose that path as `learningPath` and update the content test. Until
-  // then, keep the back-compat 8-concept `foundations` view scoped to the Foundations
-  // phase so existing consumers/tests see the original Foundations-only shape.
+  // The full multi-phase learning path (Foundations -> Joins -> ...) flattened into
+  // the generic track shape the client engine consumes, plus the grouped `phases`.
   const learningPath = getLearningPath();
-  const foundationsPhase = learningPath.phases.find((p) => p.id === 'foundations');
-  const foundationsConcepts = foundationsPhase.concepts;
-  const foundations = {
-    dataset: learningPath.dataset,
-    concepts: foundationsConcepts,
-    checkpoints: foundationsPhase.checkpoints,
-    skills: foundationsConcepts.map((c) => ({ skill: c.skill, conceptId: c.id, title: c.title, order: c.order, phaseId: c.phaseId })),
-    exercises: foundationsConcepts.flatMap((c) => c.exercises)
-  };
 
   return {
     product: {
@@ -407,7 +396,7 @@ function buildCurriculum(options = {}) {
     weeks,
     sessions,
     exercises,
-    foundations,
+    learningPath,
     stats: {
       totalWeeks: weeks.length,
       totalSessions: sessions.length,
