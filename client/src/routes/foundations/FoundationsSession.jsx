@@ -4,7 +4,6 @@ import { AppShell } from '../../components/AppShell.jsx';
 import { EmptyState, Button } from '../../components/ui.jsx';
 import { useFoundations } from '../../state/FoundationsContext.jsx';
 import { buildTodaySession, advanceSession } from '../../lib/foundations.js';
-import { TeachCard } from './TeachCard.jsx';
 import { FoundationsRep } from './FoundationsRep.jsx';
 import './foundations.css';
 
@@ -51,18 +50,19 @@ export default function FoundationsSession() {
   const isLast = index === steps.length - 1;
   const showTeach = step.type === 'rep' && (index === 0 || steps[index - 1].type !== 'rep');
   const label = step.type === 'review'
-    ? `Review: ${step.concept.title}`
-    : `New — ${step.concept.title}`;
+    ? `Review · ${step.concept.title}`
+    : `New · ${step.concept.title}`;
+  const stepText = `Step ${index + 1} of ${steps.length}${step.type === 'review' ? ' · spaced review' : ''}`;
 
   function next() { if (isLast) completeSession(); else setIndex((i) => i + 1); }
 
   return (
     <AppShell breadcrumb={<span className="here">Learn — Foundations</span>}>
-      <div className="fnd-session-progress">Step {index + 1} of {steps.length}{step.type === 'review' ? ' · spaced review' : ''}</div>
-      {showTeach ? <TeachCard concept={step.concept} /> : null}
-      <FoundationsRep key={step.exercise.id} exercise={step.exercise} label={label} kind={step.type === 'review' ? 'review' : 'new'} />
-      <div style={{ marginTop: 'var(--s-4)' }}>
-        <Button variant="secondary" onClick={next}>{isLast ? 'Finish session' : 'Next →'}</Button>
+      <FoundationsRep key={step.exercise.id} exercise={step.exercise}
+        label={label} kind={step.type === 'review' ? 'review' : 'new'}
+        teach={showTeach ? step.concept.teach : null} stepText={stepText} />
+      <div className="session-footer">
+        <Button variant="primary" onClick={next}>{isLast ? 'Finish session' : 'Next exercise →'}</Button>
       </div>
     </AppShell>
   );

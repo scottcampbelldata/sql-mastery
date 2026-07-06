@@ -1,55 +1,56 @@
-/* Theme tokens. Light is the default (:root); dark overrides flip on [data-theme="dark"].
+/* Theme tokens — LearnSQL/Vertabelo-inspired: bright, clean, professional, sans-serif.
+   Light is default (:root); dark overrides flip on [data-theme="dark"].
    Component CSS consumes only these semantic names, so both themes come "for free". */
 :root {
-  /* ground + surfaces (warm off-white "Daylight") */
-  --bg: #faf8f3;
-  --surface-1: #ffffff;      /* cards, panels */
-  --surface-2: #f4f1e9;      /* nested panels, table heads, inputs */
-  --surface-3: #efeadf;      /* deeper nesting */
-  --line: #eae4d8;           /* default hairline */
-  --line-strong: #ddd6c7;    /* hover / emphasis */
+  /* ground + surfaces (clean, cool white) */
+  --bg: #f5f7fb;
+  --surface-1: #ffffff;      /* cards, panels, console */
+  --surface-2: #eef2f8;      /* nested panels, table heads, inputs */
+  --surface-3: #e7ecf4;      /* deeper nesting */
+  --line: #e3e8f1;           /* default hairline */
+  --line-strong: #cfd8e6;    /* hover / emphasis */
 
   /* ink */
-  --ink: #20222b;            /* body text */
-  --ink-strong: #14161c;     /* headings */
-  --ink-dim: #5c5f6b;        /* secondary text */
-  --ink-faint: #93959f;      /* placeholders, disabled, captions */
+  --ink: #1b2433;            /* body text */
+  --ink-strong: #0e1726;     /* headings */
+  --ink-dim: #59647a;        /* secondary text */
+  --ink-faint: #8b96ab;      /* placeholders, captions */
 
-  /* brand (green = growth/progress) */
-  --brand: #0e8f73;
+  /* brand — professional blue */
+  --brand: #2563eb;
   --brand-ink: #ffffff;      /* text on solid brand */
-  --brand-soft: #e4f2ec;     /* tint background */
+  --brand-soft: #e7efff;     /* tint background */
 
-  /* semantics — meaning only */
-  --ok: #0e8f73;   --ok-soft: #e4f2ec;
-  --err: #c0392b;  --err-soft: #f8e7e4;
-  --info: #2b6fb3; --info-soft: #e7eef8;
-  --accent2: #c9701f;  --accent2-soft: #f8ecdb;   /* warm amber — active / streaks */
+  /* semantics */
+  --ok: #15925f;   --ok-soft: #e1f4ec;
+  --err: #d13b3b;  --err-soft: #fbe9e9;
+  --info: #2563eb; --info-soft: #e7efff;
+  --accent2: #d97a1e;  --accent2-soft: #fbeedb;   /* amber — active / in-progress */
 
-  /* syntax (light editor: dark ink on light) */
-  --syn-keyword: #0e8f73;
-  --syn-function: #2b6fb3;
-  --syn-string: #b0632a;
-  --syn-number: #9a5417;
-  --syn-comment: #8a8a80;
+  /* syntax (light editor: readable ink on white) */
+  --syn-keyword: #2563eb;
+  --syn-function: #7c3aed;
+  --syn-string: #15925f;
+  --syn-number: #c2591b;
+  --syn-comment: #8b96ab;
 
-  /* depth (the old design was flat; give surfaces gentle lift) */
-  --shadow-sm: 0 1px 2px rgba(28, 26, 20, 0.05);
-  --shadow-md: 0 6px 20px -10px rgba(28, 26, 20, 0.18);
-  --shadow-lg: 0 20px 50px -24px rgba(28, 26, 20, 0.30);
+  /* depth — soft, product-like */
+  --shadow-sm: 0 1px 2px rgba(20, 33, 61, 0.06);
+  --shadow-md: 0 4px 16px -6px rgba(20, 33, 61, 0.12);
+  --shadow-lg: 0 18px 44px -20px rgba(20, 33, 61, 0.22);
 
-  /* type */
-  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  /* type — all clean sans */
+  --font-serif: 'Iowan Old Style', Georgia, serif;
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
   --text-xs: 0.72rem;
   --text-sm: 0.84rem;
   --text-md: 0.95rem;
   --text-lg: 1.15rem;
   --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.4rem;
+  --text-2xl: 1.95rem;
+  --text-3xl: 2.35rem;
 
   /* space (8px grid) */
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
@@ -68,37 +69,36 @@
   --sidebar-w: 236px;
   --sidebar-w-collapsed: 64px;
   --topbar-h: 56px;
-  --content-max: 1180px;
+  --content-max: 1220px;
 }
 
 :root[data-theme="dark"] {
-  /* ground + surfaces (rich "Midnight") */
-  --bg: #0b0c11;
-  --surface-1: #14161f;
-  --surface-2: #191c27;
-  --surface-3: #1e2230;
-  --line: #242736;
-  --line-strong: #2f3446;
+  --bg: #0d111a;
+  --surface-1: #151a26;
+  --surface-2: #1b2130;
+  --surface-3: #212838;
+  --line: #262d3d;
+  --line-strong: #333c50;
 
-  --ink: #eceef5;
+  --ink: #e9edf5;
   --ink-strong: #ffffff;
-  --ink-dim: #9aa0b3;
-  --ink-faint: #626879;
+  --ink-dim: #9aa4b8;
+  --ink-faint: #626d82;
 
-  --brand: #4ade9a;
-  --brand-ink: #062015;
-  --brand-soft: rgba(74, 222, 154, 0.13);
+  --brand: #4d8dff;
+  --brand-ink: #06122b;
+  --brand-soft: rgba(77, 141, 255, 0.14);
 
-  --ok: #4ade9a;   --ok-soft: rgba(74, 222, 154, 0.13);
+  --ok: #3ddc97;   --ok-soft: rgba(61, 220, 151, 0.14);
   --err: #f2726b;  --err-soft: rgba(242, 114, 107, 0.14);
-  --info: #8b7bff; --info-soft: rgba(139, 123, 255, 0.14);
+  --info: #4d8dff; --info-soft: rgba(77, 141, 255, 0.14);
   --accent2: #f5b13f;  --accent2-soft: rgba(245, 177, 63, 0.14);
 
-  --syn-keyword: #4ade9a;
-  --syn-function: #8b7bff;
-  --syn-string: #f5b13f;
+  --syn-keyword: #4d8dff;
+  --syn-function: #a78bfa;
+  --syn-string: #3ddc97;
   --syn-number: #f5b13f;
-  --syn-comment: #6f809a;
+  --syn-comment: #6b7688;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.55);
