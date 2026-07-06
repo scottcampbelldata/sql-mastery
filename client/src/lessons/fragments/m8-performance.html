@@ -1,6 +1,6 @@
 <p class="eyebrow">-- module 8 / three sessions / <span id="done-count"></span></p>
 <h1>Performance</h1>
-<p class="lede">At senior level nobody expects you to be a DBA. They expect you to (a) read an EXPLAIN plan without panic, (b) know what an index does and when it helps, (c) not write queries that defeat indexes, and (d) talk about all three calmly. Your Stack Overflow database - a quarter-million posts, nearly a million votes - is big enough to make every one of these lessons visible on a stopwatch.</p>
+<p class="lede">At senior level nobody expects you to be a DBA. They expect you to (a) read an EXPLAIN plan without panic - naming every scan and join node, (b) know what an index does and when it helps, including covering and partial indexes, (c) not write queries that defeat indexes, and (d) talk about all three calmly. This module now walks the four scan types and both major join strategies in plans you run live, then makes you reproduce each on your own. Your Stack Overflow database - a quarter-million posts, nearly a million votes - is big enough to make every one of these lessons visible on a stopwatch.</p>
 
 <h2>8.1 EXPLAIN and EXPLAIN ANALYZE</h2>
 <pre><span class="c">-- EXPLAIN shows the plan; EXPLAIN ANALYZE runs the query and shows reality:</span>
@@ -88,6 +88,68 @@
 
 <div class="note"><span class="tag">On this course's databases</span>
 Your <strong>stackoverflow</strong> and <strong>chinook</strong> databases are read-only, and the DDL above rebuilds a table, so this section is read-and-reason rather than a live drill - the runner would reject <code>CREATE TABLE</code>. Picture it on <code>posts</code>: 243k rows spanning 2008-2024, partitioned by year, with the 2016 date-range query you have already run pruning straight to one child. That mental picture is exactly what the interview question tests.</div>
+
+<h2>8.6 Reading a real plan: the four scan types side by side</h2>
+<p>Section 8.1 named the scan nodes. Here they are in plans you can run right now, so the vocabulary sticks. Notice that the planner, not you, picks each one - your job is to read what it chose and judge whether the predicate gave it a good option.</p>
+<pre><span class="c">-- Index Only Scan: the index alone answered it, Heap Fetches: 0.</span>
+<span class="c">-- posttypeid is indexed, and we only ask for a count - nothing off the index needed.</span>
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> posts <span class="k">WHERE</span> posttypeid = <span class="n">1</span>;
+<span class="c">--  Index Only Scan using idx_posts_type on posts  (rows=103026)  Heap Fetches: 0</span>
+
+<span class="c">-- Index Scan: index finds the rows, then fetches each from the heap for the SELECT list.</span>
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> id, score <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>;
+<span class="c">--  Index Scan using idx_posts_owner on posts  (actual rows=5559)  ~8 ms</span></pre>
+<p>And on <code>chinook</code>, one small query shows two more nodes at once - a <strong>Bitmap Heap Scan</strong> (the index found several scattered rows and fetched them in one heap pass) feeding the outer side of a <strong>Nested Loop</strong>:</p>
+<pre><span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> il.track_id, il.unit_price
+<span class="k">FROM</span> invoice i
+<span class="k">JOIN</span> invoice_line il <span class="k">ON</span> il.invoice_id = i.invoice_id
+<span class="k">WHERE</span> i.customer_id = <span class="n">5</span>;
+<span class="c">--  Nested Loop</span>
+<span class="c">--    -> Bitmap Heap Scan on invoice   (Recheck Cond: customer_id = 5)</span>
+<span class="c">--         -> Bitmap Index Scan on invoice_customer_id_idx</span>
+<span class="c">--    -> Index Scan using invoice_line_invoice_id_idx on invoice_line  (loops=7)</span></pre>
+<p><strong>Why it matters:</strong> "there was a seq scan" is not an answer - an answer names the node and says whether it was the right choice for that selectivity. A bitmap heap scan on a few dozen rows is healthy; a seq scan on a table you filtered hard is the smell worth chasing.</p>
+
+<h2>8.7 Join strategies: watch the planner switch</h2>
+<p>Section 8.1 listed nested loop, hash join, and merge join. You can make the planner change its mind between the first two just by changing how many rows survive the filter - and seeing that switch happen is the fastest way to internalize when each wins.</p>
+<pre><span class="c">-- Selective: one customer. Few outer rows, indexed inner side -> Nested Loop.</span>
+<span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> c.first_name, i.total
+<span class="k">FROM</span> customer c
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.customer_id = c.customer_id
+<span class="k">WHERE</span> c.customer_id = <span class="n">5</span>;
+<span class="c">--  Nested Loop  (Index Scan on customer, Bitmap Heap Scan on invoice)</span>
+
+<span class="c">-- Broad: every customer. Both sides scanned whole -> Hash Join.</span>
+<span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> c.first_name, i.total
+<span class="k">FROM</span> customer c
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.customer_id = c.customer_id;
+<span class="c">--  Hash Join  (Hash Cond: i.customer_id = c.customer_id)</span>
+<span class="c">--    -> Seq Scan on invoice</span>
+<span class="c">--    -> Hash -> Seq Scan on customer   (the smaller side is hashed)</span></pre>
+<p>The rule the planner is following: a <strong>nested loop</strong> pays off when the outer side is tiny and the inner side has an index to jump to (a handful of index lookups). A <strong>hash join</strong> wins when both inputs are large and unsorted - it reads each side once and builds a hash table on the smaller one. A <strong>merge join</strong> is its cousin for inputs already sorted on the join key.</p>
+<p><strong>Why it matters:</strong> when someone asks "why did this join get slow," the honest answer is often "the planner switched to a nested loop because a stale estimate told it few rows would match, and many did." You cannot say that sentence unless you have watched the switch happen on data you control - now you have.</p>
+
+<h2>8.8 Covering scans: the SELECT list decides</h2>
+<p>An index does not only speed up the <em>filter</em>. If every column you SELECT is already in the index, PostgreSQL can answer from the index alone and never touch the table heap - an <strong>Index Only Scan</strong>. Add one column that is not in the index and it falls back to a plain Index Scan that visits the heap for every row. Same filter, very different cost.</p>
+<pre><span class="c">-- Covered: owneruserid is the indexed column, and it is all we select.</span>
+<span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> owneruserid <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>;
+<span class="c">--  Index Only Scan using idx_posts_owner   (cost ..116)</span>
+
+<span class="c">-- Not covered: title lives in the heap, so every matching row is fetched.</span>
+<span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> title <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>;
+<span class="c">--  Index Scan using idx_posts_owner   (cost ..3694)</span></pre>
+<p>The cost jumps from about 116 to about 3694 - roughly thirty times - purely from adding <code>title</code> to the SELECT list. This is the concrete mechanism behind "SELECT only what you need" from section 8.4, and it is why a <strong>covering index</strong> (one that carries the extra columns via <code>INCLUDE (...)</code>) is a real tuning tool. A <strong>partial index</strong> (<code>WHERE posttypeid = 2</code> baked into the index) does the mirror trick: it indexes only the rows you ever query, staying small and cheap.</p>
+<pre><span class="c">-- Illustrative DDL (read-only role cannot run these):</span>
+<span class="k">CREATE INDEX</span> idx_posts_owner_cover <span class="k">ON</span> posts (owneruserid) <span class="k">INCLUDE</span> (title);
+<span class="k">CREATE INDEX</span> idx_posts_answers <span class="k">ON</span> posts (owneruserid) <span class="k">WHERE</span> posttypeid = <span class="n">2</span>;</pre>
+<p><strong>Why it matters:</strong> the difference between an index scan and an index-only scan is often decided by a column you did not even filter on. Trimming the SELECT list is the cheapest tuning move there is - no new index, no DBA conversation, just deleting columns you were not using.</p>
 
 <h2>Drills (all timed against your own hardware)</h2>
 
@@ -216,6 +278,67 @@ Your <strong>stackoverflow</strong> and <strong>chinook</strong> databases are r
   <div class="pbody"><p>Verbal drill (no SQL): a stakeholder says the daily report "suddenly got slow this week." Give your diagnostic plan out loud in under 90 seconds. Record yourself. Then compare against the model answer.</p>
   <details class="sol"><summary>model answer</summary><div class="sbody">
 <p>"First I would establish what changed: is the query slower, or is there more data, or is the server busier? I would run EXPLAIN ANALYZE and compare against the plan from when it was fast if we have it. Common culprits in rough order: the table grew past a threshold and the planner changed strategy on stale statistics - ANALYZE fixes that; an index was dropped or a query change made a predicate non-sargable; a join started fanning out because upstream data introduced duplicates - I would check row counts at each step; or concurrent load. I would fix the cheapest probable cause first, measure, and only then consider new indexes, since those carry write costs and need a DBA conversation." That covers method, causes, and judgment - the three things being graded.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.9</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p8-9"></div>
+  <div class="pbody"><p>Sargability, live: <code>owneruserid</code> is indexed. EXPLAIN ANALYZE the count of posts for user 1876 written two ways - once wrapping the column as <code>owneruserid + 0 = 1876</code>, once as the plain <code>owneruserid = 1876</code>. Read where the value 1876 shows up in each plan and explain the runtime gap.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Look for the difference between an <code>Index Cond</code> and a <code>Filter</code>. A condition the index can seek on appears as Index Cond; a test applied to every entry appears as Filter with a "Rows Removed by Filter" line.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid + <span class="n">0</span> = <span class="n">1876</span>;
+
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>;</pre>
+<p>The plain version shows <code>Index Cond: (owneruserid = 1876)</code> - the index seeks straight to Rick James's 5,559 posts in about 2 ms. The <code>+ 0</code> version cannot seek, because the index stores <code>owneruserid</code>, not <code>owneruserid + 0</code>; it degrades to <code>Filter: ((owneruserid + 0) = 1876)</code> that tests every entry (Rows Removed by Filter in the tens of thousands) and runs an order of magnitude slower. Any arithmetic, cast, or function on the indexed column moves it from Index Cond to Filter. That single line in the plan is the whole lesson of section 8.3, made visible.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.10</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-10"></div>
+  <div class="pbody"><p>Covering scan: with the built-in index on <code>owneruserid</code>, EXPLAIN two queries that share the same filter (<code>owneruserid = 1876</code>) but differ only in the SELECT list - one selecting <code>owneruserid</code>, one selecting <code>title</code>. Name the two different scan nodes and explain why one column changed the plan.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">If everything you select is inside the index, the heap is never touched. Which of the two columns lives only in the table heap?</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> owneruserid <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>;
+
+<span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> title <span class="k">FROM</span> posts <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>;</pre>
+<p>The first is an <strong>Index Only Scan</strong> (cost around 116) - <code>owneruserid</code> is in the index, so the table is never read. The second is a plain <strong>Index Scan</strong> (cost around 3694) because <code>title</code> lives in the heap and must be fetched for every one of the ~5,559 matches. Same filter, roughly thirty times the cost, decided entirely by the SELECT list. This is the mechanism behind "SELECT only what you need," and the setup for why a covering index with <code>INCLUDE (title)</code> would restore the index-only scan.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.11</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p8-11"></div>
+  <div class="pbody"><p>Make the planner switch join strategy: EXPLAIN the same customer-to-invoice join twice - once filtered to a single customer (<code>WHERE c.customer_id = 5</code>), once with no filter at all. Report which join node each plan uses and articulate the selectivity rule that flips it.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Few outer rows plus an indexed inner side favors one strategy; two whole tables scanned favors another that hashes the smaller side.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> c.first_name, i.total
+<span class="k">FROM</span> customer c
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.customer_id = c.customer_id
+<span class="k">WHERE</span> c.customer_id = <span class="n">5</span>;
+
+<span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> c.first_name, i.total
+<span class="k">FROM</span> customer c
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.customer_id = c.customer_id;</pre>
+<p>Filtered to one customer, the plan is a <strong>Nested Loop</strong>: one indexed lookup on <code>customer</code>, then a bitmap lookup for that customer's seven invoices - a handful of index probes. Unfiltered, the planner switches to a <strong>Hash Join</strong>, scanning both tables once and building a hash on the smaller <code>customer</code> side. The rule: nested loop wins when the outer side is tiny and the inner side is indexed; hash join wins when both inputs are large and unsorted. A wrong row estimate is exactly what makes the planner pick a nested loop for a set that turns out to be large - the classic "why did it suddenly get slow."</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P8.12</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p8-12"></div>
+  <div class="pbody"><p>Bitmap heap scan, dissected: EXPLAIN ANALYZE the invoice-line detail for one customer (join <code>invoice</code> to <code>invoice_line</code>, <code>WHERE i.customer_id = 5</code>). Identify every node, and explain specifically why the <code>invoice</code> access is a <em>bitmap</em> heap scan rather than a plain index scan, and why the <code>invoice_line</code> access is an index scan run once per invoice.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">A bitmap scan gathers all matching row locations from the index first, then reads the heap in physical order. Look at the "loops=" count on the inner node to see how many times it runs.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> il.track_id, il.unit_price
+<span class="k">FROM</span> invoice i
+<span class="k">JOIN</span> invoice_line il <span class="k">ON</span> il.invoice_id = i.invoice_id
+<span class="k">WHERE</span> i.customer_id = <span class="n">5</span>;</pre>
+<p>Top node: a <strong>Nested Loop</strong>. Its outer side is a <strong>Bitmap Heap Scan on invoice</strong> fed by a <strong>Bitmap Index Scan on invoice_customer_id_idx</strong> - the planner expects several matching invoices (seven here) scattered across the table, so it collects all their locations from the index into a bitmap, then reads those heap pages once in physical order (the <code>Heap Blocks: exact</code> line). That is cheaper than seven separate random index-scan fetches. The inner side is an <strong>Index Scan on invoice_line_invoice_id_idx</strong> with <code>loops=7</code>: once per surviving invoice, seeking that invoice's lines. Whole thing runs in a fraction of a millisecond. Reading a nested plan top-down and explaining every node is exactly the "can read a plan" bar.</p></div></details>
   </div>
 </div>
 

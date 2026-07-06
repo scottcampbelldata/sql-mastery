@@ -15,9 +15,9 @@
 </div></header>
 
 <div class="wrap">
-<p class="eyebrow">-- module 6 / eight sessions / <span id="done-count"></span></p>
+<p class="eyebrow">-- module 6 / ten sessions / <span id="done-count"></span></p>
 <h1>Window Functions</h1>
-<p class="lede">This is the module that decides senior interviews. A window function computes across a set of related rows <strong>without collapsing them</strong> - GROUP BY answers "what is the total per group," windows answer "how does this row compare to its group." Your Stack Overflow dump - a quarter-million users, 243k posts - is where most of these earn their keep: rank users by reputation, top answers per tag, month-over-month post counts. chinook stays for the cases where a small, readable result makes the shape obvious. Give this module twice the reps of anything else.</p>
+<p class="lede">This is the module that decides senior interviews. A window function computes across a set of related rows <strong>without collapsing them</strong> - GROUP BY answers "what is the total per group," windows answer "how does this row compare to its group." Your Stack Overflow dump - a quarter-million users, 243k posts - is where most of these earn their keep: rank users by reputation, top answers per tag, month-over-month post counts. chinook stays for the cases where a small, readable result makes the shape obvious. We go past the basics into the parts that actually separate candidates: the frame clause and ROWS vs RANGE, the FIRST_VALUE / LAST_VALUE / NTH_VALUE frame traps, LAG and LEAD in both directions, centered vs trailing moving averages, deduplication with ROW_NUMBER, and percent-of-partition. Give this module twice the reps of anything else.</p>
 
 <h2>6.1 Anatomy of a window</h2>
 <pre><span class="f">function</span>(...) <span class="k">OVER</span> (
@@ -120,6 +120,69 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
 <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">PARTITION BY</span> genre_id <span class="k">ORDER BY</span> milliseconds);
 <span class="c">-- Without the frame, LAST_VALUE's default frame ends at CURRENT ROW: it returns the row itself.</span>
 <span class="c">-- Also note the WINDOW clause: name a window once, reuse it. Clean and impressive.</span></pre>
+
+<h2>6.7 ROWS vs RANGE: the frame you did not ask for</h2>
+<pre><span class="c">-- chinook: the same running total computed two ways, on a date where two invoices tie</span>
+<span class="k">SELECT</span> invoice_id, invoice_date::date, total,
+       <span class="f">SUM</span>(total) <span class="k">OVER</span> (<span class="k">ORDER BY</span> invoice_date::date
+                        <span class="k">RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>) <span class="k">AS</span> range_total,
+       <span class="f">SUM</span>(total) <span class="k">OVER</span> (<span class="k">ORDER BY</span> invoice_date::date, invoice_id
+                        <span class="k">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>) <span class="k">AS</span> rows_total
+<span class="k">FROM</span> invoice
+<span class="k">ORDER BY</span> invoice_date::date, invoice_id;</pre>
+<p>On the two invoices that share 2021-02-01, range_total reads 39.60 on <em>both</em> rows while rows_total reads 37.62 then 39.60. That is the whole distinction in one screenshot: <strong>ROWS counts physical rows</strong>, so each row extends the frame by exactly one; <strong>RANGE counts logical peers</strong>, so every row that ties on the ORDER BY value shares one frame and therefore one value. RANGE is the default whenever you write ORDER BY without a frame - which is why "my running total repeats on tied dates" is the single most common window surprise.</p>
+<div class="note"><span class="tag">Why it matters</span>
+Reach for ROWS by default for running totals and moving windows - it does the row-by-row thing people picture. Reach for RANGE deliberately when you actually want peers grouped (e.g. "cumulative revenue as of the end of each day" where same-day order is meaningless). The offsets are also different vocabularies: ROWS takes a row count (<code>2 PRECEDING</code> = two rows back), RANGE takes a value offset (<code>INTERVAL '7 days' PRECEDING</code> over a date column). Saying "ROWS is positional, RANGE is value-based" out loud is a clean senior signal.</div>
+
+<h2>6.8 NTH_VALUE and the frame that makes LAST_VALUE lie</h2>
+<pre><span class="c">-- chinook: shortest, second-shortest, and longest track per genre (genre 1 shown)</span>
+<span class="k">SELECT</span> name, genre_id, milliseconds,
+       <span class="f">FIRST_VALUE</span>(name)   <span class="k">OVER</span> w <span class="k">AS</span> shortest,
+       <span class="f">NTH_VALUE</span>(name, <span class="n">2</span>) <span class="k">OVER</span> w <span class="k">AS</span> second_shortest,
+       <span class="f">LAST_VALUE</span>(name)    <span class="k">OVER</span> (w <span class="k">ROWS BETWEEN UNBOUNDED PRECEDING
+                                        AND UNBOUNDED FOLLOWING</span>) <span class="k">AS</span> longest
+<span class="k">FROM</span> track
+<span class="k">WHERE</span> genre_id = <span class="n">1</span>
+<span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">PARTITION BY</span> genre_id <span class="k">ORDER BY</span> milliseconds);</pre>
+<p>Both LAST_VALUE and NTH_VALUE are held hostage by the default frame. With ORDER BY present, the frame runs UNBOUNDED PRECEDING to CURRENT ROW - so on the first row of a genre, NTH_VALUE(name, 2) has no second row in its frame yet and returns NULL, and LAST_VALUE returns the current row rather than the genuine last. FIRST_VALUE looks fine only because the frame always starts at the top. The fix is the same for both: widen the frame to the full partition with <code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>.</p>
+<div class="warn"><span class="tag">Why it matters</span>
+"Get the last / Nth value in a partition" is a trap laid on purpose in interviews. The naive query runs without error and returns plausible-looking rubbish - exactly the failure mode reviewers probe for. If you only remember one thing: FIRST_VALUE is safe under the default frame, LAST_VALUE and NTH_VALUE are not.</div>
+
+<h2>6.9 Deduplicating with ROW_NUMBER</h2>
+<pre><span class="c">-- stackoverflow: keep the single highest-reputation user per display name</span>
+<span class="k">WITH</span> ranked <span class="k">AS</span> (
+    <span class="k">SELECT</span> id, displayname, reputation,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> displayname
+                              <span class="k">ORDER BY</span> reputation <span class="k">DESC</span>, id) <span class="k">AS</span> rn,
+           <span class="f">COUNT</span>(*)     <span class="k">OVER</span> (<span class="k">PARTITION BY</span> displayname) <span class="k">AS</span> name_count
+    <span class="k">FROM</span> users
+)
+<span class="k">SELECT</span> displayname, id, reputation, name_count
+<span class="k">FROM</span> ranked
+<span class="k">WHERE</span> rn = <span class="n">1</span> <span class="k">AND</span> name_count <span class="k">BETWEEN</span> <span class="n">2</span> <span class="k">AND</span> <span class="n">5</span>
+<span class="k">ORDER BY</span> reputation <span class="k">DESC</span>;</pre>
+<p>The dedup recipe: PARTITION BY the columns that define "the same thing," ORDER BY a rule that decides which duplicate wins (here highest reputation, id as a deterministic tiebreaker), then keep <code>rn = 1</code>. The parallel <code>COUNT(*) OVER (PARTITION BY displayname)</code> lets you see how many collided without a second pass - handy for confirming there really were duplicates before you delete anything.</p>
+<div class="tip"><span class="tag">Why it matters</span>
+This is the export-cleanup and idempotency workhorse: collapse a table to one row per key, keeping the "best" copy. It beats <code>SELECT DISTINCT</code> the moment your tiebreak needs a rule ("keep the most recent," "keep the highest score"), and it beats a GROUP-BY-then-join because it never widens or double-counts. The tiebreaker column in ORDER BY is not optional - without it, "which duplicate survives" is nondeterministic and your results shift run to run.</div>
+
+<h2>6.10 Bounded frames and centered averages</h2>
+<pre><span class="c">-- chinook: monthly revenue with a centered 3-month moving average</span>
+<span class="k">WITH</span> monthly <span class="k">AS</span> (
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, invoice_date)::date <span class="k">AS</span> month,
+           <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice
+    <span class="k">GROUP BY</span> <span class="n">1</span>
+)
+<span class="k">SELECT</span> month, revenue,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month
+                                <span class="k">ROWS BETWEEN</span> <span class="n">1</span> <span class="k">PRECEDING AND</span> <span class="n">1</span> <span class="k">FOLLOWING</span>), <span class="n">2</span>) <span class="k">AS</span> centered_ma_3,
+       <span class="f">COUNT</span>(*) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month
+                      <span class="k">ROWS BETWEEN</span> <span class="n">1</span> <span class="k">PRECEDING AND</span> <span class="n">1</span> <span class="k">FOLLOWING</span>) <span class="k">AS</span> months_in_frame
+<span class="k">FROM</span> monthly
+<span class="k">ORDER BY</span> month;</pre>
+<p>Frames reach forward too. <code>1 PRECEDING AND 1 FOLLOWING</code> centers the window on the current row - each smoothed value blends the month before, the month itself, and the month after. Contrast with the trailing <code>6 PRECEDING AND CURRENT ROW</code> from 6.5: trailing looks only backward (no peeking at the future, which is what you want for a live dashboard), centered is symmetric (better for after-the-fact trend analysis). The endpoints tell on themselves again - the first and last month only have two rows in frame (see months_in_frame), so their smoothed value is built from fewer neighbors.</p>
+<div class="note"><span class="tag">Why it matters</span>
+The frame is a tiny sublanguage - UNBOUNDED PRECEDING, n PRECEDING, CURRENT ROW, n FOLLOWING, UNBOUNDED FOLLOWING - and every moving-window question is just a choice of two endpoints. Trailing vs centered is a real interview follow-up ("would you use future rows here?"): on anything forecast-facing or streaming, using FOLLOWING rows leaks the future and is a bug, not a smoothing choice.</div>
 
 <h2>Practice - Sessions A and B (problems 1-6)</h2>
 
@@ -429,6 +492,133 @@ response_times <span class="k">AS</span> (
   <details class="sol"><summary>solution</summary><div class="sbody">
 <p><strong>a</strong>: grand total of all invoices, identical on every row (empty OVER = one partition, no order, whole-set frame). <strong>b</strong>: the row's customer's lifetime total, identical within each customer. <strong>c</strong>: running total across ALL customers by date - and because the default frame is RANGE, same-date invoices (even for different customers) show the same value. <strong>d</strong>: running total within the customer by date, same RANGE caveat for a customer's same-day invoices.</p>
 <p>If you got all four including the RANGE peer behavior, you understand windows well enough for any interview. If c surprised you, reread 6.5 - that gotcha is worth real points.</p></div></details>
+  </div>
+</div>
+
+<h2>Practice - Sessions G and H (problems 15-20)</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P6.15</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-15"></div>
+  <div class="pbody"><p>For customer 1, show every invoice with two running totals side by side: one ordered by date alone with a RANGE frame, one ordered by (date, invoice_id) with a ROWS frame. Do they ever disagree, and why?</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Both are <code>SUM(total) OVER (PARTITION BY customer_id ORDER BY ...)</code>. One uses <code>RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>, the other <code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>. A difference only appears when two invoices tie on the ORDER BY value.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> customer_id, invoice_id, invoice_date::date, total,
+       <span class="f">SUM</span>(total) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> invoice_date::date
+                        <span class="k">RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>) <span class="k">AS</span> range_running,
+       <span class="f">SUM</span>(total) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> invoice_date::date, invoice_id
+                        <span class="k">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>) <span class="k">AS</span> rows_running
+<span class="k">FROM</span> invoice
+<span class="k">WHERE</span> customer_id = <span class="n">1</span>
+<span class="k">ORDER BY</span> invoice_date::date, invoice_id;</pre>
+<p>If this customer never has two invoices on one date, the two columns match exactly - which is the honest answer to give: RANGE and ROWS diverge only at ties on the ORDER BY value. Add a tiebreaker column and a ROWS frame and the ambiguity is gone regardless. That is the 6.7 concept in a single query you can run to convince yourself.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P6.16</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-16"></div>
+  <div class="pbody"><p>Rank albums by their track count (most tracks first) with ROW_NUMBER, RANK, and DENSE_RANK in one query, top 15. Point to a spot where albums tie and read off what each of the three columns does there.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Aggregate track count per album in a CTE (<code>COUNT(*)</code> over the album-to-track join), then apply all three ranking functions over a single named <code>WINDOW w AS (ORDER BY tracks DESC)</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> album_len <span class="k">AS</span> (
+    <span class="k">SELECT</span> al.album_id, al.title, <span class="f">COUNT</span>(*) <span class="k">AS</span> tracks
+    <span class="k">FROM</span> album al
+    <span class="k">JOIN</span> track t <span class="k">ON</span> t.album_id = al.album_id
+    <span class="k">GROUP BY</span> al.album_id, al.title
+)
+<span class="k">SELECT</span> title, tracks,
+       <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> w <span class="k">AS</span> row_num,
+       <span class="f">RANK</span>()       <span class="k">OVER</span> w <span class="k">AS</span> rnk,
+       <span class="f">DENSE_RANK</span>() <span class="k">OVER</span> w <span class="k">AS</span> dense_rnk
+<span class="k">FROM</span> album_len
+<span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">ORDER BY</span> tracks <span class="k">DESC</span>)
+<span class="k">ORDER BY</span> tracks <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">15</span>;</pre>
+<p>Many albums have the same track count, so ties are everywhere below the top: at a block of albums with equal tracks, row_num keeps incrementing (arbitrary order among them), rnk repeats the block's start rank then skips ahead, dense_rnk repeats then advances by one. Same data, three different questions - "give me a strict order," "Olympic standings," "distinct tiers" - answered by picking the function, not rewriting the query.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P6.17</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p6-17"></div>
+  <div class="pbody"><p>For every question with at least 5 answers, find the id and score of its <em>second</em> highest-scoring answer using NTH_VALUE (not ROW_NUMBER). Return the 10 questions whose runner-up answer scored highest. Mind the frame.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">NTH_VALUE under the default frame stops at CURRENT ROW and will return NULL on early rows. Give the window an explicit <code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code> so every row sees the whole partition, then DISTINCT the per-question result.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> scored <span class="k">AS</span> (
+    <span class="k">SELECT</span> parentid, id, score,
+           <span class="f">NTH_VALUE</span>(id, <span class="n">2</span>)    <span class="k">OVER</span> w <span class="k">AS</span> second_id,
+           <span class="f">NTH_VALUE</span>(score, <span class="n">2</span>) <span class="k">OVER</span> w <span class="k">AS</span> second_score,
+           <span class="f">COUNT</span>(*) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> parentid) <span class="k">AS</span> answer_count
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">2</span> <span class="k">AND</span> parentid <span class="k">IS NOT NULL</span>
+    <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">PARTITION BY</span> parentid <span class="k">ORDER BY</span> score <span class="k">DESC</span>, id
+                    <span class="k">ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</span>)
+)
+<span class="k">SELECT DISTINCT</span> parentid <span class="k">AS</span> question_id, second_id <span class="k">AS</span> second_best_answer,
+       second_score, answer_count
+<span class="k">FROM</span> scored
+<span class="k">WHERE</span> answer_count >= <span class="n">5</span>
+<span class="k">ORDER BY</span> second_score <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">10</span>;</pre>
+<p>Without the explicit full frame this returns NULL for the runner-up on early rows and quietly wrong answers elsewhere - the 6.8 trap. NTH_VALUE broadcasts the same second-place value to every row in the partition, so DISTINCT collapses back to one row per question. A ROW_NUMBER-then-filter-rn=2 solution is equally valid and often clearer; NTH_VALUE is the point here because interviewers ask about it specifically.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P6.18</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-18"></div>
+  <div class="pbody"><p>For user 1876, list their posts in date order and, using LEAD, the date of their next post and the days until it. LAG looks back; this is the same idea looking forward.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">LEAD(creationdate) OVER (PARTITION BY owneruserid ORDER BY creationdate, id) is the next row's date. Subtract to get an interval; use <code>EXTRACT(EPOCH FROM ...) / 86400</code> for total days rather than <code>EXTRACT(DAY FROM ...)</code>, which only reads the day component of the interval.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> id, creationdate::date <span class="k">AS</span> posted,
+       (<span class="f">LEAD</span>(creationdate) <span class="k">OVER</span> w)::date <span class="k">AS</span> next_post,
+       <span class="f">ROUND</span>(<span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> <span class="f">LEAD</span>(creationdate) <span class="k">OVER</span> w - creationdate)
+             / <span class="n">86400.0</span>, <span class="n">1</span>) <span class="k">AS</span> days_to_next
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> owneruserid = <span class="n">1876</span>
+<span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">PARTITION BY</span> owneruserid <span class="k">ORDER BY</span> creationdate, id)
+<span class="k">ORDER BY</span> creationdate;</pre>
+<p>The last post has no successor, so its LEAD (and days_to_next) is NULL - the mirror image of LAG's NULL first row. Watch the interval trap: <code>EXTRACT(DAY FROM interval)</code> returns only the "days" field of an interval, so a 368-day gap could read as some small number; EPOCH over 86400 gives the true total. Order the same window by (creationdate, id) so ties on a busy day resolve deterministically.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P6.19</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p6-19"></div>
+  <div class="pbody"><p>Monthly revenue with a centered 3-month moving average and a count of how many months actually fell in each frame. Then explain why the very first and last months' smoothed values are the least trustworthy.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Aggregate revenue per month in a CTE (<code>date_trunc('month', invoice_date)</code>), then an <code>AVG</code> with <code>ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING</code>. Add <code>COUNT(*)</code> over the same frame to expose the truncated endpoints.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> monthly <span class="k">AS</span> (
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, invoice_date)::date <span class="k">AS</span> month,
+           <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice
+    <span class="k">GROUP BY</span> <span class="n">1</span>
+)
+<span class="k">SELECT</span> month, revenue,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(revenue) <span class="k">OVER</span> w, <span class="n">2</span>) <span class="k">AS</span> centered_ma_3,
+       <span class="f">COUNT</span>(*) <span class="k">OVER</span> w <span class="k">AS</span> months_in_frame
+<span class="k">FROM</span> monthly
+<span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">ORDER BY</span> month <span class="k">ROWS BETWEEN</span> <span class="n">1</span> <span class="k">PRECEDING AND</span> <span class="n">1</span> <span class="k">FOLLOWING</span>)
+<span class="k">ORDER BY</span> month;</pre>
+<p>months_in_frame is 2 on the first and last rows and 3 everywhere in between: an endpoint has only one neighbor, so its "3-month" average is really a 2-month average and jumps around more. Options are the same as any truncated-frame case - report the count, trim the endpoints, or footnote them. A centered frame trades that endpoint weakness for symmetry (no lag), which is the right call for retrospective trend work but wrong for anything that must not see the future.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P6.20</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p6-20"></div>
+  <div class="pbody"><p>Concentration check for user 1876: among their positively scored posts, what share of their total score do their top 5 posts contribute? Return each top-5 post's score and its percent of the user's total.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">One pass: <code>SUM(score) OVER (PARTITION BY owneruserid)</code> gives the whole-user total on every row (a partition-level window, no ORDER BY), and <code>ROW_NUMBER() OVER (... ORDER BY score DESC, id)</code> ranks the posts. Filter <code>rn &lt;= 5</code> outside and divide, guarding with NULLIF.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> user_posts <span class="k">AS</span> (
+    <span class="k">SELECT</span> owneruserid, id, score,
+           <span class="f">SUM</span>(score)   <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owneruserid) <span class="k">AS</span> user_total,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owneruserid
+                              <span class="k">ORDER BY</span> score <span class="k">DESC</span>, id) <span class="k">AS</span> rn
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> owneruserid = <span class="n">1876</span> <span class="k">AND</span> score > <span class="n">0</span>
+)
+<span class="k">SELECT</span> id, score, user_total,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * score / <span class="f">NULLIF</span>(user_total, <span class="n">0</span>), <span class="n">2</span>) <span class="k">AS</span> pct_of_user_total
+<span class="k">FROM</span> user_posts
+<span class="k">WHERE</span> rn <= <span class="n">5</span>
+<span class="k">ORDER BY</span> score <span class="k">DESC</span>;</pre>
+<p>Two windows over the same partition doing different jobs: a partition-wide SUM (no ORDER BY, so the whole-partition total lands on every row) as the denominator, and a ROW_NUMBER for the top-5 cutoff. For a prolific answerer the top 5 posts are a tiny slice of a large total - the long-tail shape you would summarize as "no single post carries them." Same <code>x / SUM(x) OVER (partition)</code> percent-of-partition idea as 6.6, now scoped per user instead of globally.</p></div></details>
   </div>
 </div>
 
