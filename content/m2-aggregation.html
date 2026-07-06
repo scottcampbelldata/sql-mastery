@@ -17,7 +17,7 @@
 <div class="wrap">
 <p class="eyebrow">-- module 2 / four sessions / <span id="done-count"></span></p>
 <h1>Aggregation</h1>
-<p class="lede">GROUP BY collapses rows into groups; aggregate functions summarize each group. This module also contains the single most-asked conceptual interview question in existence: the logical order of query execution.</p>
+<p class="lede">GROUP BY collapses rows into groups; aggregate functions summarize each group. This module also contains the single most-asked conceptual interview question in existence: the logical order of query execution. You will practice on <strong>chinook</strong> invoices - small enough to eyeball every total - and on <strong>stackoverflow</strong> posts, votes, and badges, where a group can hold a quarter-million rows.</p>
 
 <h2>2.1 The logical order of execution (memorize this)</h2>
 <pre><span class="c">-- Written order:          Logical execution order:</span>
@@ -32,16 +32,16 @@
 <p>Every "why can't I..." question is answered by this list. Why can't WHERE see a SELECT alias? WHERE runs first. Why can't WHERE filter on SUM()? Groups do not exist yet at WHERE time - that is HAVING's job. Why <em>can</em> ORDER BY use an alias? It runs after SELECT.</p>
 
 <h2>2.2 The aggregate functions and their NULL behavior</h2>
-<pre><span class="c">-- northwind: one row summarizing all orders</span>
+<pre><span class="c">-- chinook: one row summarizing every invoice</span>
 <span class="k">SELECT</span>
-    <span class="f">COUNT</span>(*)                 <span class="k">AS</span> all_rows,          <span class="c">-- counts rows, NULLs included</span>
-    <span class="f">COUNT</span>(shipped_date)      <span class="k">AS</span> shipped_rows,      <span class="c">-- skips NULLs</span>
-    <span class="f">COUNT</span>(<span class="k">DISTINCT</span> customer_id) <span class="k">AS</span> customers,      <span class="c">-- unique non-NULL values</span>
-    <span class="f">SUM</span>(freight)             <span class="k">AS</span> total_freight,     <span class="c">-- ignores NULLs</span>
-    <span class="f">AVG</span>(freight)             <span class="k">AS</span> avg_freight,       <span class="c">-- ignores NULLs in the denominator too!</span>
-    <span class="f">MIN</span>(order_date)          <span class="k">AS</span> first_order,
-    <span class="f">MAX</span>(order_date)          <span class="k">AS</span> last_order
-<span class="k">FROM</span> orders;</pre>
+    <span class="f">COUNT</span>(*)                   <span class="k">AS</span> all_rows,        <span class="c">-- counts rows, NULLs included</span>
+    <span class="f">COUNT</span>(billing_state)       <span class="k">AS</span> rows_with_state, <span class="c">-- skips NULLs (only 210 of 412 have a state)</span>
+    <span class="f">COUNT</span>(<span class="k">DISTINCT</span> customer_id) <span class="k">AS</span> customers,       <span class="c">-- unique non-NULL values</span>
+    <span class="f">SUM</span>(total)                 <span class="k">AS</span> total_revenue,   <span class="c">-- ignores NULLs</span>
+    <span class="f">AVG</span>(total)                 <span class="k">AS</span> avg_invoice,     <span class="c">-- ignores NULLs in the denominator too!</span>
+    <span class="f">MIN</span>(invoice_date)          <span class="k">AS</span> first_invoice,
+    <span class="f">MAX</span>(invoice_date)          <span class="k">AS</span> last_invoice
+<span class="k">FROM</span> invoice;</pre>
 <div class="warn"><span class="tag">The AVG trap</span>
 <code>AVG(col)</code> divides by the count of non-NULL values. If you want NULLs to count as zero, you must say so: <code>AVG(COALESCE(col, 0))</code>. "Which average does the business want?" is a genuine senior clarifying question.</div>
 
@@ -58,93 +58,97 @@
 <p>Rule: every column in SELECT must either be inside an aggregate or listed in GROUP BY. Postgres enforces this; interviewers test it.</p>
 
 <pre><span class="c">-- WHERE and HAVING together: filter rows first, then filter groups</span>
-<span class="c">-- northwind: among 1997 orders only, which employees handled more than 50?</span>
-<span class="k">SELECT</span> employee_id, <span class="f">COUNT</span>(*) <span class="k">AS</span> orders_1997
-<span class="k">FROM</span> orders
-<span class="k">WHERE</span> order_date >= <span class="k">DATE</span> <span class="s">'1997-01-01'</span>
-  <span class="k">AND</span> order_date <  <span class="k">DATE</span> <span class="s">'1998-01-01'</span>
-<span class="k">GROUP BY</span> employee_id
+<span class="c">-- stackoverflow: among 2013 posts only, which authors posted more than 50 times?</span>
+<span class="k">SELECT</span> owneruserid, <span class="f">COUNT</span>(*) <span class="k">AS</span> posts_2013
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> creationdate >= <span class="k">DATE</span> <span class="s">'2013-01-01'</span>
+  <span class="k">AND</span> creationdate <  <span class="k">DATE</span> <span class="s">'2014-01-01'</span>
+  <span class="k">AND</span> owneruserid <span class="k">IS NOT NULL</span>
+<span class="k">GROUP BY</span> owneruserid
 <span class="k">HAVING</span> <span class="f">COUNT</span>(*) > <span class="n">50</span>
-<span class="k">ORDER BY</span> orders_1997 <span class="k">DESC</span>;</pre>
+<span class="k">ORDER BY</span> posts_2013 <span class="k">DESC</span>;</pre>
+<p>WHERE narrows to 2013 rows before any grouping; HAVING then keeps only the busy authors. Swap the two and you get an error - you cannot filter a group that does not exist yet.</p>
 
 <h2>2.4 Conditional aggregation with FILTER</h2>
 <p>Counting different things in one pass is a constant real-world need. Postgres has the cleanest syntax anywhere:</p>
 <pre><span class="c">-- stackoverflow: questions vs answers per user, one scan of posts</span>
-<span class="k">SELECT</span> owner_user_id,
-       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">1</span>) <span class="k">AS</span> questions,
-       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">2</span>) <span class="k">AS</span> answers
+<span class="k">SELECT</span> owneruserid,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">1</span>) <span class="k">AS</span> questions,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">2</span>) <span class="k">AS</span> answers
 <span class="k">FROM</span> posts
-<span class="k">WHERE</span> owner_user_id <span class="k">IS NOT NULL</span>
-<span class="k">GROUP BY</span> owner_user_id
+<span class="k">WHERE</span> owneruserid <span class="k">IS NOT NULL</span>
+<span class="k">GROUP BY</span> owneruserid
 <span class="k">ORDER BY</span> answers <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">20</span>;
 
 <span class="c">-- Portable equivalent (know both - many interviews assume this form):</span>
-<span class="f">SUM</span>(<span class="k">CASE WHEN</span> post_type_id = <span class="n">1</span> <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) <span class="k">AS</span> questions</pre>
+<span class="f">SUM</span>(<span class="k">CASE WHEN</span> posttypeid = <span class="n">1</span> <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) <span class="k">AS</span> questions</pre>
+<p>Recall the codes from Module 0: <code>posttypeid</code> 1 = question, 2 = answer. The top of this list is user 1876, the most prolific answerer in the dump.</p>
 
 <h2>Practice - Session A (problems 1-3)</h2>
 
 <div class="problem">
   <div class="phead"><span class="pid">P2.1</span><span class="db">chinook</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p2-1"></div>
-  <div class="pbody"><p>How many customers, how many distinct countries, and how many customers have no assigned support rep? One query, one row.</p>
+  <div class="pbody"><p>How many customers, how many distinct countries, and how many customers have no company on file? One query, one row.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">COUNT</span>(*)                        <span class="k">AS</span> customers,
-       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> country)         <span class="k">AS</span> countries,
-       <span class="f">COUNT</span>(*) - <span class="f">COUNT</span>(support_rep_id) <span class="k">AS</span> no_rep
+<pre><span class="k">SELECT</span> <span class="f">COUNT</span>(*)                    <span class="k">AS</span> customers,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> country)     <span class="k">AS</span> countries,
+       <span class="f">COUNT</span>(*) - <span class="f">COUNT</span>(company)  <span class="k">AS</span> no_company
 <span class="k">FROM</span> customer;</pre>
-<p>The <code>COUNT(*) - COUNT(col)</code> idiom for NULL counting comes up in nearly every data-quality discussion.</p></div></details>
+<p>The <code>COUNT(*) - COUNT(col)</code> idiom for NULL counting comes up in nearly every data-quality discussion. Here 49 of the 59 customers are individuals with no company recorded - exactly the kind of "how complete is this column?" number an interviewer wants you to reach for without thinking.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P2.2</span><span class="db">northwind</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p2-2"></div>
-  <div class="pbody"><p>Average, minimum, and maximum freight per ship_country, only for countries with at least 10 orders, highest average first. Round the average to 2 decimals.</p>
+  <div class="phead"><span class="pid">P2.2</span><span class="db">chinook</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p2-2"></div>
+  <div class="pbody"><p>Average, minimum, and maximum invoice total per billing_country, only for countries with at least 10 invoices, highest average first. Round the average to 2 decimals.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> ship_country,
-       <span class="f">COUNT</span>(*)              <span class="k">AS</span> orders,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(freight), <span class="n">2</span>) <span class="k">AS</span> avg_freight,
-       <span class="f">MIN</span>(freight)          <span class="k">AS</span> min_freight,
-       <span class="f">MAX</span>(freight)          <span class="k">AS</span> max_freight
-<span class="k">FROM</span> orders
-<span class="k">GROUP BY</span> ship_country
+<pre><span class="k">SELECT</span> billing_country,
+       <span class="f">COUNT</span>(*)            <span class="k">AS</span> invoices,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(total), <span class="n">2</span>) <span class="k">AS</span> avg_total,
+       <span class="f">MIN</span>(total)          <span class="k">AS</span> min_total,
+       <span class="f">MAX</span>(total)          <span class="k">AS</span> max_total
+<span class="k">FROM</span> invoice
+<span class="k">GROUP BY</span> billing_country
 <span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">10</span>
-<span class="k">ORDER BY</span> avg_freight <span class="k">DESC</span>;</pre></div></details>
+<span class="k">ORDER BY</span> avg_total <span class="k">DESC</span>;</pre>
+<p>MIN/MAX/AVG in one pass over each country's invoices - the standard "distribution per group" shape. Note how tight chinook's invoice totals are: everything lands between roughly one and twenty-six dollars, because a single invoice is just a handful of 99-cent tracks.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P2.3</span><span class="db">nyctaxi</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p2-3"></div>
-  <div class="pbody"><p>Per payment_type: trip count, average fare, average tip, and average tip percentage of fare (fare > 0 only, to avoid division problems). Round money to 2 decimals.</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">The average of per-trip percentages and the ratio of averages are different numbers. Compute the per-trip percentage inside AVG. Filter <code>fare_amount &gt; 0</code> in WHERE.</div></details>
+  <div class="phead"><span class="pid">P2.3</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p2-3"></div>
+  <div class="pbody"><p>Per posttypeid (1 = question, 2 = answer): post count, average score, average view count, and the average score-per-view as a percentage (viewcount > 0 only, to avoid division problems). Round money-like numbers to 2 decimals and the percentage to 3.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">The average of per-post ratios and the ratio of averages are different numbers. Compute the per-post percentage inside AVG. Filter <code>viewcount &gt; 0</code> in WHERE, and cast to <code>::numeric</code> so the division is not integer division.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> payment_type,
-       <span class="f">COUNT</span>(*)                                  <span class="k">AS</span> trips,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(fare_amount)::numeric, <span class="n">2</span>)      <span class="k">AS</span> avg_fare,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(tip_amount)::numeric, <span class="n">2</span>)       <span class="k">AS</span> avg_tip,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(tip_amount / fare_amount)::numeric * <span class="n">100</span>, <span class="n">1</span>) <span class="k">AS</span> avg_tip_pct
-<span class="k">FROM</span> trips
-<span class="k">WHERE</span> fare_amount > <span class="n">0</span>
-<span class="k">GROUP BY</span> payment_type
-<span class="k">ORDER BY</span> trips <span class="k">DESC</span>;</pre>
-<p>Interview follow-up you should expect: "why did you filter fare &gt; 0?" Answer: to prevent division by zero and to exclude voided/negative trips that would distort the ratio - and I would confirm with the business whether they should be excluded from the counts too.</p></div></details>
+<pre><span class="k">SELECT</span> posttypeid,
+       <span class="f">COUNT</span>(*)                              <span class="k">AS</span> posts,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(score)::numeric, <span class="n">2</span>)          <span class="k">AS</span> avg_score,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(viewcount)::numeric, <span class="n">1</span>)      <span class="k">AS</span> avg_views,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(score::numeric / viewcount) * <span class="n">100</span>, <span class="n">3</span>) <span class="k">AS</span> avg_score_per_view_pct
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> viewcount > <span class="n">0</span>
+<span class="k">GROUP BY</span> posttypeid
+<span class="k">ORDER BY</span> posts <span class="k">DESC</span>;</pre>
+<p>Interview follow-up you should expect: "why did you filter viewcount &gt; 0?" Answer: to prevent division by zero and to exclude un-viewed posts that would distort the ratio - and I would confirm with the business whether those posts should be excluded from the counts too. (In this dump answers carry no <code>viewcount</code>, so the surviving rows are essentially the questions - a good reminder to check what a filter silently removes.)</p></div></details>
   </div>
 </div>
 
 <h2>Practice - Session B (problems 4-6)</h2>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P2.4</span><span class="db">northwind</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p2-4"></div>
-  <div class="pbody"><p>Using <code>order_details</code> only: total revenue per product (revenue = unit_price * quantity * (1 - discount)). Show product_id, number of order lines, total quantity, and total revenue rounded to 2 decimals. Products with revenue over 10,000 only, richest first.</p>
+  <div class="phead"><span class="pid">P2.4</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p2-4"></div>
+  <div class="pbody"><p>Using <code>invoice_line</code> only: total revenue per invoice (revenue = unit_price * quantity - there is no discount column in chinook). Show invoice_id, number of line items, total quantity, and total revenue rounded to 2 decimals. Only invoices with revenue over 20, richest first.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> product_id,
+<pre><span class="k">SELECT</span> invoice_id,
        <span class="f">COUNT</span>(*)      <span class="k">AS</span> line_count,
        <span class="f">SUM</span>(quantity) <span class="k">AS</span> total_qty,
-       <span class="f">ROUND</span>(<span class="f">SUM</span>(unit_price * quantity * (<span class="n">1</span> - discount))::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
-<span class="k">FROM</span> order_details
-<span class="k">GROUP BY</span> product_id
-<span class="k">HAVING</span> <span class="f">SUM</span>(unit_price * quantity * (<span class="n">1</span> - discount)) > <span class="n">10000</span>
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(unit_price * quantity)::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
+<span class="k">FROM</span> invoice_line
+<span class="k">GROUP BY</span> invoice_id
+<span class="k">HAVING</span> <span class="f">SUM</span>(unit_price * quantity) > <span class="n">20</span>
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
-<p>Note HAVING repeats the expression rather than using the alias - HAVING runs before SELECT, so the alias does not exist yet. (Postgres actually permits GROUP BY aliases as a convenience, but not HAVING aliases.)</p></div></details>
+<p>Note HAVING repeats the expression rather than using the alias - HAVING runs before SELECT, so the alias does not exist yet. (Postgres actually permits GROUP BY aliases as a convenience, but not HAVING aliases.) And note the revenue formula: chinook has no <code>discount</code> column, so it is just <code>unit_price * quantity</code> - always read the schema before assuming a discount term exists.</p></div></details>
   </div>
 </div>
 
@@ -153,13 +157,13 @@
   <div class="pbody"><p>Which badge names have been awarded more than 1,000 times, and to how many distinct users? Most-awarded first.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">SELECT</span> name,
-       <span class="f">COUNT</span>(*)               <span class="k">AS</span> times_awarded,
-       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> user_id) <span class="k">AS</span> distinct_users
+       <span class="f">COUNT</span>(*)              <span class="k">AS</span> times_awarded,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> userid) <span class="k">AS</span> distinct_users
 <span class="k">FROM</span> badges
 <span class="k">GROUP BY</span> name
 <span class="k">HAVING</span> <span class="f">COUNT</span>(*) > <span class="n">1000</span>
 <span class="k">ORDER BY</span> times_awarded <span class="k">DESC</span>;</pre>
-<p>If times_awarded is much larger than distinct_users for a badge, it is a repeatable badge - the kind of observation a senior volunteers while the query runs.</p></div></details>
+<p>If times_awarded is much larger than distinct_users for a badge, it is a repeatable badge - "Popular Question" and "Notable Question" can land on the same user many times, whereas "Autobiographer" is once per person. That gap between the two counts is the kind of observation a senior volunteers while the query is still running.</p></div></details>
   </div>
 </div>
 
@@ -175,7 +179,7 @@
 <span class="k">GROUP BY</span> genre_id
 <span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">50</span>
 <span class="k">ORDER BY</span> tracks <span class="k">DESC</span>;</pre>
-<p>GROUP BY treats all NULLs as one group, so unclassified tracks appear as a single genre_id = NULL row (if 50+ of them exist). That NULLs group together in GROUP BY - but never equal each other in joins - is a classic conceptual question.</p></div></details>
+<p>GROUP BY treats all NULLs as one group, so any unclassified tracks would appear as a single genre_id = NULL row (if 50+ of them existed). That NULLs group together in GROUP BY - but never equal each other in joins - is a classic conceptual question.</p></div></details>
   </div>
 </div>
 
@@ -183,77 +187,79 @@
 
 <div class="problem">
   <div class="phead"><span class="pid">P2.7</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-7"></div>
-  <div class="pbody"><p>One row per year of <code>posts.creation_date</code>: total posts, questions, answers, and the answer-to-question ratio (2 decimals). Use FILTER. Chronological order.</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Group by <code>EXTRACT(YEAR FROM creation_date)</code> or <code>date_trunc('year', creation_date)</code>. Guard the ratio against zero questions with NULLIF.</div></details>
+  <div class="pbody"><p>One row per year of <code>posts.creationdate</code>: total posts, questions, answers, and the answer-to-question ratio (2 decimals). Use FILTER. Chronological order.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Group by <code>EXTRACT(YEAR FROM creationdate)</code> or <code>date_trunc('year', creationdate)</code>. Guard the ratio against zero questions with NULLIF.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creation_date)::int <span class="k">AS</span> yr,
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
        <span class="f">COUNT</span>(*) <span class="k">AS</span> posts,
-       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">1</span>) <span class="k">AS</span> questions,
-       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">2</span>) <span class="k">AS</span> answers,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">1</span>) <span class="k">AS</span> questions,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">2</span>) <span class="k">AS</span> answers,
        <span class="f">ROUND</span>(
-         <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">2</span>)::numeric
-         / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">1</span>), <span class="n">0</span>), <span class="n">2</span>) <span class="k">AS</span> ans_per_q
+         <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">2</span>)::numeric
+         / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">1</span>), <span class="n">0</span>), <span class="n">2</span>) <span class="k">AS</span> ans_per_q
 <span class="k">FROM</span> posts
 <span class="k">GROUP BY</span> <span class="n">1</span>
 <span class="k">ORDER BY</span> yr;</pre>
-<p>Three interview staples in one: FILTER, NULLIF-guarded division, and the <code>::numeric</code> cast to avoid integer division. <code>GROUP BY 1</code> (positional) is fine to use, just be able to name the tradeoff: shorter but fragile if the SELECT list is reordered.</p></div></details>
+<p>Three interview staples in one: FILTER, NULLIF-guarded division, and the <code>::numeric</code> cast to avoid integer division. The trend is real and worth a sentence out loud: the answer-to-question ratio drifts from roughly 3.9 in the early years toward about 1.0 by 2024 as the site matures. <code>GROUP BY 1</code> (positional) is fine to use, just be able to name the tradeoff: shorter but fragile if the SELECT list is reordered.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P2.8</span><span class="db">adventureworks</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-8"></div>
-  <div class="pbody"><p>From <code>sales.salesorderheader</code>: per territoryid, count orders and split total revenue (totaldue) into online (onlineorderflag true) vs offline using conditional aggregation. Sort by total revenue descending.</p>
+  <div class="phead"><span class="pid">P2.8</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-8"></div>
+  <div class="pbody"><p>From <code>posts</code> (questions and answers only): per posttypeid, count posts and split the total score into a positive bucket (score > 0) and a non-positive bucket (score &lt;= 0) using conditional aggregation. Sort by total score descending.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> territoryid,
-       <span class="f">COUNT</span>(*) <span class="k">AS</span> orders,
-       <span class="f">SUM</span>(totaldue)                                        <span class="k">AS</span> revenue,
-       <span class="f">SUM</span>(totaldue) <span class="k">FILTER</span> (<span class="k">WHERE</span> onlineorderflag)         <span class="k">AS</span> online_rev,
-       <span class="f">SUM</span>(totaldue) <span class="k">FILTER</span> (<span class="k">WHERE NOT</span> onlineorderflag)     <span class="k">AS</span> offline_rev
-<span class="k">FROM</span> sales.salesorderheader
-<span class="k">GROUP BY</span> territoryid
-<span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
-<p>If your port stores the flag as 0/1 instead of boolean, the FILTER becomes <code>WHERE onlineorderflag = 1</code>. Checking the type with <code>\d</code> before writing is exactly the Module 0 reflex.</p></div></details>
+<pre><span class="k">SELECT</span> posttypeid,
+       <span class="f">COUNT</span>(*)   <span class="k">AS</span> posts,
+       <span class="f">SUM</span>(score) <span class="k">AS</span> total_score,
+       <span class="f">SUM</span>(score) <span class="k">FILTER</span> (<span class="k">WHERE</span> score > <span class="n">0</span>)  <span class="k">AS</span> positive_score,
+       <span class="f">SUM</span>(score) <span class="k">FILTER</span> (<span class="k">WHERE</span> score <= <span class="n">0</span>) <span class="k">AS</span> nonpositive_score
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid <span class="k">IN</span> (<span class="n">1</span>, <span class="n">2</span>)
+<span class="k">GROUP BY</span> posttypeid
+<span class="k">ORDER BY</span> total_score <span class="k">DESC</span>;</pre>
+<p>Splitting one measure into two mutually exclusive buckets with <code>SUM(...) FILTER (WHERE ...)</code> is the everyday reporting pattern - the online-vs-offline, new-vs-returning, region-A-vs-B split. The portable form is <code>SUM(CASE WHEN score &gt; 0 THEN score ELSE 0 END)</code>; know both, because FILTER is Postgres-only and some interviews assume the CASE version.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P2.9</span><span class="db">northwind</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-9"></div>
-  <div class="pbody"><p>The classic two-level aggregation: what is the <em>average number of orders per customer</em>? (Not average order value - average order count.) Solve it with a subquery in FROM; you will redo it with a CTE in Module 5.</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Step 1: orders per customer (GROUP BY customer_id). Step 2: AVG over those counts.</div></details>
+  <div class="phead"><span class="pid">P2.9</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-9"></div>
+  <div class="pbody"><p>The classic two-level aggregation: what is the <em>average number of invoices per customer</em>? (Not average invoice value - average invoice count.) Solve it with a subquery in FROM; you will redo it with a CTE in Module 5.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Step 1: invoices per customer (GROUP BY customer_id). Step 2: AVG over those counts.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">ROUND</span>(<span class="f">AVG</span>(order_count), <span class="n">2</span>) <span class="k">AS</span> avg_orders_per_customer
+<pre><span class="k">SELECT</span> <span class="f">ROUND</span>(<span class="f">AVG</span>(invoice_count), <span class="n">2</span>) <span class="k">AS</span> avg_invoices_per_customer
 <span class="k">FROM</span> (
-    <span class="k">SELECT</span> customer_id, <span class="f">COUNT</span>(*) <span class="k">AS</span> order_count
-    <span class="k">FROM</span> orders
+    <span class="k">SELECT</span> customer_id, <span class="f">COUNT</span>(*) <span class="k">AS</span> invoice_count
+    <span class="k">FROM</span> invoice
     <span class="k">GROUP BY</span> customer_id
 ) per_customer;</pre>
-<p>Clarifying question a senior asks first: "customers with zero orders - do they count in the average?" This version excludes them (they have no rows in orders). Including them requires starting from the customers table with a LEFT JOIN - Module 3, P3.9.</p></div></details>
+<p>Clarifying question a senior asks first: "customers with zero invoices - do they count in the average?" This version excludes them (they have no rows in invoice). Including them requires starting from the customer table with a LEFT JOIN - Module 3. In chinook every customer has bought something, so the two answers coincide here, but you should still say the caveat.</p></div></details>
   </div>
 </div>
 
 <h2>Practice - Session D (problems 10-12)</h2>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P2.10</span><span class="db">nyctaxi</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-10"></div>
-  <div class="pbody"><p>Hourly demand curve: for one week of data (pick any 7-day range), count trips per hour of day (0-23) and show average fare per hour. Which three hours have the highest average fare?</p>
+  <div class="phead"><span class="pid">P2.10</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-10"></div>
+  <div class="pbody"><p>Activity curve: for one week of data (pick any 7-day range in the 2008-2024 span), count posts per hour of day (0-23) and show the average score per hour. Which three hours have the highest average score?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> pickup_datetime)::int <span class="k">AS</span> hr,
-       <span class="f">COUNT</span>(*) <span class="k">AS</span> trips,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(fare_amount)::numeric, <span class="n">2</span>) <span class="k">AS</span> avg_fare
-<span class="k">FROM</span> trips
-<span class="k">WHERE</span> pickup_datetime >= <span class="s">'2016-01-04'</span>
-  <span class="k">AND</span> pickup_datetime <  <span class="s">'2016-01-11'</span>
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate)::int <span class="k">AS</span> hr,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> posts,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(score), <span class="n">2</span>) <span class="k">AS</span> avg_score
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> creationdate >= <span class="s">'2016-06-01'</span>
+  <span class="k">AND</span> creationdate <  <span class="s">'2016-06-08'</span>
 <span class="k">GROUP BY</span> hr
-<span class="k">ORDER BY</span> avg_fare <span class="k">DESC</span>
+<span class="k">ORDER BY</span> avg_score <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">3</span>;</pre>
-<p>Adjust the date range to whatever your dataset covers (find it with <code>SELECT MIN(pickup_datetime), MAX(pickup_datetime) FROM trips</code> - which is itself a Module 0 move). Rerun without LIMIT and ORDER BY hr to see the full curve.</p></div></details>
+<p>Adjust the date range to whatever window you like - the data runs 2008-09 to 2024-03 (find the exact bounds with <code>SELECT MIN(creationdate), MAX(creationdate) FROM posts</code>, itself a Module 0 move). Rerun without LIMIT and with <code>ORDER BY hr</code> to see the full 24-hour curve. Careful with one week of data: some hours hold only a handful of posts, so a single high-scoring post can dominate the average - a good moment to mention sample size out loud.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
   <div class="phead"><span class="pid">P2.11</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-11"></div>
   <div class="pbody"><p>Debug drill. A teammate wrote this and got an error. Fix it two different ways and explain the difference in results, if any:</p>
-<pre><span class="k">SELECT</span> billing_country, billing_city, <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
+<pre><span class="c">/* BROKEN - this errors on purpose; the two fixes are below */</span>
+<span class="k">SELECT</span> billing_country, billing_city, <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
 <span class="k">FROM</span> invoice
 <span class="k">WHERE</span> <span class="f">SUM</span>(total) > <span class="n">50</span>
 <span class="k">GROUP BY</span> billing_country;</pre>
@@ -290,7 +296,7 @@
 <span class="k">FROM</span> users
 <span class="k">GROUP BY</span> <span class="n">1</span>
 <span class="k">ORDER BY</span> bucket;</pre>
-<p>The letter prefixes make the buckets sort correctly as text - a small practical trick. <code>SUM(COUNT(*)) OVER ()</code> is a window over the grouped result; if that feels like magic now, it will be obvious after Module 6. The subquery alternative: <code>ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM users), 1)</code>.</p></div></details>
+<p>The letter prefixes make the buckets sort correctly as text - a small practical trick. <code>SUM(COUNT(*)) OVER ()</code> is a window over the grouped result; if that feels like magic now, it will be obvious after Module 6. The subquery alternative: <code>ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM users), 1)</code>. The shape is stark - well over half of these users sit under 100 reputation, and only a sliver clear 10,000.</p></div></details>
   </div>
 </div>
 

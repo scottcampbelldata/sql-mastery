@@ -17,7 +17,7 @@
 <div class="wrap">
 <p class="eyebrow">-- module 6 / eight sessions / <span id="done-count"></span></p>
 <h1>Window Functions</h1>
-<p class="lede">This is the module that decides senior interviews. A window function computes across a set of related rows <strong>without collapsing them</strong> - GROUP BY answers "what is the total per group," windows answer "how does this row compare to its group." Give this module twice the reps of anything else.</p>
+<p class="lede">This is the module that decides senior interviews. A window function computes across a set of related rows <strong>without collapsing them</strong> - GROUP BY answers "what is the total per group," windows answer "how does this row compare to its group." Your Stack Overflow dump - a quarter-million users, 243k posts - is where most of these earn their keep: rank users by reputation, top answers per tag, month-over-month post counts. chinook stays for the cases where a small, readable result makes the shape obvious. Give this module twice the reps of anything else.</p>
 
 <h2>6.1 Anatomy of a window</h2>
 <pre><span class="f">function</span>(...) <span class="k">OVER</span> (
@@ -36,7 +36,7 @@ Only in SELECT and ORDER BY. Never in WHERE, GROUP BY, or HAVING - windows are c
 
 <h2>6.2 The ranking trio</h2>
 <pre><span class="c">-- stackoverflow: rank users by reputation</span>
-<span class="k">SELECT</span> display_name, reputation,
+<span class="k">SELECT</span> displayname, reputation,
        <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> reputation <span class="k">DESC</span>) <span class="k">AS</span> row_num,     <span class="c">-- 1,2,3,4 - ties broken arbitrarily</span>
        <span class="f">RANK</span>()       <span class="k">OVER</span> (<span class="k">ORDER BY</span> reputation <span class="k">DESC</span>) <span class="k">AS</span> rnk,         <span class="c">-- 1,2,2,4 - ties share, gaps after</span>
        <span class="f">DENSE_RANK</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> reputation <span class="k">DESC</span>) <span class="k">AS</span> dense_rnk    <span class="c">-- 1,2,2,3 - ties share, no gaps</span>
@@ -46,45 +46,46 @@ Only in SELECT and ORDER BY. Never in WHERE, GROUP BY, or HAVING - windows are c
 "Exactly one row per group even with ties" - ROW_NUMBER (dedup, pagination). "Olympic-style, ties share and the next rank skips" - RANK. "Give me everything in the top 3 <em>values</em>" - DENSE_RANK. If they ask "second highest salary," ask whether ties should both appear; the choice between the three IS the question.</div>
 
 <h2>6.3 Top-N per group: the most-asked interview pattern, period</h2>
-<pre><span class="c">-- northwind: top 3 products by revenue within each category</span>
-<span class="k">WITH</span> product_revenue <span class="k">AS</span> (
-    <span class="k">SELECT</span> p.category_id, p.product_name,
-           <span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount)) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> order_details d
-    <span class="k">JOIN</span> products p <span class="k">ON</span> p.product_id = d.product_id
-    <span class="k">GROUP BY</span> p.category_id, p.product_name
+<pre><span class="c">-- chinook: top 3 tracks by revenue within each genre</span>
+<span class="k">WITH</span> track_revenue <span class="k">AS</span> (
+    <span class="k">SELECT</span> t.genre_id, t.name <span class="k">AS</span> track_name,
+           <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice_line il
+    <span class="k">JOIN</span> track t <span class="k">ON</span> t.track_id = il.track_id
+    <span class="k">GROUP BY</span> t.genre_id, t.name
 ),
 ranked <span class="k">AS</span> (
     <span class="k">SELECT</span> *,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> category_id
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> genre_id
                               <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>) <span class="k">AS</span> rn
-    <span class="k">FROM</span> product_revenue
+    <span class="k">FROM</span> track_revenue
 )
-<span class="k">SELECT</span> category_id, product_name, <span class="f">ROUND</span>(revenue::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
+<span class="k">SELECT</span> genre_id, track_name, <span class="f">ROUND</span>(revenue::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
 <span class="k">FROM</span> ranked
 <span class="k">WHERE</span> rn <= <span class="n">3</span>
-<span class="k">ORDER BY</span> category_id, rn;</pre>
-<p>Aggregate, rank in a CTE, filter the rank outside. Drill this shape until you can type it half asleep - it will appear in your interview in some costume.</p>
+<span class="k">ORDER BY</span> genre_id, rn;</pre>
+<p>Aggregate, rank in a CTE, filter the rank outside. Drill this shape until you can type it half asleep - it will appear in your interview in some costume (top products per category, top answers per tag, top sellers per region). The costume changes; the three-step skeleton does not.</p>
 
 <h2>6.4 LAG and LEAD: reaching into other rows</h2>
-<pre><span class="c">-- nyctaxi: month-over-month revenue change</span>
+<pre><span class="c">-- stackoverflow: month-over-month question volume</span>
 <span class="k">WITH</span> monthly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, pickup_datetime)::date <span class="k">AS</span> month,
-           <span class="f">SUM</span>(total_amount) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> trips
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, creationdate)::date <span class="k">AS</span> month,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>
 )
-<span class="k">SELECT</span> month, revenue,
-       <span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> prev_month,
-       revenue - <span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> change,
-       <span class="f">ROUND</span>(<span class="n">100.0</span> * (revenue - <span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))
-             / <span class="f">NULLIF</span>(<span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> pct_change
+<span class="k">SELECT</span> month, questions,
+       <span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> prev_month,
+       questions - <span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> change,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * (questions - <span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))
+             / <span class="f">NULLIF</span>(<span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> pct_change
 <span class="k">FROM</span> monthly
 <span class="k">ORDER BY</span> month;</pre>
-<p>LAG(x) is the previous row's x; LEAD(x) the next row's; both take an optional offset and default: <code>LAG(revenue, 1, 0)</code>. The first row's LAG is NULL - decide deliberately whether that becomes 0 (via the default) or stays NULL (no prior period exists, which is usually the honest answer).</p>
+<p>LAG(x) is the previous row's x; LEAD(x) the next row's; both take an optional offset and default: <code>LAG(questions, 1, 0)</code>. The first row's LAG is NULL - decide deliberately whether that becomes 0 (via the default) or stays NULL (no prior period exists, which is usually the honest answer). Note the order of operations: aggregate to one row per month <em>first</em>, then window over those months - windowing the raw posts would compare individual posts, not months.</p>
 
 <h2>6.5 Running totals and frames</h2>
-<pre><span class="c">-- chinook: running revenue through the year, per customer lifetime, and a 3-row moving average</span>
+<pre><span class="c">-- chinook: running revenue through time, per customer lifetime, and a 3-row moving average</span>
 <span class="k">SELECT</span> invoice_id, customer_id, invoice_date, total,
        <span class="f">SUM</span>(total) <span class="k">OVER</span> (<span class="k">ORDER BY</span> invoice_date, invoice_id)         <span class="k">AS</span> running_total,
        <span class="f">SUM</span>(total) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id
@@ -104,10 +105,12 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
 <span class="k">GROUP BY</span> billing_country
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;
 <span class="c">-- SUM(SUM(total)) OVER (): inner SUM is the group aggregate, outer is a window across groups.</span></pre>
-<pre><span class="c">-- NTILE: split into equal buckets (quartiles here)</span>
-<span class="k">SELECT</span> display_name, reputation,
+<pre><span class="c">-- stackoverflow NTILE: split users into equal buckets (quartiles here)</span>
+<span class="k">SELECT</span> displayname, reputation,
        <span class="f">NTILE</span>(<span class="n">4</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> reputation) <span class="k">AS</span> quartile
-<span class="k">FROM</span> users;</pre>
+<span class="k">FROM</span> users
+<span class="k">WHERE</span> reputation > <span class="n">1</span>
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
 <pre><span class="c">-- FIRST_VALUE / LAST_VALUE: LAST_VALUE needs the full frame or it lies</span>
 <span class="k">SELECT</span> name, genre_id, milliseconds,
        <span class="f">FIRST_VALUE</span>(name) <span class="k">OVER</span> w <span class="k">AS</span> shortest_in_genre,
@@ -124,7 +127,7 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
   <div class="phead"><span class="pid">P6.1</span><span class="db">stackoverflow</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p6-1"></div>
   <div class="pbody"><p>Rank the top 15 users by reputation with all three ranking functions in one query. Find (or construct in your head) a tie and explain each column's value at the tie.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> display_name, reputation,
+<pre><span class="k">SELECT</span> displayname, reputation,
        <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> w <span class="k">AS</span> row_num,
        <span class="f">RANK</span>()       <span class="k">OVER</span> w <span class="k">AS</span> rnk,
        <span class="f">DENSE_RANK</span>() <span class="k">OVER</span> w <span class="k">AS</span> dense_rnk
@@ -132,7 +135,7 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
 <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">ORDER BY</span> reputation <span class="k">DESC</span>)
 <span class="k">ORDER BY</span> reputation <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">15</span>;</pre>
-<p>At a two-way tie for 3rd: row_num gives 3 and 4 (arbitrary order), rnk gives 3 and 3 then jumps to 5, dense_rnk gives 3 and 3 then 4.</p></div></details>
+<p>At a two-way tie for 3rd: row_num gives 3 and 4 (arbitrary order), rnk gives 3 and 3 then jumps to 5, dense_rnk gives 3 and 3 then 4. The top of this list is the real DBA Stack Exchange leaderboard - the famous high-rep names are genuinely in your data.</p></div></details>
   </div>
 </div>
 
@@ -158,40 +161,48 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.3</span><span class="db">northwind</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-3"></div>
-  <div class="pbody"><p>Each employee's 3 largest orders by freight: employee_id, order_id, freight, and the rank. (Top-N per group again, deliberately, one day after 6.2 - this is the spaced repetition.)</p>
+  <div class="phead"><span class="pid">P6.3</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-3"></div>
+  <div class="pbody"><p>Each genre's 3 highest-revenue tracks: genre_id, track name, revenue, and the rank within the genre. Revenue is <code>unit_price * quantity</code> summed from <code>invoice_line</code>. (Top-N per group again, deliberately, one day after 6.2 - this is the spaced repetition.)</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> ranked <span class="k">AS</span> (
-    <span class="k">SELECT</span> employee_id, order_id, freight,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> employee_id
-                              <span class="k">ORDER BY</span> freight <span class="k">DESC</span>) <span class="k">AS</span> rn
-    <span class="k">FROM</span> orders
+<pre><span class="k">WITH</span> track_revenue <span class="k">AS</span> (
+    <span class="k">SELECT</span> t.genre_id, t.name <span class="k">AS</span> track_name,
+           <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice_line il
+    <span class="k">JOIN</span> track t <span class="k">ON</span> t.track_id = il.track_id
+    <span class="k">GROUP BY</span> t.genre_id, t.name
+),
+ranked <span class="k">AS</span> (
+    <span class="k">SELECT</span> genre_id, track_name, revenue,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> genre_id
+                              <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>) <span class="k">AS</span> rn
+    <span class="k">FROM</span> track_revenue
 )
-<span class="k">SELECT</span> employee_id, rn, order_id, freight
+<span class="k">SELECT</span> genre_id, rn, track_name, <span class="f">ROUND</span>(revenue::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
 <span class="k">FROM</span> ranked
 <span class="k">WHERE</span> rn <= <span class="n">3</span>
-<span class="k">ORDER BY</span> employee_id, rn;</pre></div></details>
+<span class="k">ORDER BY</span> genre_id, rn;</pre>
+<p>Identical skeleton to the section 6.3 worked example above: aggregate the grain you want (track within genre), rank inside a CTE, filter <code>rn <= 3</code> outside. Say "top-N per group" out loud when you recognize it - naming the pattern is half the interview.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.4</span><span class="db">adventureworks</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-4"></div>
-  <div class="pbody"><p>Monthly sales from <code>sales.salesorderheader</code> with month-over-month change and percent change (1 decimal). Sum totaldue per month first.</p>
+  <div class="phead"><span class="pid">P6.4</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-4"></div>
+  <div class="pbody"><p>Monthly answer volume with month-over-month change and percent change (1 decimal). Count answers (<code>posttypeid = 2</code>) per calendar month first, then window over the months.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> monthly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, orderdate)::date <span class="k">AS</span> month,
-           <span class="f">SUM</span>(totaldue) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> sales.salesorderheader
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, creationdate)::date <span class="k">AS</span> month,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> answers
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">2</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>
 )
-<span class="k">SELECT</span> month,
-       <span class="f">ROUND</span>(revenue::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue,
-       <span class="f">ROUND</span>((revenue - <span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))::numeric, <span class="n">0</span>) <span class="k">AS</span> mom_change,
-       <span class="f">ROUND</span>(<span class="n">100.0</span> * (revenue - <span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))
-             / <span class="f">NULLIF</span>(<span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> mom_pct
+<span class="k">SELECT</span> month, answers,
+       answers - <span class="f">LAG</span>(answers) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> mom_change,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * (answers - <span class="f">LAG</span>(answers) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))
+             / <span class="f">NULLIF</span>(<span class="f">LAG</span>(answers) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> mom_pct
 <span class="k">FROM</span> monthly
 <span class="k">ORDER BY</span> month;</pre>
-<p>Aggregate first, window second - windows on the raw order rows would compare orders, not months. That sequencing error is the most common window mistake in interviews.</p></div></details>
+<p>Aggregate first, window second - windows on the raw post rows would compare posts, not months. That sequencing error is the most common window mistake in interviews. NULLIF guards the first month (LAG is NULL) and any month with a zero predecessor from a divide-by-zero.</p></div></details>
   </div>
 </div>
 
@@ -210,16 +221,16 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.6</span><span class="db">nyctaxi</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-6"></div>
-  <div class="pbody"><p>7-day moving average of daily trip counts. Two CTAs... two CTEs: daily counts, then the window with an explicit ROWS frame. Why is the first 6 days' "7-day average" misleading, and what would you do about it?</p>
+  <div class="phead"><span class="pid">P6.6</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p6-6"></div>
+  <div class="pbody"><p>7-day moving average of daily post counts. One CTE for the daily counts, then the window with an explicit ROWS frame in the outer query. Why is the first 6 days' "7-day average" misleading, and what would you do about it?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> daily <span class="k">AS</span> (
-    <span class="k">SELECT</span> pickup_datetime::date <span class="k">AS</span> day, <span class="f">COUNT</span>(*) <span class="k">AS</span> trips
-    <span class="k">FROM</span> trips
+    <span class="k">SELECT</span> creationdate::date <span class="k">AS</span> day, <span class="f">COUNT</span>(*) <span class="k">AS</span> posts
+    <span class="k">FROM</span> posts
     <span class="k">GROUP BY</span> <span class="n">1</span>
 )
-<span class="k">SELECT</span> day, trips,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(trips) <span class="k">OVER</span> (<span class="k">ORDER BY</span> day
+<span class="k">SELECT</span> day, posts,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(posts) <span class="k">OVER</span> (<span class="k">ORDER BY</span> day
                               <span class="k">ROWS BETWEEN</span> <span class="n">6</span> <span class="k">PRECEDING AND CURRENT ROW</span>), <span class="n">0</span>) <span class="k">AS</span> ma_7d,
        <span class="f">COUNT</span>(*) <span class="k">OVER</span> (<span class="k">ORDER BY</span> day
                       <span class="k">ROWS BETWEEN</span> <span class="n">6</span> <span class="k">PRECEDING AND CURRENT ROW</span>) <span class="k">AS</span> days_in_window
@@ -257,114 +268,122 @@ With ORDER BY but no explicit frame, the default is <code>RANGE BETWEEN UNBOUNDE
 
 <div class="problem">
   <div class="phead"><span class="pid">P6.8</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p6-8"></div>
-  <div class="pbody"><p>Gaps between posts: for one prolific user (pick any owner_user_id with many posts), list their posts in order with the days since their previous post. Then find their single longest gap.</p>
+  <div class="pbody"><p>Gaps between posts: for one prolific user (use <code>owneruserid = 1876</code>, the most prolific answerer here), list their posts in order with the time since their previous post. Then find their single longest gap.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> gaps <span class="k">AS</span> (
-    <span class="k">SELECT</span> owner_user_id, id, creation_date,
-           creation_date - <span class="f">LAG</span>(creation_date) <span class="k">OVER</span> (
-               <span class="k">PARTITION BY</span> owner_user_id <span class="k">ORDER BY</span> creation_date) <span class="k">AS</span> gap
+    <span class="k">SELECT</span> owneruserid, id, creationdate,
+           creationdate - <span class="f">LAG</span>(creationdate) <span class="k">OVER</span> (
+               <span class="k">PARTITION BY</span> owneruserid <span class="k">ORDER BY</span> creationdate) <span class="k">AS</span> gap
     <span class="k">FROM</span> posts
-    <span class="k">WHERE</span> owner_user_id = <span class="n">22656</span>   <span class="c">-- swap in your chosen user</span>
+    <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>   <span class="c">-- swap in any prolific user</span>
 )
 <span class="k">SELECT</span> * <span class="k">FROM</span> gaps <span class="k">ORDER BY</span> gap <span class="k">DESC NULLS LAST</span> <span class="k">LIMIT</span> <span class="n">1</span>;</pre>
-<p>The first post's gap is NULL (no predecessor) - NULLS LAST keeps it from masquerading as the longest gap. LAG-against-yourself is the core of sessionization and retention, both coming in Module 7.</p></div></details>
+<p>The first post's gap is NULL (no predecessor) - NULLS LAST keeps it from masquerading as the longest gap. Subtracting two timestamps yields an interval, so the answer reads like "368 days ..." directly. LAG-against-yourself is the core of sessionization and retention, both coming in Module 7.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.9</span><span class="db">northwind</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p6-9"></div>
-  <div class="pbody"><p>Customer order velocity: for every customer, the average number of days between consecutive orders. (LAG per customer in a CTE, AVG outside.) Return the 10 fastest-reordering customers with at least 5 orders.</p>
+  <div class="phead"><span class="pid">P6.9</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p6-9"></div>
+  <div class="pbody"><p>Answering cadence: for every user, the average number of days between consecutive answers. (LAG per user in a CTE, AVG outside.) Return the 10 fastest-answering users with at least 100 answers.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> gaps <span class="k">AS</span> (
-    <span class="k">SELECT</span> customer_id,
-           order_date - <span class="f">LAG</span>(order_date) <span class="k">OVER</span> (
-               <span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> order_date, order_id) <span class="k">AS</span> gap_days
-    <span class="k">FROM</span> orders
+    <span class="k">SELECT</span> owneruserid,
+           <span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> creationdate - <span class="f">LAG</span>(creationdate) <span class="k">OVER</span> (
+               <span class="k">PARTITION BY</span> owneruserid <span class="k">ORDER BY</span> creationdate, id)) / <span class="n">86400</span> <span class="k">AS</span> gap_days
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">2</span> <span class="k">AND</span> owneruserid <span class="k">IS NOT NULL</span>
 )
-<span class="k">SELECT</span> customer_id,
-       <span class="f">COUNT</span>(gap_days) + <span class="n">1</span>          <span class="k">AS</span> orders,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(gap_days), <span class="n">1</span>)      <span class="k">AS</span> avg_days_between
+<span class="k">SELECT</span> owneruserid,
+       <span class="f">COUNT</span>(gap_days) + <span class="n">1</span>              <span class="k">AS</span> answers,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(gap_days)::numeric, <span class="n">2</span>)   <span class="k">AS</span> avg_days_between
 <span class="k">FROM</span> gaps
-<span class="k">GROUP BY</span> customer_id
-<span class="k">HAVING</span> <span class="f">COUNT</span>(gap_days) + <span class="n">1</span> >= <span class="n">5</span>
+<span class="k">GROUP BY</span> owneruserid
+<span class="k">HAVING</span> <span class="f">COUNT</span>(gap_days) + <span class="n">1</span> >= <span class="n">100</span>
 <span class="k">ORDER BY</span> avg_days_between
 <span class="k">LIMIT</span> <span class="n">10</span>;</pre>
-<p>COUNT(gap_days) skips the NULL first-order row, so orders = gaps + 1. Windows inside the CTE, plain aggregation outside - the two layers never mix, which is the whole architecture of window-based analysis.</p></div></details>
+<p>COUNT(gap_days) skips the NULL first-answer row, so answers = gaps + 1. Windows inside the CTE, plain aggregation outside - the two layers never mix, which is the whole architecture of window-based analysis. User 1876 tops this too: thousands of answers, under a day apart on average.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.10</span><span class="db">nyctaxi</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p6-10"></div>
-  <div class="pbody"><p>Fare quartiles: assign every trip in a single busy day to a fare quartile with NTILE(4), then summarize each quartile: trip count, min fare, max fare, avg tip percent. What do you notice about tipping across quartiles?</p>
+  <div class="phead"><span class="pid">P6.10</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p6-10"></div>
+  <div class="pbody"><p>Reputation quartiles: assign every user with reputation above 1 to a quartile with NTILE(4) over reputation, then summarize each quartile - user count, min and max reputation, average upvotes. What do you notice about upvotes across quartiles, and about the min/max reputation of the middle buckets?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> one_day <span class="k">AS</span> (
-    <span class="k">SELECT</span> fare_amount, tip_amount,
-           <span class="f">NTILE</span>(<span class="n">4</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> fare_quartile
-    <span class="k">FROM</span> trips
-    <span class="k">WHERE</span> pickup_datetime >= <span class="s">'2016-01-15'</span>
-      <span class="k">AND</span> pickup_datetime <  <span class="s">'2016-01-16'</span>
-      <span class="k">AND</span> fare_amount > <span class="n">0</span>
+<pre><span class="k">WITH</span> bucketed <span class="k">AS</span> (
+    <span class="k">SELECT</span> reputation, upvotes,
+           <span class="f">NTILE</span>(<span class="n">4</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> reputation) <span class="k">AS</span> quartile
+    <span class="k">FROM</span> users
+    <span class="k">WHERE</span> reputation > <span class="n">1</span>
 )
-<span class="k">SELECT</span> fare_quartile,
-       <span class="f">COUNT</span>(*) <span class="k">AS</span> trips,
-       <span class="f">MIN</span>(fare_amount) <span class="k">AS</span> min_fare,
-       <span class="f">MAX</span>(fare_amount) <span class="k">AS</span> max_fare,
-       <span class="f">ROUND</span>(<span class="f">AVG</span>(tip_amount / fare_amount)::numeric * <span class="n">100</span>, <span class="n">1</span>) <span class="k">AS</span> avg_tip_pct
-<span class="k">FROM</span> one_day
-<span class="k">GROUP BY</span> fare_quartile
-<span class="k">ORDER BY</span> fare_quartile;</pre>
-<p>NTILE forces near-equal bucket sizes, so boundary ties can land in different buckets - unlike CASE-based bucketing on fixed thresholds. "NTILE for equal populations, CASE for fixed cutoffs" is a tidy line to have ready.</p></div></details>
+<span class="k">SELECT</span> quartile,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> users,
+       <span class="f">MIN</span>(reputation) <span class="k">AS</span> min_rep,
+       <span class="f">MAX</span>(reputation) <span class="k">AS</span> max_rep,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(upvotes), <span class="n">1</span>) <span class="k">AS</span> avg_upvotes
+<span class="k">FROM</span> bucketed
+<span class="k">GROUP BY</span> quartile
+<span class="k">ORDER BY</span> quartile;</pre>
+<p>NTILE forces near-equal bucket sizes, so when a value dominates (huge numbers of users sit at the default-ish low reputation) the middle quartiles can share the same min and max - the boundary between them is arbitrary. Contrast with CASE-based bucketing on fixed thresholds, where a bucket can be empty. "NTILE for equal populations, CASE for fixed cutoffs" is a tidy line to have ready; the upvote average climbing steeply into the top quartile is the real-world payoff.</p></div></details>
   </div>
 </div>
 
 <h2>Practice - Sessions E and F (problems 11-14)</h2>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.11</span><span class="db">northwind</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p6-11"></div>
-  <div class="pbody"><p>Redo P5.10 (customers whose first order shipped late) with ROW_NUMBER instead of the MIN-join, handling the same-day tie deterministically by lowest order_id. Compare the two solutions' length and clarity.</p>
+  <div class="phead"><span class="pid">P6.11</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p6-11"></div>
+  <div class="pbody"><p>Redo the "each user's very first post" problem with ROW_NUMBER instead of a MIN-and-join, handling the same-day tie deterministically by lowest post id. Return the user, the first post's id, date, and whether it was a question or an answer. Compare the two solutions' length and clarity.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> ranked <span class="k">AS</span> (
-    <span class="k">SELECT</span> o.*,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id
-                              <span class="k">ORDER BY</span> order_date, order_id) <span class="k">AS</span> rn
-    <span class="k">FROM</span> orders o
+    <span class="k">SELECT</span> owneruserid, id, creationdate, posttypeid,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owneruserid
+                              <span class="k">ORDER BY</span> creationdate, id) <span class="k">AS</span> rn
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> owneruserid <span class="k">IS NOT NULL</span>
 )
-<span class="k">SELECT</span> c.company_name,
-       r.order_date <span class="k">AS</span> first_order,
-       r.shipped_date - r.required_date <span class="k">AS</span> days_late
-<span class="k">FROM</span> ranked r
-<span class="k">JOIN</span> customers c <span class="k">ON</span> c.customer_id = r.customer_id
-<span class="k">WHERE</span> r.rn = <span class="n">1</span>
-  <span class="k">AND</span> r.shipped_date > r.required_date
-<span class="k">ORDER BY</span> days_late <span class="k">DESC</span>;</pre>
-<p>One CTE instead of two, ties resolved explicitly, exactly one row per customer guaranteed. In an interview, write this version and mention the MIN-join as the alternative - showing you know both is the point.</p></div></details>
+<span class="k">SELECT</span> owneruserid,
+       id <span class="k">AS</span> first_post_id,
+       creationdate::date <span class="k">AS</span> first_post_date,
+       <span class="k">CASE</span> posttypeid <span class="k">WHEN</span> <span class="n">1</span> <span class="k">THEN</span> <span class="s">'question'</span> <span class="k">WHEN</span> <span class="n">2</span> <span class="k">THEN</span> <span class="s">'answer'</span> <span class="k">ELSE</span> <span class="s">'other'</span> <span class="k">END</span> <span class="k">AS</span> first_post_kind
+<span class="k">FROM</span> ranked
+<span class="k">WHERE</span> rn = <span class="n">1</span>
+<span class="k">ORDER BY</span> first_post_date
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<p>One CTE, ties resolved explicitly (creationdate then id), exactly one row per user guaranteed. The MIN-join alternative is <code>GROUP BY owneruserid</code> to get each user's <code>MIN(creationdate)</code>, then join back to posts on user + date - two passes and a same-day ambiguity you have to break with another rule. In an interview, write the ROW_NUMBER version and mention the MIN-join as the alternative; showing you know both is the point.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P6.12</span><span class="db">adventureworks</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p6-12"></div>
-  <div class="pbody"><p>Territory league table by year: for each order year, rank territories by revenue (totaldue), and show only each year's top 3 with their revenue and share of that year's total (1 decimal). Three window concepts in one query.</p>
+  <div class="phead"><span class="pid">P6.12</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p6-12"></div>
+  <div class="pbody"><p>Tag league table by year: for each year, rank the four big database tags (postgresql, mysql, sql-server, oracle) by how many answers their questions attracted, and show only each year's top 3 with their answer count and share of that year's tagged answers (1 decimal). A tag is read off the parent question's pipe-delimited <code>tags</code>. Three window concepts in one query.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Join each answer to its parent question (<code>a.parentid = q.id</code>), classify the question's tag with a CASE over <code>tags LIKE '%|postgresql|%'</code> etc., aggregate to (year, tag), then RANK within year and compute share with <code>SUM(...) OVER (PARTITION BY yr)</code>.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> yearly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> orderdate)::int <span class="k">AS</span> yr,
-           territoryid,
-           <span class="f">SUM</span>(totaldue) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> sales.salesorderheader
+    <span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> a.creationdate)::int <span class="k">AS</span> yr,
+           <span class="k">CASE</span>
+               <span class="k">WHEN</span> q.tags <span class="k">LIKE</span> <span class="s">'%|postgresql|%'</span> <span class="k">THEN</span> <span class="s">'postgresql'</span>
+               <span class="k">WHEN</span> q.tags <span class="k">LIKE</span> <span class="s">'%|mysql|%'</span>      <span class="k">THEN</span> <span class="s">'mysql'</span>
+               <span class="k">WHEN</span> q.tags <span class="k">LIKE</span> <span class="s">'%|sql-server|%'</span> <span class="k">THEN</span> <span class="s">'sql-server'</span>
+               <span class="k">WHEN</span> q.tags <span class="k">LIKE</span> <span class="s">'%|oracle|%'</span>     <span class="k">THEN</span> <span class="s">'oracle'</span>
+               <span class="k">ELSE</span> <span class="s">'other'</span>
+           <span class="k">END</span> <span class="k">AS</span> tag,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> answers
+    <span class="k">FROM</span> posts a
+    <span class="k">JOIN</span> posts q <span class="k">ON</span> q.id = a.parentid
+    <span class="k">WHERE</span> a.posttypeid = <span class="n">2</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>
 ),
 ranked <span class="k">AS</span> (
-    <span class="k">SELECT</span> yr, territoryid, revenue,
-           <span class="f">RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>) <span class="k">AS</span> rnk,
-           <span class="f">ROUND</span>(<span class="n">100.0</span> * revenue / <span class="f">SUM</span>(revenue) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr), <span class="n">1</span>) <span class="k">AS</span> pct_of_year
+    <span class="k">SELECT</span> yr, tag, answers,
+           <span class="f">RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr <span class="k">ORDER BY</span> answers <span class="k">DESC</span>) <span class="k">AS</span> rnk,
+           <span class="f">ROUND</span>(<span class="n">100.0</span> * answers / <span class="f">SUM</span>(answers) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr), <span class="n">1</span>) <span class="k">AS</span> pct_of_year
     <span class="k">FROM</span> yearly
+    <span class="k">WHERE</span> tag <> <span class="s">'other'</span>
 )
-<span class="k">SELECT</span> yr, rnk, territoryid,
-       <span class="f">ROUND</span>(revenue::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue,
-       pct_of_year
+<span class="k">SELECT</span> yr, rnk, tag, answers, pct_of_year
 <span class="k">FROM</span> ranked
 <span class="k">WHERE</span> rnk <= <span class="n">3</span>
 <span class="k">ORDER BY</span> yr, rnk;</pre>
-<p>RANK (not ROW_NUMBER) so tied territories both make the podium. PARTITION BY yr appears in both windows - rank within year, share within year. This is a fair replica of a real senior screen question.</p></div></details>
+<p>RANK (not ROW_NUMBER) so tied tags both make the podium. PARTITION BY yr appears in both windows - rank within year, share within year. The CASE ladder is order-sensitive: a question tagged both mysql and postgresql lands in postgresql because that branch is tested first - a real modeling choice to say out loud. This is a fair replica of a senior screen question.</p></div></details>
   </div>
 </div>
 
@@ -373,17 +392,17 @@ ranked <span class="k">AS</span> (
   <div class="pbody"><p>Per question, how long until it was answered, and the median response time by year. Combine your P5.5 CTE work with <code>PERCENTILE_CONT</code> (an ordered-set aggregate - close cousin of windows and a frequent interview cameo).</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> first_answers <span class="k">AS</span> (
-    <span class="k">SELECT</span> parent_id <span class="k">AS</span> question_id, <span class="f">MIN</span>(creation_date) <span class="k">AS</span> first_answer_at
+    <span class="k">SELECT</span> parentid <span class="k">AS</span> question_id, <span class="f">MIN</span>(creationdate) <span class="k">AS</span> first_answer_at
     <span class="k">FROM</span> posts
-    <span class="k">WHERE</span> post_type_id = <span class="n">2</span>
-    <span class="k">GROUP BY</span> parent_id
+    <span class="k">WHERE</span> posttypeid = <span class="n">2</span>
+    <span class="k">GROUP BY</span> parentid
 ),
 response_times <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> q.creation_date)::int <span class="k">AS</span> yr,
-           <span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> fa.first_answer_at - q.creation_date) / <span class="n">3600</span> <span class="k">AS</span> hours_to_answer
+    <span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> q.creationdate)::int <span class="k">AS</span> yr,
+           <span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> fa.first_answer_at - q.creationdate) / <span class="n">3600</span> <span class="k">AS</span> hours_to_answer
     <span class="k">FROM</span> posts q
     <span class="k">JOIN</span> first_answers fa <span class="k">ON</span> fa.question_id = q.id
-    <span class="k">WHERE</span> q.post_type_id = <span class="n">1</span>
+    <span class="k">WHERE</span> q.posttypeid = <span class="n">1</span>
 )
 <span class="k">SELECT</span> yr,
        <span class="f">COUNT</span>(*) <span class="k">AS</span> answered_questions,
