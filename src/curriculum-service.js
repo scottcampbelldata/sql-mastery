@@ -239,13 +239,13 @@ ORDER BY table_schema, table_name;
     schemaExercise({
       id: 'schema-recon-02',
       title: 'Schema Recon 2',
-      database: 'northwind',
-      task: 'Inspect likely order-analysis tables in Northwind. Show table name, column name, and data type for customers, orders, and order_details.',
+      database: 'chinook',
+      task: 'Inspect the core order-analysis tables in Chinook. Show table name, column name, and data type for customer, invoice, and invoice_line.',
       expectedSql: `
 SELECT table_name, column_name, data_type
 FROM information_schema.columns
 WHERE table_schema = 'public'
-  AND table_name IN ('customers', 'orders', 'order_details')
+  AND table_name IN ('customer', 'invoice', 'invoice_line')
 ORDER BY table_name, ordinal_position;
 `
     }),
@@ -265,27 +265,28 @@ ORDER BY ordinal_position;
     schemaExercise({
       id: 'schema-recon-04',
       title: 'Schema Recon 4',
-      database: 'adventureworks',
-      task: 'Map AdventureWorks by schema. Count base tables in each non-system schema.',
+      database: 'stackoverflow',
+      task: 'Estimate which StackOverflow tables are largest. Show table name and PostgreSQL estimated rows, largest first.',
       expectedSql: `
-SELECT table_schema, COUNT(*)::int AS table_count
-FROM information_schema.tables
-WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
-  AND table_type = 'BASE TABLE'
-GROUP BY table_schema
-ORDER BY table_schema;
+SELECT c.relname AS table_name,
+       c.reltuples::bigint AS estimated_rows
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE n.nspname = 'public'
+  AND c.relkind = 'r'
+ORDER BY estimated_rows DESC, table_name;
 `
     }),
     schemaExercise({
       id: 'schema-recon-05',
       title: 'Schema Recon 5',
-      database: 'nyctaxi',
-      task: 'Inspect the NYC taxi trips table. Show column name and data type in table order.',
+      database: 'stackoverflow',
+      task: 'Inspect the StackOverflow users table. Show column name and data type in table order.',
       expectedSql: `
 SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_schema = 'public'
-  AND table_name = 'trips'
+  AND table_name = 'users'
 ORDER BY ordinal_position;
 `
     }),

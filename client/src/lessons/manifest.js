@@ -8,5 +8,7 @@ export const LESSONS = [
   { slug: 'm6-window-functions', short: '6', title: 'Window Functions', page: 'm6' },
   { slug: 'm7-interview-patterns', short: '7', title: 'Interview Patterns', page: 'm7' },
   { slug: 'm8-performance', short: '8', title: 'Performance', page: 'm8' },
-  { slug: 'mock-interviews', short: 'M', title: 'Mock Interviews', page: 'mocks' }
+  { slug: 'm9-data-modeling', short: '9', title: 'Data Modeling', page: 'm9' },
+  { slug: 'mock-interviews', short: 'M', title: 'Mock Interviews', page: 'mocks' },
+  { slug: 'dialects', short: 'D', title: 'SQL Dialects', page: 'dialects' }
 ];

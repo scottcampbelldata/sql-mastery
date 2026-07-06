@@ -43,13 +43,13 @@ export function useSqlCheck(exercise, { onResult, onAttempt } = {}) {
         setFeedback({
           toneClass: body.feedbackType === 'error' ? TONE.err : TONE.warn,
           title: body.feedbackType === 'error' ? 'Your SQL did not run' : 'Not quite yet',
-          message: body.feedbackType === 'error' ? [body.message, body.hint].filter(Boolean).join(' — ') : (body.hint || body.message)
+          message: body.feedbackType === 'error' ? [body.message, body.hint].filter(Boolean).join(': ') : (body.hint || body.message)
         });
       }
       onResult?.(Boolean(body.correct), body);
     } catch (error) {
       setResult(null);
-      setFeedback({ toneClass: TONE.err, title: 'The checker could not run', message: `${error.message}${error.hint ? ` — ${error.hint}` : ''}` });
+      setFeedback({ toneClass: TONE.err, title: 'The checker could not run', message: `${error.message}${error.hint ? `: ${error.hint}` : ''}` });
     } finally {
       setChecking(false);
     }

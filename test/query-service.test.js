@@ -101,7 +101,7 @@ test('executeQuery maps missing SCRAM passwords to a setup error', async () => {
   const service = createQueryService({ Pool: AuthPool, env: {} });
 
   await assert.rejects(
-    () => service.executeQuery({ database: 'northwind', sql: 'SELECT 1' }),
+    () => service.executeQuery({ database: 'chinook', sql: 'SELECT 1' }),
     (error) => {
       assert.ok(error instanceof QueryServiceError);
       assert.equal(error.statusCode, 503);
@@ -138,7 +138,7 @@ test('checkQuery returns success when user and expected result sets match', asyn
 
   const service = createQueryService({ Pool: QueuePool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'northwind',
+    database: 'chinook',
     sql: 'SELECT 1 AS ok',
     expectedSql: 'SELECT 1 AS ok'
   });
@@ -175,7 +175,7 @@ test('checkQuery explains column mismatches without exposing expected rows', asy
 
   const service = createQueryService({ Pool: QueuePool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'northwind',
+    database: 'chinook',
     sql: 'SELECT 1 AS wrong_name',
     expectedSql: 'SELECT 1 AS ok'
   });
@@ -201,7 +201,7 @@ test('checkQuery turns SQL errors into learning feedback', async () => {
 
   const service = createQueryService({ Pool: ErrorPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'northwind',
+    database: 'chinook',
     sql: 'SELECT bad_column FROM orders',
     expectedSql: 'SELECT order_id FROM orders'
   });

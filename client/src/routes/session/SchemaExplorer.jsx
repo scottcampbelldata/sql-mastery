@@ -31,7 +31,7 @@ export function SchemaExplorer({ database }) {
     return () => { alive = false; };
   }, [database, activeTable]);
 
-  if (error) return <Callout tone="warn" title={`Could not load ${database}`}>{error.message}{error.hint ? ` — ${error.hint}` : ''}</Callout>;
+  if (error) return <Callout tone="warn" title={`Could not load ${database}`}>{error.message}{error.hint ? `: ${error.hint}` : ''}</Callout>;
   if (!schema) return <div className="table-note">Loading {database} tables…</div>;
   if (!schema.tables.length) return <div className="table-note">{database} has no user tables.</div>;
 

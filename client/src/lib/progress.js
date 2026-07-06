@@ -2,8 +2,8 @@ const PROGRESS_KEY = 'sqlm:product-progress:v1';
 export const ACTIVE_SESSION_KEY = 'sqlm:product-active-session:v1';
 export const SIDEBAR_KEY = 'sqlm:sidebar-collapsed:v1';
 
-/* localStorage can throw (Safari private mode, quota, disabled storage) —
-   like the legacy shared.js, treat storage as best-effort. */
+/* localStorage can throw (Safari private mode, quota, disabled storage).
+   Like the legacy shared.js, treat storage as best-effort. */
 export function safeGet(key) {
   try {
     return localStorage.getItem(key);

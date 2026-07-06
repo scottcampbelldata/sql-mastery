@@ -26,7 +26,7 @@ test('client preserves legacy localStorage keys', () => {
 
 test('lesson content lives in content/ and fragments are generated', () => {
   const content = fs.readdirSync(path.join(rootDir, 'content')).filter((f) => f.endsWith('.html'));
-  assert.equal(content.length, 10);
+  assert.equal(content.length, 12);
   const fragments = fs.readdirSync(path.join(rootDir, 'client', 'src', 'lessons', 'fragments'));
-  assert.equal(fragments.filter((f) => f.endsWith('.html')).length, 10);
+  assert.equal(fragments.filter((f) => f.endsWith('.html')).length, content.length);
 });

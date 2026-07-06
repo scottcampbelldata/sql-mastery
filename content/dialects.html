@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference - SQL Dialects</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body data-page="dialects">
+<header class="site"><div class="bar">
+  <span class="brand">sql://<b>mastery-path</b></span>
+  <nav class="mods">
+    <a href="index.html">Home</a><a href="schemas.html">0</a><a href="m1-fundamentals.html">1</a><a href="m2-aggregation.html">2</a><a href="m3-joins.html">3</a><a href="m4-transformation.html">4</a><a href="m5-subqueries-ctes.html">5</a><a href="m6-window-functions.html">6</a><a href="m7-interview-patterns.html">7</a><a href="m8-performance.html">8</a><a href="m9-data-modeling.html">9</a><a href="mock-interviews.html">Mocks</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<p class="eyebrow">-- reference / dialect cheat sheet</p>
+<h1>SQL Dialects: Postgres vs. BigQuery vs. Snowflake</h1>
+<p class="lede">The logic you have learned here is standard SQL and ports everywhere. What changes between warehouses is the surface: date functions, string splitting, casting, and a few conveniences. This is the reference to skim before a BI interview - your engine here is PostgreSQL, so the Postgres column is what you have been writing; the other two are the ones you will be asked to "also know." When unsure in an interview, say the standard-SQL form and note the dialect difference out loud.</p>
+
+<h2>Limiting rows</h2>
+<table>
+<thead><tr><th>Task</th><th>PostgreSQL</th><th>BigQuery</th><th>Snowflake</th></tr></thead>
+<tbody>
+<tr><td>First N rows</td><td><code>LIMIT 10</code></td><td><code>LIMIT 10</code></td><td><code>LIMIT 10</code> or <code>SELECT TOP 10</code></td></tr>
+<tr><td>Skip then take</td><td><code>LIMIT 10 OFFSET 20</code></td><td><code>LIMIT 10 OFFSET 20</code></td><td><code>LIMIT 10 OFFSET 20</code></td></tr>
+</tbody>
+</table>
+
+<h2>Strings</h2>
+<table>
+<thead><tr><th>Task</th><th>PostgreSQL</th><th>BigQuery</th><th>Snowflake</th></tr></thead>
+<tbody>
+<tr><td>Concatenate</td><td><code>a || b</code> / <code>CONCAT(a,b)</code></td><td><code>CONCAT(a,b)</code></td><td><code>a || b</code> / <code>CONCAT(a,b)</code></td></tr>
+<tr><td>Substring</td><td><code>SUBSTRING(s, 1, 5)</code></td><td><code>SUBSTR(s, 1, 5)</code></td><td><code>SUBSTR(s, 1, 5)</code></td></tr>
+<tr><td>Split to array</td><td><code>STRING_TO_ARRAY(s, '|')</code></td><td><code>SPLIT(s, '|')</code></td><td><code>SPLIT(s, '|')</code></td></tr>
+<tr><td>Explode array to rows</td><td><code>UNNEST(arr)</code> (also <code>regexp_split_to_table</code>)</td><td><code>UNNEST(arr)</code> in FROM</td><td><code>LATERAL FLATTEN(input =&gt; arr)</code></td></tr>
+<tr><td>Case-insensitive LIKE</td><td><code>x ILIKE '%sql%'</code></td><td><code>LOWER(x) LIKE '%sql%'</code></td><td><code>x ILIKE '%sql%'</code></td></tr>
+</tbody>
+</table>
+
+<h2>Dates and times</h2>
+<table>
+<thead><tr><th>Task</th><th>PostgreSQL</th><th>BigQuery</th><th>Snowflake</th></tr></thead>
+<tbody>
+<tr><td>Today</td><td><code>CURRENT_DATE</code></td><td><code>CURRENT_DATE()</code></td><td><code>CURRENT_DATE</code></td></tr>
+<tr><td>Truncate to month</td><td><code>date_trunc('month', ts)</code></td><td><code>DATE_TRUNC(dt, MONTH)</code></td><td><code>DATE_TRUNC('month', ts)</code></td></tr>
+<tr><td>Extract a part</td><td><code>EXTRACT(YEAR FROM ts)</code></td><td><code>EXTRACT(YEAR FROM ts)</code></td><td><code>YEAR(ts)</code> / <code>EXTRACT(...)</code></td></tr>
+<tr><td>Add an interval</td><td><code>ts + INTERVAL '7 days'</code></td><td><code>DATE_ADD(dt, INTERVAL 7 DAY)</code></td><td><code>DATEADD('day', 7, ts)</code></td></tr>
+<tr><td>Difference in days</td><td><code>d2 - d1</code></td><td><code>DATE_DIFF(d2, d1, DAY)</code></td><td><code>DATEDIFF('day', d1, d2)</code></td></tr>
+<tr><td>Format for display</td><td><code>TO_CHAR(ts, 'YYYY-MM')</code></td><td><code>FORMAT_DATE('%Y-%m', dt)</code></td><td><code>TO_CHAR(ts, 'YYYY-MM')</code></td></tr>
+</tbody>
+</table>
+<div class="note"><span class="tag">The one that trips people up</span>
+Date subtraction returns days in Postgres (<code>d2 - d1</code>) but you must spell out the unit in BigQuery and Snowflake. And BigQuery's <code>DATE_TRUNC</code> takes the column <em>first</em> and an unquoted unit (<code>DATE_TRUNC(dt, MONTH)</code>), the reverse of Postgres. If you only remember one dialect gotcha, remember date functions - they differ the most.</div>
+
+<h2>Casting and NULLs</h2>
+<table>
+<thead><tr><th>Task</th><th>PostgreSQL</th><th>BigQuery</th><th>Snowflake</th></tr></thead>
+<tbody>
+<tr><td>Cast</td><td><code>x::int</code> / <code>CAST(x AS INT)</code></td><td><code>CAST(x AS INT64)</code></td><td><code>x::int</code> / <code>CAST(x AS INT)</code></td></tr>
+<tr><td>Cast, NULL on failure</td><td>(none built-in)</td><td><code>SAFE_CAST(x AS INT64)</code></td><td><code>TRY_CAST(x AS INT)</code></td></tr>
+<tr><td>First non-NULL</td><td><code>COALESCE(a, b)</code></td><td><code>COALESCE(a, b)</code> / <code>IFNULL(a,b)</code></td><td><code>COALESCE(a, b)</code> / <code>NVL(a,b)</code></td></tr>
+<tr><td>Value to NULL</td><td><code>NULLIF(x, 0)</code></td><td><code>NULLIF(x, 0)</code></td><td><code>NULLIF(x, 0)</code></td></tr>
+</tbody>
+</table>
+
+<h2>Analytics conveniences</h2>
+<table>
+<thead><tr><th>Task</th><th>PostgreSQL</th><th>BigQuery</th><th>Snowflake</th></tr></thead>
+<tbody>
+<tr><td>Top-1 per group</td><td>ROW_NUMBER in a subquery, filter <code>= 1</code></td><td><code>QUALIFY ROW_NUMBER() OVER (...) = 1</code></td><td><code>QUALIFY ROW_NUMBER() OVER (...) = 1</code></td></tr>
+<tr><td>Semi-structured</td><td><code>jsonb</code>, <code>-&gt;</code> / <code>-&gt;&gt;</code>; native arrays</td><td><code>JSON</code>, <code>JSON_VALUE</code>; <code>ARRAY</code> + <code>UNNEST</code></td><td><code>VARIANT</code>, <code>col:path</code>; <code>FLATTEN</code></td></tr>
+<tr><td>Approx distinct count</td><td><code>(extension)</code></td><td><code>APPROX_COUNT_DISTINCT(x)</code></td><td><code>APPROX_COUNT_DISTINCT(x)</code></td></tr>
+</tbody>
+</table>
+<div class="tip"><span class="tag">QUALIFY is the flex</span>
+<code>QUALIFY</code> filters on a window function without wrapping the query in a subquery - <code>SELECT ... QUALIFY ROW_NUMBER() OVER (PARTITION BY user ORDER BY ts DESC) = 1</code> is the whole "latest row per user" query. Postgres has no QUALIFY, so you write the CTE-plus-filter form you already know. Mentioning that QUALIFY is a BigQuery/Snowflake shortcut for exactly that pattern signals you have worked across warehouses.</div>
+
+<h2>How to use this</h2>
+<p>Do not memorize it cold. Learn the <em>shape</em> of each operation in Postgres here - split-then-explode, truncate-then-group, guard-with-NULLIF - and keep this page for the day you switch dialects. Interview move: write the standard form, and when a function name might differ, say "in BigQuery that's <code>SPLIT</code> and <code>UNNEST</code>; in Snowflake it's <code>FLATTEN</code>" - that one sentence turns a syntax gap into a demonstration of range.</p>
+
+<div class="pager">
+  <a href="m9-data-modeling.html">&larr; Module 9</a>
+  <a href="mock-interviews.html">Mock Interviews &rarr;</a>
+</div>
+</div>
+</body>
+</html>

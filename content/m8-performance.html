@@ -67,6 +67,45 @@
 <li><strong>LIMIT is not free</strong> if there is an ORDER BY on an unindexed column - the whole set must be sorted before the top rows are known.</li>
 </ul>
 
+<h2>8.5 Partitioning: pruning whole tables, not rows</h2>
+<p>An index helps the planner find a few rows quickly <em>inside</em> a table. Partitioning helps it skip <em>entire slices</em> of the table it can prove no matching row lives in. They solve different problems, and the senior move is knowing which one a slow query actually needs.</p>
+<p>Declarative partitioning splits one logical table into physical child tables by a key. Three shapes:</p>
+<ul>
+<li><strong>RANGE</strong> - by an ordered key, almost always a date. The natural fit for append-only time-series like <code>posts</code>.</li>
+<li><strong>LIST</strong> - by a discrete set, e.g. one partition per region, or per <code>posttypeid</code>.</li>
+<li><strong>HASH</strong> - spread rows evenly across N partitions when there is no natural range, to cap partition size and parallelize.</li>
+</ul>
+<pre><span class="c">-- Range-partition posts by year (illustrative DDL - see the note below):</span>
+<span class="k">CREATE TABLE</span> posts (<span class="c">/* ...same columns... */</span>) <span class="k">PARTITION BY RANGE</span> (creationdate);
+
+<span class="k">CREATE TABLE</span> posts_2015 <span class="k">PARTITION OF</span> posts
+    <span class="k">FOR VALUES FROM</span> (<span class="s">'2015-01-01'</span>) <span class="k">TO</span> (<span class="s">'2016-01-01'</span>);
+<span class="k">CREATE TABLE</span> posts_2016 <span class="k">PARTITION OF</span> posts
+    <span class="k">FOR VALUES FROM</span> (<span class="s">'2016-01-01'</span>) <span class="k">TO</span> (<span class="s">'2017-01-01'</span>);
+<span class="c">-- ...one child per year. Each partition is indexed on its own (or an index on the</span>
+<span class="c">-- parent cascades to all of them).</span></pre>
+
+<p><strong>When it helps vs. an index.</strong> A B-tree on <code>creationdate</code> still reads one big table and walks the index to your rows. A range-partitioned table lets the planner discard every year but the one you asked for <em>before it scans anything</em> - this is <strong>partition pruning</strong>:</p>
+<pre><span class="k">EXPLAIN</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> posts
+<span class="k">WHERE</span> creationdate >= <span class="s">'2016-01-01'</span> <span class="k">AND</span> creationdate < <span class="s">'2017-01-01'</span>;
+<span class="c">-- On the partitioned table the plan is an Append over posts_2016 ALONE;</span>
+<span class="c">-- posts_2015, posts_2017, ... never appear in it. Pruned partitions are never read.</span></pre>
+<p>Read the plan for an <code>Append</code> node listing only the partitions that survived pruning. The rest are gone at plan time - or shown as <code>(never executed)</code> when the cutoff is only known at run time (run-time pruning, e.g. the value comes from a parameter or a join).</p>
+
+<p>So the division of labor:</p>
+<ul>
+<li><strong>Reach for a partition</strong> when a huge, append-only table is almost always queried by a range key (time), and when data lifecycle matters: archiving old data becomes <code>DETACH PARTITION</code> / <code>DROP TABLE posts_2015</code> - instant - instead of a day-long <code>DELETE</code> that bloats the table.</li>
+<li><strong>Reach for an index</strong> when the predicate is selective <em>within</em> the data you keep - a specific user, a score threshold - which is most analyst queries.</li>
+<li><strong>They stack:</strong> partition to prune by time, then index each partition for the selective predicates inside it. Partitioning is not a general speed-up - on a small table, or a query that must touch every partition, it only adds planning overhead.</li>
+</ul>
+
+<div class="tip"><span class="tag">Interview script</span>
+"Partitioning is for pruning and archival, not point lookups. If a table is enormous, append-only, and almost always filtered by a time range, I range-partition on that date so the planner skips whole partitions and dropping old data is instant - then I still index inside each partition for the selective predicates. If a query is just selective on some column, an index is the right tool and partitioning would only add overhead." Naming pruning and the drop-old-partition lifecycle win is what separates a real answer from a buzzword.</div>
+
+<div class="note"><span class="tag">On this course's databases</span>
+Your <strong>stackoverflow</strong> and <strong>chinook</strong> databases are read-only, and the DDL above rebuilds a table, so this section is read-and-reason rather than a live drill - the runner would reject <code>CREATE TABLE</code>. Picture it on <code>posts</code>: 243k rows spanning 2008-2024, partitioned by year, with the 2016 date-range query you have already run pruning straight to one child. That mental picture is exactly what the interview question tests.</div>
+
 <h2>Drills (all timed against your own hardware)</h2>
 
 <div class="problem">

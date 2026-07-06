@@ -134,16 +134,16 @@ LIMIT 10;
     id: 'zero-first-filter-01',
     title: 'Zero SQL 4',
     moduleId: 'm1',
-    database: 'northwind',
+    database: 'chinook',
     level: 'absolute beginner',
-    task: 'Your first WHERE: return product_name and unit_price for Northwind products priced at 20 or more.',
+    task: 'Your first WHERE: return name and unit_price for Chinook tracks priced at 1 or more.',
     concept: 'WHERE filters rows. It runs before sorting and limiting.',
     whyItMatters: 'Most analyst questions start by reducing the dataset to the relevant population.',
     mentalModel: 'WHERE is a gate: rows pass through only when the condition is true.',
-    workedExample: 'SELECT product_name FROM products WHERE unit_price >= 20;',
+    workedExample: 'SELECT name FROM track WHERE unit_price >= 1;',
     steps: [
       'Select only the requested columns.',
-      'Choose the products table.',
+      'Choose the track table.',
       'Add a numeric comparison in WHERE.'
     ],
     commonMistakes: [
@@ -153,10 +153,10 @@ LIMIT 10;
     ],
     interviewAngle: 'State your population filter out loud before writing metrics.',
     expectedSql: `
-SELECT product_name, unit_price
-FROM products
-WHERE unit_price >= 20
-ORDER BY unit_price, product_name;
+SELECT name, unit_price
+FROM track
+WHERE unit_price >= 1
+ORDER BY unit_price, name;
 `
   }),
   academyExercise({
@@ -192,41 +192,41 @@ LIMIT 10;
     id: 'senior-analytics-case-01',
     title: 'Senior Analytics Case 1',
     moduleId: 'm7',
-    database: 'adventureworks',
+    database: 'chinook',
     level: 'senior case',
-    task: 'Executive revenue readout: by year, show orders, revenue, average order value, and online revenue percentage.',
+    task: 'Executive revenue readout: by year, show invoices, revenue, average invoice value, and active customers.',
     concept: 'Senior analytics SQL turns raw rows into decision-ready metrics at a clear grain.',
     whyItMatters: 'Executives need trend, volume, mix, and efficiency in the same result so they can ask better follow-up questions.',
     mentalModel: 'One row per year is the grain. Each metric is a different lens on that yearly grain.',
-    workedExample: 'Group by order year, aggregate totaldue, and use FILTER for the online slice.',
+    workedExample: 'Group by invoice year, aggregate total, and count distinct customers for the active base.',
     steps: [
-      'Set the result grain to one row per order year.',
-      'Compute count, sum, average, and a percentage with a guarded denominator.',
+      'Set the result grain to one row per invoice year.',
+      'Compute count, sum, average, and a distinct customer count.',
       'Sort chronologically so the trend is readable.'
     ],
     commonMistakes: [
       'Mixing monthly and yearly grain in one query.',
-      'Dividing by order count when the prompt asks for revenue percentage.',
-      'Forgetting NULLIF around percentage denominators.'
+      'Counting rows when the prompt asks for distinct customers.',
+      'Forgetting to round presentation metrics.'
     ],
-    interviewAngle: 'Frame the answer like an analyst: revenue trend, volume, average order value, and channel mix answer different business questions.',
+    interviewAngle: 'Frame the answer like an analyst: revenue trend, volume, average invoice value, and active customer base answer different business questions.',
     expectedSql: `
-SELECT EXTRACT(YEAR FROM orderdate)::int AS order_year,
-       COUNT(*) AS orders,
-       ROUND(SUM(totaldue)::numeric, 2) AS revenue,
-       ROUND(AVG(totaldue)::numeric, 2) AS avg_order_value,
-       ROUND(100.0 * SUM(totaldue) FILTER (WHERE onlineorderflag = true) / NULLIF(SUM(totaldue), 0), 1) AS online_revenue_pct
-FROM sales.salesorderheader
+SELECT EXTRACT(YEAR FROM invoice_date)::int AS invoice_year,
+       COUNT(*) AS invoices,
+       COUNT(DISTINCT customer_id) AS active_customers,
+       ROUND(SUM(total)::numeric, 2) AS revenue,
+       ROUND(AVG(total)::numeric, 2) AS avg_invoice_value
+FROM invoice
 GROUP BY 1
-ORDER BY order_year;
+ORDER BY invoice_year;
 `
   })
 ];
 
 const sources = [
-  { moduleId: 'm1', database: 'northwind', table: 'products', columns: 'product_id, product_name, category_id, unit_price, units_in_stock', orderBy: 'unit_price DESC, product_name', groupColumn: 'category_id', measureColumn: 'unit_price', nullColumn: 'category_id' },
-  { moduleId: 'm1', database: 'northwind', table: 'orders', columns: 'order_id, customer_id, order_date, ship_country, freight', orderBy: 'order_date DESC, order_id', groupColumn: 'ship_country', measureColumn: 'freight', nullColumn: 'ship_region', dateColumn: 'order_date' },
-  { moduleId: 'm2', database: 'northwind', table: 'order_details', columns: 'order_id, product_id, unit_price, quantity, discount', orderBy: 'quantity DESC, order_id', groupColumn: 'product_id', measureColumn: 'quantity', nullColumn: 'discount' },
+  { moduleId: 'm1', database: 'chinook', table: 'album', columns: 'album_id, title, artist_id', orderBy: 'title, album_id', groupColumn: 'artist_id', measureColumn: 'album_id', nullColumn: 'title' },
+  { moduleId: 'm1', database: 'chinook', table: 'employee', columns: 'employee_id, first_name, last_name, title, reports_to', orderBy: 'last_name, employee_id', groupColumn: 'title', measureColumn: 'employee_id', nullColumn: 'reports_to' },
+  { moduleId: 'm2', database: 'chinook', table: 'playlist_track', columns: 'playlist_id, track_id', orderBy: 'playlist_id, track_id', groupColumn: 'playlist_id', measureColumn: 'track_id', nullColumn: 'track_id' },
   { moduleId: 'm1', database: 'chinook', table: 'track', columns: 'track_id, name, genre_id, milliseconds, unit_price', orderBy: 'milliseconds DESC, name', groupColumn: 'genre_id', measureColumn: 'milliseconds', nullColumn: 'composer' },
   { moduleId: 'm2', database: 'chinook', table: 'invoice', columns: 'invoice_id, customer_id, invoice_date, billing_country, total', orderBy: 'total DESC, invoice_id', groupColumn: 'billing_country', measureColumn: 'total', nullColumn: 'billing_state', dateColumn: 'invoice_date' },
   { moduleId: 'm3', database: 'chinook', table: 'invoice_line', columns: 'invoice_id, track_id, unit_price, quantity', orderBy: 'quantity DESC, invoice_id', groupColumn: 'track_id', measureColumn: 'quantity', nullColumn: 'track_id' },
@@ -235,16 +235,16 @@ const sources = [
   { moduleId: 'm1', database: 'stackoverflow', table: 'posts', columns: 'id, posttypeid, owneruserid, creationdate, score', orderBy: 'score DESC, id', groupColumn: 'posttypeid', measureColumn: 'score', nullColumn: 'owneruserid', dateColumn: 'creationdate' },
   { moduleId: 'm2', database: 'stackoverflow', table: 'comments', columns: 'id, postid, userid, score, creationdate', orderBy: 'score DESC, id', groupColumn: 'userid', measureColumn: 'score', nullColumn: 'userid', dateColumn: 'creationdate' },
   { moduleId: 'm2', database: 'stackoverflow', table: 'badges', columns: 'id, userid, name, date, class', orderBy: 'date DESC, id', groupColumn: 'name', measureColumn: 'class', nullColumn: 'userid', dateColumn: 'date' },
-  { moduleId: 'm1', database: 'nyctaxi', table: 'trips', columns: 'trip_id, pickup_datetime, passenger_count, trip_distance, total_amount', orderBy: 'pickup_datetime DESC, trip_id', groupColumn: 'payment_type', measureColumn: 'total_amount', nullColumn: 'payment_type', dateColumn: 'pickup_datetime' },
-  { moduleId: 'm2', database: 'nyctaxi', table: 'trips', columns: 'payment_type, passenger_count, fare_amount, tip_amount, total_amount', orderBy: 'total_amount DESC, trip_id', groupColumn: 'passenger_count', measureColumn: 'tip_amount', nullColumn: 'passenger_count', dateColumn: 'pickup_datetime' },
-  { moduleId: 'm4', database: 'nyctaxi', table: 'trips', columns: 'trip_id, pickup_datetime, trip_distance, fare_amount, tip_amount', orderBy: 'trip_distance DESC, trip_id', groupColumn: 'passenger_count', measureColumn: 'trip_distance', nullColumn: 'passenger_count', dateColumn: 'pickup_datetime' },
-  { moduleId: 'm1', database: 'adventureworks', table: 'production.product', columns: 'productid, name, color, listprice', orderBy: 'listprice DESC, productid', groupColumn: 'color', measureColumn: 'listprice', nullColumn: 'color' },
-  { moduleId: 'm2', database: 'adventureworks', table: 'sales.salesorderheader', columns: 'salesorderid, customerid, orderdate, territoryid, totaldue', orderBy: 'totaldue DESC, salesorderid', groupColumn: 'territoryid', measureColumn: 'totaldue', nullColumn: 'territoryid', dateColumn: 'orderdate' },
-  { moduleId: 'm3', database: 'adventureworks', table: 'sales.salesorderdetail', columns: 'salesorderid, productid, orderqty, linetotal', orderBy: 'linetotal DESC, salesorderid', groupColumn: 'productid', measureColumn: 'linetotal', nullColumn: 'productid' },
-  { moduleId: 'm3', database: 'adventureworks', table: 'sales.customer', columns: 'customerid, personid, storeid, territoryid', orderBy: 'customerid', groupColumn: 'territoryid', measureColumn: 'customerid', nullColumn: 'storeid' },
-  { moduleId: 'm2', database: 'northwind', table: 'products', columns: 'product_id, product_name, category_id, units_in_stock, units_on_order', orderBy: 'units_in_stock DESC, product_id', groupColumn: 'category_id', measureColumn: 'units_in_stock', nullColumn: 'category_id' },
+  { moduleId: 'm1', database: 'stackoverflow', table: 'votes', columns: 'id, postid, votetypeid, bountyamount, creationdate', orderBy: 'creationdate DESC, id', groupColumn: 'votetypeid', measureColumn: 'bountyamount', nullColumn: 'bountyamount', dateColumn: 'creationdate' },
+  { moduleId: 'm2', database: 'stackoverflow', table: 'posts', columns: 'id, posttypeid, score, viewcount, answercount, creationdate', orderBy: 'score DESC, id', groupColumn: 'posttypeid', measureColumn: 'viewcount', nullColumn: 'viewcount', dateColumn: 'creationdate' },
+  { moduleId: 'm4', database: 'stackoverflow', table: 'posthistory', columns: 'id, posthistorytypeid, postid, userid, creationdate', orderBy: 'creationdate DESC, id', groupColumn: 'posthistorytypeid', measureColumn: 'postid', nullColumn: 'userid', dateColumn: 'creationdate' },
+  { moduleId: 'm1', database: 'chinook', table: 'track', columns: 'track_id, name, genre_id, bytes, composer', orderBy: 'bytes DESC, track_id', groupColumn: 'genre_id', measureColumn: 'bytes', nullColumn: 'composer' },
+  { moduleId: 'm2', database: 'chinook', table: 'invoice', columns: 'invoice_id, customer_id, billing_country, billing_state, total, invoice_date', orderBy: 'total DESC, invoice_id', groupColumn: 'billing_country', measureColumn: 'total', nullColumn: 'billing_state', dateColumn: 'invoice_date' },
+  { moduleId: 'm3', database: 'chinook', table: 'invoice_line', columns: 'invoice_line_id, invoice_id, track_id, unit_price, quantity', orderBy: 'unit_price DESC, invoice_line_id', groupColumn: 'track_id', measureColumn: 'unit_price', nullColumn: 'quantity' },
+  { moduleId: 'm3', database: 'chinook', table: 'customer', columns: 'customer_id, first_name, last_name, country, company, support_rep_id', orderBy: 'country, last_name', groupColumn: 'country', measureColumn: 'customer_id', nullColumn: 'company' },
+  { moduleId: 'm2', database: 'stackoverflow', table: 'users', columns: 'id, displayname, reputation, upvotes, downvotes, creationdate', orderBy: 'reputation DESC, id', groupColumn: 'location', measureColumn: 'upvotes', nullColumn: 'location', dateColumn: 'creationdate' },
   { moduleId: 'm2', database: 'chinook', table: 'track', columns: 'track_id, album_id, media_type_id, milliseconds, bytes', orderBy: 'bytes DESC, track_id', groupColumn: 'media_type_id', measureColumn: 'bytes', nullColumn: 'album_id' },
-  { moduleId: 'm5', database: 'northwind', table: 'orders', columns: 'order_id, customer_id, employee_id, order_date, freight', orderBy: 'freight DESC, order_id', groupColumn: 'employee_id', measureColumn: 'freight', nullColumn: 'ship_region', dateColumn: 'order_date' },
+  { moduleId: 'm5', database: 'chinook', table: 'album', columns: 'album_id, title, artist_id', orderBy: 'artist_id, album_id', groupColumn: 'artist_id', measureColumn: 'album_id', nullColumn: 'title' },
   { moduleId: 'm6', database: 'chinook', table: 'invoice', columns: 'invoice_id, customer_id, invoice_date, total', orderBy: 'invoice_date, invoice_id', groupColumn: 'customer_id', measureColumn: 'total', nullColumn: 'billing_state', dateColumn: 'invoice_date' }
 ];
 

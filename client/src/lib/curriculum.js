@@ -8,7 +8,7 @@ export function completedCount(ids, completed) {
 export function sessionComplete(session, completed) {
   return completedCount(session.exerciseIds, completed) === session.exerciseIds.length;
 }
-/* Returns null when there are no sessions — consumers must handle null. */
+/* Returns null when there are no sessions: consumers must handle null. */
 export function currentSession(sessions, completed, activeSessionId) {
   if (!sessions || !sessions.length) return null;
   const active = sessions.find((s) => s.id === activeSessionId);

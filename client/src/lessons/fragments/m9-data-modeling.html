@@ -1,0 +1,205 @@
+<p class="eyebrow">-- module 9 / two sessions / <span id="done-count"></span></p>
+<h1>Data Modeling</h1>
+<p class="lede">Querying data and <em>shaping</em> data for a dashboard are different senior skills. A BI tool like Power BI or Tableau does not want your normalized OLTP tables - it wants a <strong>star schema</strong>: one fact table of measurable events surrounded by dimension tables of descriptive attributes, or a single wide flat table it can slice without joins. This module is that translation, written entirely as SQL you already know: chinook is your normalized store to model into a star, and Stack Overflow is your denormalization-at-scale example.</p>
+
+<h2>9.1 Normalized vs. star: two shapes, two jobs</h2>
+<p>chinook is <strong>normalized</strong> (third normal form): every fact lives in exactly one place, so <code>invoice_line</code> stores a <code>track_id</code>, not the track's name, album, artist, and genre. That is perfect for an app that writes data - no duplication, no update anomalies. It is painful for analysis, where "revenue by artist by month" needs five joins every single time.</p>
+<p>A <strong>star schema</strong> flips the tradeoff for reads:</p>
+<ul>
+<li><strong>Fact table</strong> - one row per business event, holding foreign keys plus numeric <em>measures</em>. Here: one row per invoice line, with <code>quantity</code> and <code>line_revenue</code>.</li>
+<li><strong>Dimension tables</strong> - the descriptive "by what" attributes you filter and group on: customer, track, date. Wide, textual, relatively small.</li>
+<li><strong>Grain</strong> - the single most important decision: exactly what one fact row means. Get this wrong and every measure is wrong.</li>
+</ul>
+<div class="note"><span class="tag">Star vs. snowflake</span>
+A <strong>star</strong> flattens each dimension into one table (dim_track already carries album, artist, and genre names). A <strong>snowflake</strong> leaves those normalized into sub-tables (track -&gt; album -&gt; artist). Stars win for BI: fewer joins, simpler for the tool and the analyst. chinook as shipped is essentially a snowflake; your job in this module is to collapse it into a star.</div>
+
+<h2>9.2 Pick the grain first</h2>
+<p>Before a single JOIN, name the grain out loud. For sales analytics the natural grain is the <strong>invoice line</strong>: one row per track sold on an invoice. That grain supports revenue, units, average selling price, and every "by dimension" rollup. Choosing the invoice (order) grain instead would lose per-track detail; choosing the customer grain would lose everything time-based. State it: <em>"one row per invoice line; measures are quantity and line revenue; dimensions are date, customer, and track."</em></p>
+<div class="warn"><span class="tag">The additivity trap</span>
+Measures are not all equal. <code>quantity</code> and <code>line_revenue</code> are <strong>fully additive</strong> - they sum correctly across every dimension. <code>unit_price</code> is <strong>non-additive</strong> - summing prices is meaningless; you average it. A ratio like margin percent is non-additive too - you recompute it from summed numerator and denominator, never average the percentages. Knowing which measures are additive, semi-additive (balances over time), and non-additive is a senior modeling signal.</div>
+
+<h2>9.3 Build the fact table</h2>
+<p>The fact table is a SELECT that pins the grain, carries the dimension keys, and computes the measures. This is the query a nightly job would run to (re)build <code>fact_sales</code>:</p>
+<pre><span class="k">SELECT</span> il.invoice_line_id                         <span class="k">AS</span> sales_key,     <span class="c">-- the fact's own key</span>
+       i.invoice_date::date                       <span class="k">AS</span> date_key,      <span class="c">-- FK to dim_date</span>
+       i.customer_id                              <span class="k">AS</span> customer_key,  <span class="c">-- FK to dim_customer</span>
+       il.track_id                                <span class="k">AS</span> track_key,     <span class="c">-- FK to dim_track</span>
+       il.quantity,                                             <span class="c">-- additive measure</span>
+       il.unit_price,                                           <span class="c">-- non-additive (average it)</span>
+       il.unit_price * il.quantity                <span class="k">AS</span> line_revenue   <span class="c">-- additive measure</span>
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">ORDER BY</span> il.invoice_line_id
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>Notice the fact stays <em>narrow</em>: keys and numbers only, no descriptive text. The names live in the dimensions, which is what keeps a fact table small even at a billion rows.</p>
+
+<h2>9.4 Build the dimensions</h2>
+<p><strong>dim_track</strong> collapses the track -&gt; album -&gt; artist -&gt; genre snowflake into one flat row per track. LEFT JOINs matter here: some tracks have no album or no genre, and a dimension must never drop a key the fact references.</p>
+<pre><span class="k">SELECT</span> t.track_id                <span class="k">AS</span> track_key,
+       t.name                    <span class="k">AS</span> track_name,
+       al.title                  <span class="k">AS</span> album_title,
+       ar.name                   <span class="k">AS</span> artist_name,
+       <span class="f">COALESCE</span>(g.name, <span class="s">'Unknown'</span>) <span class="k">AS</span> genre_name
+<span class="k">FROM</span> track t
+<span class="k">LEFT JOIN</span> album al  <span class="k">ON</span> al.album_id = t.album_id
+<span class="k">LEFT JOIN</span> artist ar <span class="k">ON</span> ar.artist_id = al.artist_id
+<span class="k">LEFT JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">ORDER BY</span> t.track_id
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>A <strong>date dimension</strong> is the one dimension you manufacture rather than harvest, with <code>generate_series</code>. Every calendar attribute you might group by lives here once, so the fact only stores a date and the reports get weekday, month name, and quarter for free.</p>
+<pre><span class="k">SELECT</span> d::date                          <span class="k">AS</span> date_key,
+       <span class="f">EXTRACT</span>(<span class="k">YEAR</span>  <span class="k">FROM</span> d)::int         <span class="k">AS</span> yr,
+       <span class="f">EXTRACT</span>(<span class="k">MONTH</span> <span class="k">FROM</span> d)::int         <span class="k">AS</span> mo,
+       <span class="f">TO_CHAR</span>(d, <span class="s">'Mon'</span>)                  <span class="k">AS</span> month_name,
+       <span class="f">EXTRACT</span>(<span class="k">QUARTER</span> <span class="k">FROM</span> d)::int       <span class="k">AS</span> quarter,
+       (<span class="f">EXTRACT</span>(<span class="k">DOW</span> <span class="k">FROM</span> d) <span class="k">IN</span> (<span class="n">0</span>, <span class="n">6</span>))   <span class="k">AS</span> is_weekend
+<span class="k">FROM</span> <span class="f">generate_series</span>(<span class="k">DATE</span> <span class="s">'2021-01-01'</span>, <span class="k">DATE</span> <span class="s">'2025-12-31'</span>, <span class="k">INTERVAL</span> <span class="s">'1 day'</span>) d
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<div class="note"><span class="tag">Surrogate keys and slowly changing dimensions</span>
+Production dimensions use a <strong>surrogate key</strong> (a meaningless auto-number) instead of the source's natural id, so history survives when a source id is reused. That enables <strong>SCD Type 2</strong>: when a customer's country changes you insert a <em>new</em> dimension row with valid-from/valid-to dates rather than overwriting, so old facts still join to the country that was true at the time. You will not build this on a read-only teaching DB, but naming "surrogate key" and "SCD Type 2" answers the modeling interview question directly.</div>
+
+<h2>9.5 The semantic layer: one wide table for the BI tool</h2>
+<p>Many BI setups skip the explicit star and hand the tool a single <strong>wide flat table</strong>: the fact with every dimension already joined in. It is the star, pre-joined. On chinook's small data this is the pragmatic choice - one view, zero joins for the analyst:</p>
+<pre><span class="c">-- Run locally you would wrap this in CREATE VIEW vw_sales AS ( ... );</span>
+<span class="c">-- the read-only teaching DB rejects DDL, so run the SELECT and picture the view.</span>
+<span class="k">SELECT</span> il.invoice_line_id            <span class="k">AS</span> sales_key,
+       i.invoice_date::date          <span class="k">AS</span> sale_date,
+       c.country                     <span class="k">AS</span> customer_country,
+       ar.name                       <span class="k">AS</span> artist,
+       <span class="f">COALESCE</span>(g.name, <span class="s">'Unknown'</span>)     <span class="k">AS</span> genre,
+       il.quantity,
+       il.unit_price * il.quantity   <span class="k">AS</span> line_revenue
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i    <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">JOIN</span> customer c   <span class="k">ON</span> c.customer_id = i.customer_id
+<span class="k">JOIN</span> track t      <span class="k">ON</span> t.track_id = il.track_id
+<span class="k">LEFT JOIN</span> album al  <span class="k">ON</span> al.album_id = t.album_id
+<span class="k">LEFT JOIN</span> artist ar <span class="k">ON</span> ar.artist_id = al.artist_id
+<span class="k">LEFT JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">ORDER BY</span> sale_date, sales_key
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<div class="tip"><span class="tag">Wide table vs. true star</span>
+"Would you hand the BI tool a wide table or a real star schema?" Wide flat table: simplest, fastest for a single tool on modest data, but it duplicates dimension text on every fact row and there is no shared place to fix an attribute. True star: no duplication, dimensions reusable across many facts, the standard at scale. Say the tradeoff and pick based on data size and how many fact tables share the dimensions - that judgment is the answer they want.</div>
+
+<h2>9.6 Denormalization at scale (Stack Overflow)</h2>
+<p>Stack Overflow is the other direction. <code>posts</code> is already wide and denormalized - it even caches <code>answercount</code> and <code>favoritecount</code> so the site never recomputes them. At a quarter-million posts you <em>pre-join</em> the few things a dashboard always needs (the author's reputation, the primary tag) into one analytics row, so the dashboard reads one table instead of re-joining <code>users</code> on every load:</p>
+<pre><span class="k">SELECT</span> p.id                       <span class="k">AS</span> post_key,
+       p.creationdate::date        <span class="k">AS</span> created,
+       p.score,
+       p.answercount,
+       u.id                        <span class="k">AS</span> author_key,
+       u.reputation                <span class="k">AS</span> author_reputation,
+       <span class="f">SPLIT_PART</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> p.tags), <span class="s">'|'</span>, <span class="n">1</span>) <span class="k">AS</span> primary_tag
+<span class="k">FROM</span> posts p
+<span class="k">JOIN</span> users u <span class="k">ON</span> u.id = p.owneruserid
+<span class="k">WHERE</span> p.posttypeid = <span class="n">1</span>
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>The tradeoff is the mirror of normalization: reads get faster and simpler, but the reputation is now a <em>copy</em> that goes stale until the next rebuild. Senior answer: denormalize deliberately, for a known read pattern, and own the refresh.</p>
+
+<h2>9.7 The talking points that round out a modeling answer</h2>
+<ul>
+<li><strong>Normal forms in one breath:</strong> 1NF = atomic values (no comma-lists in a cell), 2NF/3NF = every non-key column depends on the whole key and nothing but the key. OLTP aims for 3NF; analytics deliberately breaks it.</li>
+<li><strong>Fact types:</strong> transaction (one row per event, what we built), periodic snapshot (one row per entity per period, e.g. daily balances), accumulating snapshot (one row per process, updated as it moves through stages).</li>
+<li><strong>Conformed dimensions:</strong> one <code>dim_customer</code> shared by sales, support, and web facts so "customer" means the same thing everywhere. This is the whole point of a star over a wide table.</li>
+<li><strong>Grain, grain, grain:</strong> if you can only say one sentence about a model, say its grain. Every measure and every join correctness follows from it.</li>
+</ul>
+
+<h2>Practice</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P9.1</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p9-1"></div>
+  <div class="pbody"><p>Build the sales fact at invoice-line grain: return the line key, a date key, customer key, track key, the quantity, unit_price, and line_revenue (unit_price * quantity). Narrow - keys and numbers only, no names. First 50 by line id.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Only one join is needed - invoice_line already holds track_id; join invoice to reach the date and customer. Keep descriptive text out.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> il.invoice_line_id <span class="k">AS</span> sales_key,
+       i.invoice_date::date <span class="k">AS</span> date_key,
+       i.customer_id <span class="k">AS</span> customer_key,
+       il.track_id <span class="k">AS</span> track_key,
+       il.quantity,
+       il.unit_price,
+       il.unit_price * il.quantity <span class="k">AS</span> line_revenue
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">ORDER BY</span> il.invoice_line_id
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>The fact carries foreign keys and additive measures and nothing else. That narrowness is what lets a fact table scale while the wide, textual detail lives in the dimensions.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P9.2</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p9-2"></div>
+  <div class="pbody"><p>Build <code>dim_track</code>: one flat row per track with track_key, track_name, album_title, artist_name, and genre_name. A track with no genre must still appear, labeled 'Unknown'. First 50 by track id.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">LEFT JOIN album, artist, and genre so tracks with a missing album or genre survive. COALESCE the genre name.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> t.track_id <span class="k">AS</span> track_key,
+       t.name <span class="k">AS</span> track_name,
+       al.title <span class="k">AS</span> album_title,
+       ar.name <span class="k">AS</span> artist_name,
+       <span class="f">COALESCE</span>(g.name, <span class="s">'Unknown'</span>) <span class="k">AS</span> genre_name
+<span class="k">FROM</span> track t
+<span class="k">LEFT JOIN</span> album al  <span class="k">ON</span> al.album_id = t.album_id
+<span class="k">LEFT JOIN</span> artist ar <span class="k">ON</span> ar.artist_id = al.artist_id
+<span class="k">LEFT JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">ORDER BY</span> t.track_id
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>Collapsing the track -&gt; album -&gt; artist -&gt; genre chain into one row is exactly the snowflake-to-star flattening. The LEFT JOINs are the safety rule: a dimension must contain every key its fact can reference.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P9.3</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p9-3"></div>
+  <div class="pbody"><p>The semantic layer: write the single wide SELECT a BI tool would read - sale_date, customer_country, artist, genre ('Unknown' when missing), quantity, and line_revenue, one row per invoice line. This is the SELECT you would wrap in <code>CREATE VIEW vw_sales</code>. First 50 by date then line id.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Join invoice_line to invoice, customer, and track; LEFT JOIN album, artist, genre. The measures come straight off invoice_line.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> il.invoice_line_id <span class="k">AS</span> sales_key,
+       i.invoice_date::date <span class="k">AS</span> sale_date,
+       c.country <span class="k">AS</span> customer_country,
+       ar.name <span class="k">AS</span> artist,
+       <span class="f">COALESCE</span>(g.name, <span class="s">'Unknown'</span>) <span class="k">AS</span> genre,
+       il.quantity,
+       il.unit_price * il.quantity <span class="k">AS</span> line_revenue
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i  <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">JOIN</span> customer c <span class="k">ON</span> c.customer_id = i.customer_id
+<span class="k">JOIN</span> track t    <span class="k">ON</span> t.track_id = il.track_id
+<span class="k">LEFT JOIN</span> album al  <span class="k">ON</span> al.album_id = t.album_id
+<span class="k">LEFT JOIN</span> artist ar <span class="k">ON</span> ar.artist_id = al.artist_id
+<span class="k">LEFT JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">ORDER BY</span> sale_date, sales_key
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>One flat result, no joins left for the analyst. Wrapped in a view it becomes the semantic layer the dashboard binds to. Say the tradeoff out loud: convenient and fast for one tool on small data, at the cost of duplicated dimension text.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P9.4</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p9-4"></div>
+  <div class="pbody"><p>Denormalize for a dashboard: one analytics row per <em>question</em> - post_key, created date, score, answercount, the author's id and reputation, and the primary tag (first tag in the pipe list). First 50.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Join posts to users on owneruserid; filter posttypeid = 1; SPLIT_PART on the trimmed tags for the primary tag.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> p.id <span class="k">AS</span> post_key,
+       p.creationdate::date <span class="k">AS</span> created,
+       p.score,
+       p.answercount,
+       u.id <span class="k">AS</span> author_key,
+       u.reputation <span class="k">AS</span> author_reputation,
+       <span class="f">SPLIT_PART</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> p.tags), <span class="s">'|'</span>, <span class="n">1</span>) <span class="k">AS</span> primary_tag
+<span class="k">FROM</span> posts p
+<span class="k">JOIN</span> users u <span class="k">ON</span> u.id = p.owneruserid
+<span class="k">WHERE</span> p.posttypeid = <span class="n">1</span>
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>This is the row you would materialize so a dashboard never re-joins users. The catch to name: author_reputation is now a snapshot copy that drifts until the next rebuild - deliberate denormalization for a known read pattern, with an owned refresh.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P9.5</span><span class="db">any</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p9-5"></div>
+  <div class="pbody"><p>Verbal (no SQL, out loud): design a star schema for an e-commerce company's orders. Name the fact and its grain, the measures and their additivity, three dimensions, and how you would handle a customer moving to a new country without corrupting historical revenue.</p>
+  <details class="sol"><summary>model answer</summary><div class="sbody">
+<p>"Fact_order_line at one row per line item - the grain. Measures: quantity and extended_price (additive), unit_price (non-additive, averaged), discount_pct (non-additive, recomputed from summed amounts). Dimensions: dim_date, dim_customer, dim_product, each with a surrogate key. For the customer moving countries I use SCD Type 2: instead of overwriting the country I close the old dimension row with a valid-to date and insert a new row with the new country and a fresh surrogate key, so orders placed before the move still join to the old row and historical revenue-by-country stays correct." That answer hits grain, additivity, conformed dimensions, and slowly changing dimensions - the four things a modeling round grades.</p></div></details>
+  </div>
+</div>
+
+<div class="pager">
+  <a href="m8-performance.html">&larr; Module 8</a>
+  <a href="mock-interviews.html">Mock Interviews &rarr;</a>
+</div>

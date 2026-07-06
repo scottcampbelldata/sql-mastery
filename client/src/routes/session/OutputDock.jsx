@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Tabs } from '../../components/ui.jsx';
+import { Tabs, Pill } from '../../components/ui.jsx';
 import { DataTable } from '../../components/DataTable.jsx';
 import { SchemaExplorer } from './SchemaExplorer.jsx';
 
@@ -19,7 +19,12 @@ export function OutputDock({ exercise, result }) {
         {tab === 'schema'
           ? <SchemaExplorer database={exercise.database} />
           : result
-            ? <DataTable columns={result.columns || []} rows={result.rows || []} />
+            ? (<>
+                <div className="dock-results-meta">
+                  <Pill tone="ok">{result.command} · {result.rowCount} rows · {result.durationMs} ms</Pill>
+                </div>
+                <DataTable columns={result.columns || []} rows={result.rows || []} />
+              </>)
             : <div className="table-note">Run your SQL to see rows here.</div>}
       </div>
     </section>

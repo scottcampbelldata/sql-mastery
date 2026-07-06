@@ -15,7 +15,7 @@ export function LearnAccordion({ exercise, defaultOpen }) {
   return (
     <section className={`learn ${open ? 'open' : ''}`}>
       <button className="learn-toggle" onClick={() => setOpen(!open)} aria-expanded={open}>
-        <span>Learn this first</span><span className="learn-chevron">{open ? '−' : '+'}</span>
+        <span>Learn this first</span><span className="learn-chevron">{open ? '-' : '+'}</span>
       </button>
       {open ? (
         <div className="learn-body">

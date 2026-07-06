@@ -36,7 +36,7 @@ export default function FoundationsSession() {
 
   if (finished) {
     return (
-      <AppShell breadcrumb={<span className="here">Learn — session complete</span>}>
+      <AppShell breadcrumb={<span className="here">Learn / session complete</span>}>
         <div className="fnd-done">
           <h1>Nice work.</h1>
           <p style={{ color: 'var(--ink-dim)' }}>You finished today's session. Come back for the next lesson and your spaced reviews.</p>
@@ -57,7 +57,7 @@ export default function FoundationsSession() {
   function next() { if (isLast) completeSession(); else setIndex((i) => i + 1); }
 
   return (
-    <AppShell breadcrumb={<span className="here">Learn — Foundations</span>}>
+    <AppShell breadcrumb={<span className="here">Learn / Foundations</span>}>
       <FoundationsRep key={step.exercise.id} exercise={step.exercise}
         label={label} kind={step.type === 'review' ? 'review' : 'new'}
         teach={showTeach ? step.concept.teach : null} stepText={stepText} />

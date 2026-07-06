@@ -231,3 +231,33 @@ test('POST /api/table-preview returns sample rows for a schema table', async () 
     assert.equal(body.table, 'products');
   });
 });
+
+test('CORS reflects allowed origins, answers preflight, and ignores others', async () => {
+  const app = createApp({
+    queryService: { listDatabases: () => ['chinook'] },
+    allowedOrigins: ['https://sql-mastery.pages.dev']
+  });
+
+  await withServer(app, async (baseUrl) => {
+    // An allowlisted origin is reflected back.
+    const allowed = await fetch(`${baseUrl}/api/databases`, {
+      headers: { origin: 'https://sql-mastery.pages.dev' }
+    });
+    assert.equal(allowed.status, 200);
+    assert.equal(allowed.headers.get('access-control-allow-origin'), 'https://sql-mastery.pages.dev');
+
+    // A CORS preflight is answered 204 with the allowed methods.
+    const preflight = await fetch(`${baseUrl}/api/query`, {
+      method: 'OPTIONS',
+      headers: { origin: 'https://sql-mastery.pages.dev' }
+    });
+    assert.equal(preflight.status, 204);
+    assert.match(preflight.headers.get('access-control-allow-methods') || '', /POST/);
+
+    // A non-allowlisted origin gets no CORS header.
+    const blocked = await fetch(`${baseUrl}/api/databases`, {
+      headers: { origin: 'https://evil.example.com' }
+    });
+    assert.equal(blocked.headers.get('access-control-allow-origin'), null);
+  });
+});
