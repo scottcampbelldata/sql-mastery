@@ -10,7 +10,31 @@ function createApp(options = {}) {
   const contentDir = options.contentDir || path.join(__dirname, '..', 'content');
   const clientDir = options.clientDir || path.join(__dirname, '..', 'client', 'dist');
 
+  // Cross-origin allowlist for split deployments (e.g. a Cloudflare Pages front end
+  // calling this backend on a different origin). Comma-separated list of allowed
+  // origins; empty means same-origin only (no CORS headers emitted). "*" allows any.
+  const allowedOrigins = (options.allowedOrigins
+    || (process.env.SQL_MASTERY_ALLOWED_ORIGINS || '')
+      .split(',').map((origin) => origin.trim()).filter(Boolean));
+
   app.disable('x-powered-by');
+
+  app.use((request, response, next) => {
+    const origin = request.headers.origin;
+    if (origin && (allowedOrigins.includes('*') || allowedOrigins.includes(origin))) {
+      response.setHeader('Access-Control-Allow-Origin', origin);
+      response.setHeader('Vary', 'Origin');
+      response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      response.setHeader('Access-Control-Max-Age', '86400');
+    }
+    if (request.method === 'OPTIONS') {
+      response.status(204).end();
+      return;
+    }
+    next();
+  });
+
   app.use(express.json({ limit: '1mb' }));
 
   app.get('/api/databases', (request, response) => {

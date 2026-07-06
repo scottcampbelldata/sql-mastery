@@ -1,4 +1,4 @@
-/* Theme tokens — LearnSQL/Vertabelo-inspired: bright, clean, professional, sans-serif.
+/* Theme tokens: LearnSQL/Vertabelo-inspired: bright, clean, professional, sans-serif.
    Light is default (:root); dark overrides flip on [data-theme="dark"].
    Component CSS consumes only these semantic names, so both themes come "for free". */
 :root {
@@ -16,7 +16,7 @@
   --ink-dim: #59647a;        /* secondary text */
   --ink-faint: #8b96ab;      /* placeholders, captions */
 
-  /* brand — professional blue */
+  /* brand: professional blue */
   --brand: #2563eb;
   --brand-ink: #ffffff;      /* text on solid brand */
   --brand-soft: #e7efff;     /* tint background */
@@ -25,7 +25,7 @@
   --ok: #15925f;   --ok-soft: #e1f4ec;
   --err: #d13b3b;  --err-soft: #fbe9e9;
   --info: #2563eb; --info-soft: #e7efff;
-  --accent2: #d97a1e;  --accent2-soft: #fbeedb;   /* amber — active / in-progress */
+  --accent2: #d97a1e;  --accent2-soft: #fbeedb;   /* amber: active / in-progress */
 
   /* syntax (light editor: readable ink on white) */
   --syn-keyword: #2563eb;
@@ -34,12 +34,12 @@
   --syn-number: #c2591b;
   --syn-comment: #8b96ab;
 
-  /* depth — soft, product-like */
+  /* depth: soft, product-like */
   --shadow-sm: 0 1px 2px rgba(20, 33, 61, 0.06);
   --shadow-md: 0 4px 16px -6px rgba(20, 33, 61, 0.12);
   --shadow-lg: 0 18px 44px -20px rgba(20, 33, 61, 0.22);
 
-  /* type — all clean sans */
+  /* type: all clean sans */
   --font-serif: 'Iowan Old Style', Georgia, serif;
   --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;

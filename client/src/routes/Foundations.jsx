@@ -44,7 +44,7 @@ export default function Foundations() {
         <div className="lh-hero-copy">
           <span className="lh-kick">{started ? 'Keep going' : 'Start here'}</span>
           <h1>Your path to senior SQL</h1>
-          <p className="lh-sub">From your first query to interview-ready analysis — one dataset, one step at a time, with everything you learn coming back so it sticks.</p>
+          <p className="lh-sub">From your first query to interview-ready analysis: one dataset, one step at a time, with everything you learn coming back so it sticks.</p>
           {session.main.kind === 'graduated'
             ? <p className="lh-grad">You’ve completed every phase. Senior-ready.</p>
             : <>

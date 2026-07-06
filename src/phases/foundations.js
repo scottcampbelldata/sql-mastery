@@ -1,4 +1,4 @@
-// Phase 1 — Foundations. Content is the exact CONCEPTS/CHECKPOINTS from the original
+// Phase 1: Foundations. Content is the exact CONCEPTS/CHECKPOINTS from the original
 // src/foundations.js (unchanged); only the phase wrapper is added.
 const DB = 'chinook';
 
@@ -24,7 +24,7 @@ const CONCEPTS = [
       example: { sql: 'SELECT * FROM genre;', note: 'Returns all 25 genres with both columns (genre_id and name).' }
     },
     exercises: [
-      ex('c1-r1', 'select-all', 'Show everything — every column and every row — from the genre table.', 'SELECT * FROM genre;', { starterSql: 'SELECT ____ FROM genre;', hint: 'The star * means "all columns".' }),
+      ex('c1-r1', 'select-all', 'Show everything, every column and every row, from the genre table.', 'SELECT * FROM genre;', { starterSql: 'SELECT ____ FROM genre;', hint: 'The star * means "all columns".' }),
       ex('c1-r2', 'select-all', 'Show everything in the media_type table.', 'SELECT * FROM media_type;', { hint: 'Same shape as the example, different table name.' }),
       ex('c1-r3', 'select-all', 'Show everything in the playlist table.', 'SELECT * FROM playlist;', { hint: 'SELECT * FROM <table>;' })
     ]
@@ -52,7 +52,7 @@ const CONCEPTS = [
       example: { sql: 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 5;', note: 'The 5 longest tracks, longest first.' }
     },
     exercises: [
-      ex('c3-r1', 'order-limit', 'Show the 10 longest tracks — their name and milliseconds — longest first.', 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 10;', { starterSql: 'SELECT name, milliseconds FROM track ORDER BY ____ DESC LIMIT 10;', hint: 'Longest first means sort by milliseconds DESC, then LIMIT 10.' }),
+      ex('c3-r1', 'order-limit', 'Show the 10 longest tracks, their name and milliseconds, longest first.', 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 10;', { starterSql: 'SELECT name, milliseconds FROM track ORDER BY ____ DESC LIMIT 10;', hint: 'Longest first means sort by milliseconds DESC, then LIMIT 10.' }),
       ex('c3-r2', 'order-limit', 'Show the genre_id and name of every genre, sorted alphabetically by name.', 'SELECT genre_id, name FROM genre ORDER BY name;', { hint: 'ORDER BY name (no DESC = A to Z).' }),
       ex('c3-r3', 'order-limit', 'Show the genre_id and name of every genre, from highest genre_id to lowest.', 'SELECT genre_id, name FROM genre ORDER BY genre_id DESC;', { hint: 'Highest first means DESC.' })
     ]
@@ -90,7 +90,7 @@ const CONCEPTS = [
     id: 'c6-null', order: 6, skill: 'null',
     title: 'Handle missing values (NULL)',
     teach: {
-      plain: 'NULL means "no value" — the data is missing. You cannot test it with = ; you must use IS NULL or IS NOT NULL. In the track table, many rows have no composer listed, so composer is NULL for them.',
+      plain: 'NULL means "no value": the data is missing. You cannot test it with = ; you must use IS NULL or IS NOT NULL. In the track table, many rows have no composer listed, so composer is NULL for them.',
       mentalModel: 'NULL is "unknown". Use IS NULL / IS NOT NULL, never = NULL.',
       example: { sql: 'SELECT track_id, name FROM track WHERE composer IS NULL ORDER BY track_id;', note: '977 tracks have no composer recorded.' }
     },

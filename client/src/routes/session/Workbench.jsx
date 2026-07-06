@@ -85,13 +85,13 @@ export function Workbench({ exercise, session, nextTarget }) {
           tone: body.feedbackType === 'error' ? 'err' : 'warn',
           title: body.feedbackType === 'error' ? 'Your SQL did not run' : 'Close, but not correct yet',
           message: body.feedbackType === 'error'
-            ? [body.message, body.hint].filter(Boolean).join(' — ')
+            ? [body.message, body.hint].filter(Boolean).join(': ')
             : (body.hint || body.message)
         });
       }
     } catch (error) {
       setResult(null);
-      setFeedback({ tone: 'err', title: 'The checker could not run', message: `${error.message}${error.hint ? ` — ${error.hint}` : ''}` });
+      setFeedback({ tone: 'err', title: 'The checker could not run', message: `${error.message}${error.hint ? `: ${error.hint}` : ''}` });
     } finally {
       setChecking(false);
     }
@@ -110,7 +110,7 @@ export function Workbench({ exercise, session, nextTarget }) {
       <LearnAccordion exercise={exercise} defaultOpen={!attempted} />
       <div>
         {/* The editor announces itself via its own aria-label; this is the visual cue. */}
-        <span className="wb-editor-label" aria-hidden="true">Your SQL — write your answer here</span>
+        <span className="wb-editor-label" aria-hidden="true">Your SQL: write your answer here</span>
         <SqlEditor value={sql} onChange={persistSql} onSubmit={runCheck}
           placeholder="Type SQL here..." schema={dbSchema} />
       </div>

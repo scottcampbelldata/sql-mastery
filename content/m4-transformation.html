@@ -89,6 +89,26 @@ COALESCE turns NULL into a value; NULLIF turns a value into NULL. Together they 
 <span class="k">JOIN</span> album al <span class="k">ON</span> al.artist_id = ar.artist_id
 <span class="k">GROUP BY</span> ar.name
 <span class="k">LIMIT</span> <span class="n">10</span>;</pre>
+<pre><span class="c">-- The inverse of STRING_AGG: explode one delimited string into many rows.</span>
+<span class="c">-- Stack Overflow tags are pipe-wrapped (|postgresql|trigger|plpgsql|). Strip the outer</span>
+<span class="c">-- pipes, split into an array, then UNNEST it to one tag per row:</span>
+<span class="k">SELECT</span> id,
+       <span class="f">UNNEST</span>(<span class="f">STRING_TO_ARRAY</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> tags), <span class="s">'|'</span>)) <span class="k">AS</span> tag
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> tags <span class="k">IS NOT NULL</span>
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<pre><span class="c">-- Once each tag is its own row, an ordinary GROUP BY answers "most popular tags":</span>
+<span class="k">SELECT</span> tag, <span class="f">COUNT</span>(*) <span class="k">AS</span> uses
+<span class="k">FROM</span> (
+    <span class="k">SELECT</span> <span class="f">UNNEST</span>(<span class="f">STRING_TO_ARRAY</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> tags), <span class="s">'|'</span>)) <span class="k">AS</span> tag
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> tags <span class="k">IS NOT NULL</span>
+) exploded
+<span class="k">GROUP BY</span> tag
+<span class="k">ORDER BY</span> uses <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">15</span>;</pre>
+<div class="tip"><span class="tag">Explode to rows, then aggregate</span>
+The pattern is universal: whenever a column packs several values into one string (tags, CSV lists, multi-select answers), <code>STRING_TO_ARRAY</code> + <code>UNNEST</code> turns it into a normal one-value-per-row table you can filter, join, and GROUP BY. Postgres also has <code>regexp_split_to_table(TRIM(BOTH '|' FROM tags), '\|')</code> which returns the rows directly. In BigQuery the same move is <code>UNNEST(SPLIT(tags, '|'))</code>; in Snowflake it is <code>LATERAL FLATTEN</code>. Naming the explode-then-aggregate shape - and that it is the inverse of STRING_AGG - is a senior-level string answer.</div>
 
 <h2>4.5 Dates and times: the senior analyst's bread and butter</h2>
 <pre><span class="c">-- The core toolkit, on stackoverflow posts:</span>
@@ -113,6 +133,40 @@ COALESCE turns NULL into a value; NULLIF turns a value into NULL. Together they 
   <span class="k">AND</span> p.posttypeid = <span class="n">1</span>
 <span class="k">GROUP BY</span> mo
 <span class="k">ORDER BY</span> mo;</pre>
+
+<h2>4.6 Splitting delimited values into rows</h2>
+<p>SPLIT_PART pulls out <em>one</em> piece. The senior move on a multi-valued column - Stack Overflow's pipe-delimited <code>tags</code> like <code>|c#|.net|linq|</code> - is to explode it into <em>one row per value</em> so you can group and count. Postgres does this with STRING_TO_ARRAY + UNNEST (or <code>regexp_split_to_table</code>):</p>
+<pre><span class="c">-- one row per (post, tag): strip the outer pipes, split on '|', unnest to rows</span>
+<span class="k">SELECT</span> p.id, <span class="f">LOWER</span>(tag) <span class="k">AS</span> tag
+<span class="k">FROM</span> posts p,
+     <span class="f">UNNEST</span>(<span class="f">STRING_TO_ARRAY</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> p.tags), <span class="s">'|'</span>)) <span class="k">AS</span> tag
+<span class="k">WHERE</span> p.tags <span class="k">IS NOT NULL</span> <span class="k">AND</span> p.tags <> <span class="s">''</span>;</pre>
+<p>The comma in the FROM clause is an implicit LATERAL join: UNNEST runs once per <code>posts</code> row and fans it out into as many rows as it has tags. Once each tag is its own row, the usual aggregation follows - the most-used tags are a GROUP BY away:</p>
+<pre><span class="c">-- the 20 most common tags across all questions</span>
+<span class="k">SELECT</span> <span class="f">LOWER</span>(tag) <span class="k">AS</span> tag, <span class="f">COUNT</span>(*) <span class="k">AS</span> posts
+<span class="k">FROM</span> posts p,
+     <span class="f">UNNEST</span>(<span class="f">STRING_TO_ARRAY</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> p.tags), <span class="s">'|'</span>)) <span class="k">AS</span> tag
+<span class="k">WHERE</span> p.posttypeid = <span class="n">1</span> <span class="k">AND</span> p.tags <span class="k">IS NOT NULL</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>
+<span class="k">ORDER BY</span> posts <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<div class="note"><span class="tag">Explode, then aggregate</span>
+The pattern - <em>turn the multi-valued column into rows, then GROUP BY</em> - is the whole game for tags, CSV fields, and array columns. With each tag on its own row, "top tags," "tag co-occurrence" (drill P4.13), and "tags per question" become ordinary aggregations. Section 4.7 shows the same explode in BigQuery and Snowflake.</div>
+
+<h2>4.7 Portability: the same idea across warehouses</h2>
+<p>BI interviews increasingly ask "how would this change on BigQuery or Snowflake?" You do not need fluency in all three - you need to know that the <em>concept</em> is portable and where the syntax drifts. The high-value differences, all drawn from this module:</p>
+<table>
+<tr><th>Task</th><th>PostgreSQL (this app)</th><th>BigQuery</th><th>Snowflake</th></tr>
+<tr><td>Truncate to month</td><td><code>date_trunc('month', d)</code></td><td><code>DATE_TRUNC(d, MONTH)</code></td><td><code>DATE_TRUNC('month', d)</code></td></tr>
+<tr><td>Pull a date part</td><td><code>EXTRACT(YEAR FROM d)</code></td><td><code>EXTRACT(YEAR FROM d)</code></td><td><code>YEAR(d)</code></td></tr>
+<tr><td>Split a string to rows</td><td><code>UNNEST(STRING_TO_ARRAY(s,'|'))</code></td><td><code>UNNEST(SPLIT(s,'|'))</code></td><td><code>LATERAL FLATTEN(INPUT =&gt; SPLIT(s,'|'))</code></td></tr>
+<tr><td>Case-insensitive match</td><td><code>col ILIKE '%x%'</code></td><td><code>LOWER(col) LIKE '%x%'</code></td><td><code>col ILIKE '%x%'</code></td></tr>
+<tr><td>Read a JSON field</td><td><code>data-&gt;&gt;'key'</code></td><td><code>JSON_VALUE(data,'$.key')</code></td><td><code>data:key::string</code></td></tr>
+<tr><td>Filter on a window result</td><td>wrap in a CTE, filter outside</td><td><code>QUALIFY</code></td><td><code>QUALIFY</code></td></tr>
+<tr><td>String concat</td><td><code>a || b</code> or <code>CONCAT</code></td><td><code>CONCAT(a, b)</code></td><td><code>a || b</code></td></tr>
+</table>
+<div class="tip"><span class="tag">Interview script</span>
+"The logic is identical; only the function names move. On BigQuery I'd reach for SPLIT and UNNEST instead of STRING_TO_ARRAY, JSON_VALUE instead of the arrow operators, and QUALIFY to filter window results in one pass. Standard SQL is the through-line; I learn each engine's dialect notes on top of it." Naming one concrete difference per engine - dates, JSON, string-split - is enough to clear this question.</div>
 
 <h2>Practice - Session A (problems 1-3)</h2>
 
@@ -274,7 +328,7 @@ COALESCE turns NULL into a value; NULLIF turns a value into NULL. Together they 
   </div>
 </div>
 
-<h2>Practice - Session D (problems 10-12)</h2>
+<h2>Practice - Session D (problems 10-13)</h2>
 
 <div class="problem">
   <div class="phead"><span class="pid">P4.10</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p4-10"></div>
@@ -320,6 +374,27 @@ COALESCE turns NULL into a value; NULLIF turns a value into NULL. Together they 
 <span class="k">FROM</span> posts
 <span class="k">WHERE</span> posttypeid = <span class="n">1</span>;</pre>
 <p>The repetition is intentional practice - and it is also the setup for the cleaner refactor: in Module 5 you will compute <code>is_weekend</code> once in a CTE and aggregate from that. Feeling the pain first is what makes CTEs stick. ISODOW &gt;= 6 catches Saturday (6) and Sunday (7).</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P4.13</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p4-13"></div>
+  <div class="pbody"><p>Tag co-occurrence: across all questions, find the 15 most common <em>pairs</em> of tags that appear together on the same post. Explode the pipe-delimited <code>tags</code> into rows (4.6), then self-join a post to itself on tag pairs. Return tag_a, tag_b, and how many questions carry both.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Explode to (post_id, tag) in a CTE. Self-join on <code>a.post_id = b.post_id</code> with <code>a.tag &lt; b.tag</code> so each pair is counted once and no tag is paired with itself.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> post_tags <span class="k">AS</span> (
+    <span class="k">SELECT</span> p.id <span class="k">AS</span> post_id, <span class="f">LOWER</span>(tag) <span class="k">AS</span> tag
+    <span class="k">FROM</span> posts p,
+         <span class="f">UNNEST</span>(<span class="f">STRING_TO_ARRAY</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> p.tags), <span class="s">'|'</span>)) <span class="k">AS</span> tag
+    <span class="k">WHERE</span> p.posttypeid = <span class="n">1</span> <span class="k">AND</span> p.tags <span class="k">IS NOT NULL</span>
+)
+<span class="k">SELECT</span> a.tag <span class="k">AS</span> tag_a, b.tag <span class="k">AS</span> tag_b, <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+<span class="k">FROM</span> post_tags a
+<span class="k">JOIN</span> post_tags b <span class="k">ON</span> a.post_id = b.post_id <span class="k">AND</span> a.tag < b.tag
+<span class="k">GROUP BY</span> a.tag, b.tag
+<span class="k">ORDER BY</span> questions <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">15</span>;</pre>
+<p>The <code>a.tag &lt; b.tag</code> predicate does double duty: it drops the self-pair (a tag with itself) and collapses (x, y) and (y, x) into one canonical pair, so each combination is counted exactly once. "Explode, then self-join on the shared key" is the standard way to turn a multi-valued column into a co-occurrence matrix - market-basket analysis in a dozen lines.</p></div></details>
   </div>
 </div>
 

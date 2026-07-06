@@ -19,7 +19,7 @@ export function CurriculumProvider({ children }) {
     return () => { cancelled = true; };
   }, []);
 
-  // Mutators must assign new leaf objects (never mutate existing leaves) — only the top-level maps are cloned.
+  // Mutators must assign new leaf objects (never mutate existing leaves): only the top-level maps are cloned.
   const updateProgress = useCallback((mutate) => {
     setProgress((prev) => {
       const next = { completed: { ...prev.completed }, attempts: { ...prev.attempts }, lastSql: { ...prev.lastSql } };

@@ -41,7 +41,7 @@ export function saveLearning(state) { safeSet(LEARNING_KEY, JSON.stringify(state
 // The first phase that has not yet fully graduated (any concept not-strong OR any
 // checkpoint unpassed), or the last phase if every phase is complete. A phase whose
 // concepts are all strong but whose trailing checkpoint has not passed stays active,
-// so later phases stay locked — matching the engine's checkpoint/concept gating.
+// so later phases stay locked: matching the engine's checkpoint/concept gating.
 export function currentPhase(phases, state) {
   const ordered = [...phases].sort((a, b) => a.order - b.order);
   for (const phase of ordered) {

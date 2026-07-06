@@ -21,7 +21,7 @@ export default function Lesson() {
     const root = bodyRef.current;
     if (!root || !meta) return;
     rewriteLessonLinks(root);
-    // progress checkboxes — legacy keys
+    // progress checkboxes: legacy keys
     root.querySelectorAll('input.done[data-id]').forEach((cb) => {
       cb.checked = isLessonBoxChecked(meta.page, cb.dataset.id);
       cb.onchange = () => setLessonBox(meta.page, cb.dataset.id, cb.checked);

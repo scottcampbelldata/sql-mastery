@@ -46,11 +46,11 @@ const seniorScreens = [
     'Accepted answer rate by question year: show year, question count, accepted count, accepted rate, and year-over-year accepted-rate change.',
     `
 WITH yearly AS (
-  SELECT EXTRACT(YEAR FROM creation_date)::int AS year,
+  SELECT EXTRACT(YEAR FROM creationdate)::int AS year,
          COUNT(*) AS questions,
-         COUNT(accepted_answer_id) AS accepted
+         COUNT(acceptedanswerid) AS accepted
   FROM posts
-  WHERE post_type_id = 1
+  WHERE posttypeid = 1
   GROUP BY 1
 )
 SELECT year,
@@ -67,12 +67,11 @@ ORDER BY year;
       solutionNote: 'Sample answer: the CTE fixes the grain at one row per year; the window compares each year to the prior year without rejoining.'
     }
   ),
-  withModule('senior-window-02','m6','Senior Window 2','northwind','senior','Monthly revenue with running year-to-date total and month-over-month change for all order lines.',`
+  withModule('senior-window-02','m6','Senior Window 2','chinook','senior','Monthly invoice revenue with a running total and month-over-month change.',`
 WITH monthly AS (
-  SELECT date_trunc('month', o.order_date)::date AS month,
-         SUM(od.unit_price * od.quantity * (1 - od.discount)) AS revenue
-  FROM orders o
-  JOIN order_details od ON od.order_id = o.order_id
+  SELECT date_trunc('month', invoice_date)::date AS month,
+         SUM(total) AS revenue
+  FROM invoice
   GROUP BY 1
 )
 SELECT month,
@@ -92,83 +91,82 @@ SELECT customer_id,
 FROM invoice
 ORDER BY customer_id, invoice_date, invoice_id;
 `),
-  withModule('senior-window-04','m6','Senior Window 4','nyctaxi','senior','Daily trips with a 7-day trailing moving average. Include the number of days in each frame.',`
+  withModule('senior-window-04','m6','Senior Window 4','stackoverflow','senior','Daily posts in early 2016 with a 7-day trailing moving average. Include the number of days in each frame.',`
 WITH daily AS (
-  SELECT pickup_datetime::date AS day,
-         COUNT(*) AS trips
-  FROM trips
+  SELECT creationdate::date AS day,
+         COUNT(*) AS post_count
+  FROM posts
+  WHERE creationdate >= DATE '2016-01-01' AND creationdate < DATE '2016-02-01'
   GROUP BY 1
 )
 SELECT day,
-       trips,
-       ROUND(AVG(trips) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 1) AS trailing_7_day_avg,
+       post_count,
+       ROUND(AVG(post_count) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 1) AS trailing_7_day_avg,
        COUNT(*) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS days_in_frame
 FROM daily
 ORDER BY day;
 `),
-  withModule('senior-window-05','m6','Senior Window 5','adventureworks','senior','Rank territories by annual revenue and return the top 5 territories per year.',`
+  withModule('senior-window-05','m6','Senior Window 5','stackoverflow','senior','Rank questions by score within each year and return the top 5 questions per year.',`
 WITH yearly AS (
-  SELECT EXTRACT(YEAR FROM orderdate)::int AS order_year,
-         territoryid,
-         SUM(totaldue) AS revenue
-  FROM sales.salesorderheader
-  GROUP BY 1, 2
+  SELECT EXTRACT(YEAR FROM creationdate)::int AS post_year,
+         id,
+         score
+  FROM posts
+  WHERE posttypeid = 1
 ),
 ranked AS (
-  SELECT order_year,
-         territoryid,
-         revenue,
-         RANK() OVER (PARTITION BY order_year ORDER BY revenue DESC) AS territory_rank
+  SELECT post_year,
+         id,
+         score,
+         RANK() OVER (PARTITION BY post_year ORDER BY score DESC) AS score_rank
   FROM yearly
 )
-SELECT order_year, territoryid, ROUND(revenue::numeric, 2) AS revenue, territory_rank
+SELECT post_year, id, score, score_rank
 FROM ranked
-WHERE territory_rank <= 5
-ORDER BY order_year, territory_rank, territoryid;
+WHERE score_rank <= 5
+ORDER BY post_year, score_rank, id;
 `),
   withModule('senior-cte-01','m5','Senior CTE 1','stackoverflow','senior','Find users who posted questions but never posted answers. Return the 50 highest-reputation users.',`
-SELECT u.id, u.display_name, u.reputation
+SELECT u.id, u.displayname, u.reputation
 FROM users u
 WHERE EXISTS (
   SELECT 1 FROM posts q
-  WHERE q.owner_user_id = u.id AND q.post_type_id = 1
+  WHERE q.owneruserid = u.id AND q.posttypeid = 1
 )
 AND NOT EXISTS (
   SELECT 1 FROM posts a
-  WHERE a.owner_user_id = u.id AND a.post_type_id = 2
+  WHERE a.owneruserid = u.id AND a.posttypeid = 2
 )
 ORDER BY u.reputation DESC
 LIMIT 50;
 `),
-  withModule('senior-cte-02','m5','Senior CTE 2','northwind','senior','Find customers whose first order was also their largest order by revenue.',`
-WITH order_revenue AS (
-  SELECT o.customer_id,
-         o.order_id,
-         o.order_date,
-         SUM(od.unit_price * od.quantity * (1 - od.discount)) AS revenue
-  FROM orders o
-  JOIN order_details od ON od.order_id = o.order_id
-  GROUP BY o.customer_id, o.order_id, o.order_date
+  withModule('senior-cte-02','m5','Senior CTE 2','chinook','senior','Find customers whose first invoice was also their largest invoice by total.',`
+WITH invoice_revenue AS (
+  SELECT customer_id,
+         invoice_id,
+         invoice_date,
+         total AS revenue
+  FROM invoice
 ),
 ranked AS (
-  SELECT *,
-         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date, order_id) AS first_order_rank,
+  SELECT customer_id, invoice_id, invoice_date, revenue,
+         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY invoice_date, invoice_id) AS first_invoice_rank,
          RANK() OVER (PARTITION BY customer_id ORDER BY revenue DESC) AS revenue_rank
-  FROM order_revenue
+  FROM invoice_revenue
 )
-SELECT customer_id, order_id, order_date, ROUND(revenue::numeric, 2) AS revenue
+SELECT customer_id, invoice_id, invoice_date, ROUND(revenue::numeric, 2) AS revenue
 FROM ranked
-WHERE first_order_rank = 1 AND revenue_rank = 1
+WHERE first_invoice_rank = 1 AND revenue_rank = 1
 ORDER BY revenue DESC;
 `),
-  withModule('senior-debug-01','m3','Senior Debug 1','northwind','senior','Debug fan-out: compare order count before and after joining order_details by customer. Return customers where joined rows exceed orders.',`
-SELECT o.customer_id,
-       COUNT(DISTINCT o.order_id) AS orders,
+  withModule('senior-debug-01','m3','Senior Debug 1','chinook','senior','Debug fan-out: compare invoice count before and after joining invoice_line by customer. Return customers where joined rows exceed invoices.',`
+SELECT i.customer_id,
+       COUNT(DISTINCT i.invoice_id) AS invoices,
        COUNT(*) AS joined_rows
-FROM orders o
-JOIN order_details od ON od.order_id = o.order_id
-GROUP BY o.customer_id
-HAVING COUNT(*) > COUNT(DISTINCT o.order_id)
+FROM invoice i
+JOIN invoice_line il ON il.invoice_id = i.invoice_id
+GROUP BY i.customer_id
+HAVING COUNT(*) > COUNT(DISTINCT i.invoice_id)
 ORDER BY joined_rows DESC;
 `),
   withModule('senior-debug-02','m2','Senior Debug 2','chinook','senior','Find countries where average invoice total is above global average invoice total.',`
@@ -179,19 +177,19 @@ GROUP BY billing_country
 HAVING AVG(total) > (SELECT AVG(total) FROM invoice)
 ORDER BY avg_invoice_total DESC;
 `),
-  withModule('case-executive-sales-01','m7','Executive Sales Case 1','adventureworks','case','Executive case: identify annual revenue, order count, average order value, and online revenue share for leadership.',`
-SELECT EXTRACT(YEAR FROM orderdate)::int AS order_year,
-       COUNT(*) AS orders,
-       ROUND(SUM(totaldue)::numeric, 2) AS revenue,
-       ROUND(AVG(totaldue)::numeric, 2) AS avg_order_value,
-       ROUND(100.0 * SUM(totaldue) FILTER (WHERE onlineorderflag = true) / NULLIF(SUM(totaldue), 0), 1) AS online_revenue_pct
-FROM sales.salesorderheader
+  withModule('case-executive-sales-01','m7','Executive Sales Case 1','chinook','case','Executive case: identify annual revenue, invoice count, active customers, and average invoice value for leadership.',`
+SELECT EXTRACT(YEAR FROM invoice_date)::int AS invoice_year,
+       COUNT(*) AS invoices,
+       COUNT(DISTINCT customer_id) AS active_customers,
+       ROUND(SUM(total)::numeric, 2) AS revenue,
+       ROUND(AVG(total)::numeric, 2) AS avg_invoice_value
+FROM invoice
 GROUP BY 1
-ORDER BY order_year;
+ORDER BY invoice_year;
 `,
     {
-      hint: 'Leadership wants one row per year. Use FILTER for the online slice.',
-      solutionNote: 'Sample executive framing: revenue trend, volume, average deal size, and channel mix answer different executive questions; call out that online revenue share can move independently from order count.'
+      hint: 'Leadership wants one row per year. COUNT(DISTINCT customer_id) gives the active customer base.',
+      solutionNote: 'Sample executive framing: revenue trend, invoice volume, active customer base, and average invoice value each answer a different leadership question; call out that average invoice value can move independently from total revenue.'
     }
   ),
   withModule('case-retention-01','m7','Retention Case 1','chinook','case','Cohort-style case: for each first invoice year, count customers and total lifetime revenue.',`
@@ -211,9 +209,9 @@ ORDER BY cohort_year;
 `),
   withModule('case-marketplace-01','m7','Marketplace Case 1','stackoverflow','case','Marketplace-style case: monthly question supply, answer supply, and answer-to-question ratio.',`
 WITH monthly AS (
-  SELECT date_trunc('month', creation_date)::date AS month,
-         COUNT(*) FILTER (WHERE post_type_id = 1) AS questions,
-         COUNT(*) FILTER (WHERE post_type_id = 2) AS answers
+  SELECT date_trunc('month', creationdate)::date AS month,
+         COUNT(*) FILTER (WHERE posttypeid = 1) AS questions,
+         COUNT(*) FILTER (WHERE posttypeid = 2) AS answers
   FROM posts
   GROUP BY 1
 )
@@ -227,24 +225,24 @@ ORDER BY month;
 ];
 
 const fluencySources = [
-  ['m1','northwind','products','product_name, unit_price, units_in_stock','unit_price DESC','category_id','units_in_stock','product_name'],
-  ['m1','northwind','orders','order_id, customer_id, order_date, freight','order_date DESC','ship_country','freight','customer_id'],
-  ['m1','northwind','customers','customer_id, company_name, city, country','country, company_name','country','customer_id','city'],
-  ['m2','northwind','order_details','order_id, product_id, unit_price, quantity, discount','quantity DESC','product_id','quantity','order_id'],
-  ['m1','chinook','track','track_id, name, milliseconds, unit_price','milliseconds DESC','genre_id','milliseconds','composer'],
-  ['m2','chinook','invoice','invoice_id, customer_id, invoice_date, billing_country, total','total DESC','billing_country','total','customer_id'],
-  ['m1','chinook','customer','customer_id, first_name, last_name, country','country, last_name','country','customer_id','support_rep_id'],
-  ['m3','chinook','invoice_line','invoice_id, track_id, unit_price, quantity','quantity DESC','track_id','quantity','invoice_id'],
-  ['m1','stackoverflow','users','id, display_name, reputation, creation_date','reputation DESC','location','reputation','location'],
-  ['m1','stackoverflow','posts','id, post_type_id, owner_user_id, creation_date, score','score DESC','post_type_id','score','owner_user_id'],
-  ['m2','stackoverflow','badges','id, user_id, name, date','date DESC','name','user_id','date'],
-  ['m2','stackoverflow','comments','id, post_id, user_id, score, creation_date','score DESC','user_id','score','post_id'],
-  ['m1','nyctaxi','trips','trip_id, pickup_datetime, passenger_count, trip_distance, total_amount','pickup_datetime DESC','payment_type','total_amount','passenger_count'],
-  ['m2','nyctaxi','trips','payment_type, passenger_count, fare_amount, tip_amount, total_amount','total_amount DESC','passenger_count','tip_amount','payment_type'],
-  ['m1','adventureworks','production.product','productid, name, color, listprice','listprice DESC','color','listprice','color'],
-  ['m2','adventureworks','sales.salesorderheader','salesorderid, customerid, orderdate, totaldue','totaldue DESC','territoryid','totaldue','shipdate'],
-  ['m3','adventureworks','sales.salesorderdetail','salesorderid, productid, orderqty, linetotal','linetotal DESC','productid','orderqty','salesorderid'],
-  ['m3','adventureworks','sales.customer','customerid, personid, storeid, territoryid','customerid','territoryid','customerid','storeid']
+  ['m1','chinook','album','album_id, title, artist_id','title, album_id','artist_id','album_id','title'],
+  ['m1','chinook','employee','employee_id, first_name, last_name, title, reports_to','last_name, employee_id','title','employee_id','reports_to'],
+  ['m1','stackoverflow','votes','id, postid, votetypeid, bountyamount','id DESC','votetypeid','bountyamount','bountyamount'],
+  ['m2','chinook','invoice_line','invoice_line_id, invoice_id, track_id, unit_price, quantity','quantity DESC, invoice_line_id','track_id','quantity','quantity'],
+  ['m1','chinook','track','track_id, name, genre_id, milliseconds, unit_price','milliseconds DESC, track_id','genre_id','milliseconds','composer'],
+  ['m2','chinook','invoice','invoice_id, customer_id, billing_country, total','total DESC, invoice_id','billing_country','total','customer_id'],
+  ['m1','chinook','customer','customer_id, first_name, last_name, country, support_rep_id','country, last_name','country','customer_id','support_rep_id'],
+  ['m3','chinook','playlist_track','playlist_id, track_id','playlist_id, track_id','playlist_id','track_id','track_id'],
+  ['m1','stackoverflow','users','id, displayname, reputation, location, upvotes','reputation DESC, id','location','reputation','location'],
+  ['m1','stackoverflow','posts','id, posttypeid, owneruserid, score, viewcount','score DESC, id','posttypeid','score','owneruserid'],
+  ['m2','stackoverflow','badges','id, userid, name, class','id DESC','name','class','userid'],
+  ['m2','stackoverflow','comments','id, postid, userid, score','score DESC, id','userid','score','userid'],
+  ['m1','stackoverflow','posts','id, posttypeid, score, viewcount, answercount','viewcount DESC, id','posttypeid','viewcount','answercount'],
+  ['m2','stackoverflow','posthistory','id, posthistorytypeid, postid, userid','id DESC','posthistorytypeid','postid','userid'],
+  ['m1','chinook','track','track_id, name, genre_id, bytes, composer','bytes DESC, track_id','genre_id','bytes','composer'],
+  ['m2','chinook','customer','customer_id, last_name, country, company, support_rep_id','country, last_name','country','customer_id','company'],
+  ['m3','chinook','invoice_line','invoice_line_id, invoice_id, track_id, unit_price, quantity','unit_price DESC, invoice_line_id','track_id','unit_price','quantity'],
+  ['m3','chinook','album','album_id, title, artist_id','artist_id, album_id','artist_id','album_id','title']
 ];
 
 function fluencyExercise(source, variantIndex, sourceIndex) {

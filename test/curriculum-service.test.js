@@ -55,7 +55,7 @@ test('buildCurriculum starts from absolute zero and carries teaching metadata', 
   assert.ok(firstExercise.steps.length >= 3);
   assert.match(firstExercise.interviewAngle, /interview/i);
 
-  assert.equal(seniorCase.database, 'adventureworks');
+  assert.equal(seniorCase.database, 'chinook');
   assert.equal(seniorCase.level, 'senior case');
   assert.match(seniorCase.task, /executive/i);
 });
@@ -76,7 +76,7 @@ test('buildCurriculum includes senior interview expansion packs', () => {
   assert.equal(advanced.database, 'stackoverflow');
   assert.match(advanced.task, /accepted answer rate/i);
   assert.match(advanced.expectedSql, /OVER/);
-  assert.equal(caseStudy.database, 'adventureworks');
+  assert.equal(caseStudy.database, 'chinook');
   assert.match(caseStudy.solutionNote, /executive/i);
 });
 

@@ -81,7 +81,7 @@ export default function Databases() {
             </Button>
             {result ? <Pill tone="ok">{result.command} · {result.rowCount} rows · {result.durationMs} ms</Pill> : null}
           </div>
-          {error ? <Callout tone="warn" title="Query failed">{error.message}{error.hint ? ` — ${error.hint}` : ''}</Callout> : null}
+          {error ? <Callout tone="warn" title="Query failed">{error.message}{error.hint ? `: ${error.hint}` : ''}</Callout> : null}
           {result ? <DataTable columns={result.columns || []} rows={result.rows || []} maxRows={500} /> : null}
           <section className="dock db-dock">
             <h2 className="db-tables-heading">Tables in {active}</h2>

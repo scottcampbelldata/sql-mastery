@@ -48,12 +48,12 @@ export default function Dashboard() {
             <div>
               <span className="welcome-num">1</span>
               <strong>Practice sessions</strong>
-              <p>Press the big button below. Each session gives you a small task, teaches the idea, and checks your answer instantly. No setup, no grading anxiety — try, miss, retry.</p>
+              <p>Press the big button below. Each session gives you a small task, teaches the idea, and checks your answer instantly. No setup, no grading anxiety, try, miss, retry.</p>
             </div>
             <div>
               <span className="welcome-num">2</span>
               <strong>Lessons</strong>
-              <p>Prefer reading first? The Lessons list in the menu holds the full textbook — every concept explained with examples you can copy.</p>
+              <p>Prefer reading first? The Lessons list in the menu holds the full textbook: every concept explained with examples you can copy.</p>
             </div>
             <div>
               <span className="welcome-num">3</span>

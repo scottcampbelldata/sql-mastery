@@ -24,11 +24,11 @@
   transition: background var(--ease), color var(--ease);
 }
 .nav-item:hover { background: var(--surface-2); color: var(--ink-strong); text-decoration: none; }
-.nav-item.active { background: var(--brand-soft); color: var(--brand); }
+.nav-item.active { background: var(--brand-soft); color: var(--brand); font-weight: 600; }
 .nav-ico { font-family: var(--font-mono); font-size: var(--text-xs); width: 18px; text-align: center; flex: none; }
 .collapsed .nav-label, .collapsed .nav-group-label, .collapsed .sidebar-foot { display: none; }
-.nav-group { margin: 0 0 var(--s-3); }
-.nav-group-label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); padding: var(--s-2) var(--s-3) var(--s-1); }
+.nav-group { margin: 0 0 var(--s-4); }
+.nav-group-label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); padding: var(--s-3) var(--s-3) var(--s-1); }
 .nav-sub { padding-top: 5px; padding-bottom: 5px; }
 .sidebar-foot { padding: var(--s-3); border-top: 1px solid var(--line); }
 
@@ -47,7 +47,7 @@
 .topbar-spacer { flex: 1; }
 .main { padding: var(--s-6) var(--s-7) var(--s-8); max-width: var(--content-max); width: 100%; margin: 0 auto; }
 
-/* Theme toggle — round icon button, in the topbar and mobile bar. */
+/* Theme toggle: round icon button, in the topbar and mobile bar. */
 .theme-toggle {
   width: 34px; height: 34px; flex: none; display: grid; place-items: center;
   border: 1px solid var(--line); background: var(--surface-1); color: var(--ink-dim);
@@ -73,7 +73,7 @@
   }
   .menu-btn:hover { color: var(--ink-strong); border-color: var(--line-strong); }
 
-  /* The full sidebar becomes an off-canvas drawer — every destination stays reachable. */
+  /* The full sidebar becomes an off-canvas drawer. Every destination stays reachable. */
   .sidebar {
     position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw);
     z-index: calc(var(--z-overlay) + 1);

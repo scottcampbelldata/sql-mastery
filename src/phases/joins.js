@@ -22,7 +22,7 @@ const CONCEPTS = [
     id: 'j-left', order: 2, skill: 'left-join',
     title: 'Keep every row with LEFT JOIN',
     teach: {
-      plain: 'A plain JOIN drops rows that have no match. A LEFT JOIN keeps every row from the left (first) table and fills NULL where the right table has no match. That is how you answer "which X have no Y" — LEFT JOIN, then keep the rows where the right key IS NULL.',
+      plain: 'A plain JOIN drops rows that have no match. A LEFT JOIN keeps every row from the left (first) table and fills NULL where the right table has no match. That is how you answer "which X have no Y": LEFT JOIN, then keep the rows where the right key IS NULL.',
       mentalModel: 'LEFT JOIN keeps all of the left table; unmatched right-side columns come back NULL.',
       example: { sql: 'SELECT ar.name, al.title FROM artist ar LEFT JOIN album al ON al.artist_id = ar.artist_id ORDER BY ar.artist_id LIMIT 5;', note: 'Artists appear even if they have no album (title is NULL).' }
     },
@@ -36,7 +36,7 @@ const CONCEPTS = [
     id: 'j-multi', order: 3, skill: 'multi-join',
     title: 'Chain three or more tables',
     teach: {
-      plain: 'You can JOIN more than two tables — each JOIN adds another table on its key. To show a track with its artist you go track → album → artist, because the artist is stored on the album, not the track.',
+      plain: 'You can JOIN more than two tables: each JOIN adds another table on its key. To show a track with its artist you go track → album → artist, because the artist is stored on the album, not the track.',
       mentalModel: 'Each additional JOIN … ON … hops one more key across the schema.',
       example: { sql: 'SELECT ar.name AS artist, t.name AS track FROM artist ar JOIN album al ON al.artist_id = ar.artist_id JOIN track t ON t.album_id = al.album_id ORDER BY t.track_id LIMIT 5;', note: 'artist → album → track, chained by two joins.' }
     },
@@ -50,7 +50,7 @@ const CONCEPTS = [
     id: 'j-agg', order: 4, skill: 'join-aggregate',
     title: 'Summarize across a join',
     teach: {
-      plain: 'Once tables are joined, GROUP BY and the aggregate functions you already know work across them — revenue per genre, tracks per album, sales per country. Join first, then group by the label you want one row per.',
+      plain: 'Once tables are joined, GROUP BY and the aggregate functions you already know work across them: revenue per genre, tracks per album, sales per country. Join first, then group by the label you want one row per.',
       mentalModel: 'JOIN builds the wide table; GROUP BY + COUNT/SUM collapse it per group.',
       example: { sql: 'SELECT g.name AS genre, COUNT(*) AS tracks FROM track t JOIN genre g ON t.genre_id = g.genre_id GROUP BY g.name ORDER BY tracks DESC, g.name LIMIT 5;', note: 'Track count per genre, busiest first.' }
     },
@@ -64,7 +64,7 @@ const CONCEPTS = [
     id: 'j-self', order: 5, skill: 'self-join',
     title: 'Join a table to itself',
     teach: {
-      plain: 'A table can join to itself — useful for hierarchies. Each employee row has a reports_to that holds their manager’s employee_id. Join employee to a second copy of employee to line up each person with their manager. Alias the two copies (e for employee, m for manager) so SQL can tell them apart.',
+      plain: 'A table can join to itself, useful for hierarchies. Each employee row has a reports_to that holds their manager’s employee_id. Join employee to a second copy of employee to line up each person with their manager. Alias the two copies (e for employee, m for manager) so SQL can tell them apart.',
       mentalModel: 'Two aliases of the same table = "this row" and "the row it points at".',
       example: { sql: 'SELECT e.first_name AS employee, m.first_name AS manager FROM employee e JOIN employee m ON e.reports_to = m.employee_id ORDER BY e.employee_id;', note: 'Each employee beside their manager.' }
     },
