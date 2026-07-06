@@ -146,59 +146,9 @@ grouped <span class="k">AS</span> (
 
 <h2>Pattern 8: Dimensional modeling and the semantic layer</h2>
 <p><strong>Trigger phrases:</strong> "how would you model this for a dashboard," "star schema," "fact vs dimension," "build a semantic layer," "one big table."</p>
-<p>Chinook is <em>normalized</em> (third normal form): a track points to an album, the album to an artist, and every genre and customer lives in its own table. That shape is built for clean writes, not for reporting - the genre scorecard in P7.12 needed four joins just to attach a name to a sale, and a BI tool would re-run those joins on <em>every</em> click. Dimensional modeling pre-shapes the data so the dashboard does not have to. The vocabulary a senior analyst is expected to use fluently:</p>
-<ul>
-<li><strong>Grain</strong> - the one thing a fact row represents. Here it is <em>one invoice line</em>. Nail the grain first; every other decision follows from it.</li>
-<li><strong>Fact table</strong> - the measurements at that grain: foreign keys to the dimensions plus additive numbers (quantity, revenue). Long and skinny, millions of rows.</li>
-<li><strong>Dimension tables</strong> - the descriptive "what you slice by": <code>dim_customer</code>, <code>dim_track</code>, <code>dim_date</code>. Short and wide.</li>
-<li><strong>Star vs. snowflake</strong> - a <em>star</em> flattens each dimension into one table (<code>dim_track</code> carries album, artist, and genre names directly). A <em>snowflake</em> keeps them normalized (dim_track -&gt; dim_album -&gt; dim_artist). BI tools favor the star: fewer joins, faster filters, simpler for the analyst.</li>
-</ul>
-<pre><span class="c">-- Illustrative DDL (read-and-reason - the practice DBs are read-only).</span>
-<span class="c">-- Flatten the track chain into ONE star dimension:</span>
-<span class="k">CREATE TABLE</span> dim_track <span class="k">AS</span>
-<span class="k">SELECT</span> t.track_id,
-       t.name   <span class="k">AS</span> track,
-       al.title <span class="k">AS</span> album,
-       ar.name  <span class="k">AS</span> artist,
-       g.name   <span class="k">AS</span> genre
-<span class="k">FROM</span> track t
-<span class="k">LEFT JOIN</span> album al  <span class="k">ON</span> al.album_id = t.album_id
-<span class="k">LEFT JOIN</span> artist ar <span class="k">ON</span> ar.artist_id = al.artist_id
-<span class="k">LEFT JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id;
-
-<span class="c">-- The fact: one row per invoice line, keys + additive measures.</span>
-<span class="k">CREATE TABLE</span> fact_sales <span class="k">AS</span>
-<span class="k">SELECT</span> il.invoice_line_id,
-       i.invoice_date::date        <span class="k">AS</span> date_key,
-       i.customer_id               <span class="k">AS</span> customer_key,
-       il.track_id                 <span class="k">AS</span> track_key,
-       il.quantity,
-       il.unit_price * il.quantity <span class="k">AS</span> line_revenue
-<span class="k">FROM</span> invoice_line il
-<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id;</pre>
-<p>With that star in place, "revenue by genre by month" is a two-table join instead of five, and it reads the way the business talks. You can prove the shape right now, read-only, by building the <strong>semantic layer</strong> - the wide, dashboard-ready result - as one query (exactly what a <code>CREATE VIEW</code> or a dbt model would wrap):</p>
-<pre><span class="c">-- Runnable: the "one big table" a dashboard would sit on top of.</span>
-<span class="k">SELECT</span> il.invoice_line_id,
-       i.invoice_date::date <span class="k">AS</span> sale_date,
-       i.billing_country,
-       c.first_name || <span class="s">' '</span> || c.last_name <span class="k">AS</span> customer,
-       ar.name  <span class="k">AS</span> artist,
-       al.title <span class="k">AS</span> album,
-       t.name   <span class="k">AS</span> track,
-       g.name   <span class="k">AS</span> genre,
-       il.quantity,
-       il.unit_price * il.quantity <span class="k">AS</span> line_revenue
-<span class="k">FROM</span> invoice_line il
-<span class="k">JOIN</span> invoice i    <span class="k">ON</span> i.invoice_id = il.invoice_id
-<span class="k">JOIN</span> customer c   <span class="k">ON</span> c.customer_id = i.customer_id
-<span class="k">JOIN</span> track t      <span class="k">ON</span> t.track_id = il.track_id
-<span class="k">LEFT JOIN</span> album al  <span class="k">ON</span> al.album_id = t.album_id
-<span class="k">LEFT JOIN</span> artist ar <span class="k">ON</span> ar.artist_id = al.artist_id
-<span class="k">LEFT JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
-<span class="k">ORDER BY</span> sale_date, il.invoice_line_id
-<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
-<div class="tip"><span class="tag">Interview script</span>
-"I'd start at the grain - one invoice line - then build a fact of keys and additive measures plus a few flattened dimensions: a star, because dashboards filter faster with one join per dimension than with a snowflake's chain. Chinook is normalized for writes; for BI I denormalize track+album+artist+genre into dim_track so 'revenue by genre' stops being a four-table join. If it feeds a single dashboard I might go all the way to one wide table." Saying <em>grain, fact, dimension, star, denormalize-for-reads</em> in one breath is the senior signal.</div>
+<p>Recognize the shift from "answer this question" to "shape this data so a dashboard can answer it over and over." Chinook is normalized for clean writes, so the genre scorecard in P7.12 needed four joins just to attach a name to a sale - and a BI tool would re-run those joins on <em>every</em> click. The senior move is a <strong>star</strong>: a fact at one clear grain (one invoice line: keys plus additive measures) surrounded by flattened dimensions (a <code>dim_track</code> carrying album, artist, and genre), so "revenue by genre by month" becomes a two-table join that reads the way the business talks. Name the vocabulary in one breath - <em>grain, fact, dimension, star, denormalize-for-reads</em> - and note that a single wide "semantic layer" view (what a <code>CREATE VIEW</code> or dbt model wraps) is the pragmatic end state for one dashboard.</p>
+<div class="note"><span class="tag">Build it in Module 9</span>
+This module is about <em>recognizing</em> the pattern. <a href="m9-data-modeling.html">Module 9 - Data Modeling</a> is where you build the fact table, the dimensions, and the wide semantic-layer query step by step with runnable drills. P7.13 below is the payoff: once the model exists, the business question collapses to a short GROUP BY.</div>
 
 <h2>Practice - thirteen problems, mixed costume</h2>
 <p>The prompts below deliberately do not name their pattern. Your first job on each: say which pattern it is before writing a line.</p>

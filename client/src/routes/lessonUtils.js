@@ -1,6 +1,7 @@
 const LESSON_FILES = [
   'schemas', 'm1-fundamentals', 'm2-aggregation', 'm3-joins', 'm4-transformation',
-  'm5-subqueries-ctes', 'm6-window-functions', 'm7-interview-patterns', 'm8-performance', 'mock-interviews'
+  'm5-subqueries-ctes', 'm6-window-functions', 'm7-interview-patterns', 'm8-performance',
+  'm9-data-modeling', 'mock-interviews', 'dialects'
 ];
 
 export function rewriteLessonLinks(root) {
