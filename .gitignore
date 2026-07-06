@@ -1,6 +1,7 @@
 node_modules/
 client/dist/
 .env
+data/
 
 # binary data archives
 *.zip

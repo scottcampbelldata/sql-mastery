@@ -249,6 +249,40 @@ test('serveClient=false runs API-only (no static front end)', async () => {
   });
 });
 
+test('progress sync stores/returns per-code data and rejects short codes', async () => {
+  const os = require('node:os');
+  const fs = require('node:fs');
+  const nodePath = require('node:path');
+  const { createProgressStore } = require('../src/progress-store');
+  const dir = fs.mkdtempSync(nodePath.join(os.tmpdir(), 'sqlm-progress-'));
+  const app = createApp({
+    queryService: { listDatabases: () => ['chinook'] },
+    progressStore: createProgressStore({ dir })
+  });
+
+  await withServer(app, async (baseUrl) => {
+    const empty = await fetch(`${baseUrl}/api/progress?code=abcdef`);
+    assert.equal(empty.status, 200);
+    assert.deepEqual(await empty.json(), { data: null, updatedAt: null });
+
+    const put = await fetch(`${baseUrl}/api/progress`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ code: 'abcdef', data: { 'sqlm:m1:p1-1': '1' } })
+    });
+    assert.equal(put.status, 200);
+    assert.equal((await put.json()).ok, true);
+
+    const got = await fetch(`${baseUrl}/api/progress?code=abcdef`);
+    assert.deepEqual((await got.json()).data, { 'sqlm:m1:p1-1': '1' });
+
+    const bad = await fetch(`${baseUrl}/api/progress?code=x`);
+    assert.equal(bad.status, 400);
+  });
+
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
 test('CORS reflects allowed origins, answers preflight, and ignores others', async () => {
   const app = createApp({
     queryService: { listDatabases: () => ['chinook'] },

@@ -2,11 +2,13 @@ const express = require('express');
 const path = require('path');
 const { buildCurriculum } = require('./curriculum-service');
 const { createQueryService } = require('./query-service');
+const { createProgressStore } = require('./progress-store');
 
 function createApp(options = {}) {
   const app = express();
   const queryService = options.queryService || createQueryService();
   const curriculumService = options.curriculumService || { buildCurriculum };
+  const progressStore = options.progressStore || createProgressStore();
   const contentDir = options.contentDir || path.join(__dirname, '..', 'content');
   const clientDir = options.clientDir || path.join(__dirname, '..', 'client', 'dist');
 
@@ -132,6 +134,38 @@ function createApp(options = {}) {
         hint: error.hint,
         position: error.position
       });
+    }
+  });
+
+  // Cross-device progress sync, keyed by a user-chosen sync code. Progress is a
+  // best-effort blob of localStorage keys; the server just stores and returns it.
+  const isValidCode = (code) => typeof code === 'string' && code.trim().length >= 6 && code.trim().length <= 128;
+
+  app.get('/api/progress', (request, response) => {
+    const code = request.query && request.query.code;
+    if (!isValidCode(code)) {
+      return response.status(400).json({ error: 'A sync code of at least 6 characters is required.', code: 'BAD_SYNC_CODE' });
+    }
+    const record = progressStore.get(code.trim());
+    response.json(record || { data: null, updatedAt: null });
+  });
+
+  app.put('/api/progress', (request, response) => {
+    const body = request.body || {};
+    if (!isValidCode(body.code)) {
+      return response.status(400).json({ error: 'A sync code of at least 6 characters is required.', code: 'BAD_SYNC_CODE' });
+    }
+    if (!body.data || typeof body.data !== 'object' || Array.isArray(body.data)) {
+      return response.status(400).json({ error: 'A progress data object is required.', code: 'BAD_PROGRESS' });
+    }
+    if (JSON.stringify(body.data).length > 512 * 1024) {
+      return response.status(413).json({ error: 'Progress payload is too large.', code: 'PROGRESS_TOO_LARGE' });
+    }
+    try {
+      const record = progressStore.set(body.code.trim(), body.data);
+      response.json({ ok: true, updatedAt: record.updatedAt });
+    } catch (error) {
+      response.status(500).json({ error: 'Could not save progress.', code: 'PROGRESS_SAVE_FAILED' });
     }
   });
 

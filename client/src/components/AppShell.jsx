@@ -5,6 +5,7 @@ import { currentSession, percent } from '../lib/curriculum.js';
 import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress.js';
 import { getTheme, setTheme } from '../theme/theme.js';
 import { ProgressMeter, cx } from './ui.jsx';
+import { SyncControl } from './SyncControl.jsx';
 import { LESSONS } from '../lessons/manifest.js';
 import './appshell.css';
 
@@ -87,6 +88,7 @@ export function AppShell({ children, breadcrumb }) {
         </nav>
         <div className="sidebar-foot">
           {total ? <ProgressMeter value={percent(done, total)} label="Course" /> : null}
+          <SyncControl />
         </div>
       </aside>
       <div className="main-col">
