@@ -232,6 +232,23 @@ test('POST /api/table-preview returns sample rows for a schema table', async () 
   });
 });
 
+test('serveClient=false runs API-only (no static front end)', async () => {
+  const app = createApp({
+    queryService: { listDatabases: () => ['chinook', 'stackoverflow'] },
+    serveClient: false
+  });
+
+  await withServer(app, async (baseUrl) => {
+    // API still works.
+    const api = await fetch(`${baseUrl}/api/databases`);
+    assert.equal(api.status, 200);
+    assert.deepEqual((await api.json()).databases, ['chinook', 'stackoverflow']);
+    // The front end is not served: a non-API path 404s instead of returning index.html.
+    const root = await fetch(`${baseUrl}/`);
+    assert.equal(root.status, 404);
+  });
+});
+
 test('CORS reflects allowed origins, answers preflight, and ignores others', async () => {
   const app = createApp({
     queryService: { listDatabases: () => ['chinook'] },
