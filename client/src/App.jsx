@@ -31,7 +31,7 @@ function Body() {
       <Route path="/learn/checkpoint/:id" element={<Checkpoint />} />
       <Route path="/academy" element={<Dashboard />} />
       <Route path="/session/:sessionId/:exerciseId?" element={<Session />} />
-      <Route path="/lessons/:slug" element={<Lesson />} />
+      <Route path="/lessons/:slug/:step?" element={<Lesson />} />
       <Route path="/databases" element={<Databases />} />
       <Route path="*" element={<EmptyState title="Page not found" />} />
     </Routes>
