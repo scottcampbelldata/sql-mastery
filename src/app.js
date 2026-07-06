@@ -10,6 +10,13 @@ function createApp(options = {}) {
   const contentDir = options.contentDir || path.join(__dirname, '..', 'content');
   const clientDir = options.clientDir || path.join(__dirname, '..', 'client', 'dist');
 
+  // Whether this backend also serves the built front end (all-in-one). In a split
+  // deployment (front end on Cloudflare Pages) set SQL_MASTERY_SERVE_CLIENT=false so
+  // the VPS runs API-only. Defaults to true for local dev / monolith hosting.
+  const serveClient = options.serveClient !== undefined
+    ? options.serveClient
+    : (process.env.SQL_MASTERY_SERVE_CLIENT || 'true').toLowerCase() !== 'false';
+
   // Cross-origin allowlist for split deployments (e.g. a Cloudflare Pages front end
   // calling this backend on a different origin). Comma-separated list of allowed
   // origins; empty means same-origin only (no CORS headers emitted). "*" allows any.
@@ -128,11 +135,14 @@ function createApp(options = {}) {
     }
   });
 
-  app.use(express.static(clientDir));
-
-  app.use(express.static(contentDir, {
-    extensions: ['html']
-  }));
+  // Serve the built front end only in all-in-one mode. When SQL_MASTERY_SERVE_CLIENT
+  // is false (split deployment) the VPS runs API-only and Cloudflare Pages serves the UI.
+  if (serveClient) {
+    app.use(express.static(clientDir));
+    app.use(express.static(contentDir, {
+      extensions: ['html']
+    }));
+  }
 
   return app;
 }
