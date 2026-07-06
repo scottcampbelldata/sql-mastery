@@ -25,10 +25,26 @@ $PGUSER = if ($env:PGUSER) { $env:PGUSER } else { 'postgres' }
 $DBNAME = 'olist'
 $env:PGCLIENTENCODING = 'UTF8'
 
-# psql must be reachable
-if (-not (Get-Command psql -ErrorAction SilentlyContinue)) {
-  throw "psql was not found on PATH. Install the PostgreSQL client tools, or add the PostgreSQL 'bin' folder (e.g. 'C:\Program Files\PostgreSQL\16\bin') to PATH, then re-run."
+# find psql: PATH first, then $env:PSQL, then the standard PostgreSQL install dirs
+$Psql = $null
+if (Get-Command psql -ErrorAction SilentlyContinue) {
+  $Psql = 'psql'
+} elseif ($env:PSQL -and (Test-Path $env:PSQL)) {
+  $Psql = $env:PSQL
+} else {
+  $found = @()
+  foreach ($root in @("$env:ProgramFiles\PostgreSQL", "${env:ProgramFiles(x86)}\PostgreSQL", "$env:LOCALAPPDATA\Programs\PostgreSQL")) {
+    if (Test-Path $root) { $found += Get-ChildItem $root -Recurse -Filter psql.exe -ErrorAction SilentlyContinue }
+  }
+  # prefer the real client under \bin\, highest version number
+  $best = $found | Where-Object { $_.FullName -match '\\bin\\psql\.exe$' } | Sort-Object FullName -Descending | Select-Object -First 1
+  if (-not $best) { $best = $found | Sort-Object FullName -Descending | Select-Object -First 1 }
+  if ($best) { $Psql = $best.FullName }
 }
+if (-not $Psql) {
+  throw "psql was not found. Set `$env:PSQL to the full path of psql.exe (e.g. 'C:\Program Files\PostgreSQL\18\bin\psql.exe') and re-run."
+}
+Write-Host "Using psql: $Psql"
 
 # password: use PGPASSWORD if present, otherwise prompt once
 if (-not $env:PGPASSWORD) {
@@ -47,21 +63,42 @@ $files = @(
   'olist_sellers_dataset', 'product_category_name_translation',
   'olist_closed_deals_dataset', 'olist_marketing_qualified_leads_dataset'
 )
+# robust download: curl.exe (built into Windows 10/11) retries and fails loudly on
+# a dropped connection; then we verify the on-disk size matches the server's.
+$curl = Get-Command curl.exe -ErrorAction SilentlyContinue
 foreach ($f in $files) {
   $dest = Join-Path $tmp "$f.csv"
+  $url  = "$base/$f.csv"
   Write-Host "Downloading $f.csv ..."
-  Invoke-WebRequest -Uri "$base/$f.csv" -OutFile $dest -UseBasicParsing
+  if ($curl) {
+    & curl.exe -sSL --fail --retry 5 --retry-all-errors -o $dest $url
+    if ($LASTEXITCODE -ne 0) { throw "Download failed for $f.csv" }
+  } else {
+    $ok = $false
+    for ($try = 1; $try -le 5 -and -not $ok; $try++) {
+      try { Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing; $ok = $true }
+      catch { if ($try -eq 5) { throw }; Start-Sleep 3 }
+    }
+  }
+  # integrity check: local bytes must equal the server's Content-Length
+  try {
+    $remote = [int64]((Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing).Headers['Content-Length'])
+    $local  = (Get-Item $dest).Length
+    if ($remote -gt 0 -and $local -ne $remote) {
+      throw "Incomplete download for $f.csv ($local of $remote bytes). Re-run the script."
+    }
+  } catch [System.Net.WebException] { }  # HEAD not supported → skip the check
 }
 
 # ---- helpers ----
 function Invoke-Psql([string]$db, [string]$sql) {
-  psql -h $PGHOST -p $PGPORT -U $PGUSER -d $db -v ON_ERROR_STOP=1 -q -c $sql
+  & $Psql -h $PGHOST -p $PGPORT -U $PGUSER -d $db -v ON_ERROR_STOP=1 -q -c $sql
   if ($LASTEXITCODE -ne 0) { throw "psql failed on: $sql" }
 }
 function Import-Csv-Table([string]$table, [string]$file, [string]$withOpts) {
   $path = (Join-Path $tmp "$file.csv") -replace '\\', '/'
   $cmd  = "\copy $table FROM '$path' WITH ($withOpts)"
-  psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -v ON_ERROR_STOP=1 -q -c $cmd
+  & $Psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -v ON_ERROR_STOP=1 -q -c $cmd
   if ($LASTEXITCODE -ne 0) { throw "Load failed for table '$table'." }
   Write-Host "  loaded $table"
 }
@@ -160,7 +197,7 @@ CREATE TABLE qualified_leads (
 );
 '@
 Write-Host "Creating schema ..."
-$schema | psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -v ON_ERROR_STOP=1 -q
+$schema | & $Psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -v ON_ERROR_STOP=1 -q
 if ($LASTEXITCODE -ne 0) { throw "Schema creation failed." }
 
 # ---- 4. load each CSV (FORCE_NULL turns empty quoted fields "" into NULL for typed columns) ----
@@ -189,11 +226,11 @@ CREATE INDEX idx_payments_order  ON order_payments (order_id);
 CREATE INDEX idx_reviews_order   ON order_reviews (order_id);
 '@
 Write-Host "Adding keys and indexes ..."
-$constraints | psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -v ON_ERROR_STOP=1 -q
+$constraints | & $Psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -v ON_ERROR_STOP=1 -q
 if ($LASTEXITCODE -ne 0) { Write-Warning "Some constraints/indexes failed (data loaded OK; joins still work)." }
 
 # ---- 6. sanity check ----
 Write-Host "`nRow counts:"
-psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -q -c "SELECT 'customers' t, count(*) FROM customers UNION ALL SELECT 'orders', count(*) FROM orders UNION ALL SELECT 'order_items', count(*) FROM order_items UNION ALL SELECT 'order_payments', count(*) FROM order_payments UNION ALL SELECT 'order_reviews', count(*) FROM order_reviews UNION ALL SELECT 'products', count(*) FROM products UNION ALL SELECT 'sellers', count(*) FROM sellers ORDER BY 1;"
+& $Psql -h $PGHOST -p $PGPORT -U $PGUSER -d $DBNAME -q -c "SELECT 'customers' t, count(*) FROM customers UNION ALL SELECT 'orders', count(*) FROM orders UNION ALL SELECT 'order_items', count(*) FROM order_items UNION ALL SELECT 'order_payments', count(*) FROM order_payments UNION ALL SELECT 'order_reviews', count(*) FROM order_reviews UNION ALL SELECT 'products', count(*) FROM products UNION ALL SELECT 'sellers', count(*) FROM sellers ORDER BY 1;"
 
 Write-Host "`nDone. 'olist' is ready. Expect ~99k orders, ~99k customers, ~112k order_items, ~32k products, ~3k sellers." -ForegroundColor Green

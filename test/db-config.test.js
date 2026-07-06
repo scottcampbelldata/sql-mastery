@@ -9,13 +9,14 @@ const {
   resolveDatabaseName
 } = require('../src/db-config');
 
-test('defaults to the five curriculum databases', () => {
+test('defaults to the six curriculum databases', () => {
   assert.deepEqual(DEFAULT_DATABASES, [
     'northwind',
     'chinook',
     'adventureworks',
     'stackoverflow',
-    'nyctaxi'
+    'nyctaxi',
+    'olist'
   ]);
 
   assert.deepEqual(getDatabaseNames({}), DEFAULT_DATABASES);

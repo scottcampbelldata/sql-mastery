@@ -3,7 +3,8 @@ const DEFAULT_DATABASES = Object.freeze([
   'chinook',
   'adventureworks',
   'stackoverflow',
-  'nyctaxi'
+  'nyctaxi',
+  'olist'
 ]);
 
 function splitDatabaseList(value) {
