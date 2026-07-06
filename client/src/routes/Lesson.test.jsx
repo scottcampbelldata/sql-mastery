@@ -1,5 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { rewriteLessonLinks } from './lessonUtils.js';
+import { rewriteLessonLinks, splitLessonSections } from './lessonUtils.js';
+
+describe('splitLessonSections', () => {
+  it('splits intro + one section per h2 and counts drills', () => {
+    const html = '<p class="lede">Intro text.</p>'
+      + '<h2>1.1 First</h2><p>alpha</p>'
+      + '<h2>Practice</h2><div class="problem"><div class="phead"></div></div><div class="problem"></div>';
+    const { introHtml, sections } = splitLessonSections(html);
+    expect(introHtml).toContain('Intro text');
+    expect(sections.length).toBe(2);
+    expect(sections[0].title).toBe('1.1 First');
+    expect(sections[0].html).toContain('alpha');
+    expect(sections[0].drills).toBe(0);
+    expect(sections[1].title).toBe('Practice');
+    expect(sections[1].drills).toBe(2);
+  });
+});
 
 describe('rewriteLessonLinks', () => {
   it('rewrites legacy lesson hrefs to router paths', () => {
