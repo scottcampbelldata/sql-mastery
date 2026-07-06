@@ -31,6 +31,15 @@
 .nav-group-label { display: block; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); padding: var(--s-3) var(--s-3) var(--s-1); }
 .nav-sub { padding-top: 5px; padding-bottom: 5px; }
 .sidebar-foot { padding: var(--s-3); border-top: 1px solid var(--line); }
+.sync-link { display: inline-block; margin-top: var(--s-2); background: none; border: none; padding: 0; cursor: pointer; color: var(--ink-dim); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; }
+.sync-link:hover { color: var(--brand); }
+.sync-box { display: flex; flex-direction: column; gap: var(--s-2); margin-top: var(--s-3); }
+.sync-status { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-dim); }
+.sync-status code { color: var(--brand); }
+.sync-label { font-size: var(--text-xs); color: var(--ink-faint); line-height: 1.4; }
+.sync-input { width: 100%; box-sizing: border-box; padding: var(--s-2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--ink-strong); font-family: var(--font-mono); font-size: var(--text-sm); }
+.sync-input:focus { outline: none; border-color: var(--brand); }
+.sync-actions { display: flex; align-items: center; gap: var(--s-3); }
 
 .main-col { min-width: 0; display: flex; flex-direction: column; }
 .topbar {
