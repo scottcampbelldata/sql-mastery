@@ -1,0 +1,54 @@
+[Unit]
+Description=SQL Mastery API (Express backend)
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sqlmastery
+Group=sqlmastery
+WorkingDirectory=/opt/sql-mastery
+
+# Config/secrets: HOST=127.0.0.1, PORT=3000, PG*, SQL_MASTERY_* (chmod 600, owned by sqlmastery).
+EnvironmentFile=/opt/sql-mastery/.env
+
+# Absolute node path so systemd PATH differences cannot break startup.
+# Replace /usr/bin/node with the output of `which node` on the host (Node 18+).
+ExecStart=/usr/bin/node server.js
+
+Restart=on-failure
+RestartSec=2s
+# Just above the 60s statement timeout so a graceful stop does not SIGKILL a
+# request that is legitimately running the maximum-length query.
+TimeoutStopSec=65s
+
+# --- Hardening ---
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictSUIDSGID=true
+RestrictRealtime=true
+RestrictNamespaces=true
+LockPersonality=true
+# V8's JIT needs writable+executable pages, so this must stay false.
+MemoryDenyWriteExecute=false
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+CapabilityBoundingSet=
+AmbientCapabilities=
+# ProtectSystem=strict makes /opt/sql-mastery read-only to the service (fine for a
+# stateless API). If the app must write (logs/cache), add e.g.:
+#   ReadWritePaths=/opt/sql-mastery/logs
+
+[Install]
+WantedBy=multi-user.target
