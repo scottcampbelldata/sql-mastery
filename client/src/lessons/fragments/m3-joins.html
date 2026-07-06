@@ -1,6 +1,6 @@
-<p class="eyebrow">-- module 3 / four sessions / <span id="done-count"></span></p>
+<p class="eyebrow">-- module 3 / five sessions / <span id="done-count"></span></p>
 <h1>Joins</h1>
-<p class="lede">Everything downstream - CTEs, windows, interview patterns - is joins plus something. This module covers all the join types, the two traps that fail otherwise-strong candidates (fan-out and the LEFT-JOIN-killing WHERE clause), and the anti-join, which is the single most-asked join question in interviews. Your chinook store has a rich foreign-key graph to walk (artist to album to track to genre; customer to invoice to line; employee to employee), and stackoverflow supplies the self-join and the big anti-join.</p>
+<p class="lede">Everything downstream - CTEs, windows, interview patterns - is joins plus something. This module covers all the join types, the two traps that fail otherwise-strong candidates (fan-out and the LEFT-JOIN-killing WHERE clause), the anti-join and its mirror the semi-join, the two senior uses of CROSS JOIN (broadcasting a scalar and building a full grid), and the join-hygiene call every interviewer listens for (why explicit ON beats NATURAL). Your chinook store has a rich foreign-key graph to walk (artist to album to track to genre; customer to invoice to line; employee to employee), and stackoverflow supplies the self-join and the big anti-join.</p>
 
 <h2>3.1 INNER, LEFT, RIGHT, FULL in one mental model</h2>
 <p>A join matches rows by a condition. The only question the four types answer differently is: <strong>what happens to rows with no match?</strong></p>
@@ -102,6 +102,56 @@ Before writing any join, say the grain of each table: "invoice is one row per in
 <span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
 <span class="k">GROUP BY</span> g.name
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
+
+<h2>3.6 CROSS JOIN: the scalar broadcast and the grid</h2>
+<p>A <code>CROSS JOIN</code> pairs every left row with every right row - no ON clause. Careless, it explodes row counts; deliberate, it powers two senior patterns.</p>
+<p><strong>Broadcast one value to every row.</strong> Cross-join a one-row aggregate to make a grand total available everywhere - "percent of total" without a window function:</p>
+<pre><span class="c">-- chinook: each country's revenue and its share of the grand total</span>
+<span class="k">SELECT</span> i.billing_country <span class="k">AS</span> country,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity)::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">SUM</span>(il.unit_price * il.quantity) / tot.grand, <span class="n">1</span>) <span class="k">AS</span> pct
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">CROSS JOIN</span> (<span class="k">SELECT</span> <span class="f">SUM</span>(unit_price * quantity) <span class="k">AS</span> grand <span class="k">FROM</span> invoice_line) tot
+<span class="k">GROUP BY</span> i.billing_country, tot.grand
+<span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
+<p>The subquery <code>tot</code> returns exactly one row, so cross-joining it multiplies nothing - it just attaches <code>grand</code> to every group. The USA leads at about 22.5% of revenue. Module 6 does this with <code>SUM(...) OVER ()</code>; here it is a join.</p>
+<p><strong>Generate a complete grid.</strong> Cross-join two dimension tables to get every combination, so a later LEFT JOIN of the facts leaves no cell missing:</p>
+<pre><span class="c">-- chinook: every (genre, media_type) pairing - 25 x 5 = 125 rows, always</span>
+<span class="k">SELECT</span> g.name <span class="k">AS</span> genre, mt.name <span class="k">AS</span> media_type
+<span class="k">FROM</span> genre g
+<span class="k">CROSS JOIN</span> media_type mt
+<span class="k">ORDER BY</span> g.name, mt.name;</pre>
+<p>25 genres times 5 media types is exactly 125 rows whether or not any track uses that pairing. Building the full grid first is how you produce reports with zero missing rows.</p>
+
+<h2>3.7 Semi-join: the anti-join's twin</h2>
+<p>The anti-join (3.3) finds rows with <em>no</em> match. Its mirror - the <strong>semi-join</strong> - finds rows that <em>have</em> a match, once each, without fan-out. <code>EXISTS</code> is the clean way:</p>
+<pre><span class="c">-- chinook: artists that have sold at least one track (semi-join)</span>
+<span class="k">SELECT</span> ar.name
+<span class="k">FROM</span> artist ar
+<span class="k">WHERE EXISTS</span> (
+    <span class="k">SELECT</span> <span class="n">1</span>
+    <span class="k">FROM</span> album al
+    <span class="k">JOIN</span> track t <span class="k">ON</span> t.album_id = al.album_id
+    <span class="k">JOIN</span> invoice_line il <span class="k">ON</span> il.track_id = t.track_id
+    <span class="k">WHERE</span> al.artist_id = ar.artist_id
+)
+<span class="k">ORDER BY</span> ar.name;</pre>
+<p>165 artists have sold at least one track. The reason to prefer EXISTS over <code>JOIN ... GROUP BY</code> or <code>JOIN ... DISTINCT</code>: a plain join to invoice_line returns an artist once <em>per sale</em> (fan-out), forcing a DISTINCT to de-duplicate; EXISTS stops at the first match and returns each artist exactly once.</p>
+<div class="tip"><span class="tag">EXISTS vs IN vs JOIN + DISTINCT</span>
+All three express "has at least one match." Prefer <code>EXISTS</code>: it short-circuits, is NULL-safe (unlike its cousin <code>NOT IN</code>), and never fans out. Reach for <code>JOIN + DISTINCT</code> only when you also need columns from the matched table.</div>
+
+<h2>3.8 USING, NATURAL, and join hygiene</h2>
+<pre><span class="c">-- USING(col): shorthand when the join column is named identically on both sides.</span>
+<span class="k">SELECT</span> al.title, ar.name <span class="k">AS</span> artist
+<span class="k">FROM</span> album al
+<span class="k">JOIN</span> artist ar <span class="k">USING</span> (artist_id)
+<span class="k">ORDER BY</span> ar.name <span class="k">LIMIT</span> <span class="n">5</span>;
+<span class="c">-- Equivalent to ON al.artist_id = ar.artist_id, and it collapses the two</span>
+<span class="c">-- join columns into a single output column.</span></pre>
+<p><code>USING (artist_id)</code> reads cleanly - but only when both sides genuinely name the column the same way. Half of interview schemas name keys differently (<code>id</code> here, <code>artist_id</code> there), so explicit <code>ON</code> stays the default.</p>
+<div class="warn"><span class="tag">Avoid NATURAL JOIN</span>
+<code>NATURAL JOIN</code> joins on <em>every</em> column the two tables share by name - no ON, no USING. It looks tidy and is a maintenance landmine: add a same-named column later (say both tables gain a <code>name</code>) and the join condition silently changes underneath you. Write explicit <code>ON</code> (or <code>USING</code> at most). Being able to explain <em>why</em> you avoid NATURAL is the senior signal here.</div>
 
 <h2>Practice - Session A (problems 1-3)</h2>
 
@@ -328,6 +378,63 @@ Before writing any join, say the grain of each table: "invoice is one row per in
 ) em <span class="k">ON</span> em.country = cu.country
 <span class="k">ORDER BY</span> country;</pre>
 <p>The FULL JOIN essentials in one query: COALESCE on the join key (either side can be NULL) and IS NULL tests to classify which side was missing. All eight employees sit in Canada, so most countries land in "customers only" and Canada is "both."</p></div></details>
+  </div>
+</div>
+
+<h2>Practice - Session E (problems 13-15)</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P3.13</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p3-13"></div>
+  <div class="pbody"><p>Percent of total revenue by genre, <em>without</em> a window function. For each genre show its revenue (<code>SUM(unit_price * quantity)</code>) and that revenue as a share of total line revenue, to one decimal, highest revenue first. Broadcast the grand total with a CROSS JOIN.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">CROSS JOIN a one-row subquery <code>(SELECT SUM(unit_price * quantity) AS grand FROM invoice_line)</code>, then divide each group's revenue by <code>grand</code>. Include <code>grand</code> in GROUP BY so it survives aggregation.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity)::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">SUM</span>(il.unit_price * il.quantity) / tot.grand, <span class="n">1</span>) <span class="k">AS</span> pct_of_total
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> track t <span class="k">ON</span> t.track_id = il.track_id
+<span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">CROSS JOIN</span> (<span class="k">SELECT</span> <span class="f">SUM</span>(unit_price * quantity) <span class="k">AS</span> grand <span class="k">FROM</span> invoice_line) tot
+<span class="k">GROUP BY</span> g.name, tot.grand
+<span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
+<p>Rock is about 35.5% of revenue. The one-row scalar cross-joined onto every group is the whole trick; <code>SUM(...) OVER ()</code> does the same job in Module 6, but knowing the join form proves you understand what the window is doing under the hood.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P3.14</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-14"></div>
+  <div class="pbody"><p>Semi-join. Using <code>EXISTS</code>, list the 20 alphabetically-first artists that have sold at least one track (the artist has a track, on one of their albums, that appears on any invoice line). Return just the artist name.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">This is the mirror of the P3.4 anti-join: <code>WHERE EXISTS</code> a correlated subquery walking album -&gt; track -&gt; invoice_line for that artist. No GROUP BY and no DISTINCT are needed - EXISTS returns each artist once.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> ar.name
+<span class="k">FROM</span> artist ar
+<span class="k">WHERE EXISTS</span> (
+    <span class="k">SELECT</span> <span class="n">1</span>
+    <span class="k">FROM</span> album al
+    <span class="k">JOIN</span> track t <span class="k">ON</span> t.album_id = al.album_id
+    <span class="k">JOIN</span> invoice_line il <span class="k">ON</span> il.track_id = t.track_id
+    <span class="k">WHERE</span> al.artist_id = ar.artist_id
+)
+<span class="k">ORDER BY</span> ar.name
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<p>165 artists in all have a sold track. The value of EXISTS over a plain join is that it returns each artist exactly once with no fan-out - a join to invoice_line would repeat an artist once per sale and force a DISTINCT to clean up.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P3.15</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p3-15"></div>
+  <div class="pbody"><p>Join on a foreign key, then compare a value column. For every customer show their support rep's full name and whether the customer lives in the same country as that rep - label it <code>'same'</code> or <code>'different'</code>. Join customer to employee on <code>support_rep_id</code>. Order by the match label, then by customer name.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Join <code>customer c</code> to <code>employee e</code> on <code>e.employee_id = c.support_rep_id</code>, then a CASE comparing <code>c.country</code> to <code>e.country</code>. Every customer has a rep, so a plain INNER JOIN keeps all 59.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> c.first_name || <span class="s">' '</span> || c.last_name <span class="k">AS</span> customer,
+       c.country <span class="k">AS</span> customer_country,
+       e.first_name || <span class="s">' '</span> || e.last_name <span class="k">AS</span> rep,
+       <span class="k">CASE WHEN</span> c.country = e.country <span class="k">THEN</span> <span class="s">'same'</span>
+            <span class="k">ELSE</span> <span class="s">'different'</span> <span class="k">END</span> <span class="k">AS</span> location_match
+<span class="k">FROM</span> customer c
+<span class="k">JOIN</span> employee e <span class="k">ON</span> e.employee_id = c.support_rep_id
+<span class="k">ORDER BY</span> location_match, customer;</pre>
+<p>All three sales reps sit in Canada, so only Canadian customers read <code>'same'</code>. The shape - join on a foreign key, then branch on a plain attribute of the joined row - is one of the most common real reporting patterns, and nothing about it is a trick; it just wants a clean join plus a CASE.</p></div></details>
   </div>
 </div>
 
