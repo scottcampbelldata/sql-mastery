@@ -19,6 +19,13 @@ pre {
   padding: var(--s-4); overflow-x: auto; font-family: var(--font-mono);
   font-size: var(--text-sm); line-height: 1.6; color: var(--ink);
 }
+/* Formatted-SQL blocks (model answers, worked examples) wrap instead of scrolling
+   sideways, so every clause stays visible. Scoped to .sql-block so it never touches
+   the hand-aligned code blocks in lesson content, which rely on runs of spaces to
+   line up aliases and comments and must keep horizontal scroll. overflow-wrap only
+   breaks a token when it genuinely cannot fit, so ordinary identifiers still wrap at
+   whitespace rather than being chopped mid-word. */
+.sql-block { white-space: pre-wrap; overflow-wrap: break-word; }
 /* legacy lesson syntax spans keep working */
 pre .k { color: var(--syn-keyword); font-weight: 600; }
 pre .f { color: var(--syn-function); }
