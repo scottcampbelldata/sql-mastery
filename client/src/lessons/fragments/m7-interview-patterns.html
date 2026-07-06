@@ -133,7 +133,7 @@ grouped <span class="k">AS</span> (
 <div class="note"><span class="tag">Build it in Module 9</span>
 This module is about <em>recognizing</em> the pattern. <a href="m9-data-modeling.html">Module 9 - Data Modeling</a> is where you build the fact table, the dimensions, and the wide semantic-layer query step by step with runnable drills. P7.13 below is the payoff: once the model exists, the business question collapses to a short GROUP BY.</div>
 
-<h2>Practice - thirteen problems, mixed costume</h2>
+<h2>Practice - fifteen problems, mixed costume</h2>
 <p>The prompts below deliberately do not name their pattern. Your first job on each: say which pattern it is before writing a line.</p>
 
 <div class="problem">
@@ -462,6 +462,73 @@ per_customer <span class="k">AS</span> (
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">10</span>;</pre>
 <p>Once the model exists this is trivial - and that is the entire point of modeling. The genre join is INNER because a null-genre track carries no label to group by (a modeling choice to state out loud; <code>LEFT JOIN</code> with <code>COALESCE(g.name, 'Unknown')</code> is the alternative). The half-open <code>&gt;= '2023-01-01' AND &lt; '2024-01-01'</code> keeps the filter sargable, exactly as Module 8 preaches.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.14</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-14"></div>
+  <div class="pbody"><p>Cohort retention matrix. Group customers by their first-purchase month (their cohort), then show how many were active 0, 1, 2, and 3 months after that first purchase. Output columns exactly: <code>cohort_month</code>, <code>month_0</code>, <code>month_1</code>, <code>month_2</code>, <code>month_3</code>. One row per cohort month, earliest first.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Patterns 4 + 6. One CTE for each customer's cohort month (<code>date_trunc('month', MIN(invoice_date))</code>), one for their distinct active months. Compute <code>months_since</code> as <code>(year diff) * 12 + (month diff)</code>, then pivot with <code>COUNT(DISTINCT CASE WHEN months_since = N THEN customer_id END)</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> cohorts <span class="k">AS</span> (
+    <span class="k">SELECT</span> customer_id,
+           <span class="f">date_trunc</span>(<span class="s">'month'</span>, <span class="f">MIN</span>(invoice_date))::date <span class="k">AS</span> cohort_month
+    <span class="k">FROM</span> invoice
+    <span class="k">GROUP BY</span> customer_id
+),
+activity <span class="k">AS</span> (
+    <span class="k">SELECT DISTINCT</span> customer_id,
+           <span class="f">date_trunc</span>(<span class="s">'month'</span>, invoice_date)::date <span class="k">AS</span> active_month
+    <span class="k">FROM</span> invoice
+),
+idx <span class="k">AS</span> (
+    <span class="k">SELECT</span> c.customer_id, c.cohort_month,
+           (<span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> a.active_month) - <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> c.cohort_month)) * <span class="n">12</span>
+         + (<span class="f">EXTRACT</span>(<span class="k">MONTH FROM</span> a.active_month) - <span class="f">EXTRACT</span>(<span class="k">MONTH FROM</span> c.cohort_month)) <span class="k">AS</span> months_since
+    <span class="k">FROM</span> cohorts c
+    <span class="k">JOIN</span> activity a <span class="k">ON</span> a.customer_id = c.customer_id
+)
+<span class="k">SELECT</span> cohort_month,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> <span class="k">CASE WHEN</span> months_since = <span class="n">0</span> <span class="k">THEN</span> customer_id <span class="k">END</span>) <span class="k">AS</span> month_0,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> <span class="k">CASE WHEN</span> months_since = <span class="n">1</span> <span class="k">THEN</span> customer_id <span class="k">END</span>) <span class="k">AS</span> month_1,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> <span class="k">CASE WHEN</span> months_since = <span class="n">2</span> <span class="k">THEN</span> customer_id <span class="k">END</span>) <span class="k">AS</span> month_2,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> <span class="k">CASE WHEN</span> months_since = <span class="n">3</span> <span class="k">THEN</span> customer_id <span class="k">END</span>) <span class="k">AS</span> month_3
+<span class="k">FROM</span> idx
+<span class="k">GROUP BY</span> cohort_month
+<span class="k">ORDER BY</span> cohort_month;</pre>
+<p>Pattern 4 (cohort + months_since) feeding Pattern 6 (conditional-aggregation pivot). <code>month_0</code> is the cohort size; each later column is the retained count. The wide shape is the classic triangular retention chart a BI tool renders. On chinook it collapses to 19 cohort rows.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.15</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-15"></div>
+  <div class="pbody"><p>Comment streaks. Among users with <code>reputation &gt; 100000</code>, find every run of 5 or more consecutive calendar days on which they left a comment. Return <code>userid</code>, <code>displayname</code>, <code>streak_start</code>, <code>streak_end</code>, and <code>streak_days</code>. Longest streaks first, ties broken by start date then userid.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 5, gaps and islands, on comment dates. Distinct comment days per user (pre-filter to the high-rep users so the scan is small), then the island key is <code>day - ROW_NUMBER() OVER (PARTITION BY userid ORDER BY day)</code>. Group by user + island, keep groups with <code>COUNT(*) &gt;= 5</code>, and join <code>users</code> for the name.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> active_days <span class="k">AS</span> (
+    <span class="k">SELECT DISTINCT</span> c.userid, c.creationdate::date <span class="k">AS</span> day
+    <span class="k">FROM</span> comments c
+    <span class="k">WHERE</span> c.userid <span class="k">IN</span> (<span class="k">SELECT</span> id <span class="k">FROM</span> users <span class="k">WHERE</span> reputation > <span class="n">100000</span>)
+),
+numbered <span class="k">AS</span> (
+    <span class="k">SELECT</span> userid, day,
+           day - (<span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> userid <span class="k">ORDER BY</span> day))::int <span class="k">AS</span> island
+    <span class="k">FROM</span> active_days
+),
+streaks <span class="k">AS</span> (
+    <span class="k">SELECT</span> userid,
+           <span class="f">MIN</span>(day) <span class="k">AS</span> streak_start,
+           <span class="f">MAX</span>(day) <span class="k">AS</span> streak_end,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> streak_days
+    <span class="k">FROM</span> numbered
+    <span class="k">GROUP BY</span> userid, island
+)
+<span class="k">SELECT</span> s.userid, u.displayname, s.streak_start, s.streak_end, s.streak_days
+<span class="k">FROM</span> streaks s
+<span class="k">JOIN</span> users u <span class="k">ON</span> u.id = s.userid
+<span class="k">WHERE</span> s.streak_days >= <span class="n">5</span>
+<span class="k">ORDER BY</span> s.streak_days <span class="k">DESC</span>, s.streak_start, s.userid;</pre>
+<p>The date-minus-row-number island key is constant along a consecutive run and shifts the moment a day is skipped - the whole trick. Pre-filtering to <code>reputation &gt; 100000</code> keeps the comment scan (hundreds of thousands of rows) fast. Aaron Bertrand's 27-day run in 2015 tops the list.</p></div></details>
   </div>
 </div>
 
