@@ -1,6 +1,6 @@
 <p class="eyebrow">-- mock interviews / four timed sets / <span id="done-count"></span></p>
 <h1>Mock Interviews</h1>
-<p class="lede">Four 45-minute simulations. These are not more practice problems - they are dress rehearsals. Set a timer, talk out loud the entire time as if an interviewer is watching, and grade yourself with the rubric afterward. Space them: one at the end of week 10, three across weeks 11-12.</p>
+<p class="lede">Four 45-minute simulations. These are not more practice problems - they are dress rehearsals. Set a timer, talk out loud the entire time as if an interviewer is watching, and grade yourself with the rubric afterward. Space them: one at the end of week 10, three across weeks 11-12. Every question runs against one of your two databases - <strong>chinook</strong> for clean business analytics, <strong>stackoverflow</strong> for the big-data rounds.</p>
 
 <h2>The rules</h2>
 <ul>
@@ -21,83 +21,85 @@
 </table>
 <p>16+ means you are ready. 12-15: re-solve every miss the next day, mock again in three days. Below 12: return to the weakest module for a week before the next mock. Log your scores - the trend across four mocks matters more than any single number.</p>
 
-<h2 id="mock1">Mock 1 - Northwind: "The new BI hire screen"</h2>
-<p>Straightforward business questions, escalating. This is what a first-round screen at most companies actually looks like.</p>
+<h2 id="mock1">Mock 1 - Chinook: "The new BI hire screen"</h2>
+<p>Straightforward business questions, escalating. This is what a first-round screen at most companies actually looks like: a small, clean sales database and a series of "tell me about the business" questions.</p>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M1.1</span><span class="db">northwind</span><span class="chip warmup">5 min</span><input type="checkbox" class="done" data-id="mk1-1"></div>
-  <div class="pbody"><p>How many orders were placed in 1997, and what was the total freight cost that year?</p>
+  <div class="phead"><span class="pid">M1.1</span><span class="db">chinook</span><span class="chip warmup">5 min</span><input type="checkbox" class="done" data-id="mk1-1"></div>
+  <div class="pbody"><p>How many invoices were issued in 2023, and what was the total invoiced amount that year?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">AS</span> orders_1997,
-       <span class="f">ROUND</span>(<span class="f">SUM</span>(freight)::numeric, <span class="n">2</span>) <span class="k">AS</span> total_freight
-<span class="k">FROM</span> orders
-<span class="k">WHERE</span> order_date >= <span class="s">'1997-01-01'</span> <span class="k">AND</span> order_date < <span class="s">'1998-01-01'</span>;</pre>
-<p>Half-open range, narrated: "I use a half-open range so it is index-friendly and unambiguous about timestamps."</p></div></details>
+<pre><span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">AS</span> invoices_2023,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(total)::numeric, <span class="n">2</span>) <span class="k">AS</span> total_2023
+<span class="k">FROM</span> invoice
+<span class="k">WHERE</span> invoice_date >= <span class="s">'2023-01-01'</span> <span class="k">AND</span> invoice_date < <span class="s">'2024-01-01'</span>;</pre>
+<p>Half-open range, narrated: "I use a half-open range so it is index-friendly and unambiguous about timestamps." The invoice data spans 2021-2025, so pick a year in the middle and say why.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M1.2</span><span class="db">northwind</span><span class="chip core">7 min</span><input type="checkbox" class="done" data-id="mk1-2"></div>
-  <div class="pbody"><p>Revenue by category, highest first, with each category's share of total revenue.</p>
+  <div class="phead"><span class="pid">M1.2</span><span class="db">chinook</span><span class="chip core">7 min</span><input type="checkbox" class="done" data-id="mk1-2"></div>
+  <div class="pbody"><p>Revenue by genre, highest first, with each genre's share of total revenue. (Line revenue is <code>unit_price * quantity</code> from <code>invoice_line</code>.)</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> c.category_name,
-       <span class="f">ROUND</span>(<span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount))::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue,
-       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount))
-             / <span class="f">SUM</span>(<span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount))) <span class="k">OVER</span> (), <span class="n">1</span>) <span class="k">AS</span> pct
-<span class="k">FROM</span> order_details d
-<span class="k">JOIN</span> products p   <span class="k">ON</span> p.product_id = d.product_id
-<span class="k">JOIN</span> categories c <span class="k">ON</span> c.category_id = p.category_id
-<span class="k">GROUP BY</span> c.category_name
+<pre><span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity)::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">SUM</span>(il.unit_price * il.quantity)
+             / <span class="f">SUM</span>(<span class="f">SUM</span>(il.unit_price * il.quantity)) <span class="k">OVER</span> (), <span class="n">1</span>) <span class="k">AS</span> pct
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> track t <span class="k">ON</span> t.track_id = il.track_id
+<span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">GROUP BY</span> g.name
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
-<p>Points earned for: the discount in the revenue formula (check the schema, say you checked), and percent-of-total via window over the aggregate.</p></div></details>
+<p>Points earned for: reading the schema and using <code>unit_price * quantity</code> from the line table (say you checked there is no discount column - unlike some sales schemas), and percent-of-total via a window over the aggregate.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M1.3</span><span class="db">northwind</span><span class="chip core">8 min</span><input type="checkbox" class="done" data-id="mk1-3"></div>
-  <div class="pbody"><p>Which customers have never placed an order? And separately: which customers placed orders in 1996 but none in 1998?</p>
+  <div class="phead"><span class="pid">M1.3</span><span class="db">chinook</span><span class="chip core">8 min</span><input type="checkbox" class="done" data-id="mk1-3"></div>
+  <div class="pbody"><p>Which customers have never been invoiced? And separately: which customers bought in 2022 but nothing in 2024?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="c">-- never ordered: anti-join</span>
-<span class="k">SELECT</span> c.customer_id, c.company_name
-<span class="k">FROM</span> customers c
-<span class="k">WHERE NOT EXISTS</span> (<span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> orders o <span class="k">WHERE</span> o.customer_id = c.customer_id);
+<pre><span class="c">-- never invoiced: anti-join</span>
+<span class="k">SELECT</span> c.customer_id, c.first_name || <span class="s">' '</span> || c.last_name <span class="k">AS</span> customer
+<span class="k">FROM</span> customer c
+<span class="k">WHERE NOT EXISTS</span> (<span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> invoice i <span class="k">WHERE</span> i.customer_id = c.customer_id);
 
-<span class="c">-- active 1996, gone by 1998: two EXISTS with opposite signs</span>
-<span class="k">SELECT</span> c.customer_id, c.company_name
-<span class="k">FROM</span> customers c
-<span class="k">WHERE EXISTS</span> (<span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> orders o
-              <span class="k">WHERE</span> o.customer_id = c.customer_id
-                <span class="k">AND</span> o.order_date >= <span class="s">'1996-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1997-01-01'</span>)
-  <span class="k">AND NOT EXISTS</span> (<span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> orders o
-              <span class="k">WHERE</span> o.customer_id = c.customer_id
-                <span class="k">AND</span> o.order_date >= <span class="s">'1998-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1999-01-01'</span>);</pre>
-<p>Narrate why NOT EXISTS over NOT IN (NULL footgun). The second query is churn analysis in disguise - say so.</p></div></details>
+<span class="c">-- active 2022, gone by 2024: two EXISTS with opposite signs</span>
+<span class="k">SELECT</span> c.customer_id, c.first_name || <span class="s">' '</span> || c.last_name <span class="k">AS</span> customer
+<span class="k">FROM</span> customer c
+<span class="k">WHERE EXISTS</span> (<span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> invoice i
+              <span class="k">WHERE</span> i.customer_id = c.customer_id
+                <span class="k">AND</span> i.invoice_date >= <span class="s">'2022-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2023-01-01'</span>)
+  <span class="k">AND NOT EXISTS</span> (<span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> invoice i
+              <span class="k">WHERE</span> i.customer_id = c.customer_id
+                <span class="k">AND</span> i.invoice_date >= <span class="s">'2024-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2025-01-01'</span>);</pre>
+<p>Narrate why NOT EXISTS over NOT IN (NULL footgun). The second query is churn analysis in disguise - say so. (In this small dataset the "never invoiced" set may be empty; an empty result is a correct answer, and saying "I would confirm with a COUNT" is the senior move.)</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M1.4</span><span class="db">northwind</span><span class="chip interview">10 min</span><input type="checkbox" class="done" data-id="mk1-4"></div>
-  <div class="pbody"><p>Each employee's top-selling product by revenue: employee name, product name, revenue. One row per employee.</p>
+  <div class="phead"><span class="pid">M1.4</span><span class="db">chinook</span><span class="chip interview">10 min</span><input type="checkbox" class="done" data-id="mk1-4"></div>
+  <div class="pbody"><p>Each support rep's top-selling genre by revenue: employee name, genre name, revenue. One row per rep. (Customers link to their rep via <code>customer.support_rep_id</code>.)</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> emp_product <span class="k">AS</span> (
-    <span class="k">SELECT</span> o.employee_id, p.product_name,
-           <span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount)) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> orders o
-    <span class="k">JOIN</span> order_details d <span class="k">ON</span> d.order_id = o.order_id
-    <span class="k">JOIN</span> products p      <span class="k">ON</span> p.product_id = d.product_id
-    <span class="k">GROUP BY</span> o.employee_id, p.product_name
+<pre><span class="k">WITH</span> rep_genre <span class="k">AS</span> (
+    <span class="k">SELECT</span> c.support_rep_id, g.name <span class="k">AS</span> genre,
+           <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> customer c
+    <span class="k">JOIN</span> invoice i      <span class="k">ON</span> i.customer_id = c.customer_id
+    <span class="k">JOIN</span> invoice_line il <span class="k">ON</span> il.invoice_id = i.invoice_id
+    <span class="k">JOIN</span> track t         <span class="k">ON</span> t.track_id = il.track_id
+    <span class="k">JOIN</span> genre g         <span class="k">ON</span> g.genre_id = t.genre_id
+    <span class="k">GROUP BY</span> c.support_rep_id, g.name
 ),
 ranked <span class="k">AS</span> (
     <span class="k">SELECT</span> *,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> employee_id
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> support_rep_id
                               <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>) <span class="k">AS</span> rn
-    <span class="k">FROM</span> emp_product
+    <span class="k">FROM</span> rep_genre
 )
 <span class="k">SELECT</span> e.first_name || <span class="s">' '</span> || e.last_name <span class="k">AS</span> employee,
-       r.product_name,
+       r.genre,
        <span class="f">ROUND</span>(r.revenue::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue
 <span class="k">FROM</span> ranked r
-<span class="k">JOIN</span> employees e <span class="k">ON</span> e.employee_id = r.employee_id
+<span class="k">JOIN</span> employee e <span class="k">ON</span> e.employee_id = r.support_rep_id
 <span class="k">WHERE</span> r.rn = <span class="n">1</span>
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
 <p>Top-N per group in its most common costume. Name the pattern before typing; mention the ROW_NUMBER vs RANK tie decision.</p></div></details>
@@ -105,15 +107,14 @@ ranked <span class="k">AS</span> (
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M1.5</span><span class="db">northwind</span><span class="chip hard">15 min</span><input type="checkbox" class="done" data-id="mk1-5"></div>
-  <div class="pbody"><p>Monthly revenue for 1997 with: running YTD total, month-over-month percent change, and each month flagged 'above' or 'below' the 1997 monthly average. Present as one clean result.</p>
+  <div class="phead"><span class="pid">M1.5</span><span class="db">chinook</span><span class="chip hard">15 min</span><input type="checkbox" class="done" data-id="mk1-5"></div>
+  <div class="pbody"><p>Monthly revenue for 2023 with: running YTD total, month-over-month percent change, and each month flagged 'above' or 'below' the 2023 monthly average. Present as one clean result.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> monthly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, o.order_date)::date <span class="k">AS</span> month,
-           <span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount)) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> orders o
-    <span class="k">JOIN</span> order_details d <span class="k">ON</span> d.order_id = o.order_id
-    <span class="k">WHERE</span> o.order_date >= <span class="s">'1997-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1998-01-01'</span>
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, invoice_date)::date <span class="k">AS</span> month,
+           <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice
+    <span class="k">WHERE</span> invoice_date >= <span class="s">'2023-01-01'</span> <span class="k">AND</span> invoice_date < <span class="s">'2024-01-01'</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>
 )
 <span class="k">SELECT</span> month,
@@ -129,6 +130,7 @@ ranked <span class="k">AS</span> (
 </div>
 
 <h2 id="mock2">Mock 2 - Chinook: "The product analytics round"</h2>
+<p>Same database, harder questions. Now the interviewer wants ranking, two grains in one output, and a retention definition you have to defend out loud.</p>
 
 <div class="problem">
   <div class="phead"><span class="pid">M2.1</span><span class="db">chinook</span><span class="chip warmup">5 min</span><input type="checkbox" class="done" data-id="mk2-1"></div>
@@ -180,11 +182,21 @@ growth <span class="k">AS</span> (
     <span class="k">FROM</span> quarterly
 )
 <span class="k">SELECT</span> * <span class="k">FROM</span> growth <span class="k">ORDER BY</span> qtr;
-<span class="c">-- best and worst:</span>
-<span class="k">SELECT</span> * <span class="k">FROM</span> growth <span class="k">WHERE</span> qoq_pct <span class="k">IS NOT NULL</span>
-<span class="k">ORDER BY</span> qoq_pct <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="n">1</span>;
-<span class="k">SELECT</span> * <span class="k">FROM</span> growth <span class="k">WHERE</span> qoq_pct <span class="k">IS NOT NULL</span>
-<span class="k">ORDER BY</span> qoq_pct <span class="k">ASC</span>  <span class="k">LIMIT</span> <span class="n">1</span>;</pre>
+<span class="c">-- best and worst in one pass: rank the non-NULL growth rows from both ends</span>
+<span class="k">WITH</span> quarterly <span class="k">AS</span> (
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'quarter'</span>, invoice_date)::date <span class="k">AS</span> qtr,
+           <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice
+    <span class="k">GROUP BY</span> <span class="n">1</span>
+),
+growth <span class="k">AS</span> (
+    <span class="k">SELECT</span> qtr, revenue,
+           <span class="f">ROUND</span>(<span class="n">100.0</span> * (revenue - <span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> qtr))
+                 / <span class="f">NULLIF</span>(<span class="f">LAG</span>(revenue) <span class="k">OVER</span> (<span class="k">ORDER BY</span> qtr), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> qoq_pct
+    <span class="k">FROM</span> quarterly
+)
+<span class="k">SELECT</span> <span class="s">'best'</span>  <span class="k">AS</span> label, qtr, qoq_pct <span class="k">FROM</span> growth
+<span class="k">WHERE</span> qoq_pct <span class="k">IS NOT NULL</span> <span class="k">ORDER BY</span> qoq_pct <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="n">1</span>;</pre>
 <p>Excluding the NULL first quarter from best/worst is the edge case. Partial first/last quarters are worth a spoken caveat.</p></div></details>
   </div>
 </div>
@@ -215,7 +227,7 @@ ranked <span class="k">AS</span> (
 <span class="k">GROUP BY</span> country
 <span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">5</span>
 <span class="k">ORDER BY</span> avg_ltv <span class="k">DESC</span>;</pre>
-<p><code>MAX(x) FILTER (WHERE rn = 1)</code> smuggles the row-level winner into the group-level summary in one pass - the P7.10 trick reused. Recognizing reuse across problems is exactly what fluency is.</p></div></details>
+<p><code>MAX(x) FILTER (WHERE rn = 1)</code> smuggles the row-level winner into the group-level summary in one pass - the P7.10 trick reused. Recognizing reuse across problems is exactly what fluency is. (USA, Canada, France and Brazil clear the five-customer bar here.)</p></div></details>
   </div>
 </div>
 
@@ -250,17 +262,17 @@ seconds <span class="k">AS</span> (
 </div>
 
 <h2 id="mock3">Mock 3 - Stack Overflow: "The big-data round"</h2>
-<p>Same skills, but on tables where sloppy queries visibly hurt. Runtime awareness is part of the grade here.</p>
+<p>Same skills, but on tables where sloppy queries visibly hurt - a quarter-million posts, nearly a million votes. Runtime awareness is part of the grade here. Remember the schema: every column is lowercase with no underscores (<code>owneruserid</code>, <code>posttypeid</code>, <code>creationdate</code>, <code>displayname</code>), and the user primary key is <code>id</code>.</p>
 
 <div class="problem">
   <div class="phead"><span class="pid">M3.1</span><span class="db">stackoverflow</span><span class="chip core">7 min</span><input type="checkbox" class="done" data-id="mk3-1"></div>
   <div class="pbody"><p>Posts per year, split into questions and answers as columns, with an answers-per-question ratio.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creation_date)::int <span class="k">AS</span> yr,
-       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">1</span>) <span class="k">AS</span> questions,
-       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">2</span>) <span class="k">AS</span> answers,
-       <span class="f">ROUND</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">2</span>)::numeric
-             / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> post_type_id = <span class="n">1</span>), <span class="n">0</span>), <span class="n">2</span>) <span class="k">AS</span> ans_per_q
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">1</span>) <span class="k">AS</span> questions,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">2</span>) <span class="k">AS</span> answers,
+       <span class="f">ROUND</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">2</span>)::numeric
+             / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> posttypeid = <span class="n">1</span>), <span class="n">0</span>), <span class="n">2</span>) <span class="k">AS</span> ans_per_q
 <span class="k">FROM</span> posts
 <span class="k">GROUP BY</span> yr
 <span class="k">ORDER BY</span> yr;</pre>
@@ -270,21 +282,21 @@ seconds <span class="k">AS</span> (
 
 <div class="problem">
   <div class="phead"><span class="pid">M3.2</span><span class="db">stackoverflow</span><span class="chip interview">10 min</span><input type="checkbox" class="done" data-id="mk3-2"></div>
-  <div class="pbody"><p>Top 10 users by accepted answers: users whose answers were most often marked as the accepted answer on a question. (Requires the posts self-join on accepted_answer_id.)</p>
+  <div class="pbody"><p>Top 10 users by accepted answers: users whose answers were most often marked as the accepted answer on a question. (Requires the posts self-join on <code>acceptedanswerid</code>.)</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> accepted <span class="k">AS</span> (
-    <span class="k">SELECT</span> a.owner_user_id, <span class="f">COUNT</span>(*) <span class="k">AS</span> accepted_answers
+    <span class="k">SELECT</span> a.owneruserid, <span class="f">COUNT</span>(*) <span class="k">AS</span> accepted_answers
     <span class="k">FROM</span> posts q
-    <span class="k">JOIN</span> posts a <span class="k">ON</span> a.id = q.accepted_answer_id
-    <span class="k">WHERE</span> q.post_type_id = <span class="n">1</span>
-    <span class="k">GROUP BY</span> a.owner_user_id
+    <span class="k">JOIN</span> posts a <span class="k">ON</span> a.id = q.acceptedanswerid
+    <span class="k">WHERE</span> q.posttypeid = <span class="n">1</span>
+    <span class="k">GROUP BY</span> a.owneruserid
 )
-<span class="k">SELECT</span> u.display_name, ac.accepted_answers
+<span class="k">SELECT</span> u.displayname, ac.accepted_answers
 <span class="k">FROM</span> accepted ac
-<span class="k">JOIN</span> users u <span class="k">ON</span> u.id = ac.owner_user_id
+<span class="k">JOIN</span> users u <span class="k">ON</span> u.id = ac.owneruserid
 <span class="k">ORDER BY</span> ac.accepted_answers <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">10</span>;</pre>
-<p>Aggregate the big self-join down first, join to users last - the P8.7 lesson applied without being asked. NULL owner_user_id rows (deleted users) drop out of the final join; mention it.</p></div></details>
+<p>Aggregate the big self-join down first, join to users last - the P8.7 lesson applied without being asked. NULL owneruserid rows (deleted users) drop out of the final join; mention it. Expect names like RolandoMySQLDBA and Aaron Bertrand at the top.</p></div></details>
   </div>
 </div>
 
@@ -293,17 +305,17 @@ seconds <span class="k">AS</span> (
   <div class="pbody"><p>Reputation vs participation: bucket users into reputation deciles (NTILE), then per decile: user count, average posts per user, and percentage of users with zero posts.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> post_counts <span class="k">AS</span> (
-    <span class="k">SELECT</span> owner_user_id, <span class="f">COUNT</span>(*) <span class="k">AS</span> posts
+    <span class="k">SELECT</span> owneruserid, <span class="f">COUNT</span>(*) <span class="k">AS</span> posts
     <span class="k">FROM</span> posts
-    <span class="k">WHERE</span> owner_user_id <span class="k">IS NOT NULL</span>
-    <span class="k">GROUP BY</span> owner_user_id
+    <span class="k">WHERE</span> owneruserid <span class="k">IS NOT NULL</span>
+    <span class="k">GROUP BY</span> owneruserid
 ),
 bucketed <span class="k">AS</span> (
     <span class="k">SELECT</span> u.id,
            <span class="f">NTILE</span>(<span class="n">10</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> u.reputation) <span class="k">AS</span> decile,
            <span class="f">COALESCE</span>(pc.posts, <span class="n">0</span>) <span class="k">AS</span> posts
     <span class="k">FROM</span> users u
-    <span class="k">LEFT JOIN</span> post_counts pc <span class="k">ON</span> pc.owner_user_id = u.id
+    <span class="k">LEFT JOIN</span> post_counts pc <span class="k">ON</span> pc.owneruserid = u.id
 )
 <span class="k">SELECT</span> decile,
        <span class="f">COUNT</span>(*) <span class="k">AS</span> users,
@@ -312,7 +324,7 @@ bucketed <span class="k">AS</span> (
 <span class="k">FROM</span> bucketed
 <span class="k">GROUP BY</span> decile
 <span class="k">ORDER BY</span> decile;</pre>
-<p>The LEFT JOIN + COALESCE is what keeps zero-post users in the analysis at all - an inner join would silently define lurkers out of existence and corrupt every decile. That one decision is the question.</p></div></details>
+<p>The LEFT JOIN + COALESCE is what keeps zero-post users in the analysis at all - an inner join would silently define lurkers out of existence and corrupt every decile. About 184k of 248k users never posted, so the lower deciles are almost all lurkers. That one join decision is the question.</p></div></details>
   </div>
 </div>
 
@@ -321,109 +333,117 @@ bucketed <span class="k">AS</span> (
   <div class="pbody"><p>Answer-speed league: for questions created in 2018, the median minutes to first answer, by month. Then: which month was fastest, and what caveat applies to December?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> firsts <span class="k">AS</span> (
-    <span class="k">SELECT</span> parent_id, <span class="f">MIN</span>(creation_date) <span class="k">AS</span> first_answer
+    <span class="k">SELECT</span> parentid, <span class="f">MIN</span>(creationdate) <span class="k">AS</span> first_answer
     <span class="k">FROM</span> posts
-    <span class="k">WHERE</span> post_type_id = <span class="n">2</span>
-    <span class="k">GROUP BY</span> parent_id
+    <span class="k">WHERE</span> posttypeid = <span class="n">2</span>
+    <span class="k">GROUP BY</span> parentid
 )
-<span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, q.creation_date)::date <span class="k">AS</span> month,
+<span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, q.creationdate)::date <span class="k">AS</span> month,
        <span class="f">COUNT</span>(*) <span class="k">AS</span> answered_questions,
        <span class="f">ROUND</span>((<span class="f">PERCENTILE_CONT</span>(<span class="n">0.5</span>) <span class="k">WITHIN GROUP</span> (
-           <span class="k">ORDER BY</span> <span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> f.first_answer - q.creation_date) / <span class="n">60</span>
+           <span class="k">ORDER BY</span> <span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> f.first_answer - q.creationdate) / <span class="n">60</span>
        ))::numeric, <span class="n">1</span>) <span class="k">AS</span> median_minutes
 <span class="k">FROM</span> posts q
-<span class="k">JOIN</span> firsts f <span class="k">ON</span> f.parent_id = q.id
-<span class="k">WHERE</span> q.post_type_id = <span class="n">1</span>
-  <span class="k">AND</span> q.creation_date >= <span class="s">'2018-01-01'</span> <span class="k">AND</span> q.creation_date < <span class="s">'2019-01-01'</span>
+<span class="k">JOIN</span> firsts f <span class="k">ON</span> f.parentid = q.id
+<span class="k">WHERE</span> q.posttypeid = <span class="n">1</span>
+  <span class="k">AND</span> q.creationdate >= <span class="s">'2018-01-01'</span> <span class="k">AND</span> q.creationdate < <span class="s">'2019-01-01'</span>
 <span class="k">GROUP BY</span> <span class="n">1</span>
 <span class="k">ORDER BY</span> <span class="n">1</span>;</pre>
 <p>December caveat: right-censoring. Late-December questions have had less time to collect answers if the data snapshot ends near year-end - their unanswered ones are excluded and their answered ones skew fast. Naming censoring in a SQL interview is a differentiator few candidates reach.</p></div></details>
   </div>
 </div>
 
-<h2 id="mock4">Mock 4 - AdventureWorks + Taxi: "The senior panel"</h2>
-<p>Hardest set. Multi-schema joins, compound patterns, and a verbal finale.</p>
+<h2 id="mock4">Mock 4 - Stack Overflow: "The senior panel"</h2>
+<p>Hardest set. Ranking within groups, portfolio-health counting, a time-of-day heatmap, and a verbal data-modeling finale - all on the big database, where the analysis choices you make show up on a stopwatch.</p>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M4.1</span><span class="db">adventureworks</span><span class="chip interview">10 min</span><input type="checkbox" class="done" data-id="mk4-1"></div>
-  <div class="pbody"><p>Sales by territory and year: territory name, year, revenue, and each territory's revenue rank within that year. Only rank 1-5 per year.</p>
+  <div class="phead"><span class="pid">M4.1</span><span class="db">stackoverflow</span><span class="chip interview">10 min</span><input type="checkbox" class="done" data-id="mk4-1"></div>
+  <div class="pbody"><p>Tag activity by year: for the five biggest technology tags (sql-server, mysql, postgresql, oracle, performance), the number of questions asked per year, and each tag's question-count rank within that year. Only rank 1-5 per year.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> ty <span class="k">AS</span> (
-    <span class="k">SELECT</span> st.name <span class="k">AS</span> territory,
-           <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> soh.orderdate)::int <span class="k">AS</span> yr,
-           <span class="f">SUM</span>(soh.totaldue) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> sales.salesorderheader soh
-    <span class="k">JOIN</span> sales.salesterritory st <span class="k">ON</span> st.territoryid = soh.territoryid
+    <span class="k">SELECT</span> <span class="k">CASE</span>
+             <span class="k">WHEN</span> tags <span class="k">LIKE</span> <span class="s">'%|sql-server|%'</span>  <span class="k">THEN</span> <span class="s">'sql-server'</span>
+             <span class="k">WHEN</span> tags <span class="k">LIKE</span> <span class="s">'%|mysql|%'</span>       <span class="k">THEN</span> <span class="s">'mysql'</span>
+             <span class="k">WHEN</span> tags <span class="k">LIKE</span> <span class="s">'%|postgresql|%'</span>  <span class="k">THEN</span> <span class="s">'postgresql'</span>
+             <span class="k">WHEN</span> tags <span class="k">LIKE</span> <span class="s">'%|oracle|%'</span>      <span class="k">THEN</span> <span class="s">'oracle'</span>
+             <span class="k">WHEN</span> tags <span class="k">LIKE</span> <span class="s">'%|performance|%'</span> <span class="k">THEN</span> <span class="s">'performance'</span>
+           <span class="k">END</span> <span class="k">AS</span> tag,
+           <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+      <span class="k">AND</span> tags <span class="k">SIMILAR TO</span> <span class="s">'%\|(sql-server|mysql|postgresql|oracle|performance)\|%'</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>
 ),
 ranked <span class="k">AS</span> (
-    <span class="k">SELECT</span> *, <span class="f">RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>) <span class="k">AS</span> rnk
+    <span class="k">SELECT</span> *, <span class="f">RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr <span class="k">ORDER BY</span> questions <span class="k">DESC</span>) <span class="k">AS</span> rnk
     <span class="k">FROM</span> ty
+    <span class="k">WHERE</span> tag <span class="k">IS NOT NULL</span>
 )
-<span class="k">SELECT</span> yr, rnk, territory, <span class="f">ROUND</span>(revenue::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue
+<span class="k">SELECT</span> yr, rnk, tag, questions
 <span class="k">FROM</span> ranked
 <span class="k">WHERE</span> rnk <= <span class="n">5</span>
-<span class="k">ORDER BY</span> yr, rnk;</pre></div></details>
+<span class="k">ORDER BY</span> yr, rnk;</pre>
+<p>The pipe-delimited <code>tags</code> column is the trap: match with <code>LIKE '%|tag|%'</code>, not equality. The CASE assigns each post to the first matching tag (say out loud that a post with two of these tags is counted once, under the first branch - a defensible simplification you should name). Then it is classic rank-within-partition. RANK vs DENSE_RANK vs ROW_NUMBER for ties is worth a sentence.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M4.2</span><span class="db">adventureworks</span><span class="chip hard">12 min</span><input type="checkbox" class="done" data-id="mk4-2"></div>
-  <div class="pbody"><p>Product portfolio health: per category, the number of products, the number that sold at least once, the sell-through percentage, and revenue - flagging any category under 60% sell-through.</p>
+  <div class="phead"><span class="pid">M4.2</span><span class="db">stackoverflow</span><span class="chip hard">12 min</span><input type="checkbox" class="done" data-id="mk4-2"></div>
+  <div class="pbody"><p>Question portfolio health, per year: the number of questions asked, how many got at least one answer, the answer-rate percentage, and the total score - flagging any year under 80% answered.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> product_sales <span class="k">AS</span> (
-    <span class="k">SELECT</span> productid, <span class="f">SUM</span>(linetotal) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> sales.salesorderdetail
-    <span class="k">GROUP BY</span> productid
-)
-<span class="k">SELECT</span> pc.name <span class="k">AS</span> category,
-       <span class="f">COUNT</span>(p.productid) <span class="k">AS</span> products,
-       <span class="f">COUNT</span>(ps.productid) <span class="k">AS</span> products_sold,
-       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(ps.productid) / <span class="f">COUNT</span>(p.productid), <span class="n">1</span>) <span class="k">AS</span> sell_through_pct,
-       <span class="f">ROUND</span>(<span class="f">COALESCE</span>(<span class="f">SUM</span>(ps.revenue), <span class="n">0</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue,
-       <span class="k">CASE WHEN</span> <span class="n">100.0</span> * <span class="f">COUNT</span>(ps.productid) / <span class="f">COUNT</span>(p.productid) < <span class="n">60</span>
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> questions,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>) <span class="k">AS</span> answered,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>)
+             / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> answer_rate_pct,
+       <span class="f">SUM</span>(score) <span class="k">AS</span> total_score,
+       <span class="k">CASE WHEN</span> <span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>) / <span class="f">COUNT</span>(*) < <span class="n">80</span>
             <span class="k">THEN</span> <span class="s">'REVIEW'</span> <span class="k">END</span> <span class="k">AS</span> flag
-<span class="k">FROM</span> production.product p
-<span class="k">JOIN</span> production.productsubcategory psc
-  <span class="k">ON</span> psc.productsubcategoryid = p.productsubcategoryid
-<span class="k">JOIN</span> production.productcategory pc
-  <span class="k">ON</span> pc.productcategoryid = psc.productcategoryid
-<span class="k">LEFT JOIN</span> product_sales ps <span class="k">ON</span> ps.productid = p.productid
-<span class="k">GROUP BY</span> pc.name
-<span class="k">ORDER BY</span> sell_through_pct;</pre>
-<p>The COUNT(col) vs COUNT(*) LEFT JOIN behavior from Module 3, doing real work: COUNT(ps.productid) counts only matched (sold) products. Products with NULL subcategory silently drop out of the inner joins - decide and declare whether that is acceptable.</p></div></details>
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+<span class="k">GROUP BY</span> yr
+<span class="k">ORDER BY</span> yr;</pre>
+<p>The COUNT(*) FILTER pattern from Module 2, doing real work: it counts only questions clearing a threshold, in the same pass as the total. Decide and declare how you treat questions with a NULL <code>answercount</code> - here <code>answercount > 0</code> excludes NULLs, which is the intended "no answers" behavior, but say it so nobody wonders whether you noticed.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">M4.3</span><span class="db">nyctaxi</span><span class="chip hard">13 min</span><input type="checkbox" class="done" data-id="mk4-3"></div>
-  <div class="pbody"><p>Demand heatmap data: trips by day-of-week and hour-of-pickup, with each cell's share of its day's total. Also name the single busiest (day, hour) cell. Mind sargability - then explain why it does not apply here.</p>
+  <div class="phead"><span class="pid">M4.3</span><span class="db">stackoverflow</span><span class="chip hard">13 min</span><input type="checkbox" class="done" data-id="mk4-3"></div>
+  <div class="pbody"><p>Activity heatmap data: questions by day-of-week and hour-of-creation, with each cell's share of its day's total. Also name the single busiest (day, hour) cell. Mind sargability - then explain why it does not apply here.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> cells <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">ISODOW FROM</span> pickup_datetime)::int <span class="k">AS</span> dow,
-           <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> pickup_datetime)::int <span class="k">AS</span> hr,
-           <span class="f">COUNT</span>(*) <span class="k">AS</span> trips
-    <span class="k">FROM</span> trips
+    <span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">ISODOW FROM</span> creationdate)::int <span class="k">AS</span> dow,
+           <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate)::int <span class="k">AS</span> hr,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>
 )
-<span class="k">SELECT</span> dow, hr, trips,
-       <span class="f">ROUND</span>(<span class="n">100.0</span> * trips / <span class="f">SUM</span>(trips) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> dow), <span class="n">1</span>) <span class="k">AS</span> pct_of_day
+<span class="k">SELECT</span> dow, hr, questions,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * questions / <span class="f">SUM</span>(questions) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> dow), <span class="n">1</span>) <span class="k">AS</span> pct_of_day
 <span class="k">FROM</span> cells
 <span class="k">ORDER BY</span> dow, hr;
 
-<span class="c">-- busiest cell:</span>
-<span class="k">SELECT</span> dow, hr, trips <span class="k">FROM</span> cells <span class="k">ORDER BY</span> trips <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="n">1</span>;</pre>
-<p>Sargability governs predicates in WHERE - it protects index seeks. Here EXTRACT lives in SELECT/GROUP BY on a full-table aggregate; there is no filter for an index to serve, so the rewrite rule does not apply. Correctly scoping a performance rule impresses more than reciting it.</p></div></details>
+<span class="c">-- busiest cell (self-contained: same aggregate, take the single top row):</span>
+<span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">ISODOW FROM</span> creationdate)::int <span class="k">AS</span> dow,
+       <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate)::int <span class="k">AS</span> hr,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>
+<span class="k">ORDER BY</span> questions <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="n">1</span>;</pre>
+<p>Sargability governs predicates in WHERE - it protects index seeks. Here EXTRACT lives in SELECT/GROUP BY on a full-table aggregate; the only WHERE filter (<code>posttypeid = 1</code>) is a plain equality. There is no date filter for an index to serve, so the "don't wrap the column in a function" rule does not apply. Correctly scoping a performance rule impresses more than reciting it.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
   <div class="phead"><span class="pid">M4.4</span><span class="db">any</span><span class="chip hard">10 min</span><input type="checkbox" class="done" data-id="mk4-4"></div>
-  <div class="pbody"><p>Verbal finale (no SQL, timed, out loud): "Walk me through how you would design the tables to track our factory's robot maintenance events, and the three queries leadership would run against them." You have real domain knowledge here - use it.</p>
+  <div class="pbody"><p>Verbal finale (no SQL, timed, out loud): "Forget the tables you have been using. Design the schema you would build to track a support-ticketing system, and name the three queries leadership would run against it." Think grain, keys, indexes, and edge cases.</p>
   <details class="sol"><summary>model answer sketch</summary><div class="sbody">
-<p>Tables: <code>robots</code> (robot_id, line, building, model, install_date), <code>maintenance_events</code> (event_id, robot_id FK, event_type, started_at, ended_at, technician_id, notes), maybe <code>event_types</code> as a lookup. Grain statement: one row per maintenance event. Indexes: (robot_id, started_at) for per-robot history, started_at for time-window reporting.</p>
-<p>Leadership queries: (1) downtime per robot per month - SUM(ended_at - started_at) grouped by robot and month, LEFT JOIN from robots to show zero-downtime robots; (2) MTBF - gaps between consecutive failures per robot via LAG, averaged; (3) Pareto of downtime by event type - percent-of-total plus cumulative percent, exactly P6.7. Close by naming edge cases: open events (ended_at NULL), events spanning month boundaries, and planned vs unplanned as a first-class column because leadership always asks to split them.</p>
-<p>This answer converts your MET II floor experience into data-modeling credibility - the exact bridge your resume needs to make in the room.</p></div></details>
+<p>Tables: <code>tickets</code> (ticket_id, customer_id FK, category, priority, opened_at, closed_at, assigned_agent_id), <code>agents</code> (agent_id, name, team, hire_date), and a lookup like <code>categories</code>. Grain statement: one row per ticket. Indexes: (assigned_agent_id, opened_at) for per-agent history, opened_at for time-window reporting, and a partial index on open tickets (closed_at IS NULL) for the live queue.</p>
+<p>Leadership queries: (1) tickets opened and closed per month, and the backlog trend - COUNT with FILTER, grouped by month, LEFT JOIN from agents so zero-ticket agents still appear; (2) mean time-to-resolution per priority - AVG(closed_at - opened_at), and its month-over-month change via LAG, exactly the window pattern from Mock 1; (3) Pareto of ticket volume by category - percent-of-total plus cumulative percent, the P6.7 running-share trick. Close by naming edge cases: open tickets (closed_at NULL), reopened tickets (a status history table if that matters), and tickets that span month boundaries.</p>
+<p>The move being graded is turning a vague prompt into a concrete, defensible model out loud - stating the grain first, choosing keys and indexes on purpose, and pre-empting the edge cases before the panel asks. That is exactly the reasoning every one of these mocks has been rehearsing.</p></div></details>
   </div>
 </div>
 

@@ -17,100 +17,101 @@
 <div class="wrap">
 <p class="eyebrow">-- module 3 / four sessions / <span id="done-count"></span></p>
 <h1>Joins</h1>
-<p class="lede">Everything downstream - CTEs, windows, interview patterns - is joins plus something. This module covers all the join types, the two traps that fail otherwise-strong candidates (fan-out and the LEFT-JOIN-killing WHERE clause), and the anti-join, which is the single most-asked join question in interviews.</p>
+<p class="lede">Everything downstream - CTEs, windows, interview patterns - is joins plus something. This module covers all the join types, the two traps that fail otherwise-strong candidates (fan-out and the LEFT-JOIN-killing WHERE clause), and the anti-join, which is the single most-asked join question in interviews. Your chinook store has a rich foreign-key graph to walk (artist to album to track to genre; customer to invoice to line; employee to employee), and stackoverflow supplies the self-join and the big anti-join.</p>
 
 <h2>3.1 INNER, LEFT, RIGHT, FULL in one mental model</h2>
 <p>A join matches rows by a condition. The only question the four types answer differently is: <strong>what happens to rows with no match?</strong></p>
 <table>
 <tr><th>Type</th><th>Unmatched left rows</th><th>Unmatched right rows</th><th>Typical use</th></tr>
 <tr><td><code>INNER JOIN</code></td><td>dropped</td><td>dropped</td><td>only complete pairs</td></tr>
-<tr><td><code>LEFT JOIN</code></td><td>kept (right columns NULL)</td><td>dropped</td><td>"all customers, with orders if any"</td></tr>
+<tr><td><code>LEFT JOIN</code></td><td>kept (right columns NULL)</td><td>dropped</td><td>"all customers, with invoices if any"</td></tr>
 <tr><td><code>RIGHT JOIN</code></td><td>dropped</td><td>kept</td><td>rare; rewrite as LEFT for readability</td></tr>
 <tr><td><code>FULL JOIN</code></td><td>kept</td><td>kept</td><td>reconciling two lists</td></tr>
 </table>
-<pre><span class="c">-- northwind: every order with its customer name</span>
-<span class="k">SELECT</span> o.order_id, o.order_date, c.company_name
-<span class="k">FROM</span> orders o
-<span class="k">JOIN</span> customers c <span class="k">ON</span> c.customer_id = o.customer_id;
+<pre><span class="c">-- chinook: every invoice with its customer name</span>
+<span class="k">SELECT</span> i.invoice_id, i.invoice_date, c.first_name, c.last_name
+<span class="k">FROM</span> invoice i
+<span class="k">JOIN</span> customer c <span class="k">ON</span> c.customer_id = i.customer_id;
 <span class="c">-- Alias every table, prefix every column. Non-negotiable style in interviews.</span></pre>
 
 <h2>3.2 The trap that kills LEFT JOINs</h2>
-<pre><span class="c">-- Goal: ALL customers, and their 1997 order count (zero if none).</span>
+<pre><span class="c">-- Goal: ALL customers, and their 2023 invoice count (zero if none).</span>
 
 <span class="c">-- WRONG: the WHERE filter on the right table silently converts LEFT to INNER,</span>
-<span class="c">-- because unmatched rows have o.order_date = NULL, and NULL fails the predicate.</span>
-<span class="k">SELECT</span> c.customer_id, <span class="f">COUNT</span>(o.order_id) <span class="k">AS</span> orders_1997
-<span class="k">FROM</span> customers c
-<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> o.customer_id = c.customer_id
-<span class="k">WHERE</span> o.order_date >= <span class="k">DATE</span> <span class="s">'1997-01-01'</span>
-  <span class="k">AND</span> o.order_date <  <span class="k">DATE</span> <span class="s">'1998-01-01'</span>
+<span class="c">-- because unmatched rows have i.invoice_date = NULL, and NULL fails the predicate.</span>
+<span class="k">SELECT</span> c.customer_id, <span class="f">COUNT</span>(i.invoice_id) <span class="k">AS</span> invoices_2023
+<span class="k">FROM</span> customer c
+<span class="k">LEFT JOIN</span> invoice i <span class="k">ON</span> i.customer_id = c.customer_id
+<span class="k">WHERE</span> i.invoice_date >= <span class="k">DATE</span> <span class="s">'2023-01-01'</span>
+  <span class="k">AND</span> i.invoice_date <  <span class="k">DATE</span> <span class="s">'2024-01-01'</span>
 <span class="k">GROUP BY</span> c.customer_id;
 
 <span class="c">-- RIGHT: put the right-table filter in the ON clause. Unmatched customers survive.</span>
-<span class="k">SELECT</span> c.customer_id, <span class="f">COUNT</span>(o.order_id) <span class="k">AS</span> orders_1997
-<span class="k">FROM</span> customers c
-<span class="k">LEFT JOIN</span> orders o
-       <span class="k">ON</span> o.customer_id = c.customer_id
-      <span class="k">AND</span> o.order_date >= <span class="k">DATE</span> <span class="s">'1997-01-01'</span>
-      <span class="k">AND</span> o.order_date <  <span class="k">DATE</span> <span class="s">'1998-01-01'</span>
+<span class="k">SELECT</span> c.customer_id, <span class="f">COUNT</span>(i.invoice_id) <span class="k">AS</span> invoices_2023
+<span class="k">FROM</span> customer c
+<span class="k">LEFT JOIN</span> invoice i
+       <span class="k">ON</span> i.customer_id = c.customer_id
+      <span class="k">AND</span> i.invoice_date >= <span class="k">DATE</span> <span class="s">'2023-01-01'</span>
+      <span class="k">AND</span> i.invoice_date <  <span class="k">DATE</span> <span class="s">'2024-01-01'</span>
 <span class="k">GROUP BY</span> c.customer_id;</pre>
 <div class="warn"><span class="tag">Rule</span>
 With OUTER joins: conditions on the preserved (left) table go in WHERE, conditions on the nullable (right) table go in ON. With INNER joins it makes no difference to the result. Being able to state this rule is worth real points.</div>
-<p>Also note <code>COUNT(o.order_id)</code>, not <code>COUNT(*)</code>: for a customer with no orders, <code>COUNT(*)</code> counts the one all-NULL joined row and reports 1; <code>COUNT(o.order_id)</code> correctly reports 0.</p>
+<p>Also note <code>COUNT(i.invoice_id)</code>, not <code>COUNT(*)</code>: for a customer with no invoices, <code>COUNT(*)</code> counts the one all-NULL joined row and reports 1; <code>COUNT(i.invoice_id)</code> correctly reports 0.</p>
 
 <h2>3.3 The anti-join: rows in A with no match in B</h2>
-<p>"Customers who never ordered" - the most common interview join question. Three ways:</p>
+<p>"Tracks that never sold" - the anti-join shape is the most common interview join question. Three ways:</p>
 <pre><span class="c">-- 1. LEFT JOIN ... IS NULL</span>
-<span class="k">SELECT</span> c.customer_id, c.company_name
-<span class="k">FROM</span> customers c
-<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> o.customer_id = c.customer_id
-<span class="k">WHERE</span> o.order_id <span class="k">IS NULL</span>;
+<span class="k">SELECT</span> t.track_id, t.name
+<span class="k">FROM</span> track t
+<span class="k">LEFT JOIN</span> invoice_line il <span class="k">ON</span> il.track_id = t.track_id
+<span class="k">WHERE</span> il.invoice_line_id <span class="k">IS NULL</span>;
 
 <span class="c">-- 2. NOT EXISTS (the one to prefer)</span>
-<span class="k">SELECT</span> c.customer_id, c.company_name
-<span class="k">FROM</span> customers c
+<span class="k">SELECT</span> t.track_id, t.name
+<span class="k">FROM</span> track t
 <span class="k">WHERE NOT EXISTS</span> (
-    <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> orders o <span class="k">WHERE</span> o.customer_id = c.customer_id
+    <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> invoice_line il <span class="k">WHERE</span> il.track_id = t.track_id
 );
 
 <span class="c">-- 3. NOT IN -- know it, and know why to avoid it:</span>
 <span class="c">-- if the subquery returns even one NULL, NOT IN returns ZERO rows total.</span>
-<span class="k">SELECT</span> customer_id, company_name
-<span class="k">FROM</span> customers
-<span class="k">WHERE</span> customer_id <span class="k">NOT IN</span> (<span class="k">SELECT</span> customer_id <span class="k">FROM</span> orders <span class="k">WHERE</span> customer_id <span class="k">IS NOT NULL</span>);</pre>
+<span class="k">SELECT</span> track_id, name
+<span class="k">FROM</span> track
+<span class="k">WHERE</span> track_id <span class="k">NOT IN</span> (<span class="k">SELECT</span> track_id <span class="k">FROM</span> invoice_line <span class="k">WHERE</span> track_id <span class="k">IS NOT NULL</span>);</pre>
 <div class="tip"><span class="tag">Interview soundbite</span>
 "I default to NOT EXISTS: it is NULL-safe, and the planner treats it as a proper anti-join. NOT IN has a footgun where a single NULL in the subquery empties the result."</div>
 
 <h2>3.4 Fan-out: the silent revenue inflator</h2>
 <p>Joining a one-to-many relationship duplicates the "one" side's values across every matched row. Aggregate after joining without noticing, and your totals inflate.</p>
-<pre><span class="c">-- northwind: orders (1) to order_details (many).</span>
-<span class="c">-- WRONG if you meant to sum freight once per order:</span>
-<span class="k">SELECT</span> <span class="f">SUM</span>(o.freight)
-<span class="k">FROM</span> orders o
-<span class="k">JOIN</span> order_details d <span class="k">ON</span> d.order_id = o.order_id;
-<span class="c">-- freight is repeated once per line item. A 3-line order counts its freight 3 times.</span>
+<pre><span class="c">-- chinook: invoice (1) to invoice_line (many).</span>
+<span class="c">-- WRONG if you meant to sum each invoice's total once:</span>
+<span class="k">SELECT</span> <span class="f">SUM</span>(i.total)
+<span class="k">FROM</span> invoice i
+<span class="k">JOIN</span> invoice_line il <span class="k">ON</span> il.invoice_id = i.invoice_id;
+<span class="c">-- total is repeated once per line item. A 5-line invoice counts its total 5 times.</span>
+<span class="c">-- The true SUM(total) is 2328.60; this fanned-out version reports 20848.62.</span>
 
 <span class="c">-- RIGHT: aggregate the many side first, then join at matching grain:</span>
-<span class="k">SELECT</span> <span class="f">SUM</span>(o.freight) <span class="k">AS</span> total_freight,
-       <span class="f">SUM</span>(d.order_revenue) <span class="k">AS</span> total_revenue
-<span class="k">FROM</span> orders o
+<span class="k">SELECT</span> <span class="f">SUM</span>(i.total) <span class="k">AS</span> total_invoiced,
+       <span class="f">SUM</span>(il.line_revenue) <span class="k">AS</span> total_line_revenue
+<span class="k">FROM</span> invoice i
 <span class="k">JOIN</span> (
-    <span class="k">SELECT</span> order_id,
-           <span class="f">SUM</span>(unit_price * quantity * (<span class="n">1</span> - discount)) <span class="k">AS</span> order_revenue
-    <span class="k">FROM</span> order_details
-    <span class="k">GROUP BY</span> order_id
-) d <span class="k">ON</span> d.order_id = o.order_id;</pre>
+    <span class="k">SELECT</span> invoice_id,
+           <span class="f">SUM</span>(unit_price * quantity) <span class="k">AS</span> line_revenue
+    <span class="k">FROM</span> invoice_line
+    <span class="k">GROUP BY</span> invoice_id
+) il <span class="k">ON</span> il.invoice_id = i.invoice_id;</pre>
 <div class="warn"><span class="tag">The senior habit</span>
-Before writing any join, say the grain of each table: "orders is one row per order; order_details is one row per order-product. Joining them puts me at line grain, so order-level columns will repeat." Interviewers listen for exactly this.</div>
+Before writing any join, say the grain of each table: "invoice is one row per invoice; invoice_line is one row per invoice-track. Joining them puts me at line grain, so invoice-level columns will repeat." Interviewers listen for exactly this.</div>
 
 <h2>3.5 Self-joins and multi-hop joins</h2>
-<pre><span class="c">-- northwind: employee and manager on one row (self-join)</span>
+<pre><span class="c">-- chinook: employee and manager on one row (self-join)</span>
 <span class="k">SELECT</span> e.first_name || <span class="s">' '</span> || e.last_name <span class="k">AS</span> employee,
        m.first_name || <span class="s">' '</span> || m.last_name <span class="k">AS</span> manager
-<span class="k">FROM</span> employees e
-<span class="k">LEFT JOIN</span> employees m <span class="k">ON</span> m.employee_id = e.reports_to;
+<span class="k">FROM</span> employee e
+<span class="k">LEFT JOIN</span> employee m <span class="k">ON</span> m.employee_id = e.reports_to;
 <span class="c">-- LEFT so the top of the hierarchy (reports_to IS NULL) still appears.</span></pre>
-<pre><span class="c">-- chinook: four-table chain, genre revenue</span>
+<pre><span class="c">-- chinook: three-table chain, genre revenue</span>
 <span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
        <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity)::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
 <span class="k">FROM</span> invoice_line il
@@ -133,33 +134,33 @@ Before writing any join, say the grain of each table: "orders is one row per ord
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P3.2</span><span class="db">northwind</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p3-2"></div>
-  <div class="pbody"><p>Every product with its category name and supplier company name. Include products even if the supplier link is missing.</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Which of the two joins needs to be LEFT to satisfy "even if missing"?</div></details>
+  <div class="phead"><span class="pid">P3.2</span><span class="db">chinook</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p3-2"></div>
+  <div class="pbody"><p>Every track with its genre name and its album title. Guard against tracks whose album link could be missing - keep such a track even if no album matches.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Which of the two joins needs to be LEFT to satisfy "keep it even if the album is missing"?</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> p.product_name, c.category_name, s.company_name <span class="k">AS</span> supplier
-<span class="k">FROM</span> products p
-<span class="k">JOIN</span> categories c <span class="k">ON</span> c.category_id = p.category_id
-<span class="k">LEFT JOIN</span> suppliers s <span class="k">ON</span> s.supplier_id = p.supplier_id
-<span class="k">ORDER BY</span> p.product_name;</pre>
-<p>Mixed join types in one query are normal - choose per relationship, not per query.</p></div></details>
+<pre><span class="k">SELECT</span> t.name <span class="k">AS</span> track, g.name <span class="k">AS</span> genre, al.title <span class="k">AS</span> album
+<span class="k">FROM</span> track t
+<span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">LEFT JOIN</span> album al <span class="k">ON</span> al.album_id = t.album_id
+<span class="k">ORDER BY</span> t.name;</pre>
+<p>Mixed join types in one query are normal - choose per relationship, not per query. Every track has a genre, so INNER is safe there; the album link is the kind of nullable foreign key you defend with a LEFT so a missing album never silently drops a track.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P3.3</span><span class="db">adventureworks</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-3"></div>
-  <div class="pbody"><p>Walk the product hierarchy: every product's name, its subcategory name, and its category name. Keep products with no subcategory (show NULLs). Three tables, two hops.</p>
+  <div class="phead"><span class="pid">P3.3</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-3"></div>
+  <div class="pbody"><p>Walk the catalog hierarchy: every track's name, its album title, and its artist name. Preserve every track even if the album (and therefore the artist) cannot be resolved - show NULLs rather than dropping the row. Three tables, two hops.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> p.name <span class="k">AS</span> product,
-       ps.name <span class="k">AS</span> subcategory,
-       pc.name <span class="k">AS</span> category
-<span class="k">FROM</span> production.product p
-<span class="k">LEFT JOIN</span> production.productsubcategory ps
-       <span class="k">ON</span> ps.productsubcategoryid = p.productsubcategoryid
-<span class="k">LEFT JOIN</span> production.productcategory pc
-       <span class="k">ON</span> pc.productcategoryid = ps.productcategoryid
-<span class="k">ORDER BY</span> category <span class="k">NULLS LAST</span>, subcategory, product;</pre>
-<p>Both hops must be LEFT: an INNER on the second hop would drop the very rows the first LEFT preserved (their ps columns are NULL and cannot match).</p></div></details>
+<pre><span class="k">SELECT</span> t.name <span class="k">AS</span> track,
+       al.title <span class="k">AS</span> album,
+       ar.name <span class="k">AS</span> artist
+<span class="k">FROM</span> track t
+<span class="k">LEFT JOIN</span> album al
+       <span class="k">ON</span> al.album_id = t.album_id
+<span class="k">LEFT JOIN</span> artist ar
+       <span class="k">ON</span> ar.artist_id = al.artist_id
+<span class="k">ORDER BY</span> artist <span class="k">NULLS LAST</span>, album, track;</pre>
+<p>Both hops must be LEFT: an INNER on the second hop would drop any row the first LEFT preserved with a NULL album, because its al columns are NULL and cannot match an artist. The rule generalizes - once you go LEFT, every downstream hop that depends on the nullable side must stay LEFT too.</p></div></details>
   </div>
 </div>
 
@@ -167,7 +168,7 @@ Before writing any join, say the grain of each table: "orders is one row per ord
 
 <div class="problem">
   <div class="phead"><span class="pid">P3.4</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-4"></div>
-  <div class="pbody"><p>Anti-join, all three ways: find every track that has never appeared on any invoice line. Write LEFT JOIN / IS NULL, NOT EXISTS, and NOT IN versions and confirm they return the same count.</p>
+  <div class="pbody"><p>Anti-join, all three ways: find every track that has never appeared on any invoice line. Write LEFT JOIN / IS NULL, NOT EXISTS, and NOT IN versions and confirm they return the same count (there are 1,519 such tracks).</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="c">-- 1</span>
 <span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> track t
@@ -188,33 +189,33 @@ Before writing any join, say the grain of each table: "orders is one row per ord
 <div class="problem">
   <div class="phead"><span class="pid">P3.5</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-5"></div>
   <div class="pbody"><p>Self-join on posts: for the 20 highest-scoring questions, show the question title, question score, and the score of its accepted answer. Questions without an accepted answer must still appear.</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Join posts to posts on <code>q.accepted_answer_id = a.id</code>. Which side is preserved?</div></details>
+  <details class="hint"><summary>hint</summary><div class="sbody">Join posts to posts on <code>a.id = q.acceptedanswerid</code>. Which side is preserved? And remember: a question is <code>posttypeid = 1</code>.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">SELECT</span> q.title,
        q.score <span class="k">AS</span> question_score,
        a.score <span class="k">AS</span> accepted_answer_score
 <span class="k">FROM</span> posts q
-<span class="k">LEFT JOIN</span> posts a <span class="k">ON</span> a.id = q.accepted_answer_id
-<span class="k">WHERE</span> q.post_type_id = <span class="n">1</span>
+<span class="k">LEFT JOIN</span> posts a <span class="k">ON</span> a.id = q.acceptedanswerid
+<span class="k">WHERE</span> q.posttypeid = <span class="n">1</span>
 <span class="k">ORDER BY</span> q.score <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">20</span>;</pre>
-<p>The WHERE filter is on q, the preserved side, so it does not break the LEFT JOIN - contrast with the 3.2 trap where the filter was on the nullable side.</p></div></details>
+<p>The WHERE filter is on q, the preserved side, so it does not break the LEFT JOIN - contrast with the 3.2 trap where the filter was on the nullable side. Every column here is lowercase, no underscores: <code>acceptedanswerid</code>, <code>posttypeid</code>.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P3.6</span><span class="db">northwind</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-6"></div>
-  <div class="pbody"><p>The 3.2 trap, live: all customers with their count of orders shipped to Germany (<code>ship_country = 'Germany'</code>), including customers with zero. Verify your row count equals the customers table row count.</p>
+  <div class="phead"><span class="pid">P3.6</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p3-6"></div>
+  <div class="pbody"><p>The 3.2 trap, live: all customers with their count of invoices billed to Brazil (<code>billing_country = 'Brazil'</code>), including customers with zero. Verify your row count equals the customer table row count (59).</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> c.customer_id, c.company_name,
-       <span class="f">COUNT</span>(o.order_id) <span class="k">AS</span> german_orders
-<span class="k">FROM</span> customers c
-<span class="k">LEFT JOIN</span> orders o
-       <span class="k">ON</span> o.customer_id = c.customer_id
-      <span class="k">AND</span> o.ship_country = <span class="s">'Germany'</span>
-<span class="k">GROUP BY</span> c.customer_id, c.company_name
-<span class="k">ORDER BY</span> german_orders <span class="k">DESC</span>;</pre>
-<p>The country filter lives in ON. Put it in WHERE and customers with no German orders vanish; the row count check catches it instantly. Making that check without being told is senior behavior.</p></div></details>
+<pre><span class="k">SELECT</span> c.customer_id, c.first_name, c.last_name,
+       <span class="f">COUNT</span>(i.invoice_id) <span class="k">AS</span> brazil_invoices
+<span class="k">FROM</span> customer c
+<span class="k">LEFT JOIN</span> invoice i
+       <span class="k">ON</span> i.customer_id = c.customer_id
+      <span class="k">AND</span> i.billing_country = <span class="s">'Brazil'</span>
+<span class="k">GROUP BY</span> c.customer_id, c.first_name, c.last_name
+<span class="k">ORDER BY</span> brazil_invoices <span class="k">DESC</span>;</pre>
+<p>The country filter lives in ON. Put it in WHERE and customers with no Brazilian invoices vanish; the row-count check catches it instantly. Making that check without being told is senior behavior.</p></div></details>
   </div>
 </div>
 
@@ -238,46 +239,46 @@ Before writing any join, say the grain of each table: "orders is one row per ord
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P3.8</span><span class="db">northwind</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p3-8"></div>
-  <div class="pbody"><p>Fan-out drill. Compute, in one query per order: order_id, freight, and total line revenue. Then produce the grand totals of both across all orders, being careful that freight is not inflated. (Two queries total: per-order, then grand total.)</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Per-order is safe if you GROUP BY order_id and take <code>MAX(freight)</code> or aggregate details in a subquery first. For grand totals, sum the pre-aggregated per-order rows.</div></details>
+  <div class="phead"><span class="pid">P3.8</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p3-8"></div>
+  <div class="pbody"><p>Fan-out drill. Produce, in one query per invoice: invoice_id, the invoice's own total, and its total line revenue (<code>SUM(unit_price * quantity)</code>). Then produce the grand totals of both across all invoices, being careful that the invoice total is not inflated. (Two queries total: per-invoice, then grand total.)</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Per-invoice is safe if you aggregate the lines in a subquery first, then join at invoice grain. For grand totals, sum the pre-aggregated per-invoice rows - the bare join fans out and multiplies <code>total</code>.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="c">-- per order (subquery pre-aggregation, the pattern to internalize)</span>
-<span class="k">SELECT</span> o.order_id, o.freight, d.line_revenue
-<span class="k">FROM</span> orders o
+<pre><span class="c">-- per invoice (subquery pre-aggregation, the pattern to internalize)</span>
+<span class="k">SELECT</span> i.invoice_id, i.total, il.line_revenue
+<span class="k">FROM</span> invoice i
 <span class="k">JOIN</span> (
-    <span class="k">SELECT</span> order_id,
-           <span class="f">SUM</span>(unit_price * quantity * (<span class="n">1</span> - discount)) <span class="k">AS</span> line_revenue
-    <span class="k">FROM</span> order_details
-    <span class="k">GROUP BY</span> order_id
-) d <span class="k">ON</span> d.order_id = o.order_id;
+    <span class="k">SELECT</span> invoice_id,
+           <span class="f">SUM</span>(unit_price * quantity) <span class="k">AS</span> line_revenue
+    <span class="k">FROM</span> invoice_line
+    <span class="k">GROUP BY</span> invoice_id
+) il <span class="k">ON</span> il.invoice_id = i.invoice_id;
 
 <span class="c">-- grand totals: wrap the same shape</span>
-<span class="k">SELECT</span> <span class="f">SUM</span>(o.freight) <span class="k">AS</span> total_freight,
-       <span class="f">SUM</span>(d.line_revenue) <span class="k">AS</span> total_revenue
-<span class="k">FROM</span> orders o
+<span class="k">SELECT</span> <span class="f">SUM</span>(i.total) <span class="k">AS</span> total_invoiced,
+       <span class="f">SUM</span>(il.line_revenue) <span class="k">AS</span> total_line_revenue
+<span class="k">FROM</span> invoice i
 <span class="k">JOIN</span> (
-    <span class="k">SELECT</span> order_id,
-           <span class="f">SUM</span>(unit_price * quantity * (<span class="n">1</span> - discount)) <span class="k">AS</span> line_revenue
-    <span class="k">FROM</span> order_details
-    <span class="k">GROUP BY</span> order_id
-) d <span class="k">ON</span> d.order_id = o.order_id;</pre>
-<p>Sanity check: <code>SELECT SUM(freight) FROM orders</code> alone should match total_freight. If it does not, fan-out got you. This aggregate-then-join move becomes one CTE in Module 5.</p></div></details>
+    <span class="k">SELECT</span> invoice_id,
+           <span class="f">SUM</span>(unit_price * quantity) <span class="k">AS</span> line_revenue
+    <span class="k">FROM</span> invoice_line
+    <span class="k">GROUP BY</span> invoice_id
+) il <span class="k">ON</span> il.invoice_id = i.invoice_id;</pre>
+<p>Sanity check: <code>SELECT SUM(total) FROM invoice</code> alone should match total_invoiced (2328.60). Join invoice straight to invoice_line without pre-aggregating and it balloons to 20848.62 - that is fan-out. This aggregate-then-join move becomes one CTE in Module 5.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P3.9</span><span class="db">northwind</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p3-9"></div>
-  <div class="pbody"><p>Finish P2.9 properly: average orders per customer <em>including</em> customers with zero orders. Compare the number with P2.9's answer.</p>
+  <div class="phead"><span class="pid">P3.9</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p3-9"></div>
+  <div class="pbody"><p>Average invoices per customer <em>including</em> customers with zero invoices. Then explain how the number would differ if you had used an INNER join instead.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">ROUND</span>(<span class="f">AVG</span>(order_count), <span class="n">2</span>) <span class="k">AS</span> avg_orders_per_customer
+<pre><span class="k">SELECT</span> <span class="f">ROUND</span>(<span class="f">AVG</span>(invoice_count), <span class="n">2</span>) <span class="k">AS</span> avg_invoices_per_customer
 <span class="k">FROM</span> (
-    <span class="k">SELECT</span> c.customer_id, <span class="f">COUNT</span>(o.order_id) <span class="k">AS</span> order_count
-    <span class="k">FROM</span> customers c
-    <span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> o.customer_id = c.customer_id
+    <span class="k">SELECT</span> c.customer_id, <span class="f">COUNT</span>(i.invoice_id) <span class="k">AS</span> invoice_count
+    <span class="k">FROM</span> customer c
+    <span class="k">LEFT JOIN</span> invoice i <span class="k">ON</span> i.customer_id = c.customer_id
     <span class="k">GROUP BY</span> c.customer_id
 ) per_customer;</pre>
-<p>The average drops slightly because zero-order customers now pull it down. Presenting both numbers and asking "which does the business mean?" is the senior answer to an ambiguous prompt.</p></div></details>
+<p>The LEFT JOIN keeps zero-invoice customers as <code>invoice_count = 0</code>, pulling the average down; an INNER join would silently drop them and inflate the average by dividing over fewer customers. Presenting both numbers and asking "which does the business mean?" is the senior answer to an ambiguous prompt.</p></div></details>
   </div>
 </div>
 
@@ -285,17 +286,18 @@ Before writing any join, say the grain of each table: "orders is one row per ord
 
 <div class="problem">
   <div class="phead"><span class="pid">P3.10</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p3-10"></div>
-  <div class="pbody"><p>Users who have earned badges but have never posted anything. Return display_name, reputation, and their badge count. (Combines a join, an anti-join, and aggregation.)</p>
+  <div class="pbody"><p>Users who have earned badges but have never posted anything. Return displayname, reputation, and their badge count. (Combines a join, an anti-join, and aggregation.) Order by badge count, highest first, and take the top 50.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> u.display_name, u.reputation, <span class="f">COUNT</span>(b.id) <span class="k">AS</span> badge_count
+<pre><span class="k">SELECT</span> u.displayname, u.reputation, <span class="f">COUNT</span>(b.id) <span class="k">AS</span> badge_count
 <span class="k">FROM</span> users u
-<span class="k">JOIN</span> badges b <span class="k">ON</span> b.user_id = u.id
+<span class="k">JOIN</span> badges b <span class="k">ON</span> b.userid = u.id
 <span class="k">WHERE NOT EXISTS</span> (
-    <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> posts p <span class="k">WHERE</span> p.owner_user_id = u.id
+    <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> posts p <span class="k">WHERE</span> p.owneruserid = u.id
 )
-<span class="k">GROUP BY</span> u.id, u.display_name, u.reputation
-<span class="k">ORDER BY</span> badge_count <span class="k">DESC</span>;</pre>
-<p>Note GROUP BY includes u.id: two users can share a display_name, and grouping by the key preserves them as separate rows. Grouping by name alone would silently merge them - a subtle correctness point interviewers love.</p></div></details>
+<span class="k">GROUP BY</span> u.id, u.displayname, u.reputation
+<span class="k">ORDER BY</span> badge_count <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">50</span>;</pre>
+<p>Note GROUP BY includes u.id: two users can share a displayname, and grouping by the key preserves them as separate rows. Grouping by name alone would silently merge them - a subtle correctness point interviewers love. Every column is lowercase, no underscores: <code>userid</code> on badges, <code>owneruserid</code> on posts, <code>displayname</code> on users. About 92k users hold a badge yet never posted.</p></div></details>
   </div>
 </div>
 
@@ -317,32 +319,32 @@ Before writing any join, say the grain of each table: "orders is one row per ord
 ) ci <span class="k">ON</span> ci.customer_id = c.customer_id
 <span class="k">GROUP BY</span> e.employee_id, rep
 <span class="k">ORDER BY</span> revenue <span class="k">DESC</span>;</pre>
-<p>Because invoices were pre-collapsed to one row per customer, the join cannot inflate revenue, and COUNT(DISTINCT c.customer_id) guards the customer count. COALESCE turns the no-customer reps' NULL sum into 0.</p></div></details>
+<p>Because invoices were pre-collapsed to one row per customer, the join cannot inflate revenue, and COUNT(DISTINCT c.customer_id) guards the customer count. COALESCE turns the no-customer reps' NULL sum into 0. Only three employees (the sales agents) support customers here; the rest report zero.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P3.12</span><span class="db">northwind</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p3-12"></div>
-  <div class="pbody"><p>FULL JOIN reconciliation: build two lists - countries that appear as customer countries, and countries that appear as supplier countries - and produce one report showing every country, whether it has customers, suppliers, or both, with counts. (This "reconcile two lists" shape is a real senior take-home staple.)</p>
+  <div class="phead"><span class="pid">P3.12</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p3-12"></div>
+  <div class="pbody"><p>FULL JOIN reconciliation: build two lists - countries that appear as customer countries, and countries that appear as employee countries - and produce one report showing every country, whether it has customers, employees, or both, with counts. (This "reconcile two lists" shape is a real senior take-home staple.)</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">SELECT</span> <span class="f">COALESCE</span>(cu.country, su.country) <span class="k">AS</span> country,
+<pre><span class="k">SELECT</span> <span class="f">COALESCE</span>(cu.country, em.country) <span class="k">AS</span> country,
        <span class="f">COALESCE</span>(cu.customer_count, <span class="n">0</span>)   <span class="k">AS</span> customers,
-       <span class="f">COALESCE</span>(su.supplier_count, <span class="n">0</span>)   <span class="k">AS</span> suppliers,
+       <span class="f">COALESCE</span>(em.employee_count, <span class="n">0</span>)   <span class="k">AS</span> employees,
        <span class="k">CASE</span>
-         <span class="k">WHEN</span> cu.country <span class="k">IS NULL</span> <span class="k">THEN</span> <span class="s">'suppliers only'</span>
-         <span class="k">WHEN</span> su.country <span class="k">IS NULL</span> <span class="k">THEN</span> <span class="s">'customers only'</span>
+         <span class="k">WHEN</span> cu.country <span class="k">IS NULL</span> <span class="k">THEN</span> <span class="s">'employees only'</span>
+         <span class="k">WHEN</span> em.country <span class="k">IS NULL</span> <span class="k">THEN</span> <span class="s">'customers only'</span>
          <span class="k">ELSE</span> <span class="s">'both'</span>
        <span class="k">END</span> <span class="k">AS</span> presence
 <span class="k">FROM</span> (
     <span class="k">SELECT</span> country, <span class="f">COUNT</span>(*) <span class="k">AS</span> customer_count
-    <span class="k">FROM</span> customers <span class="k">GROUP BY</span> country
+    <span class="k">FROM</span> customer <span class="k">GROUP BY</span> country
 ) cu
 <span class="k">FULL JOIN</span> (
-    <span class="k">SELECT</span> country, <span class="f">COUNT</span>(*) <span class="k">AS</span> supplier_count
-    <span class="k">FROM</span> suppliers <span class="k">GROUP BY</span> country
-) su <span class="k">ON</span> su.country = cu.country
+    <span class="k">SELECT</span> country, <span class="f">COUNT</span>(*) <span class="k">AS</span> employee_count
+    <span class="k">FROM</span> employee <span class="k">GROUP BY</span> country
+) em <span class="k">ON</span> em.country = cu.country
 <span class="k">ORDER BY</span> country;</pre>
-<p>The FULL JOIN essentials in one query: COALESCE on the join key (either side can be NULL) and IS NULL tests to classify which side was missing.</p></div></details>
+<p>The FULL JOIN essentials in one query: COALESCE on the join key (either side can be NULL) and IS NULL tests to classify which side was missing. All eight employees sit in Canada, so most countries land in "customers only" and Canada is "both."</p></div></details>
   </div>
 </div>
 

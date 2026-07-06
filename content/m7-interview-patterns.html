@@ -17,20 +17,22 @@
 <div class="wrap">
 <p class="eyebrow">-- module 7 / seven sessions / <span id="done-count"></span></p>
 <h1>Interview Patterns</h1>
-<p class="lede">Senior interviews recycle about a dozen named patterns in different costumes. Learn to hear the costume and name the pattern - "that's top-N per group," "that's a self-join on consecutive periods" - and the rest is typing. Each pattern below has the trigger phrases, the shape, and a worked example on your data.</p>
+<p class="lede">Senior interviews recycle about a dozen named patterns in different costumes. Learn to hear the costume and name the pattern - "that's Nth-highest by value," "that's a self-join on consecutive periods" - and the rest is typing. Each pattern below has the trigger phrases, the shape, and a worked example on your data: the small clean chinook store where the result fits on one screen, the large stackoverflow dump where the pattern earns its keep at scale.</p>
 
 <h2>Pattern 1: Deduplication</h2>
 <p><strong>Trigger phrases:</strong> "remove duplicates," "keep the latest record per," "the table has multiple rows per user."</p>
 <pre><span class="c">-- Shape: ROW_NUMBER over the duplicate key, ordered by the keep-rule, filter rn = 1.</span>
-<span class="c">-- northwind flavor: one row per customer = their most recent order</span>
+<span class="c">-- stackoverflow flavor: one row per (user, badge name) = their MOST RECENT award of it.</span>
+<span class="c">-- Scoped to one prolific user here so the demo is readable; drop the WHERE for the whole table.</span>
 <span class="k">WITH</span> ranked <span class="k">AS</span> (
-    <span class="k">SELECT</span> *,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id
-                              <span class="k">ORDER BY</span> order_date <span class="k">DESC</span>, order_id <span class="k">DESC</span>) <span class="k">AS</span> rn
-    <span class="k">FROM</span> orders
+    <span class="k">SELECT</span> userid, name, date,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> userid, name
+                              <span class="k">ORDER BY</span> date <span class="k">DESC</span>, id <span class="k">DESC</span>) <span class="k">AS</span> rn
+    <span class="k">FROM</span> badges
+    <span class="k">WHERE</span> userid = <span class="n">1876</span>
 )
-<span class="k">SELECT</span> * <span class="k">FROM</span> ranked <span class="k">WHERE</span> rn = <span class="n">1</span>;</pre>
-<p>Always add a deterministic tiebreaker (order_id here). If asked to <em>delete</em> duplicates rather than select around them, the same ranking drives a DELETE with a USING or IN clause - describe it rather than run it in an interview.</p>
+<span class="k">SELECT</span> userid, name, date <span class="k">FROM</span> ranked <span class="k">WHERE</span> rn = <span class="n">1</span>;</pre>
+<p>Always add a deterministic tiebreaker (id here). If asked to <em>delete</em> duplicates rather than select around them, the same ranking drives a DELETE with a USING or IN clause - describe it rather than run it in an interview.</p>
 
 <h2>Pattern 2: Nth highest</h2>
 <p><strong>Trigger phrases:</strong> "second highest salary," "third most expensive," any ordinal.</p>
@@ -49,9 +51,9 @@
 <pre><span class="c">-- MoM = LAG(1). YoY on monthly data = LAG(12) - but ONLY if every month exists!</span>
 <span class="c">-- Missing months silently shift LAG(12) to the wrong row. The robust form is a self-join:</span>
 <span class="k">WITH</span> monthly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, orderdate)::date <span class="k">AS</span> month,
-           <span class="f">SUM</span>(totaldue) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> sales.salesorderheader
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, invoice_date)::date <span class="k">AS</span> month,
+           <span class="f">SUM</span>(total) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice
     <span class="k">GROUP BY</span> <span class="n">1</span>
 )
 <span class="k">SELECT</span> cur.month,
@@ -64,9 +66,9 @@
 <p>Saying "LAG(12) assumes a gap-free series; the self-join on month minus one year is robust to gaps" is a top-tier senior answer.</p>
 
 <h2>Pattern 4: Cohort retention</h2>
-<p><strong>Trigger phrases:</strong> "retention," "of users who signed up in January, how many were active in February," "cohort."</p>
-<pre><span class="c">-- Shape: (1) each user's cohort = first activity month, (2) all activity months,</span>
-<span class="c">-- (3) join and count distinct users per (cohort, months_since).</span>
+<p><strong>Trigger phrases:</strong> "retention," "of customers who first bought in January, how many bought again in February," "cohort."</p>
+<pre><span class="c">-- Shape: (1) each customer's cohort = first activity month, (2) all activity months,</span>
+<span class="c">-- (3) join and count distinct customers per (cohort, months_since).</span>
 <span class="c">-- chinook flavor: purchase retention by first-purchase month</span>
 <span class="k">WITH</span> cohorts <span class="k">AS</span> (
     <span class="k">SELECT</span> customer_id,
@@ -91,18 +93,18 @@ activity <span class="k">AS</span> (
 <h2>Pattern 5: Consecutive events / gaps and islands</h2>
 <p><strong>Trigger phrases:</strong> "3 days in a row," "consecutive," "streak," "continuous ranges."</p>
 <pre><span class="c">-- The magic trick: for consecutive sequences, (value - ROW_NUMBER) is constant per island.</span>
-<span class="c">-- northwind flavor: streaks of consecutive order DATES (days on which any order arrived)</span>
+<span class="c">-- chinook flavor: streaks of consecutive calendar dates on which any invoice was issued</span>
 <span class="k">WITH</span> days <span class="k">AS</span> (
-    <span class="k">SELECT DISTINCT</span> order_date <span class="k">FROM</span> orders
+    <span class="k">SELECT DISTINCT</span> invoice_date::date <span class="k">AS</span> day <span class="k">FROM</span> invoice
 ),
 grouped <span class="k">AS</span> (
-    <span class="k">SELECT</span> order_date,
-           order_date - (<span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> order_date))::int <span class="k">AS</span> island_key
+    <span class="k">SELECT</span> day,
+           day - (<span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> day))::int <span class="k">AS</span> island_key
     <span class="k">FROM</span> days
 )
-<span class="k">SELECT</span> <span class="f">MIN</span>(order_date) <span class="k">AS</span> streak_start,
-       <span class="f">MAX</span>(order_date) <span class="k">AS</span> streak_end,
-       <span class="f">COUNT</span>(*)        <span class="k">AS</span> streak_days
+<span class="k">SELECT</span> <span class="f">MIN</span>(day) <span class="k">AS</span> streak_start,
+       <span class="f">MAX</span>(day) <span class="k">AS</span> streak_end,
+       <span class="f">COUNT</span>(*)  <span class="k">AS</span> streak_days
 <span class="k">FROM</span> grouped
 <span class="k">GROUP BY</span> island_key
 <span class="k">ORDER BY</span> streak_days <span class="k">DESC</span>;</pre>
@@ -110,37 +112,37 @@ grouped <span class="k">AS</span> (
 
 <h2>Pattern 6: Pivoting with conditional aggregation</h2>
 <p><strong>Trigger phrases:</strong> "one column per year," "reshape long to wide," "crosstab."</p>
-<pre><span class="c">-- northwind: category revenue by year, years as columns</span>
-<span class="k">SELECT</span> c.category_name,
-  <span class="f">ROUND</span>(<span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span>-d.discount)) <span class="k">FILTER</span> (<span class="k">WHERE</span> o.order_date >= <span class="s">'1996-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1997-01-01'</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> y1996,
-  <span class="f">ROUND</span>(<span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span>-d.discount)) <span class="k">FILTER</span> (<span class="k">WHERE</span> o.order_date >= <span class="s">'1997-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1998-01-01'</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> y1997,
-  <span class="f">ROUND</span>(<span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span>-d.discount)) <span class="k">FILTER</span> (<span class="k">WHERE</span> o.order_date >= <span class="s">'1998-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1999-01-01'</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> y1998
-<span class="k">FROM</span> order_details d
-<span class="k">JOIN</span> orders o     <span class="k">ON</span> o.order_id = d.order_id
-<span class="k">JOIN</span> products p   <span class="k">ON</span> p.product_id = d.product_id
-<span class="k">JOIN</span> categories c <span class="k">ON</span> c.category_id = p.category_id
-<span class="k">GROUP BY</span> c.category_name
-<span class="k">ORDER BY</span> c.category_name;</pre>
+<pre><span class="c">-- chinook: genre revenue by year, years as columns (line revenue = unit_price * quantity)</span>
+<span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+  <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">FILTER</span> (<span class="k">WHERE</span> i.invoice_date >= <span class="s">'2021-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2022-01-01'</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> y2021,
+  <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">FILTER</span> (<span class="k">WHERE</span> i.invoice_date >= <span class="s">'2022-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2023-01-01'</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> y2022,
+  <span class="f">ROUND</span>(<span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">FILTER</span> (<span class="k">WHERE</span> i.invoice_date >= <span class="s">'2023-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2024-01-01'</span>)::numeric, <span class="n">0</span>) <span class="k">AS</span> y2023
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">JOIN</span> track t   <span class="k">ON</span> t.track_id = il.track_id
+<span class="k">JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">GROUP BY</span> g.name
+<span class="k">ORDER BY</span> g.name;</pre>
 <p>SQL cannot make columns dynamically - the column list is fixed at write time. If asked "what if the years are not known in advance," the answer is: generate the SQL programmatically or pivot in the BI layer. Knowing the boundary is the senior part.</p>
 
 <h2>Pattern 7: Sessionization</h2>
-<p><strong>Trigger phrases:</strong> "group events into sessions," "a new session starts after 30 minutes of inactivity."</p>
+<p><strong>Trigger phrases:</strong> "group events into sessions," "a new session starts after 1 hour of inactivity."</p>
 <pre><span class="c">-- Shape: LAG to measure the gap, CASE to flag session starts, running SUM of flags = session id.</span>
 <span class="c">-- stackoverflow flavor: a user's posting sessions (new session after 1 hour idle)</span>
 <span class="k">WITH</span> events <span class="k">AS</span> (
-    <span class="k">SELECT</span> owner_user_id, creation_date,
-           <span class="k">CASE WHEN</span> creation_date - <span class="f">LAG</span>(creation_date) <span class="k">OVER</span> w > <span class="k">INTERVAL</span> <span class="s">'1 hour'</span>
-                  <span class="k">OR</span> <span class="f">LAG</span>(creation_date) <span class="k">OVER</span> w <span class="k">IS NULL</span>
+    <span class="k">SELECT</span> owneruserid, creationdate,
+           <span class="k">CASE WHEN</span> creationdate - <span class="f">LAG</span>(creationdate) <span class="k">OVER</span> w > <span class="k">INTERVAL</span> <span class="s">'1 hour'</span>
+                  <span class="k">OR</span> <span class="f">LAG</span>(creationdate) <span class="k">OVER</span> w <span class="k">IS NULL</span>
                 <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span> <span class="k">AS</span> new_session
     <span class="k">FROM</span> posts
-    <span class="k">WHERE</span> owner_user_id = <span class="n">22656</span>
-    <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">PARTITION BY</span> owner_user_id <span class="k">ORDER BY</span> creation_date)
+    <span class="k">WHERE</span> owneruserid = <span class="n">1876</span>
+    <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">PARTITION BY</span> owneruserid <span class="k">ORDER BY</span> creationdate)
 )
 <span class="k">SELECT</span> *,
-       <span class="f">SUM</span>(new_session) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owner_user_id
-                              <span class="k">ORDER BY</span> creation_date) <span class="k">AS</span> session_id
+       <span class="f">SUM</span>(new_session) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owneruserid
+                              <span class="k">ORDER BY</span> creationdate) <span class="k">AS</span> session_id
 <span class="k">FROM</span> events;</pre>
-<p>Flag-then-running-sum is the same engine as gaps and islands; recognizing that they are one family is what makes both easy to reconstruct under pressure.</p>
+<p>Flag-then-running-sum is the same engine as gaps and islands; recognizing that they are one family is what makes both easy to reconstruct under pressure. (User 1876 is the most prolific answerer in this dump - a real, busy timeline to sessionize.)</p>
 
 <h2>Practice - twelve problems, mixed costume</h2>
 <p>The prompts below deliberately do not name their pattern. Your first job on each: say which pattern it is before writing a line.</p>
@@ -148,17 +150,17 @@ grouped <span class="k">AS</span> (
 <div class="problem">
   <div class="phead"><span class="pid">P7.1</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-1"></div>
   <div class="pbody"><p>Some users appear to have duplicate badge awards (same user, same badge name, possibly different dates). Produce one row per (user, badge name) keeping the earliest award date, for badges named 'Nice Answer'.</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 1. The duplicate key is (user_id, name); the keep-rule is earliest date.</div></details>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 1. The duplicate key is (userid, name); the keep-rule is earliest date.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> ranked <span class="k">AS</span> (
-    <span class="k">SELECT</span> user_id, name, date,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> user_id, name
+    <span class="k">SELECT</span> userid, name, date,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> userid, name
                               <span class="k">ORDER BY</span> date, id) <span class="k">AS</span> rn
     <span class="k">FROM</span> badges
     <span class="k">WHERE</span> name = <span class="s">'Nice Answer'</span>
 )
-<span class="k">SELECT</span> user_id, name, date <span class="k">FROM</span> ranked <span class="k">WHERE</span> rn = <span class="n">1</span>;</pre>
-<p>Alternative for "earliest date only": plain <code>GROUP BY user_id, name</code> with MIN(date). ROW_NUMBER wins when you must keep the <em>whole row</em>, not just the date - say that distinction out loud.</p></div></details>
+<span class="k">SELECT</span> userid, name, date <span class="k">FROM</span> ranked <span class="k">WHERE</span> rn = <span class="n">1</span>;</pre>
+<p>Alternative for "earliest date only": plain <code>GROUP BY userid, name</code> with MIN(date). ROW_NUMBER wins when you must keep the <em>whole row</em>, not just the date - say that distinction out loud.</p></div></details>
   </div>
 </div>
 
@@ -177,89 +179,90 @@ grouped <span class="k">AS</span> (
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P7.3</span><span class="db">nyctaxi</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-3"></div>
-  <div class="pbody"><p>Weekly trip volume with percent change from the prior week, and flag weeks that dropped more than 10%.</p>
+  <div class="phead"><span class="pid">P7.3</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-3"></div>
+  <div class="pbody"><p>Weekly posting volume for the first quarter of 2016 with percent change from the prior week, and flag weeks that dropped more than 10%.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> weekly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'week'</span>, pickup_datetime)::date <span class="k">AS</span> week,
-           <span class="f">COUNT</span>(*) <span class="k">AS</span> trips
-    <span class="k">FROM</span> trips
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'week'</span>, creationdate)::date <span class="k">AS</span> week,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> posts
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> creationdate >= <span class="s">'2016-01-01'</span> <span class="k">AND</span> creationdate < <span class="s">'2016-04-01'</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>
 ),
 compared <span class="k">AS</span> (
-    <span class="k">SELECT</span> week, trips,
-           <span class="f">ROUND</span>(<span class="n">100.0</span> * (trips - <span class="f">LAG</span>(trips) <span class="k">OVER</span> (<span class="k">ORDER BY</span> week))
-                 / <span class="f">NULLIF</span>(<span class="f">LAG</span>(trips) <span class="k">OVER</span> (<span class="k">ORDER BY</span> week), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> wow_pct
+    <span class="k">SELECT</span> week, posts,
+           <span class="f">ROUND</span>(<span class="n">100.0</span> * (posts - <span class="f">LAG</span>(posts) <span class="k">OVER</span> (<span class="k">ORDER BY</span> week))
+                 / <span class="f">NULLIF</span>(<span class="f">LAG</span>(posts) <span class="k">OVER</span> (<span class="k">ORDER BY</span> week), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> wow_pct
     <span class="k">FROM</span> weekly
 )
 <span class="k">SELECT</span> *,
        <span class="k">CASE WHEN</span> wow_pct < <span class="n">-10</span> <span class="k">THEN</span> <span class="s">'ALERT'</span> <span class="k">END</span> <span class="k">AS</span> flag
 <span class="k">FROM</span> compared
 <span class="k">ORDER BY</span> week;</pre>
-<p>Note the second CTE exists so the CASE can reference wow_pct by name - you cannot filter or branch on a window in the same SELECT that defines it. Partial first and last weeks will look like fake drops; mention trimming them.</p></div></details>
+<p>Note the second CTE exists so the CASE can reference wow_pct by name - you cannot filter or branch on a window in the same SELECT that defines it. Partial first and last weeks (the truncated week straddling the range boundary) will look like fake drops; mention trimming them.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P7.4</span><span class="db">northwind</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-4"></div>
-  <div class="pbody"><p>Of the customers who placed their first order in 1996, what percentage also placed at least one order in 1997? And in 1998?</p>
-  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 4, simplified to one cohort. CTE for first-order year = 1996 customers; conditional EXISTS or FILTER for later-year activity.</div></details>
+  <div class="phead"><span class="pid">P7.4</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-4"></div>
+  <div class="pbody"><p>Of the customers who placed their first order in 2021, what percentage also placed at least one order in 2022? And in 2023?</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 4, simplified to one cohort. CTE for first-order year = 2021 customers; conditional EXISTS or FILTER for later-year activity.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> cohort_1996 <span class="k">AS</span> (
+<pre><span class="k">WITH</span> cohort_2021 <span class="k">AS</span> (
     <span class="k">SELECT</span> customer_id
-    <span class="k">FROM</span> orders
+    <span class="k">FROM</span> invoice
     <span class="k">GROUP BY</span> customer_id
-    <span class="k">HAVING</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> <span class="f">MIN</span>(order_date)) = <span class="n">1996</span>
+    <span class="k">HAVING</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> <span class="f">MIN</span>(invoice_date)) = <span class="n">2021</span>
 )
 <span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">AS</span> cohort_size,
        <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE EXISTS</span> (
-           <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> orders o
-           <span class="k">WHERE</span> o.customer_id = c.customer_id
-             <span class="k">AND</span> o.order_date >= <span class="s">'1997-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1998-01-01'</span>))
-           / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_active_1997,
+           <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> invoice i
+           <span class="k">WHERE</span> i.customer_id = c.customer_id
+             <span class="k">AND</span> i.invoice_date >= <span class="s">'2022-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2023-01-01'</span>))
+           / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_active_2022,
        <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE EXISTS</span> (
-           <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> orders o
-           <span class="k">WHERE</span> o.customer_id = c.customer_id
-             <span class="k">AND</span> o.order_date >= <span class="s">'1998-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1999-01-01'</span>))
-           / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_active_1998
-<span class="k">FROM</span> cohort_1996 c;</pre>
-<p>Retention questions always hide a definition question: "active" = placed an order? logged in? Ask. Here the data only knows orders, so state the assumption and proceed.</p></div></details>
+           <span class="k">SELECT</span> <span class="n">1</span> <span class="k">FROM</span> invoice i
+           <span class="k">WHERE</span> i.customer_id = c.customer_id
+             <span class="k">AND</span> i.invoice_date >= <span class="s">'2023-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2024-01-01'</span>))
+           / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_active_2023
+<span class="k">FROM</span> cohort_2021 c;</pre>
+<p>Retention questions always hide a definition question: "active" = placed an order? logged in? Ask. Here the data only knows invoices, so state the assumption and proceed.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
   <div class="phead"><span class="pid">P7.5</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-5"></div>
-  <div class="pbody"><p>Find users who posted on at least 5 consecutive calendar days at least once. Return the user, their longest streak, and its start and end dates. (Pick a scoped set of users first if the table is huge, e.g. reputation &gt; 50000.)</p>
+  <div class="pbody"><p>Find users who posted on at least 5 consecutive calendar days at least once. Return the user, their longest streak, and its start and end dates. (Scope the set of users first so the table is manageable, e.g. reputation &gt; 50000.)</p>
   <details class="hint"><summary>hint</summary><div class="sbody">Pattern 5 with a partition: DISTINCT (user, day), then <code>day - ROW_NUMBER() OVER (PARTITION BY user ORDER BY day)</code> as the island key.</div></details>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> user_days <span class="k">AS</span> (
-    <span class="k">SELECT DISTINCT</span> p.owner_user_id, p.creation_date::date <span class="k">AS</span> day
+    <span class="k">SELECT DISTINCT</span> p.owneruserid, p.creationdate::date <span class="k">AS</span> day
     <span class="k">FROM</span> posts p
-    <span class="k">JOIN</span> users u <span class="k">ON</span> u.id = p.owner_user_id
+    <span class="k">JOIN</span> users u <span class="k">ON</span> u.id = p.owneruserid
     <span class="k">WHERE</span> u.reputation > <span class="n">50000</span>
 ),
 islands <span class="k">AS</span> (
-    <span class="k">SELECT</span> owner_user_id, day,
-           day - (<span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owner_user_id
+    <span class="k">SELECT</span> owneruserid, day,
+           day - (<span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owneruserid
                                      <span class="k">ORDER BY</span> day))::int <span class="k">AS</span> island_key
     <span class="k">FROM</span> user_days
 ),
 streaks <span class="k">AS</span> (
-    <span class="k">SELECT</span> owner_user_id,
+    <span class="k">SELECT</span> owneruserid,
            <span class="f">MIN</span>(day) <span class="k">AS</span> streak_start,
            <span class="f">MAX</span>(day) <span class="k">AS</span> streak_end,
            <span class="f">COUNT</span>(*) <span class="k">AS</span> streak_days
     <span class="k">FROM</span> islands
-    <span class="k">GROUP BY</span> owner_user_id, island_key
+    <span class="k">GROUP BY</span> owneruserid, island_key
 ),
 best <span class="k">AS</span> (
     <span class="k">SELECT</span> *,
-           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owner_user_id
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> owneruserid
                               <span class="k">ORDER BY</span> streak_days <span class="k">DESC</span>, streak_start) <span class="k">AS</span> rn
     <span class="k">FROM</span> streaks
     <span class="k">WHERE</span> streak_days >= <span class="n">5</span>
 )
-<span class="k">SELECT</span> owner_user_id, streak_days, streak_start, streak_end
+<span class="k">SELECT</span> owneruserid, streak_days, streak_start, streak_end
 <span class="k">FROM</span> best
 <span class="k">WHERE</span> rn = <span class="n">1</span>
 <span class="k">ORDER BY</span> streak_days <span class="k">DESC</span>;</pre>
@@ -286,21 +289,21 @@ best <span class="k">AS</span> (
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P7.7</span><span class="db">nyctaxi</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-7"></div>
-  <div class="pbody"><p>Fare distribution summary in one row: min, 25th percentile, median, 75th, 95th, 99th, max, and mean of fare_amount (positive fares only). Then: which single number would you report to a stakeholder as "typical fare," and why?</p>
+  <div class="phead"><span class="pid">P7.7</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-7"></div>
+  <div class="pbody"><p>Track-length distribution summary in one row: min, 25th percentile, median, 75th, 95th, 99th, max, and mean of <code>milliseconds</code> (positive durations only). Then: which single number would you report to a stakeholder as "typical track length," and why?</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">SELECT</span>
-  <span class="f">MIN</span>(fare_amount) <span class="k">AS</span> min,
-  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.25</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> p25,
-  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.50</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> median,
-  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.75</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> p75,
-  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.95</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> p95,
-  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.99</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> p99,
-  <span class="f">MAX</span>(fare_amount) <span class="k">AS</span> max,
-  <span class="f">ROUND</span>(<span class="f">AVG</span>(fare_amount)::numeric, <span class="n">2</span>) <span class="k">AS</span> mean
-<span class="k">FROM</span> trips
-<span class="k">WHERE</span> fare_amount > <span class="n">0</span>;</pre>
-<p>Median. Fares are right-skewed (airport runs, data errors), so the mean sits above what most riders pay. p95/p99 vs max also quantifies how bad the outliers are - a data-quality statement in the same breath.</p></div></details>
+  <span class="f">MIN</span>(milliseconds) <span class="k">AS</span> min,
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.25</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> milliseconds) <span class="k">AS</span> p25,
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.50</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> milliseconds) <span class="k">AS</span> median,
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.75</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> milliseconds) <span class="k">AS</span> p75,
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.95</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> milliseconds) <span class="k">AS</span> p95,
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.99</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> milliseconds) <span class="k">AS</span> p99,
+  <span class="f">MAX</span>(milliseconds) <span class="k">AS</span> max,
+  <span class="f">ROUND</span>(<span class="f">AVG</span>(milliseconds)::numeric, <span class="n">0</span>) <span class="k">AS</span> mean
+<span class="k">FROM</span> track
+<span class="k">WHERE</span> milliseconds > <span class="n">0</span>;</pre>
+<p>Median. Track lengths are right-skewed (a handful of 30-minute classical pieces and hour-long podcast tracks pull the tail), so the mean sits above what most tracks run. p95/p99 vs max also quantifies how extreme the longest tracks are - a data-shape statement in the same breath.</p></div></details>
   </div>
 </div>
 
@@ -309,23 +312,23 @@ best <span class="k">AS</span> (
   <div class="pbody"><p>Sessionize one busy user's comments with a 30-minute idle threshold: session id, session start, session end, comments in session. Then their average session length in minutes.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> flagged <span class="k">AS</span> (
-    <span class="k">SELECT</span> user_id, creation_date,
-           <span class="k">CASE WHEN</span> creation_date - <span class="f">LAG</span>(creation_date) <span class="k">OVER</span> w > <span class="k">INTERVAL</span> <span class="s">'30 minutes'</span>
-                  <span class="k">OR</span> <span class="f">LAG</span>(creation_date) <span class="k">OVER</span> w <span class="k">IS NULL</span>
+    <span class="k">SELECT</span> userid, creationdate,
+           <span class="k">CASE WHEN</span> creationdate - <span class="f">LAG</span>(creationdate) <span class="k">OVER</span> w > <span class="k">INTERVAL</span> <span class="s">'30 minutes'</span>
+                  <span class="k">OR</span> <span class="f">LAG</span>(creationdate) <span class="k">OVER</span> w <span class="k">IS NULL</span>
                 <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span> <span class="k">AS</span> is_start
     <span class="k">FROM</span> comments
-    <span class="k">WHERE</span> user_id = <span class="n">22656</span>   <span class="c">-- swap in a busy user from your data</span>
-    <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">ORDER BY</span> creation_date)
+    <span class="k">WHERE</span> userid = <span class="n">993</span>   <span class="c">-- a very busy commenter in this dump</span>
+    <span class="k">WINDOW</span> w <span class="k">AS</span> (<span class="k">ORDER BY</span> creationdate)
 ),
 sessions <span class="k">AS</span> (
     <span class="k">SELECT</span> *,
-           <span class="f">SUM</span>(is_start) <span class="k">OVER</span> (<span class="k">ORDER BY</span> creation_date) <span class="k">AS</span> session_id
+           <span class="f">SUM</span>(is_start) <span class="k">OVER</span> (<span class="k">ORDER BY</span> creationdate) <span class="k">AS</span> session_id
     <span class="k">FROM</span> flagged
 ),
 summarized <span class="k">AS</span> (
     <span class="k">SELECT</span> session_id,
-           <span class="f">MIN</span>(creation_date) <span class="k">AS</span> session_start,
-           <span class="f">MAX</span>(creation_date) <span class="k">AS</span> session_end,
+           <span class="f">MIN</span>(creationdate) <span class="k">AS</span> session_start,
+           <span class="f">MAX</span>(creationdate) <span class="k">AS</span> session_end,
            <span class="f">COUNT</span>(*) <span class="k">AS</span> comments
     <span class="k">FROM</span> sessions
     <span class="k">GROUP BY</span> session_id
@@ -335,24 +338,25 @@ summarized <span class="k">AS</span> (
 <span class="k">FROM</span> summarized
 <span class="k">ORDER BY</span> session_id;
 <span class="c">-- average session length: wrap once more, AVG(minutes).</span></pre>
-<p>Flag, running-sum, group - once you can produce these three steps from memory, every sessionization variant (30 min, 1 hour, per device, per user) is a parameter change.</p></div></details>
+<p>Flag, running-sum, group - once you can produce these three steps from memory, every sessionization variant (30 min, 1 hour, per user, per post) is a parameter change.</p></div></details>
   </div>
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P7.9</span><span class="db">adventureworks</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-9"></div>
-  <div class="pbody"><p>YoY by quarter, robustly: quarterly revenue with same-quarter-last-year comparison using the self-join form (not LAG(4)). Include quarters where last year is missing, showing NULL.</p>
+  <div class="phead"><span class="pid">P7.9</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-9"></div>
+  <div class="pbody"><p>YoY by quarter, robustly: quarterly answer volume with same-quarter-last-year comparison using the self-join form (not LAG(4)). Include quarters where last year is missing, showing NULL.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
 <pre><span class="k">WITH</span> quarterly <span class="k">AS</span> (
-    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'quarter'</span>, orderdate)::date <span class="k">AS</span> qtr,
-           <span class="f">SUM</span>(totaldue) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> sales.salesorderheader
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'quarter'</span>, creationdate)::date <span class="k">AS</span> qtr,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> answers
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">2</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>
 )
 <span class="k">SELECT</span> cur.qtr,
-       <span class="f">ROUND</span>(cur.revenue::numeric, <span class="n">0</span>)  <span class="k">AS</span> revenue,
-       <span class="f">ROUND</span>(prev.revenue::numeric, <span class="n">0</span>) <span class="k">AS</span> same_qtr_last_year,
-       <span class="f">ROUND</span>(<span class="n">100.0</span> * (cur.revenue - prev.revenue) / <span class="f">NULLIF</span>(prev.revenue, <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> yoy_pct
+       cur.answers,
+       prev.answers <span class="k">AS</span> same_qtr_last_year,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * (cur.answers - prev.answers) / <span class="f">NULLIF</span>(prev.answers, <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> yoy_pct
 <span class="k">FROM</span> quarterly cur
 <span class="k">LEFT JOIN</span> quarterly prev
        <span class="k">ON</span> prev.qtr = (cur.qtr - <span class="k">INTERVAL</span> <span class="s">'1 year'</span>)::date
@@ -362,33 +366,33 @@ summarized <span class="k">AS</span> (
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P7.10</span><span class="db">northwind</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-10"></div>
-  <div class="pbody"><p>Share-shift analysis: each category's share of total revenue in 1997 vs 1996, and the change in percentage points. Which categories gained share? (Combines pivot, percent-of-total, and a derived comparison.)</p>
+  <div class="phead"><span class="pid">P7.10</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-10"></div>
+  <div class="pbody"><p>Share-shift analysis: each genre's share of total revenue in 2022 vs 2021, and the change in percentage points. Which genres gained share? (Combines pivot, percent-of-total, and a derived comparison.)</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> cat_year <span class="k">AS</span> (
-    <span class="k">SELECT</span> c.category_name,
-           <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> o.order_date)::int <span class="k">AS</span> yr,
-           <span class="f">SUM</span>(d.unit_price * d.quantity * (<span class="n">1</span> - d.discount)) <span class="k">AS</span> revenue
-    <span class="k">FROM</span> order_details d
-    <span class="k">JOIN</span> orders o     <span class="k">ON</span> o.order_id = d.order_id
-    <span class="k">JOIN</span> products p   <span class="k">ON</span> p.product_id = d.product_id
-    <span class="k">JOIN</span> categories c <span class="k">ON</span> c.category_id = p.category_id
-    <span class="k">WHERE</span> o.order_date >= <span class="s">'1996-01-01'</span> <span class="k">AND</span> o.order_date < <span class="s">'1998-01-01'</span>
+<pre><span class="k">WITH</span> genre_year <span class="k">AS</span> (
+    <span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+           <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> i.invoice_date)::int <span class="k">AS</span> yr,
+           <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">AS</span> revenue
+    <span class="k">FROM</span> invoice_line il
+    <span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+    <span class="k">JOIN</span> track t   <span class="k">ON</span> t.track_id = il.track_id
+    <span class="k">JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+    <span class="k">WHERE</span> i.invoice_date >= <span class="s">'2021-01-01'</span> <span class="k">AND</span> i.invoice_date < <span class="s">'2023-01-01'</span>
     <span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>
 ),
 shares <span class="k">AS</span> (
-    <span class="k">SELECT</span> category_name, yr,
+    <span class="k">SELECT</span> genre, yr,
            <span class="n">100.0</span> * revenue / <span class="f">SUM</span>(revenue) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> yr) <span class="k">AS</span> share_pct
-    <span class="k">FROM</span> cat_year
+    <span class="k">FROM</span> genre_year
 )
-<span class="k">SELECT</span> category_name,
-       <span class="f">ROUND</span>(<span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">1996</span>)::numeric, <span class="n">1</span>) <span class="k">AS</span> share_1996,
-       <span class="f">ROUND</span>(<span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">1997</span>)::numeric, <span class="n">1</span>) <span class="k">AS</span> share_1997,
-       <span class="f">ROUND</span>((<span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">1997</span>)
-            - <span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">1996</span>))::numeric, <span class="n">1</span>) <span class="k">AS</span> pp_change
+<span class="k">SELECT</span> genre,
+       <span class="f">ROUND</span>(<span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">2021</span>)::numeric, <span class="n">1</span>) <span class="k">AS</span> share_2021,
+       <span class="f">ROUND</span>(<span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">2022</span>)::numeric, <span class="n">1</span>) <span class="k">AS</span> share_2022,
+       <span class="f">ROUND</span>((<span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">2022</span>)
+            - <span class="f">MAX</span>(share_pct) <span class="k">FILTER</span> (<span class="k">WHERE</span> yr = <span class="n">2021</span>))::numeric, <span class="n">1</span>) <span class="k">AS</span> pp_change
 <span class="k">FROM</span> shares
-<span class="k">GROUP BY</span> category_name
-<span class="k">ORDER BY</span> pp_change <span class="k">DESC</span>;</pre>
+<span class="k">GROUP BY</span> genre
+<span class="k">ORDER BY</span> pp_change <span class="k">DESC</span> <span class="k">NULLS LAST</span>;</pre>
 <p><code>MAX(x) FILTER (WHERE yr = ...)</code> is the standard trick for pivoting a value you know is unique per (group, year) - MAX of one value is that value. Percentage <em>points</em>, not percent change of a percentage - vocabulary interviewers absolutely notice.</p></div></details>
   </div>
 </div>
@@ -424,29 +428,31 @@ per_customer <span class="k">AS</span> (
 </div>
 
 <div class="problem">
-  <div class="phead"><span class="pid">P7.12</span><span class="db">nyctaxi</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-12"></div>
-  <div class="pbody"><p>Capstone: build a one-query "vendor scorecard" - per vendor_id: trips, revenue, revenue share of total, median fare, average trips per day, and rank by revenue. Present it as if handing a table to a director.</p>
+  <div class="phead"><span class="pid">P7.12</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-12"></div>
+  <div class="pbody"><p>Capstone: build a one-query "genre scorecard" - per genre: lines sold, revenue, revenue share of total, median line price, average lines sold per active month, and rank by revenue. Present it as if handing a table to a director.</p>
   <details class="sol"><summary>solution</summary><div class="sbody">
-<pre><span class="k">WITH</span> per_vendor <span class="k">AS</span> (
-    <span class="k">SELECT</span> vendor_id,
-           <span class="f">COUNT</span>(*)          <span class="k">AS</span> trips,
-           <span class="f">SUM</span>(total_amount) <span class="k">AS</span> revenue,
-           <span class="f">PERCENTILE_CONT</span>(<span class="n">0.5</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> fare_amount) <span class="k">AS</span> median_fare,
-           <span class="f">COUNT</span>(<span class="k">DISTINCT</span> pickup_datetime::date) <span class="k">AS</span> active_days
-    <span class="k">FROM</span> trips
-    <span class="k">WHERE</span> fare_amount > <span class="n">0</span>
-    <span class="k">GROUP BY</span> vendor_id
+<pre><span class="k">WITH</span> per_genre <span class="k">AS</span> (
+    <span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+           <span class="f">COUNT</span>(*)                      <span class="k">AS</span> lines,
+           <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">AS</span> revenue,
+           <span class="f">PERCENTILE_CONT</span>(<span class="n">0.5</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> il.unit_price) <span class="k">AS</span> median_price,
+           <span class="f">COUNT</span>(<span class="k">DISTINCT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, i.invoice_date)) <span class="k">AS</span> active_months
+    <span class="k">FROM</span> invoice_line il
+    <span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+    <span class="k">JOIN</span> track t   <span class="k">ON</span> t.track_id = il.track_id
+    <span class="k">JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+    <span class="k">GROUP BY</span> g.name
 )
-<span class="k">SELECT</span> vendor_id,
-       trips,
+<span class="k">SELECT</span> genre,
+       lines,
        <span class="f">ROUND</span>(revenue::numeric, <span class="n">0</span>) <span class="k">AS</span> revenue,
        <span class="f">ROUND</span>(<span class="n">100.0</span> * revenue / <span class="f">SUM</span>(revenue) <span class="k">OVER</span> (), <span class="n">1</span>) <span class="k">AS</span> revenue_share_pct,
-       <span class="f">ROUND</span>(median_fare::numeric, <span class="n">2</span>) <span class="k">AS</span> median_fare,
-       <span class="f">ROUND</span>(trips::numeric / active_days, <span class="n">0</span>) <span class="k">AS</span> avg_trips_per_day,
+       <span class="f">ROUND</span>(median_price::numeric, <span class="n">2</span>) <span class="k">AS</span> median_price,
+       <span class="f">ROUND</span>(lines::numeric / active_months, <span class="n">1</span>) <span class="k">AS</span> avg_lines_per_month,
        <span class="f">RANK</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> revenue <span class="k">DESC</span>) <span class="k">AS</span> revenue_rank
-<span class="k">FROM</span> per_vendor
+<span class="k">FROM</span> per_genre
 <span class="k">ORDER BY</span> revenue_rank;</pre>
-<p>Everything in one place: aggregation, ordered-set aggregate, window over the grouped result, defensive filter. If you can write this cold and narrate it, you are interview-ready on patterns - the remaining work is speed and performance talk.</p></div></details>
+<p>Everything in one place: aggregation, ordered-set aggregate, window over the grouped result, a derived per-month rate. If you can write this cold and narrate it, you are interview-ready on patterns - the remaining work is speed and performance talk.</p></div></details>
   </div>
 </div>
 
