@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "Local PostgreSQL runner for the SQL Mastery Path curriculum.",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node dist/server.js",
     "dev": "npm --prefix client run dev",
-    "extract-lessons": "node scripts/extract-lessons.js",
-    "build": "node scripts/extract-lessons.js && npm --prefix client run build",
-    "test": "node --test test/*.test.js && npm --prefix client test"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build:server": "tsc -p tsconfig.json",
+    "extract-lessons": "tsc -p tsconfig.json && node dist/scripts/extract-lessons.js",
+    "build": "tsc -p tsconfig.json && node dist/scripts/extract-lessons.js && npm --prefix client run build",
+    "test": "tsc -p tsconfig.json && node --test dist/test/*.test.js && npm --prefix client test"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
@@ -18,5 +20,11 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.0",
+    "@types/pg": "^8.20.0",
+    "typescript": "^6.0.3"
   }
 }

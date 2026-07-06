@@ -2,6 +2,8 @@
 
 A 36-week SQL training app: a React + Vite client (in `client/`) served by an Express back end with a local PostgreSQL runner. Lesson content lives in `content/` as HTML and is parsed by the server to build the curriculum.
 
+Both the client and the server are written in TypeScript. The client is type-checked and bundled by Vite; the server is compiled with `tsc` to `dist/` and run from there.
+
 ## Run the app
 
 ```powershell
@@ -11,21 +13,29 @@ npm run build
 npm start
 ```
 
-Open `http://127.0.0.1:3000`. Express serves the built client from `client/dist`, so `npm run build` must run before the first `npm start` (and after client changes).
+Open `http://127.0.0.1:3000`. `npm run build` compiles the TypeScript server to `dist/`, generates the lesson fragments, and builds the client into `client/dist`. `npm start` runs the compiled server (`dist/server.js`), so `npm run build` must run before the first `npm start` (and after server or client changes).
 
 ## Development
 
 ```powershell
-npm start                  # Express API on :3000
+npm run build:server       # compile the TypeScript server to dist/ (rerun after server changes)
+npm start                  # Express API on :3000 (runs dist/server.js)
 npm run dev                # Vite dev server on :5173 (proxies /api to :3000)
 ```
 
 Open `http://127.0.0.1:5173` for hot reload during client work.
 
+Type-check without emitting:
+
+```powershell
+npm run typecheck                     # server (tsc --noEmit)
+npm --prefix client run typecheck     # client (tsc --noEmit)
+```
+
 ## Tests
 
 ```powershell
-npm test                   # server suite (node --test) + client suite (vitest)
+npm test                   # compiles the server, runs the server suite (node --test on dist/) + client suite (vitest)
 ```
 
 ## Database configuration

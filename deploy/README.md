@@ -15,7 +15,10 @@ user throughout.
 ```bash
 sudo useradd --system --home /opt/sql-mastery --shell /usr/sbin/nologin sqlmastery
 sudo git clone <repo> /opt/sql-mastery && cd /opt/sql-mastery
-sudo -u sqlmastery npm install --omit=dev
+# The server is TypeScript: install (incl. build deps), compile to dist/, then slim.
+sudo -u sqlmastery npm install
+sudo -u sqlmastery npm run build:server    # tsc -> dist/ (dist/server.js is the entry point)
+sudo -u sqlmastery npm prune --omit=dev    # optional: drop build-only deps after compiling
 
 sudo -u sqlmastery cp .env.example .env    # then edit:
 #   HOST=127.0.0.1  PORT=3000
@@ -28,6 +31,19 @@ sudo cp deploy/sql-mastery.service /etc/systemd/system/
 # set ExecStart node path: `which node`
 sudo systemctl daemon-reload && sudo systemctl enable --now sql-mastery
 systemctl status sql-mastery      # should be active; curl http://127.0.0.1:3000/api/databases
+```
+
+## Updating the backend (redeploy)
+
+On the VPS, pull the latest, recompile, and restart:
+
+```bash
+cd /opt/sql-mastery
+sudo -u sqlmastery git pull
+sudo -u sqlmastery npm install            # if dependencies changed
+sudo -u sqlmastery npm run build:server   # recompile TypeScript -> dist/
+sudo systemctl restart sql-mastery
+systemctl status sql-mastery && curl http://127.0.0.1:3000/api/databases
 ```
 
 ## 2. nginx

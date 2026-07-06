@@ -14,7 +14,9 @@ EnvironmentFile=/opt/sql-mastery/.env
 
 # Absolute node path so systemd PATH differences cannot break startup.
 # Replace /usr/bin/node with the output of `which node` on the host (Node 18+).
-ExecStart=/usr/bin/node server.js
+# The server is TypeScript compiled to dist/ by `npm run build:server`, so run the
+# compiled entry point, not the source.
+ExecStart=/usr/bin/node dist/server.js
 
 Restart=on-failure
 RestartSec=2s
