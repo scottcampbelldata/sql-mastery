@@ -1,6 +1,6 @@
-<p class="eyebrow">-- module 1 / three sessions / <span id="done-count"></span></p>
+<p class="eyebrow">-- module 1 / four sessions / <span id="done-count"></span></p>
 <h1>Fundamentals</h1>
-<p class="lede">Retrieval, filtering, sorting, and the three-valued logic of NULL. Nothing here is hard, but senior candidates get dinged on NULL handling and operator precedence more often than on window functions. Everything runs against one table at a time - mostly chinook's clean <code>track</code>, <code>invoice</code>, and <code>customer</code> - so the only thing you have to think about is the clause you are practicing. Get these airtight.</p>
+<p class="lede">Retrieval, filtering, sorting, and the three-valued logic of NULL, plus the everyday tools that go with them: COALESCE and NULLIF for substituting NULLs, DISTINCT vs GROUP BY and DISTINCT ON for de-duplication, LIKE and regex pattern matching, and stable LIMIT/OFFSET paging. Nothing here is hard, but senior candidates get dinged on NULL handling and operator precedence more often than on window functions. Everything runs against one table at a time - mostly chinook's clean <code>track</code>, <code>invoice</code>, and <code>customer</code> - so the only thing you have to think about is the clause you are practicing. Get these airtight.</p>
 
 <h2>1.1 SELECT, aliases, and expressions</h2>
 <pre><span class="c">-- chinook: columns, an expression, and aliases</span>
@@ -60,6 +60,56 @@ In Postgres, <code>milliseconds / 60000</code> with two integers returns an inte
 <span class="k">SELECT DISTINCT</span> billing_country, billing_city <span class="k">FROM</span> invoice;  <span class="c">-- unique (country, city) pairs</span></pre>
 <div class="note"><span class="tag">Interview soundbite</span>
 "LIMIT without ORDER BY returns an arbitrary set of rows - the database gives you whatever is cheapest. If the question says top or first, I need an ORDER BY." Saying this unprompted is an easy credibility win.</div>
+
+<h2>1.5 COALESCE and NULLIF: turning NULLs into answers</h2>
+<p>Once you can detect NULLs, you need to substitute them. <code>COALESCE(a, b, c)</code> returns the first non-NULL argument, so it is the standard "fallback" tool. <code>NULLIF(a, b)</code> is the mirror image: it returns NULL when <code>a = b</code>, which is how you demote a placeholder value (like an empty string or a zero) back into a real NULL.</p>
+<pre><span class="c">-- chinook: fall back from state to country, and from company to a label</span>
+<span class="k">SELECT</span> customer_id,
+       first_name,
+       last_name,
+       <span class="f">COALESCE</span>(state, country)                       <span class="k">AS</span> region,        <span class="c">-- state if we have one, else country</span>
+       <span class="f">COALESCE</span>(<span class="f">NULLIF</span>(<span class="f">TRIM</span>(company), <span class="s">''</span>), <span class="s">'individual'</span>) <span class="k">AS</span> account_type
+<span class="k">FROM</span> customer
+<span class="k">ORDER BY</span> region, last_name
+<span class="k">LIMIT</span> <span class="n">10</span>;</pre>
+<p>The <code>NULLIF(TRIM(company), '')</code> trick is the reason NULLIF exists: a blank string is not NULL, so a plain <code>COALESCE(company, 'individual')</code> would happily return an empty string. NULLIF converts the blank into a real NULL first, and only then does COALESCE reach the fallback.</p>
+<div class="warn"><span class="tag">Division trap</span>
+<code>NULLIF(denominator, 0)</code> is the classic guard against divide-by-zero: <code>x / NULLIF(d, 0)</code> yields NULL instead of erroring when <code>d</code> is 0. You will reuse this in every ratio you ever compute.</div>
+
+<h2>1.6 DISTINCT vs GROUP BY, and DISTINCT ON</h2>
+<p>Two ways to de-duplicate look interchangeable and mostly are. <code>SELECT DISTINCT col</code> and <code>SELECT col ... GROUP BY col</code> return the same set of rows; GROUP BY is what you reach for once you also need an aggregate per group (Module 2), while DISTINCT reads better when you just want the unique values.</p>
+<pre><span class="c">-- chinook: these two return the identical 24 countries</span>
+<span class="k">SELECT DISTINCT</span> billing_country <span class="k">FROM</span> invoice;
+<span class="k">SELECT</span> billing_country <span class="k">FROM</span> invoice <span class="k">GROUP BY</span> billing_country;</pre>
+<p>Postgres also has <code>DISTINCT ON</code>, which keeps the first row per group as defined by ORDER BY. It is the shortest way to answer "one row per X, the biggest/newest one" without a window function.</p>
+<pre><span class="c">-- chinook: the single largest invoice per country</span>
+<span class="k">SELECT DISTINCT ON</span> (billing_country)
+       billing_country, invoice_id, total
+<span class="k">FROM</span> invoice
+<span class="k">ORDER BY</span> billing_country, total <span class="k">DESC</span>;   <span class="c">-- leading key MUST match the DISTINCT ON column</span></pre>
+<div class="tip"><span class="tag">Why it matters</span>The ORDER BY has to lead with the DISTINCT ON column, then sort by the tiebreaker that decides which row survives (here <code>total DESC</code> keeps the biggest). Interviewers love this because it exposes whether you understand that DISTINCT ON picks a row, not just a value.</div>
+
+<h2>1.7 Pattern matching: LIKE, ILIKE, and regex</h2>
+<p>You have already used <code>ILIKE '%love%'</code>. Two wildcards drive LIKE: <code>%</code> matches any run of characters (including none) and <code>_</code> matches exactly one character. <code>ILIKE</code> is the case-insensitive form; anchor a pattern by leaving off the leading <code>%</code>.</p>
+<pre><span class="c">-- chinook: names that START with "The " (anchored), and 5-char postal codes starting 1</span>
+<span class="k">SELECT</span> name <span class="k">FROM</span> track <span class="k">WHERE</span> name <span class="k">ILIKE</span> <span class="s">'the %'</span>;      <span class="c">-- no leading %, so it anchors to the start</span>
+<span class="k">SELECT DISTINCT</span> billing_postal_code
+<span class="k">FROM</span> invoice
+<span class="k">WHERE</span> billing_postal_code <span class="k">LIKE</span> <span class="s">'1____'</span>;             <span class="c">-- '1' then exactly four more chars</span></pre>
+<p>When wildcards are not expressive enough, use a POSIX regular expression with <code>~</code> (case-sensitive) or <code>~*</code> (case-insensitive). Regex gives you anchors (<code>^</code>, <code>$</code>), character classes (<code>[0-9]</code>), and alternation (<code>a|b</code>).</p>
+<pre><span class="c">-- chinook: track names that begin with a digit</span>
+<span class="k">SELECT</span> name <span class="k">FROM</span> track <span class="k">WHERE</span> name ~ <span class="s">'^[0-9]'</span>;         <span class="c">-- ^ = start, [0-9] = any digit</span></pre>
+<div class="warn"><span class="tag">Why it matters</span>A pattern that starts with a wildcard (<code>'%love%'</code>, <code>~ 'bach'</code>) cannot use a plain B-tree index, so it scans. Anchored patterns (<code>'the%'</code>, <code>~ '^The'</code>) can. On the large stackoverflow tables, keep another filter alongside a leading-wildcard search so the query stays fast; Module 8 goes deep on this.</div>
+
+<h2>1.8 Paging with LIMIT and OFFSET</h2>
+<p><code>LIMIT n OFFSET m</code> skips the first <code>m</code> rows and returns the next <code>n</code> - the mechanism behind "page 2, page 3" in an application. It is only meaningful with a fully deterministic ORDER BY; without a unique tiebreaker, rows can shuffle between pages and you will drop or repeat records.</p>
+<pre><span class="c">-- chinook: page 2 of the longest tracks (10 per page, so skip the first 10)</span>
+<span class="k">SELECT</span> track_id, name, milliseconds
+<span class="k">FROM</span> track
+<span class="k">ORDER BY</span> milliseconds <span class="k">DESC</span>, track_id      <span class="c">-- track_id breaks ties so paging is stable</span>
+<span class="k">LIMIT</span> <span class="n">10</span> <span class="k">OFFSET</span> <span class="n">10</span>;                  <span class="c">-- rows 11 through 20</span></pre>
+<div class="note"><span class="tag">Interview soundbite</span>
+"Every paging query needs a tiebreaker in its ORDER BY - usually the primary key - or the pages are not stable. And large OFFSETs get slow because the database still walks and discards every skipped row; keyset pagination fixes that." The second sentence signals real production experience.</div>
 
 <h2>Practice - Session A (problems 1-4)</h2>
 
@@ -230,6 +280,78 @@ In Postgres, <code>milliseconds / 60000</code> with two integers returns an inte
 <span class="k">ORDER BY</span> creationdate <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">50</span>;</pre>
 <p>If score could be NULL, <code>score = 0</code> misses NULL rows (an unknown score is not the same as a zero score - and saying that distinction out loud is the senior move). To treat unknown as zero: <code>COALESCE(score, 0) = 0</code>, while noting it may hide data-quality issues.</p></div></details>
+  </div>
+</div>
+
+<h2>Practice - Session D (problems 13-17)</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P1.13</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p1-13"></div>
+  <div class="pbody"><p>For every customer, show first_name, last_name, and a single <code>region</code> column that is the <code>state</code> when present and the <code>country</code> otherwise. Order by region, then last name. There should be no NULLs in the region column.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody"><code>COALESCE</code> returns its first non-NULL argument. Feed it <code>state</code> first, then <code>country</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> first_name, last_name,
+       <span class="f">COALESCE</span>(state, country) <span class="k">AS</span> region
+<span class="k">FROM</span> customer
+<span class="k">ORDER BY</span> region, last_name;</pre>
+<p>29 of the 59 customers have no state, so without COALESCE a plain <code>state</code> column would be NULL for roughly half the rows. The fallback to <code>country</code> keeps every row labeled with something a human can read.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P1.14</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p1-14"></div>
+  <div class="pbody"><p>For users with reputation above 50000, compute an upvote ratio: <code>upvotes / (upvotes + downvotes)</code>, rounded to 3 decimals. Some users may have zero total votes - your query must not error on those. Show displayname, upvotes, downvotes, and the ratio, highest reputation first, limit 20.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Guard the denominator with <code>NULLIF(upvotes + downvotes, 0)</code> so a zero total yields NULL instead of a divide-by-zero error. Cast to <code>numeric</code> to avoid integer division.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> displayname, upvotes, downvotes,
+       <span class="f">ROUND</span>(upvotes::numeric / <span class="f">NULLIF</span>(upvotes + downvotes, <span class="n">0</span>), <span class="n">3</span>) <span class="k">AS</span> upvote_ratio
+<span class="k">FROM</span> users
+<span class="k">WHERE</span> reputation > <span class="n">50000</span>
+<span class="k">ORDER BY</span> reputation <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">20</span>;</pre>
+<p>Two guards in one expression: the <code>::numeric</code> cast prevents integer truncation, and <code>NULLIF(..., 0)</code> prevents the divide-by-zero. A user with no votes gets a NULL ratio, which is honest - you cannot compute a ratio from nothing.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P1.15</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p1-15"></div>
+  <div class="pbody"><p>Return exactly one row per genre: the shortest track in that genre. Show genre_id, the track name, and its length in milliseconds. Ignore tracks with no genre. Order by genre_id.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">This is the "one row per group, pick the smallest" shape. <code>DISTINCT ON (genre_id)</code> with an ORDER BY that leads on <code>genre_id</code> then sorts by <code>milliseconds ASC</code> keeps the shortest.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT DISTINCT ON</span> (genre_id)
+       genre_id, name, milliseconds
+<span class="k">FROM</span> track
+<span class="k">WHERE</span> genre_id <span class="k">IS NOT NULL</span>
+<span class="k">ORDER BY</span> genre_id, milliseconds <span class="k">ASC</span>;</pre>
+<p>The leading ORDER BY key must be <code>genre_id</code> to match the DISTINCT ON, and the second key (<code>milliseconds ASC</code>) decides which row within each genre survives. Swap it to <code>DESC</code> and you would get the longest track instead - that switch is the whole trick.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P1.16</span><span class="db">stackoverflow</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p1-16"></div>
+  <div class="pbody"><p>Find the 10 highest-scoring <em>questions</em> (posttypeid 1) whose title mentions Postgres or PostgreSQL in any casing. Show id, title, and score, highest score first. Use a regular expression so a single pattern catches both spellings.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Use the case-insensitive regex operator <code>~*</code>. The pattern <code>'postgres(ql)?'</code> makes the "ql" suffix optional. Keep the <code>posttypeid = 1</code> filter so the query stays fast on this large table.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> id, title, score
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+  <span class="k">AND</span> title ~* <span class="s">'postgres(ql)?'</span>
+<span class="k">ORDER BY</span> score <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">10</span>;</pre>
+<p>The <code>(ql)?</code> group matches "postgres" and "postgresql" with one pattern, and <code>~*</code> makes it case-insensitive so "Postgres" and "postgres" both hit. Doing this with LIKE would take two patterns joined by OR; regex is the cleaner tool when the shape of the match varies.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P1.17</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p1-17"></div>
+  <div class="pbody"><p>Imagine a track browser that shows 20 tracks per page, sorted by name A-Z. Return page 3 (tracks 41 through 60). Show track_id and name. Make sure the paging is stable even when two tracks share a name.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Page 3 of 20-per-page means <code>OFFSET 40</code>. Add <code>track_id</code> as a tiebreaker in the ORDER BY so duplicate names cannot reshuffle between pages.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> track_id, name
+<span class="k">FROM</span> track
+<span class="k">ORDER BY</span> name, track_id
+<span class="k">LIMIT</span> <span class="n">20</span> <span class="k">OFFSET</span> <span class="n">40</span>;</pre>
+<p>The offset for page <em>p</em> at page size <em>s</em> is <code>(p - 1) * s</code>, so page 3 skips 40 rows. The <code>track_id</code> tiebreaker matters here because names like "Aces High" repeat - without it, the same title could land on two different pages across requests.</p></div></details>
   </div>
 </div>
 

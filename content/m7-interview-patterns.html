@@ -15,9 +15,9 @@
 </div></header>
 
 <div class="wrap">
-<p class="eyebrow">-- module 7 / seven sessions / <span id="done-count"></span></p>
+<p class="eyebrow">-- module 7 / twelve patterns / <span id="done-count"></span></p>
 <h1>Interview Patterns</h1>
-<p class="lede">Senior interviews recycle about a dozen named patterns in different costumes. Learn to hear the costume and name the pattern - "that's Nth-highest by value," "that's a self-join on consecutive periods" - and the rest is typing. Each pattern below has the trigger phrases, the shape, and a worked example on your data: the small clean chinook store where the result fits on one screen, the large stackoverflow dump where the pattern earns its keep at scale.</p>
+<p class="lede">Senior interviews recycle about a dozen named patterns in different costumes. Learn to hear the costume and name the pattern - "that's Nth-highest by value," "that's a self-join on consecutive periods" - and the rest is typing. Each pattern below has the trigger phrases, the shape, and a worked example on your data: the small clean chinook store where the result fits on one screen, the large stackoverflow dump where the pattern earns its keep at scale. Beyond the core set you also get the three ways to do top-N per group and when each wins, exact percentiles with ordered-set aggregates, period-over-period growth over a gap-free date series, and funnel step-through.</p>
 
 <h2>Pattern 1: Deduplication</h2>
 <p><strong>Trigger phrases:</strong> "remove duplicates," "keep the latest record per," "the table has multiple rows per user."</p>
@@ -149,6 +149,91 @@ grouped <span class="k">AS</span> (
 <p>Recognize the shift from "answer this question" to "shape this data so a dashboard can answer it over and over." Chinook is normalized for clean writes, so the genre scorecard in P7.12 needed four joins just to attach a name to a sale - and a BI tool would re-run those joins on <em>every</em> click. The senior move is a <strong>star</strong>: a fact at one clear grain (one invoice line: keys plus additive measures) surrounded by flattened dimensions (a <code>dim_track</code> carrying album, artist, and genre), so "revenue by genre by month" becomes a two-table join that reads the way the business talks. Name the vocabulary in one breath - <em>grain, fact, dimension, star, denormalize-for-reads</em> - and note that a single wide "semantic layer" view (what a <code>CREATE VIEW</code> or dbt model wraps) is the pragmatic end state for one dashboard.</p>
 <div class="note"><span class="tag">Build it in Module 9</span>
 This module is about <em>recognizing</em> the pattern. <a href="m9-data-modeling.html">Module 9 - Data Modeling</a> is where you build the fact table, the dimensions, and the wide semantic-layer query step by step with runnable drills. P7.13 below is the payoff: once the model exists, the business question collapses to a short GROUP BY.</div>
+
+<h2>Pattern 9: Top-N per group, three ways</h2>
+<p><strong>Trigger phrases:</strong> "top 2 tracks in each genre," "the highest-paid employee per department," "N rows per group."</p>
+<p>This is the most-asked shape after Nth-highest, and the senior signal is knowing all three ways and their tradeoffs. Same task below - the two longest tracks in each genre - written three ways; all three return identical rows.</p>
+<pre><span class="c">-- Way 1: window function. Rank within each partition, filter rn &lt;= N.</span>
+<span class="k">WITH</span> ranked <span class="k">AS</span> (
+    <span class="k">SELECT</span> g.name <span class="k">AS</span> genre, t.name <span class="k">AS</span> track, t.milliseconds,
+           <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> t.genre_id
+                              <span class="k">ORDER BY</span> t.milliseconds <span class="k">DESC</span>, t.track_id) <span class="k">AS</span> rn
+    <span class="k">FROM</span> track t <span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
+)
+<span class="k">SELECT</span> genre, track, milliseconds <span class="k">FROM</span> ranked <span class="k">WHERE</span> rn &lt;= <span class="n">2</span>
+<span class="k">ORDER BY</span> genre, milliseconds <span class="k">DESC</span>;</pre>
+<pre><span class="c">-- Way 2: LATERAL. For each group row, run a tiny ORDER BY ... LIMIT N in a subquery.</span>
+<span class="k">SELECT</span> g.name <span class="k">AS</span> genre, x.name <span class="k">AS</span> track, x.milliseconds
+<span class="k">FROM</span> genre g
+<span class="k">CROSS JOIN LATERAL</span> (
+    <span class="k">SELECT</span> t.name, t.milliseconds
+    <span class="k">FROM</span> track t
+    <span class="k">WHERE</span> t.genre_id = g.genre_id
+    <span class="k">ORDER BY</span> t.milliseconds <span class="k">DESC</span>, t.track_id
+    <span class="k">LIMIT</span> <span class="n">2</span>
+) x
+<span class="k">ORDER BY</span> g.name, x.milliseconds <span class="k">DESC</span>;</pre>
+<pre><span class="c">-- Way 3: correlated subquery. Count how many peers beat this row; keep it if fewer than N do.</span>
+<span class="k">SELECT</span> g.name <span class="k">AS</span> genre, t.name <span class="k">AS</span> track, t.milliseconds
+<span class="k">FROM</span> track t <span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">WHERE</span> (
+    <span class="k">SELECT</span> <span class="f">COUNT</span>(*) <span class="k">FROM</span> track t2
+    <span class="k">WHERE</span> t2.genre_id = t.genre_id
+      <span class="k">AND</span> (t2.milliseconds > t.milliseconds
+           <span class="k">OR</span> (t2.milliseconds = t.milliseconds <span class="k">AND</span> t2.track_id &lt; t.track_id))
+) &lt; <span class="n">2</span>
+<span class="k">ORDER BY</span> g.name, t.milliseconds <span class="k">DESC</span>;</pre>
+<p>Why it matters: the tradeoff is the answer. The <strong>window</strong> version is the default - one pass, clean, and it hands you the rank number for free if you need it. <strong>LATERAL</strong> wins when N is small and the group column is indexed: the planner can stop after N rows per group instead of ranking the whole partition, and it lets each group pull columns a plain window cannot. The <strong>correlated subquery</strong> is the portable-to-old-databases fallback and the one to avoid at scale - it reran the inner count per row and measured roughly a hundred times slower than the other two on this same data. Say "window by default, LATERAL when N is small against a big indexed table, correlated only where windows are unavailable" and you have narrated the whole decision.</p>
+
+<h2>Pattern 10: Median and arbitrary percentiles</h2>
+<p><strong>Trigger phrases:</strong> "median," "the 90th percentile," "p95 latency," "typical value, not the average."</p>
+<pre><span class="c">-- WITHIN GROUP turns an ordered set into a percentile. CONT interpolates; DISC returns an actual row value.</span>
+<span class="k">SELECT</span>
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.5</span>)  <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> total) <span class="k">AS</span> median_cont,
+  <span class="f">PERCENTILE_DISC</span>(<span class="n">0.5</span>)  <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> total) <span class="k">AS</span> median_disc,
+  <span class="f">PERCENTILE_CONT</span>(<span class="n">0.90</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> total) <span class="k">AS</span> p90
+<span class="k">FROM</span> invoice;</pre>
+<p>Why it matters: <code>PERCENTILE_CONT</code> interpolates between the two straddling values (so the median of an even count can be a number no row actually holds), while <code>PERCENTILE_DISC</code> returns an existing value from the set. Use CONT for continuous measures like revenue or latency; use DISC when the reported number must be a real observed value. Both are ordered-set aggregates, so they slot straight into a <code>GROUP BY</code> - one median per genre, per country, per cohort - which the plain <code>AVG</code> can never protect you from a skewed tail the way a median does.</p>
+
+<h2>Pattern 11: Period-over-period over a DATE_TRUNC series</h2>
+<p><strong>Trigger phrases:</strong> "month-over-month," "compared to the previous period," "growth rate," "running peak."</p>
+<pre><span class="c">-- Bucket to a period with date_trunc, then LAG(1) reads the previous bucket in the ordered series.</span>
+<span class="c">-- LAG(1) is safe here because GROUP BY produces one row per month with no internal gaps in this window.</span>
+<span class="k">WITH</span> monthly <span class="k">AS</span> (
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, creationdate)::date <span class="k">AS</span> month,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+      <span class="k">AND</span> creationdate >= <span class="s">'2015-06-01'</span> <span class="k">AND</span> creationdate < <span class="s">'2016-01-01'</span>
+    <span class="k">GROUP BY</span> <span class="n">1</span>
+)
+<span class="k">SELECT</span> month, questions,
+       <span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> prev_month,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * (questions - <span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))
+             / <span class="f">NULLIF</span>(<span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> mom_pct
+<span class="k">FROM</span> monthly
+<span class="k">ORDER BY</span> month;</pre>
+<p>Why it matters: this is the LAG counterpart to Pattern 3's self-join. The rule to say out loud: <code>LAG(n)</code> counts <em>rows</em>, not calendar periods, so it is only correct when the bucketed series is dense - every period present, no gaps. When a period can be missing (a month with zero sales drops out of the <code>GROUP BY</code>), LAG silently compares the wrong pair and you fall back to Pattern 3's join on <code>month - INTERVAL</code>, or you left-join against a generated calendar first. On a dense series LAG is the shorter, faster answer; naming the gap assumption is what marks the senior.</p>
+
+<h2>Pattern 12: Funnel step-through</h2>
+<p><strong>Trigger phrases:</strong> "conversion funnel," "of users who did X, how many went on to Y then Z," "step-through rates."</p>
+<pre><span class="c">-- A funnel is nested FILTER counts over one base set: each step is a subset of the previous.</span>
+<span class="c">-- stackoverflow flavor: question -> got any answer -> got an accepted answer.</span>
+<span class="k">WITH</span> q <span class="k">AS</span> (
+    <span class="k">SELECT</span> acceptedanswerid, answercount
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+      <span class="k">AND</span> creationdate >= <span class="s">'2015-09-01'</span> <span class="k">AND</span> creationdate < <span class="s">'2015-10-01'</span>
+)
+<span class="k">SELECT</span>
+  <span class="f">COUNT</span>(*) <span class="k">AS</span> asked,
+  <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>) <span class="k">AS</span> got_answer,
+  <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> acceptedanswerid <span class="k">IS NOT NULL</span>) <span class="k">AS</span> got_accepted,
+  <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>) / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_answered,
+  <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> acceptedanswerid <span class="k">IS NOT NULL</span>)
+        / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> pct_accepted_of_answered
+<span class="k">FROM</span> q;</pre>
+<p>Why it matters: the decision that trips people is the <em>denominator</em>. A step rate can be measured against the very top of the funnel (overall conversion) or against the immediately preceding step (step-to-step conversion) - here <code>pct_accepted_of_answered</code> divides by answered questions, not all questions, so it reads "of questions that got an answer, how many accepted one." State which denominator you are using; interviewers deliberately leave it ambiguous to see if you notice. When steps are separate events in a log rather than columns on one row (Pattern 7's territory), you self-join or use conditional MIN(timestamp) per step and check the timestamps ascend, but the counting shape stays the same.</p>
 
 <h2>Practice - fifteen problems, mixed costume</h2>
 <p>The prompts below deliberately do not name their pattern. Your first job on each: say which pattern it is before writing a line.</p>
@@ -546,6 +631,114 @@ streaks <span class="k">AS</span> (
 <span class="k">WHERE</span> s.streak_days >= <span class="n">5</span>
 <span class="k">ORDER BY</span> s.streak_days <span class="k">DESC</span>, s.streak_start, s.userid;</pre>
 <p>The date-minus-row-number island key is constant along a consecutive run and shifts the moment a day is skipped - the whole trick. Pre-filtering to <code>reputation &gt; 100000</code> keeps the comment scan (hundreds of thousands of rows) fast. Aaron Bertrand's 27-day run in 2015 tops the list.</p></div></details>
+  </div>
+</div>
+
+<h2>Practice - Session B, the new patterns</h2>
+<p>Five more, drawn from Patterns 9 through 12. Same rule: name the pattern before you type, and when a task could be solved more than one way, say which way you picked and why.</p>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.16</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-16"></div>
+  <div class="pbody"><p>For each media type, list the three longest tracks (by <code>milliseconds</code>, positive durations only). If several tracks tie at a length they should all count toward that rank. Return media type, track name, and length, longest first within each media type.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 9, the window way. "Ties share a rank" points at <code>DENSE_RANK</code> partitioned by media type, then keep <code>dr &lt;= 3</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> ranked <span class="k">AS</span> (
+    <span class="k">SELECT</span> mt.name <span class="k">AS</span> media_type, t.name <span class="k">AS</span> track, t.milliseconds,
+           <span class="f">DENSE_RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> t.media_type_id
+                              <span class="k">ORDER BY</span> t.milliseconds <span class="k">DESC</span>) <span class="k">AS</span> dr
+    <span class="k">FROM</span> track t
+    <span class="k">JOIN</span> media_type mt <span class="k">ON</span> mt.media_type_id = t.media_type_id
+    <span class="k">WHERE</span> t.milliseconds > <span class="n">0</span>
+)
+<span class="k">SELECT</span> media_type, track, milliseconds
+<span class="k">FROM</span> ranked
+<span class="k">WHERE</span> dr &lt;= <span class="n">3</span>
+<span class="k">ORDER BY</span> media_type, milliseconds <span class="k">DESC</span>;</pre>
+<p>The "ties share a rank" wording is the whole tell: <code>ROW_NUMBER</code> would silently drop a tied third-place track, <code>DENSE_RANK</code> keeps every tie. Picking the right ranker for the tie rule is the graded part.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.17</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p7-17"></div>
+  <div class="pbody"><p>Find the single most expensive track in each genre (highest <code>unit_price</code>, break ties by lowest <code>track_id</code>). Return genre, track name, and price, most expensive genres first. Use the LATERAL form.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 9, the LATERAL way. Drive from <code>genre</code>, and for each genre run a subquery that orders that genre's tracks by <code>unit_price DESC, track_id</code> and takes <code>LIMIT 1</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> g.name <span class="k">AS</span> genre, x.name <span class="k">AS</span> track, x.unit_price
+<span class="k">FROM</span> genre g
+<span class="k">CROSS JOIN LATERAL</span> (
+    <span class="k">SELECT</span> t.name, t.unit_price
+    <span class="k">FROM</span> track t
+    <span class="k">WHERE</span> t.genre_id = g.genre_id
+    <span class="k">ORDER BY</span> t.unit_price <span class="k">DESC</span>, t.track_id
+    <span class="k">LIMIT</span> <span class="n">1</span>
+) x
+<span class="k">ORDER BY</span> x.unit_price <span class="k">DESC</span>, g.name;</pre>
+<p>Top-1-per-group is the case where LATERAL reads most naturally - the inner query is a plain "best row in this genre" and the tiebreaker lives right in its ORDER BY. A genre with no tracks would drop out under <code>CROSS JOIN LATERAL</code>; switch to <code>LEFT JOIN LATERAL ... ON true</code> if empty genres must still appear.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.18</span><span class="db">chinook</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-18"></div>
+  <div class="pbody"><p>Among genres with at least 20 tracks, report the median and 90th-percentile track length (<code>milliseconds</code>, positive only) per genre. Longest median first. Which genres are the "long-form" ones, and how does the p90 tell you whether that is the whole genre or just a tail?</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 10 inside a <code>GROUP BY</code>. <code>PERCENTILE_CONT(0.5)</code> and <code>PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY milliseconds)</code>, grouped by genre, with a <code>HAVING COUNT(*) &gt;= 20</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> tracks,
+       <span class="f">ROUND</span>(<span class="f">PERCENTILE_CONT</span>(<span class="n">0.5</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> t.milliseconds)::numeric, <span class="n">0</span>) <span class="k">AS</span> median_ms,
+       <span class="f">ROUND</span>(<span class="f">PERCENTILE_CONT</span>(<span class="n">0.9</span>) <span class="k">WITHIN GROUP</span> (<span class="k">ORDER BY</span> t.milliseconds)::numeric, <span class="n">0</span>) <span class="k">AS</span> p90_ms
+<span class="k">FROM</span> track t
+<span class="k">JOIN</span> genre g <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">WHERE</span> t.milliseconds > <span class="n">0</span>
+<span class="k">GROUP BY</span> g.name
+<span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">20</span>
+<span class="k">ORDER BY</span> median_ms <span class="k">DESC</span>;</pre>
+<p>The long-form genres (Sci Fi &amp; Fantasy, Drama, TV Shows) sit near 40+ minutes at the median with a p90 barely above it - the whole genre is long, because these are video episodes, not songs. Contrast a music genre where the median is a few minutes but the p90 runs much higher: there the length lives in a tail (epic tracks), not the typical row. Median versus p90 is exactly how you tell "the genre is long" from "a few outliers are long."</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.19</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p7-19"></div>
+  <div class="pbody"><p>For questions asked in 2015, produce a monthly series with: the month, question count, month-over-month percent change, and a running peak (the highest monthly count seen so far). Which month set the peak, and did volume ever recover the month after a double-digit drop?</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 11. Bucket with <code>date_trunc('month', creationdate)</code> filtered to <code>posttypeid = 1</code> and 2015, then <code>LAG</code> for the change and <code>MAX(...) OVER (ORDER BY month)</code> for the running peak. The 2015 series is dense, so <code>LAG(1)</code> is safe.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> monthly <span class="k">AS</span> (
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, creationdate)::date <span class="k">AS</span> month,
+           <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+      <span class="k">AND</span> creationdate >= <span class="s">'2015-01-01'</span> <span class="k">AND</span> creationdate < <span class="s">'2016-01-01'</span>
+    <span class="k">GROUP BY</span> <span class="n">1</span>
+)
+<span class="k">SELECT</span> month, questions,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * (questions - <span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month))
+             / <span class="f">NULLIF</span>(<span class="f">LAG</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month), <span class="n">0</span>), <span class="n">1</span>) <span class="k">AS</span> mom_pct,
+       <span class="f">MAX</span>(questions) <span class="k">OVER</span> (<span class="k">ORDER BY</span> month) <span class="k">AS</span> running_peak
+<span class="k">FROM</span> monthly
+<span class="k">ORDER BY</span> month;</pre>
+<p>July 2015 sets the running peak (1082) and it holds for the rest of the year - the running max never revising downward is the point of a peak column. The MoM change and the running peak read from the same dense monthly series; because every month of 2015 is present, <code>LAG(1)</code> lines up with the true previous month. If a month could be missing you would first left-join a generated month calendar so LAG never skips a gap.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P7.20</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p7-20"></div>
+  <div class="pbody"><p>Build a monthly funnel for questions asked in Q4 2015: per month, how many were asked, what percent got at least one answer, and what percent got an accepted answer. Be explicit about which base each percentage divides by.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Pattern 12 with a <code>GROUP BY</code> month. Count the base with <code>COUNT(*)</code>, then each step with <code>COUNT(*) FILTER (WHERE ...)</code> over <code>answercount &gt; 0</code> and <code>acceptedanswerid IS NOT NULL</code>. Here both percentages divide by the same base (all questions that month).</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">WITH</span> q <span class="k">AS</span> (
+    <span class="k">SELECT</span> <span class="f">date_trunc</span>(<span class="s">'month'</span>, creationdate)::date <span class="k">AS</span> month,
+           acceptedanswerid, answercount
+    <span class="k">FROM</span> posts
+    <span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+      <span class="k">AND</span> creationdate >= <span class="s">'2015-10-01'</span> <span class="k">AND</span> creationdate < <span class="s">'2016-01-01'</span>
+)
+<span class="k">SELECT</span> month,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> asked,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> answercount > <span class="n">0</span>) / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_answered,
+       <span class="f">ROUND</span>(<span class="n">100.0</span> * <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> acceptedanswerid <span class="k">IS NOT NULL</span>) / <span class="f">COUNT</span>(*), <span class="n">1</span>) <span class="k">AS</span> pct_accepted
+<span class="k">FROM</span> q
+<span class="k">GROUP BY</span> month
+<span class="k">ORDER BY</span> month;</pre>
+<p>Both rates here divide by <code>asked</code> (overall conversion), so <code>pct_accepted</code> reads "of all questions asked that month, how many earned an accepted answer." That is a different number from "of answered questions, how many were accepted" (P12's <code>pct_accepted_of_answered</code>), which divides by the answered subset. Deciding which denominator the stakeholder actually wants - and saying so - is the whole judgment call in funnel work.</p></div></details>
   </div>
 </div>
 

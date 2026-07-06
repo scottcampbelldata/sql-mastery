@@ -1,6 +1,6 @@
-<p class="eyebrow">-- module 2 / four sessions / <span id="done-count"></span></p>
+<p class="eyebrow">-- module 2 / five sessions / <span id="done-count"></span></p>
 <h1>Aggregation</h1>
-<p class="lede">GROUP BY collapses rows into groups; aggregate functions summarize each group. This module also contains the single most-asked conceptual interview question in existence: the logical order of query execution. You will practice on <strong>chinook</strong> invoices - small enough to eyeball every total - and on <strong>stackoverflow</strong> posts, votes, and badges, where a group can hold a quarter-million rows.</p>
+<p class="lede">GROUP BY collapses rows into groups; aggregate functions summarize each group. This module also contains the single most-asked conceptual interview question in existence: the logical order of query execution. You will go deep on how COUNT and AVG treat NULLs, WHERE vs HAVING, conditional aggregation and rows-to-columns pivots, multi-level subtotals with GROUPING SETS and ROLLUP, rate metrics, and list-building with STRING_AGG. Practice runs on <strong>chinook</strong> invoices - small enough to eyeball every total - and on <strong>stackoverflow</strong> posts, votes, and badges, where a group can hold a quarter-million rows.</p>
 
 <h2>2.1 The logical order of execution (memorize this)</h2>
 <pre><span class="c">-- Written order:          Logical execution order:</span>
@@ -67,6 +67,66 @@
 <span class="c">-- Portable equivalent (know both - many interviews assume this form):</span>
 <span class="f">SUM</span>(<span class="k">CASE WHEN</span> posttypeid = <span class="n">1</span> <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) <span class="k">AS</span> questions</pre>
 <p>Recall the codes from Module 0: <code>posttypeid</code> 1 = question, 2 = answer. The top of this list is user 1876, the most prolific answerer in the dump.</p>
+
+<h2>2.5 Rows to columns: the conditional-aggregation pivot</h2>
+<p>Extend FILTER one step further and you have a pivot: turn category values that live in <em>rows</em> into named <em>columns</em>. Here each year of chinook revenue becomes its own column, one row per country.</p>
+<pre><span class="c">-- chinook: revenue per country, one column per year (2023-2025) plus an all-years total</span>
+<span class="k">SELECT</span> billing_country,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(total) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> invoice_date) = <span class="n">2023</span>)::numeric, <span class="n">2</span>) <span class="k">AS</span> y2023,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(total) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> invoice_date) = <span class="n">2024</span>)::numeric, <span class="n">2</span>) <span class="k">AS</span> y2024,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(total) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> invoice_date) = <span class="n">2025</span>)::numeric, <span class="n">2</span>) <span class="k">AS</span> y2025,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(total)::numeric, <span class="n">2</span>) <span class="k">AS</span> all_years
+<span class="k">FROM</span> invoice
+<span class="k">GROUP BY</span> billing_country
+<span class="k">ORDER BY</span> all_years <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">6</span>;</pre>
+<p><span class="tag">why it matters</span> This is the shape every "put the months across the top" report wants, and it is the manual version of what a BI tool's pivot control does. Note a year with no invoices for a country returns NULL, not 0 - <code>SUM</code> over zero matching rows is NULL. Wrap the whole term in <code>COALESCE(..., 0)</code> if the report needs a hard zero. The portable form swaps each FILTER for <code>SUM(CASE WHEN ... THEN total END)</code>.</p>
+
+<h2>2.6 Multi-level totals: GROUPING SETS, ROLLUP, CUBE</h2>
+<p>Often you want detail rows <em>and</em> subtotals in one result set. Running the query twice and stapling the outputs together is the beginner move; <code>GROUPING SETS</code> asks for several grainularities at once in a single pass.</p>
+<pre><span class="c">-- chinook: per-country detail plus a grand-total row, from one scan</span>
+<span class="k">SELECT</span> billing_country,
+       <span class="f">COUNT</span>(*)               <span class="k">AS</span> invoices,
+       <span class="f">SUM</span>(total)             <span class="k">AS</span> revenue
+<span class="k">FROM</span> invoice
+<span class="k">GROUP BY</span> <span class="k">GROUPING SETS</span> ((billing_country), ());</pre>
+<p>The empty set <code>()</code> is the grand total: it groups every row together, so <code>billing_country</code> comes back NULL on that row. <code>ROLLUP (a, b)</code> is shorthand for the hierarchy <code>(a,b), (a), ()</code> - detail, per-a subtotal, grand total - and <code>CUBE (a, b)</code> gives every combination <code>(a,b), (a), (b), ()</code>.</p>
+<pre><span class="c">-- Label the subtotal row with GROUPING(): 1 means "this column was rolled up"</span>
+<span class="k">SELECT</span> <span class="k">CASE WHEN</span> <span class="f">GROUPING</span>(billing_country) = <span class="n">1</span>
+            <span class="k">THEN</span> <span class="s">'(all countries)'</span> <span class="k">ELSE</span> billing_country <span class="k">END</span> <span class="k">AS</span> country,
+       <span class="f">COUNT</span>(*)               <span class="k">AS</span> invoices,
+       <span class="f">ROUND</span>(<span class="f">SUM</span>(total)::numeric, <span class="n">2</span>) <span class="k">AS</span> revenue
+<span class="k">FROM</span> invoice
+<span class="k">WHERE</span> billing_country <span class="k">IN</span> (<span class="s">'USA'</span>, <span class="s">'Canada'</span>, <span class="s">'France'</span>)
+<span class="k">GROUP BY</span> <span class="k">ROLLUP</span> (billing_country)
+<span class="k">ORDER BY</span> <span class="f">GROUPING</span>(billing_country), revenue <span class="k">DESC</span>;</pre>
+<p><span class="tag">why it matters</span> A NULL in a subtotal row is ambiguous - is it "rolled up" or a real NULL value in the data? <code>GROUPING(col)</code> returns 1 only when the column was collapsed for that row, which is exactly how you both label the total and sort it to the bottom. This is a frequent senior-screen follow-up: "how do you tell a subtotal apart from a genuine NULL?"</p>
+
+<h2>2.7 Rate and share metrics: AVG over a boolean cast to int</h2>
+<p>"What fraction of rows satisfy a condition?" is a rate. The neat trick: cast the boolean to an integer (true becomes 1, false becomes 0) and take <code>AVG</code> - the mean of a 0/1 column <em>is</em> the proportion of 1s.</p>
+<pre><span class="c">-- stackoverflow: share of each year's questions that got an accepted answer</span>
+<span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> questions,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>((acceptedanswerid <span class="k">IS NOT NULL</span>)::int) * <span class="n">100</span>, <span class="n">1</span>) <span class="k">AS</span> pct_accepted
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>
+<span class="k">ORDER BY</span> yr;</pre>
+<p><span class="tag">why it matters</span> The acceptance rate falls from roughly 68% in the early years to under 30% by 2024 - a real trend you would call out loud. Because false casts to 0 and true to 1, <code>AVG(bool::int)</code>, <code>SUM(bool::int)::numeric / COUNT(*)</code>, and <code>COUNT(*) FILTER (WHERE bool) / COUNT(*)::numeric</code> are three spellings of the same rate. AVG is the shortest, but watch NULLs: a NULL boolean casts to NULL and drops out of the AVG denominator, so decide whether an unknown should count as a "no" first.</p>
+
+<h2>2.8 Collapsing a group into a list: STRING_AGG and ARRAY_AGG</h2>
+<p>Sometimes the summary you want is not a number but the members themselves, gathered into one cell. <code>STRING_AGG</code> joins them into a delimited string; <code>ARRAY_AGG</code> keeps them as a real array. Both take an <code>ORDER BY</code> so the list is deterministic.</p>
+<pre><span class="c">-- chinook: every album an artist released, as one ordered, semicolon-joined list</span>
+<span class="k">SELECT</span> ar.name <span class="k">AS</span> artist,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> albums,
+       <span class="f">STRING_AGG</span>(al.title, <span class="s">'; '</span> <span class="k">ORDER BY</span> al.title) <span class="k">AS</span> album_list
+<span class="k">FROM</span> artist ar
+<span class="k">JOIN</span> album al <span class="k">ON</span> al.artist_id = ar.artist_id
+<span class="k">GROUP BY</span> ar.name
+<span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">3</span>
+<span class="k">ORDER BY</span> albums <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">5</span>;</pre>
+<p><span class="tag">why it matters</span> This is how you produce "top 5 tags per user" or "all SKUs in this order" without a second round-trip. <code>ORDER BY</code> inside the aggregate is what makes the output reproducible - without it the list order is undefined. Add <code>DISTINCT</code> (<code>STRING_AGG(DISTINCT mt.name, ', ')</code>) to dedupe. Reach for <code>ARRAY_AGG</code> when the caller is code that wants a real list to iterate, and <code>STRING_AGG</code> when a human will read it.</p>
 
 <h2>Practice - Session A (problems 1-3)</h2>
 
@@ -280,6 +340,96 @@
 <span class="k">GROUP BY</span> <span class="n">1</span>
 <span class="k">ORDER BY</span> bucket;</pre>
 <p>The letter prefixes make the buckets sort correctly as text - a small practical trick. <code>SUM(COUNT(*)) OVER ()</code> is a window over the grouped result; if that feels like magic now, it will be obvious after Module 6. The subquery alternative: <code>ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM users), 1)</code>. The shape is stark - well over half of these users sit under 100 reputation, and only a sliver clear 10,000.</p></div></details>
+  </div>
+</div>
+
+<h2>Practice - Session E (problems 13-17)</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P2.13</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p2-13"></div>
+  <div class="pbody"><p>Data-quality snapshot on <code>track.composer</code>: total tracks, tracks that name a composer, distinct composers, and tracks with the composer missing. One query, one row.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody"><code>COUNT(*)</code> counts every row; <code>COUNT(composer)</code> skips NULLs; <code>COUNT(DISTINCT composer)</code> counts unique non-NULL values. The missing count is <code>COUNT(*) - COUNT(composer)</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> <span class="f">COUNT</span>(*)                      <span class="k">AS</span> all_tracks,
+       <span class="f">COUNT</span>(composer)              <span class="k">AS</span> with_composer,
+       <span class="f">COUNT</span>(<span class="k">DISTINCT</span> composer)     <span class="k">AS</span> distinct_composers,
+       <span class="f">COUNT</span>(*) - <span class="f">COUNT</span>(composer)   <span class="k">AS</span> missing_composer
+<span class="k">FROM</span> track;</pre>
+<p>The three flavors of COUNT in one line are the whole point: 3503 tracks, 2526 name a composer, only 853 of those are distinct (composers repeat across an album), and 977 are blank. Interviewers love watching whether you reach for <code>COUNT(col)</code> vs <code>COUNT(*)</code> without being reminded that they differ on NULLs.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P2.14</span><span class="db">chinook</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-14"></div>
+  <div class="pbody"><p>Build a pivot: per <code>genre_id</code> (only genres with 100+ tracks), one column for MPEG tracks (media_type_id = 1), one for protected AAC (media_type_id = 2), one for everything else, and a total. Busiest genre first.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Three <code>COUNT(*) FILTER (WHERE ...)</code> expressions, one per bucket, plus a plain <code>COUNT(*)</code>. Put the 100-track floor in HAVING.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> genre_id,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> media_type_id = <span class="n">1</span>)          <span class="k">AS</span> mpeg,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> media_type_id = <span class="n">2</span>)          <span class="k">AS</span> aac_protected,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> media_type_id <span class="k">NOT IN</span> (<span class="n">1</span>, <span class="n">2</span>)) <span class="k">AS</span> other,
+       <span class="f">COUNT</span>(*)                                          <span class="k">AS</span> total
+<span class="k">FROM</span> track
+<span class="k">GROUP BY</span> genre_id
+<span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">100</span>
+<span class="k">ORDER BY</span> total <span class="k">DESC</span>;</pre>
+<p>The buckets are mutually exclusive and cover every row, so the three columns sum to the total - a good self-check that your FILTER conditions did not overlap or leave a gap. Rock (genre_id 1) is the only genre carrying protected AAC files in quantity. The portable spelling is <code>COUNT(*) FILTER (WHERE c)</code> rewritten as <code>SUM(CASE WHEN c THEN 1 ELSE 0 END)</code>.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P2.15</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p2-15"></div>
+  <div class="pbody"><p>Per year of <code>creationdate</code>, over questions only (posttypeid = 1): how many questions, and what share of them received at least one answer (<code>answercount &gt; 0</code>)? Express the share as a percentage to 1 decimal. Chronological order.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">A share is the mean of a 0/1 flag. Cast the boolean <code>answercount &gt; 0</code> to int and take <code>AVG(...) * 100</code>. Group by the extracted year.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> questions,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>((answercount > <span class="n">0</span>)::int) * <span class="n">100</span>, <span class="n">1</span>) <span class="k">AS</span> pct_with_answer
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>
+<span class="k">ORDER BY</span> yr;</pre>
+<p>The <code>AVG(bool::int)</code> rate idiom in its natural habitat. The share of answered questions slides from essentially 100% in the sparse early years to about 63% in 2024 - the same maturing-site story the acceptance rate told, from a different angle. Follow-up to expect: "what would change if <code>answercount</code> could be NULL?" A NULL flag would drop out of the AVG rather than count as a zero, quietly shrinking the denominator.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P2.16</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p2-16"></div>
+  <div class="pbody"><p>For every genre with 100+ tracks, show the genre name, its track count, and a single comma-joined, alphabetized list of the distinct media-type names that genre uses. Busiest genre first.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Join <code>track</code> to <code>genre</code> and <code>media_type</code> for the names. Use <code>STRING_AGG(DISTINCT mt.name, ', ' ORDER BY mt.name)</code> - DISTINCT collapses repeats, ORDER BY makes the list deterministic.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> tracks,
+       <span class="f">STRING_AGG</span>(<span class="k">DISTINCT</span> mt.name, <span class="s">', '</span> <span class="k">ORDER BY</span> mt.name) <span class="k">AS</span> media_types
+<span class="k">FROM</span> track t
+<span class="k">JOIN</span> genre g       <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">JOIN</span> media_type mt <span class="k">ON</span> mt.media_type_id = t.media_type_id
+<span class="k">GROUP BY</span> g.name
+<span class="k">HAVING</span> <span class="f">COUNT</span>(*) >= <span class="n">100</span>
+<span class="k">ORDER BY</span> tracks <span class="k">DESC</span>;</pre>
+<p>STRING_AGG turns a whole group into one readable cell - here you can see at a glance that Rock spans three formats while Metal is MPEG-only. The <code>DISTINCT ... ORDER BY</code> pair matters: drop DISTINCT and every track repeats its format in the list; drop ORDER BY and the order is undefined between runs. (Joins arrive properly in Module 3 - this is a preview to make the aggregate worth reading.)</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P2.17</span><span class="db">stackoverflow</span><span class="chip hard">hard</span><input type="checkbox" class="done" data-id="p2-17"></div>
+  <div class="pbody"><p>For 2020 and 2021 only, and questions and answers only, produce a table with both the per-(year, posttypeid) counts <em>and</em> a per-year total row, in one query. Add a flag column that is 1 on the year-total rows. Order by year, with the total row last within each year.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody"><code>GROUPING SETS ((year, posttypeid), (year))</code> asks for both grains at once. <code>GROUPING(posttypeid)</code> is 1 on the rolled-up total rows; use it as the flag and in ORDER BY. Filter the date range and <code>posttypeid IN (1, 2)</code> in WHERE.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate)::int <span class="k">AS</span> yr,
+       posttypeid,
+       <span class="f">GROUPING</span>(posttypeid) <span class="k">AS</span> is_year_total,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> posts
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> creationdate >= <span class="k">DATE</span> <span class="s">'2020-01-01'</span>
+  <span class="k">AND</span> creationdate <  <span class="k">DATE</span> <span class="s">'2022-01-01'</span>
+  <span class="k">AND</span> posttypeid <span class="k">IN</span> (<span class="n">1</span>, <span class="n">2</span>)
+<span class="k">GROUP BY</span> <span class="k">GROUPING SETS</span> (
+         (<span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate), posttypeid),
+         (<span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> creationdate))
+       )
+<span class="k">ORDER BY</span> yr, posttypeid <span class="k">NULLS LAST</span>;</pre>
+<p>The total rows come back with <code>posttypeid</code> NULL and <code>is_year_total = 1</code>; each year's total equals its question and answer counts summed. <code>NULLS LAST</code> in the ORDER BY is what parks the subtotal beneath its detail rows. This is the multi-grain report interviewers reach for to see whether you know GROUPING SETS exists or would instead <code>UNION ALL</code> two separately-grouped queries (correct, but more code and two scans).</p></div></details>
   </div>
 </div>
 

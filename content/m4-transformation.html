@@ -15,9 +15,9 @@
 </div></header>
 
 <div class="wrap">
-<p class="eyebrow">-- module 4 / four sessions / <span id="done-count"></span></p>
+<p class="eyebrow">-- module 4 / five sessions / <span id="done-count"></span></p>
 <h1>Transformation</h1>
-<p class="lede">Real data is messy: wrong types, missing values, ugly strings, and above all dates. Senior analyst interviews are heavy on date math because reporting is heavy on date math. This module is CASE, the NULL toolkit, casting, strings, and serious time work - practiced on chinook's clean invoices and tracks and on Stack Overflow's quarter-million posts.</p>
+<p class="lede">Real data is messy: wrong types, missing values, ugly strings, and above all dates. Senior analyst interviews are heavy on date math because reporting is heavy on date math. This module is CASE, the NULL toolkit, casting, strings, and serious time work - now with date arithmetic (intervals, AGE, durations), string surgery (SUBSTRING, POSITION, REGEXP_REPLACE), conditional-aggregation pivots that turn rows into columns, and TO_CHAR / TO_DATE formatting - practiced on chinook's clean invoices and tracks and on Stack Overflow's quarter-million posts.</p>
 
 <h2>4.1 CASE: SQL's if/else</h2>
 <pre><span class="c">-- chinook: bucket every invoice by its total</span>
@@ -167,6 +167,67 @@ The pattern - <em>turn the multi-valued column into rows, then GROUP BY</em> - i
 </table>
 <div class="tip"><span class="tag">Interview script</span>
 "The logic is identical; only the function names move. On BigQuery I'd reach for SPLIT and UNNEST instead of STRING_TO_ARRAY, JSON_VALUE instead of the arrow operators, and QUALIFY to filter window results in one pass. Standard SQL is the through-line; I learn each engine's dialect notes on top of it." Naming one concrete difference per engine - dates, JSON, string-split - is enough to clear this question.</div>
+
+<h2>4.8 Date arithmetic: intervals, AGE, and durations</h2>
+<pre><span class="c">-- chinook: how long has each employee been on staff, as of today?</span>
+<span class="k">SELECT</span> first_name || <span class="s">' '</span> || last_name          <span class="k">AS</span> emp,
+       hire_date::date                          <span class="k">AS</span> hired,
+       <span class="f">AGE</span>(<span class="k">CURRENT_DATE</span>, hire_date)              <span class="k">AS</span> tenure,       <span class="c">-- calendar interval: years, months, days</span>
+       <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> <span class="f">AGE</span>(<span class="k">CURRENT_DATE</span>, hire_date))::int <span class="k">AS</span> full_years,   <span class="c">-- just the whole years</span>
+       (hire_date + <span class="k">INTERVAL</span> <span class="s">'6 months'</span>)::date  <span class="k">AS</span> review_due     <span class="c">-- shift a date by an interval</span>
+<span class="k">FROM</span> employee
+<span class="k">ORDER BY</span> hire_date;</pre>
+<p>Three moves cover almost every date-math question. <strong>Add or subtract an INTERVAL</strong> to shift a date (<code>d + INTERVAL '90 days'</code>, <code>d - INTERVAL '1 year'</code>). <strong>AGE(a, b)</strong> gives the calendar-aware gap between two timestamps as a years/months/days interval - it respects leap years and month lengths, which raw subtraction does not. <strong>EXTRACT</strong> then pulls a single number out of that interval.</p>
+<pre><span class="c">-- Subtracting two timestamps gives a raw interval; EXTRACT(EPOCH ...) turns any</span>
+<span class="c">-- interval into a plain number of seconds - the reliable way to measure a duration.</span>
+<span class="k">SELECT</span> track_id,
+       milliseconds,
+       <span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> (<span class="k">INTERVAL</span> <span class="s">'1 millisecond'</span> * milliseconds)) <span class="k">AS</span> seconds
+<span class="k">FROM</span> track <span class="k">LIMIT</span> <span class="n">3</span>;</pre>
+<p>Why it matters: reporting lives on "how long ago," "how long between," and "shift this deadline." <code>AGE</code> answers whole-unit questions honestly; <code>EXTRACT(EPOCH FROM ...)</code> converts any interval to seconds so you can divide it into hours, days, or years without hand-waving about 365.25.</p>
+
+<h2>4.9 String surgery: slicing, cleaning, and regex</h2>
+<pre><span class="c">-- chinook: pull pieces out of messy customer contact fields</span>
+<span class="k">SELECT</span> phone,
+       <span class="f">REGEXP_REPLACE</span>(phone, <span class="s">'[^0-9]'</span>, <span class="s">''</span>, <span class="s">'g'</span>)          <span class="k">AS</span> digits_only,  <span class="c">-- strip everything but digits</span>
+       <span class="f">LEFT</span>(<span class="f">REGEXP_REPLACE</span>(phone, <span class="s">'[^0-9]'</span>, <span class="s">''</span>, <span class="s">'g'</span>), <span class="n">3</span>) <span class="k">AS</span> lead,        <span class="c">-- first 3 chars</span>
+       <span class="f">RIGHT</span>(postal_code, <span class="n">3</span>)                          <span class="k">AS</span> last3,       <span class="c">-- last 3 chars</span>
+       <span class="f">SUBSTRING</span>(email <span class="k">FROM</span> <span class="f">POSITION</span>(<span class="s">'@'</span> <span class="k">IN</span> email) + <span class="n">1</span>) <span class="k">AS</span> domain  <span class="c">-- slice from a found position</span>
+<span class="k">FROM</span> customer
+<span class="k">WHERE</span> phone <span class="k">IS NOT NULL</span> <span class="k">LIMIT</span> <span class="n">5</span>;</pre>
+<p>The toolkit divides cleanly. <strong>LEFT / RIGHT</strong> grab a fixed number of characters from an end. <strong>SUBSTRING(s FROM start FOR len)</strong> takes an arbitrary slice, and pairing its start with <strong>POSITION(needle IN s)</strong> lets you cut relative to a character you found rather than a hard-coded offset. <strong>REGEXP_REPLACE(s, pattern, replacement, 'g')</strong> is the sledgehammer: the <code>'g'</code> flag replaces every match, and <code>'[^0-9]'</code> ("anything that is not a digit") is the canonical way to normalize a phone number or ID down to bare digits.</p>
+<p>Why it matters: real text columns are dirty - inconsistent punctuation, stray whitespace, values glued together. SPLIT_PART handles clean delimiters; POSITION + SUBSTRING handle "cut at the first X"; and REGEXP_REPLACE handles "keep only the characters that match a rule." Reaching for the narrowest tool that does the job reads as fluency.</p>
+
+<h2>4.10 Conditional aggregation: pivoting rows into columns</h2>
+<pre><span class="c">-- chinook: one row per genre, revenue spread across year columns (rows -> columns)</span>
+<span class="k">SELECT</span> g.name <span class="k">AS</span> genre,
+       <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> i.invoice_date) = <span class="n">2022</span>) <span class="k">AS</span> y2022,
+       <span class="f">SUM</span>(il.unit_price * il.quantity) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> i.invoice_date) = <span class="n">2023</span>) <span class="k">AS</span> y2023,
+       <span class="f">SUM</span>(il.unit_price * il.quantity)                                             <span class="k">AS</span> all_years
+<span class="k">FROM</span> invoice_line il
+<span class="k">JOIN</span> invoice i <span class="k">ON</span> i.invoice_id = il.invoice_id
+<span class="k">JOIN</span> track t   <span class="k">ON</span> t.track_id = il.track_id
+<span class="k">JOIN</span> genre g   <span class="k">ON</span> g.genre_id = t.genre_id
+<span class="k">GROUP BY</span> g.name
+<span class="k">ORDER BY</span> all_years <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">6</span>;</pre>
+<p>This is the "pivot" every spreadsheet user asks for: the values that were down the rows (one year per row) become across the columns (one year per column). The mechanism is a per-column aggregate that only sees some of the rows. Two equivalent forms:</p>
+<ul>
+<li><strong>FILTER</strong> (shown above) - <code>SUM(x) FILTER (WHERE cond)</code>. Postgres-native, the cleanest to read.</li>
+<li><strong>SUM(CASE)</strong> - <code>SUM(CASE WHEN cond THEN x ELSE 0 END)</code>. The portable classic that works on every engine; know it because interviews on other databases expect it.</li>
+</ul>
+<p>Why it matters: "give me metric X broken out by category across time" is the single most common reporting request, and conditional aggregation is how you serve it in one grouped pass instead of several queries stitched together. An un-FILTERed <code>SUM</code> in the same SELECT (the <code>all_years</code> column) hands you a total alongside the breakdown for free.</p>
+
+<h2>4.11 Casting and formatting: TO_CHAR and TO_DATE</h2>
+<pre><span class="c">-- chinook: format a date for display, parse a string into a date, coerce a type</span>
+<span class="k">SELECT</span> <span class="f">TO_CHAR</span>(invoice_date, <span class="s">'FMDay DD Mon YYYY'</span>) <span class="k">AS</span> pretty,      <span class="c">-- date -> display string</span>
+       <span class="f">TO_DATE</span>(<span class="s">'2023-07-04'</span>, <span class="s">'YYYY-MM-DD'</span>)         <span class="k">AS</span> parsed,      <span class="c">-- string -> date</span>
+       invoice_date::date                        <span class="k">AS</span> just_date,   <span class="c">-- timestamp -> date (drop the time)</span>
+       <span class="s">'42'</span>::int + <span class="n">8</span>                             <span class="k">AS</span> math         <span class="c">-- text -> int so arithmetic works</span>
+<span class="k">FROM</span> invoice <span class="k">LIMIT</span> <span class="n">3</span>;</pre>
+<p><strong>TO_CHAR</strong> turns a date or number into a formatted string for humans (the <code>FM</code> prefix trims the padding Postgres would otherwise add to <code>Day</code>). <strong>TO_DATE</strong> does the reverse, parsing a string into a real date using a format mask - reach for it when a source feeds you dates as text. And plain <code>::type</code> coercions clear up the everyday traps: cast a text column to <code>int</code> before you do math on it, and cast a <code>timestamp</code> to <code>date</code> when the time-of-day is noise.</p>
+<div class="note"><span class="tag">Format for display, cast for math</span>
+The discipline: keep values in their real type (<code>date</code>, <code>numeric</code>) for every calculation, grouping, and comparison, and only convert to a string with TO_CHAR at the very end, for output. Grouping or sorting by a TO_CHAR string works by luck at best - <code>'2013-2'</code> sorts before <code>'2013-10'</code> as text - so it is a display step, never a computation step. This is the same lesson as 4.5's "date_trunc groups, TO_CHAR labels," now stated as a rule.</div>
 
 <h2>Practice - Session A (problems 1-3)</h2>
 
@@ -395,6 +456,92 @@ The pattern - <em>turn the multi-valued column into rows, then GROUP BY</em> - i
 <span class="k">ORDER BY</span> questions <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="n">15</span>;</pre>
 <p>The <code>a.tag &lt; b.tag</code> predicate does double duty: it drops the self-pair (a tag with itself) and collapses (x, y) and (y, x) into one canonical pair, so each combination is counted exactly once. "Explode, then self-join on the shared key" is the standard way to turn a multi-valued column into a co-occurrence matrix - market-basket analysis in a dozen lines.</p></div></details>
+  </div>
+</div>
+
+<h2>Practice - Session E (problems 14-18)</h2>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P4.14</span><span class="db">chinook</span><span class="chip warmup">warmup</span><input type="checkbox" class="done" data-id="p4-14"></div>
+  <div class="pbody"><p>Data density per track: from <code>track</code>, show bytes, milliseconds, the integer division <code>bytes / milliseconds</code>, and the same ratio to 1 decimal place. The two ratios should differ - explain why in one line.</p>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> bytes,
+       milliseconds,
+       bytes / milliseconds                    <span class="k">AS</span> int_div,
+       <span class="f">ROUND</span>(bytes::numeric / milliseconds, <span class="n">1</span>) <span class="k">AS</span> bytes_per_ms
+<span class="k">FROM</span> track <span class="k">LIMIT</span> <span class="n">5</span>;</pre>
+<p>Both operands are integers, so <code>bytes / milliseconds</code> is integer division and truncates the fraction. Casting either side to <code>numeric</code> switches Postgres to real division; do it before the ROUND, not after. This is the 4.3 casting trap in one line.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P4.15</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p4-15"></div>
+  <div class="pbody"><p>Tenure cohorts: group employees by their hire year and show, per year, the head count and the average tenure in whole-plus-fractional years as of today, rounded to 1 decimal. Order by hire year.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Get exact fractional years from an interval with <code>EXTRACT(EPOCH FROM AGE(CURRENT_DATE, hire_date)) / 86400 / 365.25</code>. Group on <code>EXTRACT(YEAR FROM hire_date)</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> <span class="f">EXTRACT</span>(<span class="k">YEAR FROM</span> hire_date)::int <span class="k">AS</span> hire_year,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> employees,
+       <span class="f">ROUND</span>(<span class="f">AVG</span>(<span class="f">EXTRACT</span>(<span class="k">EPOCH FROM</span> <span class="f">AGE</span>(<span class="k">CURRENT_DATE</span>, hire_date)) / <span class="n">86400</span> / <span class="n">365.25</span>)::numeric, <span class="n">1</span>) <span class="k">AS</span> avg_years
+<span class="k">FROM</span> employee
+<span class="k">GROUP BY</span> <span class="n">1</span>
+<span class="k">ORDER BY</span> hire_year;</pre>
+<p>AGE gives a calendar interval; EXTRACT(EPOCH ...) turns it into seconds so you can divide down to fractional years honestly. The <code>::numeric</code> before ROUND is the same cast from 4.3 - AVG of a float is double precision, and ROUND wants numeric.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P4.16</span><span class="db">chinook</span><span class="chip core">core</span><input type="checkbox" class="done" data-id="p4-16"></div>
+  <div class="pbody"><p>Quarterly invoice pivot: one row per billing country, with four columns counting invoices in Q1, Q2, Q3, and Q4 (across all years combined). Show the eight busiest countries by total invoices.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">This is a rows-to-columns pivot (4.10). Use four <code>COUNT(*) FILTER (WHERE EXTRACT(QUARTER FROM invoice_date) = n)</code> expressions, one per quarter, and GROUP BY the country.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> billing_country,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">QUARTER FROM</span> invoice_date) = <span class="n">1</span>) <span class="k">AS</span> q1,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">QUARTER FROM</span> invoice_date) = <span class="n">2</span>) <span class="k">AS</span> q2,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">QUARTER FROM</span> invoice_date) = <span class="n">3</span>) <span class="k">AS</span> q3,
+       <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">QUARTER FROM</span> invoice_date) = <span class="n">4</span>) <span class="k">AS</span> q4
+<span class="k">FROM</span> invoice
+<span class="k">GROUP BY</span> billing_country
+<span class="k">ORDER BY</span> <span class="f">COUNT</span>(*) <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">8</span>;</pre>
+<p>Each FILTER restricts its own COUNT to one quarter, so the four columns partition every country's invoices. The portable version swaps each FILTER for <code>COUNT(CASE WHEN EXTRACT(QUARTER FROM invoice_date) = n THEN 1 END)</code> - same result, works on any engine.</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P4.17</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p4-17"></div>
+  <div class="pbody"><p>Time-of-day profile: for questions asked in January 2013, count them into four parts of the day in a single row - morning (hours 6-11), afternoon (12-17), evening (18-23), and night (0-5). Filter the month with a half-open date range.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">Four <code>COUNT(*) FILTER (...)</code> columns, each keyed on <code>EXTRACT(HOUR FROM creationdate)</code> with a <code>BETWEEN</code> range. Keep the month filter sargable: <code>creationdate &gt;= '2013-01-01' AND creationdate &lt; '2013-02-01'</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span>
+  <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate) <span class="k">BETWEEN</span> <span class="n">6</span> <span class="k">AND</span> <span class="n">11</span>)  <span class="k">AS</span> morning,
+  <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate) <span class="k">BETWEEN</span> <span class="n">12</span> <span class="k">AND</span> <span class="n">17</span>) <span class="k">AS</span> afternoon,
+  <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate) <span class="k">BETWEEN</span> <span class="n">18</span> <span class="k">AND</span> <span class="n">23</span>) <span class="k">AS</span> evening,
+  <span class="f">COUNT</span>(*) <span class="k">FILTER</span> (<span class="k">WHERE</span> <span class="f">EXTRACT</span>(<span class="k">HOUR FROM</span> creationdate) <span class="k">BETWEEN</span> <span class="n">0</span> <span class="k">AND</span> <span class="n">5</span>)   <span class="k">AS</span> night
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+  <span class="k">AND</span> creationdate >= <span class="s">'2013-01-01'</span>
+  <span class="k">AND</span> creationdate <  <span class="s">'2013-02-01'</span>;</pre>
+<p>EXTRACT(HOUR ...) buckets the timestamp; the four FILTERs pivot those buckets into one comparison row. The half-open range beats <code>BETWEEN '2013-01-01' AND '2013-01-31'</code> because it cleanly includes every moment of the month without fretting over the last day's time-of-day, and it stays index-friendly (Module 8).</p></div></details>
+  </div>
+</div>
+
+<div class="problem">
+  <div class="phead"><span class="pid">P4.18</span><span class="db">stackoverflow</span><span class="chip interview">interview</span><input type="checkbox" class="done" data-id="p4-18"></div>
+  <div class="pbody"><p>Primary-tag leaderboard for Q1 2013: for questions in the first quarter of 2013, take each post's <em>first</em> tag as its primary tag, label the quarter like '2013-1', and return the eight most common primary tags with their counts.</p>
+  <details class="hint"><summary>hint</summary><div class="sbody">The tags column is pipe-wrapped like <code>|sql-server|tsql|</code>. Strip the outer pipes with <code>TRIM(BOTH '|' FROM tags)</code>, then <code>SPLIT_PART(..., '|', 1)</code> gives the first tag. Label the quarter with <code>TO_CHAR(creationdate, 'YYYY-Q')</code>.</div></details>
+  <details class="sol"><summary>solution</summary><div class="sbody">
+<pre><span class="k">SELECT</span> <span class="f">TO_CHAR</span>(creationdate, <span class="s">'YYYY-Q'</span>) <span class="k">AS</span> quarter_label,
+       <span class="f">SPLIT_PART</span>(<span class="f">TRIM</span>(<span class="k">BOTH</span> <span class="s">'|'</span> <span class="k">FROM</span> tags), <span class="s">'|'</span>, <span class="n">1</span>) <span class="k">AS</span> primary_tag,
+       <span class="f">COUNT</span>(*) <span class="k">AS</span> questions
+<span class="k">FROM</span> posts
+<span class="k">WHERE</span> posttypeid = <span class="n">1</span>
+  <span class="k">AND</span> tags <span class="k">IS NOT NULL</span>
+  <span class="k">AND</span> creationdate >= <span class="s">'2013-01-01'</span>
+  <span class="k">AND</span> creationdate <  <span class="s">'2013-04-01'</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>
+<span class="k">ORDER BY</span> questions <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">8</span>;</pre>
+<p>SPLIT_PART pulls out just the first piece (4.4) - no need to explode the whole list here since only the primary tag matters. TRIM(BOTH '|' ...) first, or the leading pipe would make SPLIT_PART return an empty string as part 1. TO_CHAR with <code>'YYYY-Q'</code> is a display label only, matching the "format last" rule from 4.11.</p></div></details>
   </div>
 </div>
 
