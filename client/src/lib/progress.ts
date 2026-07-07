@@ -61,3 +61,26 @@ export function setLessonBox(page: string, id: string, checked: boolean): void {
   if (checked) safeSet(`sqlm:${page}:${id}`, '1');
   else safeRemove(`sqlm:${page}:${id}`);
 }
+
+// Visual prefs and sign-in are kept across a progress reset; everything else under the
+// sqlm: namespace (foundations mastery, curriculum completion, lesson checkboxes, saved
+// SQL, the active session pointer) is wiped.
+const KEEP_ON_RESET = new Set<string>([
+  'sqlm:theme:v1',
+  SIDEBAR_KEY,
+  'sqlm:auth-token:v1',
+  'sqlm:welcome-dismissed:v1'
+]);
+
+// Wipe all learning progress back to zero. Best-effort (storage can throw). The caller
+// should reload the page afterwards so the in-memory state re-initializes from empty.
+export function resetAllProgress(): void {
+  try {
+    const doomed: string[] = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('sqlm:') && !KEEP_ON_RESET.has(key)) doomed.push(key);
+    }
+    doomed.forEach((k) => safeRemove(k));
+  } catch { /* best-effort: ignore */ }
+}
