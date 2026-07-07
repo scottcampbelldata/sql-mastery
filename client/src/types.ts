@@ -134,6 +134,9 @@ export interface LearningState {
   lastPracticedSession: Record<string, number>;
   checkpointsPassed: string[];
   sessionCounter: number;
+  // Times a spaced review of each skill has been passed; drives the scaffold fade
+  // (full -> half -> blank) once a skill is mastered.
+  reviewsPassed: Record<string, number>;
 }
 
 // A { tableName: columnNames[] } map for editor autocomplete and the schema browser.

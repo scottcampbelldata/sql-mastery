@@ -3,7 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { AppShell } from '../../components/AppShell';
 import { EmptyState, Button } from '../../components/ui';
 import { useFoundations } from '../../state/FoundationsContext';
-import { buildTodaySession, advanceSession, isSkillStrong } from '../../lib/foundations';
+import { buildTodaySession, advanceSession, scaffoldTier } from '../../lib/foundations';
 import { FoundationsRep } from './FoundationsRep';
 import type { TodaySession } from '../../lib/foundations';
 import type { Exercise, Concept, LearningState } from '../../types';
@@ -68,7 +68,7 @@ export default function FoundationsSession() {
     <AppShell breadcrumb={<span className="here">Learn / Foundations</span>}>
       <FoundationsRep key={step.exercise.id} exercise={step.exercise}
         label={label} kind={step.type === 'review' ? 'review' : 'new'}
-        cold={step.type === 'review' && isSkillStrong(state, step.concept.skill)}
+        tier={scaffoldTier(state, step.concept.skill, step.type === 'review')}
         teach={showTeach ? step.concept.teach : null} stepText={stepText} />
       <div className="session-footer">
         <Button variant="primary" onClick={next}>{isLast ? 'Finish session' : 'Next exercise →'}</Button>

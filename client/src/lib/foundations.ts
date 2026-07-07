@@ -9,7 +9,7 @@ export const CHECKPOINT_SIZE = 6;
 export const CHECKPOINT_PASS = 5;
 
 function defaultState(): LearningState {
-  return { skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0 };
+  return { skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {} };
 }
 
 function asObject(v: unknown): Record<string, any> { return v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, any>) : {}; }
@@ -24,7 +24,8 @@ export function loadFoundations(): LearningState {
         lastSql: asObject(parsed.lastSql),
         lastPracticedSession: asObject(parsed.lastPracticedSession),
         checkpointsPassed: Array.isArray(parsed.checkpointsPassed) ? parsed.checkpointsPassed : [],
-        sessionCounter: Number.isFinite(parsed.sessionCounter) ? parsed.sessionCounter : 0
+        sessionCounter: Number.isFinite(parsed.sessionCounter) ? parsed.sessionCounter : 0,
+        reviewsPassed: asObject(parsed.reviewsPassed)
       };
     }
   } catch { /* fall through */ }
@@ -60,6 +61,23 @@ export function weakSpots(track: Track, state: LearningState, n = 3): { skill: s
     .map((c) => ({ skill: c.skill, title: c.title, pct: skillMastery(state, c.skill).pct }))
     .sort((a, b) => a.pct - b.pct)
     .slice(0, n);
+}
+
+export type ScaffoldTier = 'full' | 'half' | 'blank';
+
+// How much starter to show for a step. Beginners and still-learning skills always get the
+// full fill-in-the-blank scaffold. Only a review of an already-mastered (strong) skill fades:
+// its first mastered review reveals half the blanks, later ones go blank. Tracks
+// reviewsPassed so the fade progresses across repeated reviews.
+export function scaffoldTier(state: LearningState, skill: string, isReview: boolean): ScaffoldTier {
+  if (!isReview || !isSkillStrong(state, skill)) return 'full';
+  const passes = state.reviewsPassed[skill] || 0;
+  return passes === 0 ? 'half' : 'blank';
+}
+
+export function recordReviewPass(state: LearningState, skill: string): LearningState {
+  state.reviewsPassed = { ...state.reviewsPassed, [skill]: (state.reviewsPassed[skill] || 0) + 1 };
+  return state;
 }
 
 // Mutating recorders (return the same state; callers persist). New leaf objects/arrays

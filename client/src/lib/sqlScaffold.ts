@@ -62,3 +62,39 @@ export function starterSqlForExercise(exercise: Pick<Exercise, 'starterSql' | 'e
   if (explicit) return formatSql(explicit);
   return scaffoldSql(exercise?.expectedSql);
 }
+
+// Middle scaffold tier: reveal about half of a starter's ____ blanks by filling them with
+// their expected values (from expectedSql) and keeping the rest blank. Reveals the
+// even-indexed blanks, always keeping at least one blank. The starter's literal segments
+// are matched against the expected in order to recover each blank's value; on any mismatch
+// this falls back to the untouched full starter, so it never reveals a wrong value.
+export function revealHalfScaffold(starter: string, expectedSql: string | undefined): string {
+  const norm = (s: string | undefined): string => String(s || '').replace(/\s+/g, ' ').trim();
+  const starterN = norm(starter);
+  const expectedN = norm(expectedSql).replace(/;+$/, '');
+  const lits = starterN.replace(/;+$/, '').split(/_{2,}/);
+  const blankCount = lits.length - 1;
+  if (blankCount < 1 || !expectedN) return formatSql(starter);
+
+  const values: string[] = [];
+  let pos = expectedN.indexOf(lits[0]);
+  if (pos < 0) return formatSql(starter);
+  pos += lits[0].length;
+  for (let i = 1; i < lits.length; i += 1) {
+    const next = lits[i] === '' ? expectedN.length : expectedN.indexOf(lits[i], pos);
+    if (next < 0) return formatSql(starter);
+    values.push(expectedN.slice(pos, next).trim());
+    pos = next + lits[i].length;
+  }
+
+  const reveal = new Set<number>();
+  for (let i = 0; i < blankCount; i += 2) reveal.add(i);
+  if (reveal.size >= blankCount) reveal.delete(blankCount - 1);
+
+  let out = lits[0];
+  for (let i = 0; i < blankCount; i += 1) {
+    out += reveal.has(i) && values[i] ? values[i] : SQL_BLANK;
+    out += lits[i + 1];
+  }
+  return formatSql(withSemicolon(out));
+}

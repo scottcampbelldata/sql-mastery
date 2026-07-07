@@ -19,7 +19,7 @@ describe('learning-path client helpers', () => {
   beforeEach(() => localStorage.clear());
 
   it('loads a safe default under its own key', () => {
-    expect(loadLearning()).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0 });
+    expect(loadLearning()).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {} });
   });
 
   it('migrates an existing sqlm:foundations:v1 into sqlm:learning:v1 once', () => {
