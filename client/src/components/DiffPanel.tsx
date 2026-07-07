@@ -5,9 +5,9 @@ const cols = (list?: string[]): string => `[${(list || []).join(', ')}]`;
 
 function detail(diff: SqlDiff): string {
   const parts: string[] = [];
-  if (diff.extraRows) parts.push(`${diff.extraRows} extra`);
-  if (diff.missingRows) parts.push(`${diff.missingRows} missing`);
-  return parts.length ? `${parts.join(', ')} row${plural(diff.extraRows + diff.missingRows)}.` : '';
+  if (diff.extraRows) parts.push(`${diff.extraRows} extra row${plural(diff.extraRows)}`);
+  if (diff.missingRows) parts.push(`${diff.missingRows} missing row${plural(diff.missingRows)}`);
+  return parts.length ? `${parts.join(', ')}.` : '';
 }
 
 function lines(diff: SqlDiff): string[] {
