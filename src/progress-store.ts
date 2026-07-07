@@ -7,7 +7,7 @@ import crypto from 'crypto';
 // and writes are atomic (temp file + rename). This is intentionally separate from
 // the read-only teaching PostgreSQL role.
 function createProgressStore(options: any = {}): any {
-  const dir = options.dir || path.join(__dirname, '..', 'data', 'progress');
+  const dir = options.dir || path.resolve(process.cwd(), 'data', 'progress');
 
   function fileFor(code: string) {
     const hash = crypto.createHash('sha256').update(String(code)).digest('hex');
