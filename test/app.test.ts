@@ -5,6 +5,8 @@ import assert from 'node:assert/strict';
 import type { RequestListener } from 'node:http';
 
 import { createApp } from '../src/app';
+import { createUserStore } from '../src/user-store';
+import { createAuthService } from '../src/auth-service';
 
 async function withServer(app: RequestListener, run: (baseUrl: string) => Promise<void>) {
   const server = http.createServer(app);
@@ -251,40 +253,6 @@ test('serveClient=false runs API-only (no static front end)', async () => {
   });
 });
 
-test('progress sync stores/returns per-code data and rejects short codes', async () => {
-  const os = require('node:os');
-  const fs = require('node:fs');
-  const nodePath = require('node:path');
-  const { createProgressStore } = require('../src/progress-store');
-  const dir = fs.mkdtempSync(nodePath.join(os.tmpdir(), 'sqlm-progress-'));
-  const app = createApp({
-    queryService: { listDatabases: () => ['chinook'] },
-    progressStore: createProgressStore({ dir })
-  });
-
-  await withServer(app, async (baseUrl) => {
-    const empty = await fetch(`${baseUrl}/api/progress?code=abcdef`);
-    assert.equal(empty.status, 200);
-    assert.deepEqual(await empty.json() as any, { data: null, updatedAt: null });
-
-    const put = await fetch(`${baseUrl}/api/progress`, {
-      method: 'PUT',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ code: 'abcdef', data: { 'sqlm:m1:p1-1': '1' } })
-    });
-    assert.equal(put.status, 200);
-    assert.equal((await put.json() as any).ok, true);
-
-    const got = await fetch(`${baseUrl}/api/progress?code=abcdef`);
-    assert.deepEqual((await got.json() as any).data, { 'sqlm:m1:p1-1': '1' });
-
-    const bad = await fetch(`${baseUrl}/api/progress?code=x`);
-    assert.equal(bad.status, 400);
-  });
-
-  fs.rmSync(dir, { recursive: true, force: true });
-});
-
 test('CORS reflects allowed origins, answers preflight, and ignores others', async () => {
   const app = createApp({
     queryService: { listDatabases: () => ['chinook'] },
@@ -312,5 +280,67 @@ test('CORS reflects allowed origins, answers preflight, and ignores others', asy
       headers: { origin: 'https://evil.example.com' }
     });
     assert.equal(blocked.headers.get('access-control-allow-origin'), null);
+  });
+});
+
+function authApp() {
+  const os = require('node:os');
+  const fs = require('node:fs');
+  const nodePath = require('node:path');
+  const { createProgressStore } = require('../src/progress-store');
+  const dir = fs.mkdtempSync(nodePath.join(os.tmpdir(), 'sqlm-auth-'));
+  const authService = createAuthService({
+    sessionSecret: 'test-secret',
+    verifyGoogle: async (t: string) => {
+      if (t !== 'good') throw new Error('bad');
+      return { sub: 'g-1', email: 'a@b.com', name: 'Ann' };
+    }
+  });
+  return createApp({
+    queryService: { listDatabases: () => ['chinook'] },
+    userStore: createUserStore({ dir: nodePath.join(dir, 'users') }),
+    progressStore: createProgressStore({ dir: nodePath.join(dir, 'progress') }),
+    authService
+  });
+}
+
+test('POST /api/auth/google returns a token and profile for a valid id token', async () => {
+  await withServer(authApp() as any, async (baseUrl) => {
+    const res = await fetch(`${baseUrl}/api/auth/google`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ idToken: 'good' })
+    });
+    const body = await res.json() as any;
+    assert.equal(res.status, 200);
+    assert.ok(body.token);
+    assert.equal(body.user.email, 'a@b.com');
+  });
+});
+
+test('POST /api/auth/google rejects an invalid id token', async () => {
+  await withServer(authApp() as any, async (baseUrl) => {
+    const res = await fetch(`${baseUrl}/api/auth/google`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ idToken: 'bad' })
+    });
+    assert.equal(res.status, 401);
+  });
+});
+
+test('GET /api/progress requires a valid token', async () => {
+  await withServer(authApp() as any, async (baseUrl) => {
+    const anon = await fetch(`${baseUrl}/api/progress`);
+    assert.equal(anon.status, 401);
+  });
+});
+
+test('progress round-trips for the signed-in user', async () => {
+  await withServer(authApp() as any, async (baseUrl) => {
+    const auth = await (await fetch(`${baseUrl}/api/auth/google`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ idToken: 'good' })
+    })).json() as any;
+    const headers = { 'content-type': 'application/json', authorization: `Bearer ${auth.token}` };
+    const put = await fetch(`${baseUrl}/api/progress`, { method: 'PUT', headers, body: JSON.stringify({ data: { 'sqlm:m1:p1': '1' } }) });
+    assert.equal(put.status, 200);
+    const got = await (await fetch(`${baseUrl}/api/progress`, { headers })).json() as any;
+    assert.deepEqual(got.data, { 'sqlm:m1:p1': '1' });
   });
 });
