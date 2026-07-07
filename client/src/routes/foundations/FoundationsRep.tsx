@@ -37,7 +37,8 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
   const dbSchema = useDbSchema(exercise.database);
   const check = useSqlCheck(exercise, {
     onAttempt: () => update((s: LearningState) => recordAttempt(s, exercise.id)),
-    onResult: (correct: boolean) => { if (correct) { update((s: LearningState) => recordCorrect(s, exercise)); onCorrect?.(); } }
+    onResult: (correct: boolean) => { if (correct) { update((s: LearningState) => recordCorrect(s, exercise)); onCorrect?.(); } },
+    cold: kind === 'review'
   });
 
   return (
@@ -74,7 +75,7 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
         <div className="console-editor">
           <span className="wb-editor-label" aria-hidden="true">Your SQL</span>
           <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
-            placeholder={editorPlaceholder(exercise)} ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
+            placeholder={kind === 'review' ? 'Write the full query from scratch.' : editorPlaceholder(exercise)} ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
           <div className="console-actions">
             <Button variant="primary" onClick={check.runCheck} disabled={check.checking}>
               {check.checking ? 'Checking…' : `Run and check  ${isMac ? '⌘↵' : 'Ctrl+↵'}`}
