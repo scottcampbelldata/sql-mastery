@@ -7,6 +7,7 @@ import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress';
 import { getTheme, setTheme } from '../theme/theme';
 import { ProgressMeter, cx } from './ui';
 import { LESSONS } from '../lessons/manifest';
+import { AccountMenu } from './AccountMenu';
 import './appshell.css';
 
 function ThemeToggle() {
@@ -93,6 +94,7 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
         </nav>
         <div className="sidebar-foot">
           {total ? <ProgressMeter value={percent(done, total)} label="Course" /> : null}
+          <AccountMenu />
         </div>
       </aside>
       <div className="main-col">
