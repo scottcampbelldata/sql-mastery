@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../components/AppShell';
 import { EmptyState, Button } from '../components/ui';
 import { useFoundations } from '../state/FoundationsContext';
-import { skillLevel, buildTodaySession, graduationStatus, skillMastery, weakSpots } from '../lib/foundations';
+import { skillLevel, buildTodaySession, graduationStatus, skillMastery, weakSpots, frontierConcept, tileState, resetConcept } from '../lib/foundations';
 import { currentPhase, phaseGraduation } from '../lib/learning-path';
-import type { Concept, Checkpoint, Phase } from '../types';
+import type { Concept, Checkpoint, Phase, LearningState } from '../types';
+import { ConceptTile } from './foundations/ConceptTile';
 import './foundations/foundations.css';
 
 interface RingProps {
@@ -25,9 +27,31 @@ function Ring({ value }: RingProps) {
 }
 
 export default function Foundations() {
-  const { track, phases, state } = useFoundations();
+  const { track, phases, state, update } = useFoundations();
   const navigate = useNavigate();
-  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading your path…" /></AppShell>;
+  const [undo, setUndo] = useState<{ skill: string; title: string; slice: { correct?: string[]; reviews?: number; last?: number } } | null>(null);
+  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading your path..." /></AppShell>;
+
+  function handleReset(skill: string) {
+    const concept = track!.concepts.find((c) => c.skill === skill);
+    setUndo({
+      skill,
+      title: concept ? concept.title : skill,
+      slice: { correct: state.skillCorrect[skill], reviews: state.reviewsPassed[skill], last: state.lastPracticedSession[skill] }
+    });
+    update((s: LearningState) => resetConcept(s, skill));
+  }
+
+  function undoReset() {
+    if (!undo) return;
+    const { skill, slice } = undo;
+    update((s: LearningState) => {
+      if (slice.correct !== undefined) s.skillCorrect = { ...s.skillCorrect, [skill]: slice.correct };
+      if (slice.reviews !== undefined) s.reviewsPassed = { ...s.reviewsPassed, [skill]: slice.reviews };
+      if (slice.last !== undefined) s.lastPracticedSession = { ...s.lastPracticedSession, [skill]: slice.last };
+    });
+    setUndo(null);
+  }
 
   const grad = graduationStatus(track, state);
   const session = buildTodaySession(track, state);
@@ -52,10 +76,21 @@ export default function Foundations() {
           <h1>Your path to senior SQL</h1>
           <p className="lh-sub">From your first query to interview-ready analysis: one dataset, one step at a time, with everything you learn coming back so it sticks.</p>
           {session.main.kind === 'graduated'
-            ? <p className="lh-grad">You’ve completed every phase. Senior-ready.</p>
+            ? <>
+                <p className="lh-grad">You have completed every phase. Senior ready.</p>
+                <div className="lh-freeprac">
+                  <span>Free practice: pick any lesson below, or drill your weakest.</span>
+                  <div className="lh-freeprac-links">
+                    {weak.map((w) => {
+                      const c = track.concepts.find((x) => x.skill === w.skill);
+                      return c ? <Button key={w.skill} onClick={() => navigate(`/learn/concept/${c.id}`)}>{w.title}</Button> : null;
+                    })}
+                  </div>
+                </div>
+              </>
             : <>
                 <div className="lh-today"><span>Today</span> {todayLabel}</div>
-                <Button variant="primary" onClick={go}>{started ? "Continue today's session" : 'Start lesson 1'} →</Button>
+                <Button variant="primary" onClick={go}>{started ? "Continue today's session" : 'Start lesson 1'}</Button>
               </>}
         </div>
         <div className="lh-ring">
@@ -69,20 +104,11 @@ export default function Foundations() {
         <p>{active.goal}</p>
       </div>
       <div className="lh-grid">
-        {active.concepts.map((c: Concept) => {
-          const lvl = skillLevel(state, c.skill);
-          const m = skillMastery(state, c.skill);
-          return (
-            <div key={c.id} className={`lh-tile ${lvl.tier === 'strong' ? 'ok' : lvl.count ? 'now' : ''}`}>
-              <div className="lh-tile-head">
-                <span className="lh-tile-num">{lvl.tier === 'strong' ? '✓' : c.order}</span>
-                <strong>{c.title}</strong>
-                <span className="lh-tile-tier">{lvl.tier === 'strong' ? 'strong' : lvl.count ? `${lvl.count}/3` : 'new'}</span>
-              </div>
-              <div className="lh-tile-bar"><i style={{ width: `${m.pct}%` }} /></div>
-            </div>
-          );
-        })}
+        {active.concepts.map((c: Concept) => (
+          <ConceptTile key={c.id} concept={c} state={tileState(track, state, c)}
+            count={skillLevel(state, c.skill).count} masteryPct={skillMastery(state, c.skill).pct}
+            onReset={handleReset} />
+        ))}
         {active.checkpoints.map((cp: Checkpoint) => {
           const passed = state.checkpointsPassed.includes(cp.id);
           return (
@@ -96,6 +122,13 @@ export default function Foundations() {
           );
         })}
       </div>
+      {undo ? (
+        <div className="lh-toast" role="status" aria-live="polite">
+          <span>Reset {undo.title}. Its full scaffold is back.</span>
+          <button type="button" onClick={undoReset}>Undo</button>
+          <button type="button" onClick={() => setUndo(null)}>Dismiss</button>
+        </div>
+      ) : null}
       {weak.length ? (
         <p className="lh-weakspots">Weak spots to review: {weak.map((w) => w.title).join(', ')}. A short session a day beats a long one a week.</p>
       ) : (
