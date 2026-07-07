@@ -4,12 +4,16 @@ import path from 'path';
 import { buildCurriculum } from './curriculum-service';
 import { createQueryService } from './query-service';
 import { createProgressStore } from './progress-store';
+import { createUserStore } from './user-store';
+import { createAuthService } from './auth-service';
 
 function createApp(options: any = {}) {
   const app = express();
   const queryService = options.queryService || createQueryService();
   const curriculumService = options.curriculumService || { buildCurriculum };
   const progressStore = options.progressStore || createProgressStore();
+  const userStore = options.userStore || createUserStore();
+  const authService = options.authService || createAuthService();
   // Resolve default dirs from the project root (process.cwd()) rather than __dirname,
   // because the compiled file runs from dist/src/ while content/ and client/dist/ stay
   // at the project root and the server is always started from the project root.
@@ -38,7 +42,7 @@ function createApp(options: any = {}) {
       response.setHeader('Access-Control-Allow-Origin', origin);
       response.setHeader('Vary', 'Origin');
       response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
       response.setHeader('Access-Control-Max-Age', '86400');
     }
     if (request.method === 'OPTIONS') {
@@ -146,24 +150,48 @@ function createApp(options: any = {}) {
     }
   });
 
-  // Cross-device progress sync, keyed by a user-chosen sync code. Progress is a
-  // best-effort blob of localStorage keys; the server just stores and returns it.
-  const isValidCode = (code: unknown): code is string => typeof code === 'string' && code.trim().length >= 6 && code.trim().length <= 128;
-
-  app.get('/api/progress', (request: Request, response: Response) => {
-    const code = request.query && request.query.code;
-    if (!isValidCode(code)) {
-      return response.status(400).json({ error: 'A sync code of at least 6 characters is required.', code: 'BAD_SYNC_CODE' });
+  function requireAuth(request: any, response: any, next: any) {
+    const header = String(request.headers.authorization || '');
+    const token = header.startsWith('Bearer ') ? header.slice(7) : '';
+    const session = token ? authService.verifySession(token) : null;
+    if (!session) {
+      response.status(401).json({ error: 'Sign in to sync your progress.', code: 'AUTH_REQUIRED' });
+      return;
     }
-    const record = progressStore.get(code.trim());
+    response.locals.sub = session.sub;
+    next();
+  }
+
+  app.post('/api/auth/google', async (request: Request, response: Response) => {
+    try {
+      const idToken = request.body && request.body.idToken;
+      if (typeof idToken !== 'string' || !idToken) {
+        return response.status(400).json({ error: 'A Google credential is required.', code: 'MISSING_ID_TOKEN' });
+      }
+      const profile = await authService.verifyGoogleToken(idToken);
+      const user = userStore.upsert(profile);
+      const token = authService.issueSession(user.sub);
+      response.json({ token, user: { sub: user.sub, email: user.email, name: user.name } });
+    } catch {
+      response.status(401).json({ error: 'Could not verify that Google sign-in.', code: 'GOOGLE_VERIFY_FAILED' });
+    }
+  });
+
+  app.get('/api/me', requireAuth, (request: Request, response: Response) => {
+    const user = userStore.getBySub(response.locals.sub);
+    if (!user) return response.status(401).json({ error: 'Session expired.', code: 'AUTH_REQUIRED' });
+    response.json({ user: { sub: user.sub, email: user.email, name: user.name } });
+  });
+
+  // Cross-device progress sync, keyed by the signed-in user's Google sub. Progress is a
+  // best-effort blob of localStorage keys; the server just stores and returns it.
+  app.get('/api/progress', requireAuth, (request: Request, response: Response) => {
+    const record = progressStore.get(response.locals.sub);
     response.json(record || { data: null, updatedAt: null });
   });
 
-  app.put('/api/progress', (request: Request, response: Response) => {
+  app.put('/api/progress', requireAuth, (request: Request, response: Response) => {
     const body = request.body || {};
-    if (!isValidCode(body.code)) {
-      return response.status(400).json({ error: 'A sync code of at least 6 characters is required.', code: 'BAD_SYNC_CODE' });
-    }
     if (!body.data || typeof body.data !== 'object' || Array.isArray(body.data)) {
       return response.status(400).json({ error: 'A progress data object is required.', code: 'BAD_PROGRESS' });
     }
@@ -171,9 +199,9 @@ function createApp(options: any = {}) {
       return response.status(413).json({ error: 'Progress payload is too large.', code: 'PROGRESS_TOO_LARGE' });
     }
     try {
-      const record = progressStore.set(body.code.trim(), body.data);
+      const record = progressStore.set(response.locals.sub, body.data);
       response.json({ ok: true, updatedAt: record.updatedAt });
-    } catch (error) {
+    } catch {
       response.status(500).json({ error: 'Could not save progress.', code: 'PROGRESS_SAVE_FAILED' });
     }
   });
