@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { percent, completedCount, sessionComplete, currentSession, lessonSlug } from './curriculum';
+import { percent, completedCount, sessionComplete, currentSession, lessonSlug, lessonForExercise } from './curriculum';
 import type { Session, CompletionRecord } from '../types';
 
 const sessions = [
@@ -30,5 +30,18 @@ describe('curriculum helpers', () => {
   });
   it('lessonSlug strips .html from sourceFile', () => {
     expect(lessonSlug('m1-fundamentals.html')).toBe('m1-fundamentals');
+  });
+  it('lessonForExercise resolves by sourceFile when it names a real lesson', () => {
+    expect(lessonForExercise({ sourceFile: 'm3-joins.html' })).toBe('m3-joins');
+    expect(lessonForExercise({ sourceFile: 'schemas.html' })).toBe('schemas');
+  });
+  it('lessonForExercise falls back to the module lesson when sourceFile does not resolve', () => {
+    // Academy exercises default sourceFile to index.html (no such lesson); resolve via moduleId.
+    expect(lessonForExercise({ sourceFile: 'index.html', moduleId: 'm0' })).toBe('schemas');
+    expect(lessonForExercise({ sourceFile: 'index.html', moduleId: 'm7' })).toBe('m7-interview-patterns');
+  });
+  it('lessonForExercise returns null when nothing resolves, so no dead link is rendered', () => {
+    expect(lessonForExercise({ sourceFile: 'index.html', moduleId: 'nope' })).toBeNull();
+    expect(lessonForExercise({})).toBeNull();
   });
 });

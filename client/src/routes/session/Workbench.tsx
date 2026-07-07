@@ -5,7 +5,7 @@ import { api } from '../../lib/api';
 import { markComplete } from '../../lib/progress';
 import { hasSqlBlank, starterSqlForExercise } from '../../lib/sqlScaffold';
 import { formatSql } from '../../lib/sqlFormat';
-import { lessonSlug } from '../../lib/curriculum';
+import { lessonForExercise } from '../../lib/curriculum';
 import { useDbSchema } from '../../lib/dbSchema';
 import { Button, Pill, Callout } from '../../components/ui';
 import { DiffPanel } from '../../components/DiffPanel';
@@ -113,13 +113,17 @@ export function Workbench({ exercise, session, nextTarget }: Props) {
     }
   }
 
+  // Only link to a lesson that actually exists; academy exercises can carry a placeholder
+  // sourceFile (index.html) that resolves to no lesson, so we fall back to their module.
+  const lessonHref = lessonForExercise(exercise);
+
   return (
     <article className="workbench">
       <div className="wb-meta">
         {exercise.database ? <Pill tone="info">database: {exercise.database}</Pill> : <Pill>discussion exercise</Pill>}
         <Pill tone={exercise.checkable ? 'ok' : 'neutral'}>{exercise.checkable ? 'auto-graded' : 'self-check'}</Pill>
         {done ? <Pill tone="ok">✓ solved</Pill> : null}
-        <Link className="wb-lesson-link" to={`/lessons/${lessonSlug(exercise.sourceFile)}`}>Read the full lesson ↗</Link>
+        {lessonHref ? <Link className="wb-lesson-link" to={`/lessons/${lessonHref}`}>Read the full lesson ↗</Link> : null}
       </div>
       <h2>{exercise.title}</h2>
       <p className="wb-task">{exercise.task}</p>
