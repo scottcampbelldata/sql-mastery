@@ -15,7 +15,7 @@ test('flattened concepts have globally increasing order and a phaseId', () => {
   const orders = learningPath.concepts.map((c: any) => c.order);
   assert.deepEqual(orders, [...orders].sort((a: number, b: number) => a - b), 'orders are ascending');
   assert.equal(new Set(orders).size, orders.length, 'orders are unique');
-  assert.equal(learningPath.concepts.length, 13, '8 foundations + 5 joins concepts');
+  assert.equal(learningPath.concepts.length, 14, '9 foundations + 5 joins concepts');
   assert.ok(learningPath.concepts.every((c: any) => c.phaseId), 'every concept has a phaseId');
 });
 
@@ -36,5 +36,5 @@ test('checkpoints reference real skills; joins checkpoints sit after their conce
     for (const skill of cp.drawFromSkills) assert.ok(skills.has(skill), `${cp.id} → known skill ${skill}`);
   }
   const cpD = learningPath.checkpoints.find((c: any) => c.id === 'cpD');
-  assert.equal(cpD.afterOrder, 13, 'cpD sits after the last joins concept (global order 13)');
+  assert.equal(cpD.afterOrder, 14, 'cpD sits after the last joins concept (global order 14)');
 });
