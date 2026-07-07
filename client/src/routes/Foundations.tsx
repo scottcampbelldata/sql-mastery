@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../components/AppShell';
 import { EmptyState, Button } from '../components/ui';
 import { useFoundations } from '../state/FoundationsContext';
-import { skillLevel, buildTodaySession, graduationStatus } from '../lib/foundations';
+import { skillLevel, buildTodaySession, graduationStatus, skillMastery, weakSpots } from '../lib/foundations';
 import { currentPhase, phaseGraduation } from '../lib/learning-path';
 import type { Concept, Checkpoint, Phase } from '../types';
 import './foundations/foundations.css';
@@ -31,6 +31,7 @@ export default function Foundations() {
 
   const grad = graduationStatus(track, state);
   const session = buildTodaySession(track, state);
+  const weak = weakSpots(track, state, 3);
   const active = currentPhase(phases, state);
   const started = Object.values(state.skillCorrect).some((a) => (a as string[]).length);
   const pct = Math.round((grad.strongSkills / grad.totalSkills) * 100);
@@ -70,6 +71,7 @@ export default function Foundations() {
       <div className="lh-grid">
         {active.concepts.map((c: Concept) => {
           const lvl = skillLevel(state, c.skill);
+          const m = skillMastery(state, c.skill);
           return (
             <div key={c.id} className={`lh-tile ${lvl.tier === 'strong' ? 'ok' : lvl.count ? 'now' : ''}`}>
               <div className="lh-tile-head">
@@ -77,7 +79,7 @@ export default function Foundations() {
                 <strong>{c.title}</strong>
                 <span className="lh-tile-tier">{lvl.tier === 'strong' ? 'strong' : lvl.count ? `${lvl.count}/3` : 'new'}</span>
               </div>
-              <div className="lh-tile-bar"><i style={{ width: `${Math.min(100, (lvl.count / 3) * 100)}%` }} /></div>
+              <div className="lh-tile-bar"><i style={{ width: `${m.pct}%` }} /></div>
             </div>
           );
         })}
@@ -94,6 +96,11 @@ export default function Foundations() {
           );
         })}
       </div>
+      {weak.length ? (
+        <p className="lh-weakspots">Weak spots to review: {weak.map((w) => w.title).join(', ')}. A short session a day beats a long one a week.</p>
+      ) : (
+        <p className="lh-weakspots">A short session a day beats a long one a week.</p>
+      )}
 
       <div className="lh-sec-head lh-sec-head-sub"><h2>All phases</h2></div>
       <div className="lh-phaselist">
