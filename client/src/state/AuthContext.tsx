@@ -43,9 +43,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     const id = window.setInterval(() => { pushIfChanged(); }, 15000);
     const onHide = () => { if (document.hidden) pushIfChanged(); };
+    const onPageHide = () => { pushIfChanged(); };
     document.addEventListener('visibilitychange', onHide);
-    window.addEventListener('pagehide', () => pushIfChanged());
-    return () => { window.clearInterval(id); document.removeEventListener('visibilitychange', onHide); };
+    window.addEventListener('pagehide', onPageHide);
+    return () => {
+      window.clearInterval(id);
+      document.removeEventListener('visibilitychange', onHide);
+      window.removeEventListener('pagehide', onPageHide);
+    };
   }, [user]);
 
   const signIn = useCallback(async (idToken: string) => {
