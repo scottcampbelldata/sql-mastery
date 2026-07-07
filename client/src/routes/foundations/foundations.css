@@ -113,6 +113,25 @@
 .lh-tile-bar i { display: block; height: 100%; background: var(--brand); border-radius: 99px; transition: width var(--ease); }
 .lh-tile-cp { border-style: dashed; }
 
+.lh-tile-open { display: flex; flex-direction: column; gap: var(--s-3); text-decoration: none; color: inherit; border-radius: var(--r-md); }
+.lh-tile-open:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+.lh-tile:has(.lh-tile-open:hover) { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand-soft), var(--shadow-sm); }
+.lh-tile:has(.lh-tile-open) { cursor: pointer; }
+.lh-tile-go { flex: none; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--brand); }
+.lh-tile.unlocked { border-style: solid; }
+.lh-tile.upcoming { opacity: 0.6; }
+.lh-tile.locked { opacity: 0.5; }
+.lh-tile.locked .lh-tile-num, .lh-tile.upcoming .lh-tile-num { color: var(--ink-faint); }
+.lh-tile-reset { align-self: flex-start; margin-top: var(--s-2); background: none; border: none; padding: 0; color: var(--ink-faint); font-size: var(--text-xs); font-family: var(--font-mono); cursor: pointer; }
+.lh-tile-reset:hover { color: var(--ink-dim); text-decoration: underline; }
+.lh-tile-reset-confirm { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-top: var(--s-2); font-size: var(--text-xs); color: var(--ink-dim); }
+.lh-tile-reset-confirm button { font-size: var(--text-xs); font-family: var(--font-mono); border: 1px solid var(--line-strong); background: var(--surface-2); border-radius: var(--r-md); padding: 2px 8px; cursor: pointer; color: var(--ink-strong); }
+.lh-tile-reset-confirm .lh-reset-yes { border-color: var(--brand); color: var(--brand); }
+.lh-toast { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); margin-top: var(--s-4); padding: var(--s-3) var(--s-4); background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); font-size: var(--text-md); }
+.lh-toast button { font-family: var(--font-mono); font-size: var(--text-xs); border: 1px solid var(--line-strong); background: var(--surface-2); border-radius: var(--r-md); padding: 2px 10px; cursor: pointer; color: var(--ink-strong); }
+.lh-freeprac { display: flex; flex-direction: column; gap: var(--s-3); margin-top: var(--s-3); }
+.lh-freeprac-links { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
 .lh-phaselist { display: flex; flex-direction: column; gap: var(--s-2); }
 .lh-prow { display: flex; align-items: center; gap: var(--s-3); background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s-3) var(--s-4); }
 .lh-prow.active { border-color: var(--brand); }
