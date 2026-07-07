@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
+import { vi } from 'vitest';
 import { act, render, screen, renderHook } from '@testing-library/react';
 import { TeachCard } from './TeachCard';
 import { useSqlCheck } from '../../lib/useSqlCheck';
 import { editorPlaceholder } from './FoundationsRep';
 import type { Concept, Exercise } from '../../types';
+import * as apiModule from '../../lib/api';
 
 const concept = {
   id: 'c1', order: 1, skill: 'select-all', title: 'Ask a table for everything',
@@ -63,5 +65,18 @@ describe('Foundations teach + scaffolding', () => {
 
     expect(result.current.feedback!.title).toMatch(/fill/i);
     expect(result.current.feedback!.title).not.toMatch(/write your query first/i);
+  });
+
+  it('carries the server diff into feedback on a mismatch', async () => {
+    const ex = { id: 'd1', database: 'chinook', task: 't', starterSql: '', expectedSql: 'SELECT 1' };
+    vi.spyOn(apiModule.api, 'check').mockResolvedValue({
+      correct: false, feedbackType: 'mismatch', hint: 'h',
+      diff: { reason: 'row-count', yourRowCount: 3, expectedRowCount: 2, orderOnly: false, extraRows: 1, missingRows: 0 }
+    });
+    const { result } = renderHook(() => useSqlCheck(ex as Exercise));
+    act(() => result.current.setSql('SELECT 1'));
+    await act(async () => { await result.current.runCheck(); });
+    expect(result.current.feedback!.diff!.reason).toBe('row-count');
+    expect(result.current.feedback!.diff!.extraRows).toBe(1);
   });
 });
