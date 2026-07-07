@@ -5,7 +5,8 @@ import {
   dueReviews, nextConcept, checkpointDue, buildTodaySession,
   recordCheckpointResult, advanceSession, graduationStatus,
   STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots,
-  scaffoldTier, recordReviewPass
+  scaffoldTier, recordReviewPass,
+  isConceptUnlocked, frontierConcept, frontierOrder, recordConceptProgress, resetConcept
 } from './foundations';
 import type { Track, LearningState } from '../types';
 
@@ -164,5 +165,76 @@ describe('foundations engine', () => {
     expect(scaffoldTier(s, 'where', true)).toBe('half');
     recordReviewPass(s, 'where');
     expect(scaffoldTier(s, 'where', true)).toBe('blank');
+  });
+
+  it('isConceptUnlocked follows the checkpoint gate', () => {
+    const s = loadFoundations();
+    expect(isConceptUnlocked(track, s, track.concepts[4])).toBe(false); // c5 gated by cpA
+    recordCheckpointResult(s, track.checkpoints[0], 6);                  // pass cpA
+    expect(isConceptUnlocked(track, s, track.concepts[4])).toBe(true);
+  });
+
+  it('recordConceptProgress raises maxUnlockedOrder only when a concept becomes strong', () => {
+    const s = loadFoundations();
+    recordConceptProgress(track, s, { id: 'c1-r1', skill: 'select-all' });
+    expect(s.maxUnlockedOrder).toBe(0);                                  // count 1, not strong
+    recordConceptProgress(track, s, { id: 'c1-r2', skill: 'select-all' });
+    recordConceptProgress(track, s, { id: 'c1-r3', skill: 'select-all' });
+    expect(s.maxUnlockedOrder).toBe(2);                                  // c1 order 1 + 1
+    expect(s.sessionCounter).toBe(0);                                    // never advances the clock
+    expect(s.reviewsPassed).toEqual({});                                 // never touches the fade counter
+  });
+
+  it('unlock is monotonic: resetting a concept does not lower the mark or re-lock later ones', () => {
+    const s = loadFoundations();
+    ['c1-r1', 'c1-r2', 'c1-r3'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'select-all' }));
+    ['c2-r1', 'c2-r2', 'c2-r3'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'select-columns' }));
+    ['c3-r1', 'c3-r2', 'c3-r3'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'order-limit' }));
+    expect(s.maxUnlockedOrder).toBe(4);
+    resetConcept(s, 'select-columns');
+    expect(s.maxUnlockedOrder).toBe(4);                                  // unchanged
+  });
+
+  it('frontierConcept skips a reset concept and points at the true next lesson', () => {
+    const s = loadFoundations();
+    s.skillCorrect = { 'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'], 'order-limit': ['a', 'b', 'c'] };
+    s.maxUnlockedOrder = 4;                                              // mastered c1..c3, on c4
+    resetConcept(s, 'select-columns');                                  // reset c2 (order 2 < 4)
+    expect(frontierConcept(track, s)!.id).toBe('c4');                   // not c2
+    expect(frontierOrder(track, s)).toBe(4);
+  });
+
+  it('resetConcept clears only that skill and reassigns fresh maps (snapshot safe)', () => {
+    const s = loadFoundations();
+    s.skillCorrect = { where: ['a', 'b', 'c'], grp: ['x'] };
+    s.reviewsPassed = { where: 2 };
+    s.lastPracticedSession = { where: 1, grp: 0 };
+    s.checkpointsPassed = ['cpA'];
+    s.sessionCounter = 5;
+    s.maxUnlockedOrder = 6;
+    const beforeSkill = s.skillCorrect;
+    const beforeReviews = s.reviewsPassed;
+    resetConcept(s, 'where');
+    expect(s.skillCorrect).toEqual({ grp: ['x'] });
+    expect(s.reviewsPassed).toEqual({});
+    expect(s.lastPracticedSession).toEqual({ grp: 0 });
+    expect(s.checkpointsPassed).toEqual(['cpA']);
+    expect(s.sessionCounter).toBe(5);
+    expect(s.maxUnlockedOrder).toBe(6);
+    expect(beforeSkill).toEqual({ where: ['a', 'b', 'c'], grp: ['x'] }); // old ref not mutated
+    expect(beforeReviews).toEqual({ where: 2 });
+  });
+
+  it('reset restarts the scaffold fade from full', () => {
+    const s = loadFoundations();
+    strong(s, 'where', ['w1', 'w2', 'w3']);
+    expect(scaffoldTier(s, 'where', true)).toBe('half');
+    recordReviewPass(s, 'where');
+    expect(scaffoldTier(s, 'where', true)).toBe('blank');
+    resetConcept(s, 'where');
+    expect(isSkillStrong(s, 'where')).toBe(false);
+    expect(scaffoldTier(s, 'where', false)).toBe('full');
+    strong(s, 'where', ['w1', 'w2', 'w3']);
+    expect(scaffoldTier(s, 'where', true)).toBe('half');                // fade restarted
   });
 });
