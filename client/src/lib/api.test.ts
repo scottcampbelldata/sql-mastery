@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
-import { api } from './api';
+import { api, setAuthToken } from './api';
 
 function jsonResponse(body: unknown, ok = true, status = 200) {
   return {
@@ -52,5 +52,28 @@ describe('api request wrapper', () => {
     expect(err).toBeInstanceOf(Error);
     expect(err.code).toBe('NETWORK');
     expect(err.message).toBe('Could not reach the local server. Is `npm start` running?');
+  });
+
+  it('attaches a Bearer header when a token is set, and omits it when cleared', async () => {
+    const calls: RequestInit[] = [];
+    const orig = globalThis.fetch;
+    globalThis.fetch = (async (_url: string, options: RequestInit = {}) => {
+      calls.push(options);
+      return { ok: true, json: async () => ({ ok: true }) } as any;
+    }) as any;
+    try {
+      setAuthToken('tok-123');
+      await api.me();
+      const withTok = new Headers(calls[0].headers);
+      expect(withTok.get('authorization')).toBe('Bearer tok-123');
+
+      setAuthToken(null);
+      await api.me();
+      const without = new Headers(calls[1].headers);
+      expect(without.get('authorization')).toBe(null);
+    } finally {
+      globalThis.fetch = orig;
+      setAuthToken(null);
+    }
   });
 });
