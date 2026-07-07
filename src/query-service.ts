@@ -166,25 +166,59 @@ function hintForError(error: any): string {
   return 'Read the database error, then compare your SELECT, FROM, WHERE, GROUP BY, ORDER BY, and LIMIT against the task.';
 }
 
+function rowMultiset(rows: (string | null)[][]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const key = JSON.stringify(row);
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  return counts;
+}
+
+function multisetDiff(userRows: (string | null)[][], expectedRows: (string | null)[][]): { extra: number; missing: number } {
+  const inUser = rowMultiset(userRows);
+  const inExpected = rowMultiset(expectedRows);
+  let extra = 0;
+  let missing = 0;
+  for (const [key, n] of inUser) extra += Math.max(0, n - (inExpected.get(key) || 0));
+  for (const [key, n] of inExpected) missing += Math.max(0, n - (inUser.get(key) || 0));
+  return { extra, missing };
+}
+
 function mismatchFeedback(userResult: any, expectedResult: any): any {
+  const yourRowCount = userResult.rows.length;
+  const expectedRowCount = expectedResult.rows.length;
+
   if (!arraysMatch(userResult.columns, expectedResult.columns)) {
     return {
       reason: 'columns',
-      hint: 'Your query ran, but the output columns do not match. Check the SELECT list, aliases, and column order.'
+      hint: 'Your query ran, but the output columns do not match. Check the SELECT list, aliases, and column order.',
+      diff: {
+        reason: 'columns',
+        yourColumns: userResult.columns,
+        expectedColumns: expectedResult.columns,
+        yourRowCount, expectedRowCount, orderOnly: false, extraRows: 0, missingRows: 0
+      }
     };
   }
 
-  if (userResult.rows.length !== expectedResult.rows.length) {
+  const userRows = normalizeRows(userResult);
+  const expectedRows = normalizeRows(expectedResult);
+  const { extra, missing } = multisetDiff(userRows, expectedRows);
+
+  if (yourRowCount !== expectedRowCount) {
     return {
       reason: 'row-count',
-      hint: 'Your query ran, but it returned a different number of rows. Check filters, joins, grouping, and LIMIT.'
+      hint: 'Your query ran, but it returned a different number of rows. Check filters, joins, grouping, and LIMIT.',
+      diff: { reason: 'row-count', yourRowCount, expectedRowCount, orderOnly: false, extraRows: extra, missingRows: missing }
     };
   }
 
-  if (!arraysMatch(normalizeRows(userResult), normalizeRows(expectedResult))) {
+  if (!arraysMatch(userRows, expectedRows)) {
     return {
       reason: 'row-values',
-      hint: 'Your query returned the right shape, but the values or row order differ. Check expressions, NULL handling, and ORDER BY.'
+      hint: 'Your query returned the right shape, but the values or row order differ. Check expressions, NULL handling, and ORDER BY.',
+      diff: { reason: 'row-values', yourRowCount, expectedRowCount, orderOnly: extra === 0 && missing === 0, extraRows: extra, missingRows: missing }
     };
   }
 
@@ -441,6 +475,7 @@ function createQueryService(options: any = {}): any {
         message: 'Your SQL ran, but it does not match the expected result yet.',
         reason: mismatch.reason,
         hint: mismatch.hint,
+        diff: mismatch.diff,
         result: userResult,
         expectedSummary
       };
@@ -473,5 +508,6 @@ function createQueryService(options: any = {}): any {
 
 export {
   QueryServiceError,
-  createQueryService
+  createQueryService,
+  mismatchFeedback
 };

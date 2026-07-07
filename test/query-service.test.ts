@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { createQueryService, QueryServiceError } from '../src/query-service';
+import { createQueryService, QueryServiceError, mismatchFeedback } from '../src/query-service';
+
+const R = (columns: string[], rows: Record<string, unknown>[]) => ({ columns, rows });
 
 class FakePool {
   static configs: any[] = [];
@@ -362,4 +364,40 @@ test('previewTable validates the table and quotes schema identifiers', async () 
   assert.deepEqual(PreviewPool.queries[0].params, ['Sales Data', 'Order"Lines']);
   assert.match(PreviewPool.queries[1].sql, /FROM "Sales Data"\."Order""Lines"/);
   assert.match(PreviewPool.queries[1].sql, /LIMIT 100/);
+});
+
+test('diff: column mismatch reports both column lists', () => {
+  const m = mismatchFeedback(R(['a'], [{ a: 1 }]), R(['a', 'b'], [{ a: 1, b: 2 }]));
+  assert.equal(m.diff.reason, 'columns');
+  assert.deepEqual(m.diff.yourColumns, ['a']);
+  assert.deepEqual(m.diff.expectedColumns, ['a', 'b']);
+});
+
+test('diff: row-count difference counts extra and missing', () => {
+  const m = mismatchFeedback(R(['a'], [{ a: 1 }, { a: 2 }, { a: 3 }]), R(['a'], [{ a: 1 }, { a: 2 }]));
+  assert.equal(m.diff.reason, 'row-count');
+  assert.equal(m.diff.yourRowCount, 3);
+  assert.equal(m.diff.expectedRowCount, 2);
+  assert.equal(m.diff.extraRows, 1);
+  assert.equal(m.diff.missingRows, 0);
+});
+
+test('diff: order-only when the same rows are reordered', () => {
+  const m = mismatchFeedback(R(['a'], [{ a: 2 }, { a: 1 }]), R(['a'], [{ a: 1 }, { a: 2 }]));
+  assert.equal(m.diff.reason, 'row-values');
+  assert.equal(m.diff.orderOnly, true);
+  assert.equal(m.diff.extraRows, 0);
+  assert.equal(m.diff.missingRows, 0);
+});
+
+test('diff: value difference counts extra and missing', () => {
+  const m = mismatchFeedback(R(['a'], [{ a: 1 }, { a: 9 }]), R(['a'], [{ a: 1 }, { a: 2 }]));
+  assert.equal(m.diff.reason, 'row-values');
+  assert.equal(m.diff.orderOnly, false);
+  assert.equal(m.diff.extraRows, 1);
+  assert.equal(m.diff.missingRows, 1);
+});
+
+test('mismatchFeedback returns null for a matching result', () => {
+  assert.equal(mismatchFeedback(R(['a'], [{ a: 1 }]), R(['a'], [{ a: 1 }])), null);
 });
