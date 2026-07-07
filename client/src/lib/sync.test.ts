@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { deepMerge, mergeProgress } from './sync';
+import { describe, it, expect, vi } from 'vitest';
+import { deepMerge, mergeProgress, syncNow } from './sync';
+import * as apiModule from './api';
 
 describe('deepMerge (monotonic)', () => {
   it('takes the max of numbers', () => {
@@ -31,5 +32,21 @@ describe('mergeProgress', () => {
     const merged = JSON.parse(out['sqlm:product-progress:v1']!);
     expect(Object.keys(merged.completed).sort()).toEqual(['a', 'b']);
     expect(merged.attempts).toEqual({ a: 5, b: 2 });
+  });
+});
+
+describe('syncNow', () => {
+  it('syncNow merges account progress into local and pushes the union', async () => {
+    localStorage.clear();
+    localStorage.setItem('sqlm:product-progress:v1', JSON.stringify({ completed: { a: 1 }, attempts: {}, lastSql: {} }));
+    const put = vi.spyOn(apiModule.api, 'putProgress').mockResolvedValue({ ok: true, updatedAt: 'now' });
+    vi.spyOn(apiModule.api, 'getProgress').mockResolvedValue({
+      data: { 'sqlm:product-progress:v1': JSON.stringify({ completed: { b: 1 }, attempts: {}, lastSql: {} }) },
+      updatedAt: 'then'
+    });
+    await syncNow();
+    const merged = JSON.parse(localStorage.getItem('sqlm:product-progress:v1') as string);
+    expect(Object.keys(merged.completed).sort()).toEqual(['a', 'b']);
+    expect(put).toHaveBeenCalled();
   });
 });
