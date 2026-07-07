@@ -150,7 +150,7 @@ function createApp(options: any = {}) {
     }
   });
 
-  function requireAuth(request: any, response: any, next: any) {
+  function requireAuth(request: Request, response: Response, next: NextFunction) {
     const header = String(request.headers.authorization || '');
     const token = header.startsWith('Bearer ') ? header.slice(7) : '';
     const session = token ? authService.verifySession(token) : null;

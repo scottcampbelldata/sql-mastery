@@ -8,6 +8,10 @@ import { createProgressStore } from './src/progress-store';
 import { createUserStore } from './src/user-store';
 import { createAuthService } from './src/auth-service';
 
+if (!process.env.SQL_MASTERY_SESSION_SECRET) {
+  throw new Error('SQL_MASTERY_SESSION_SECRET is required. Set it in .env before starting the server.');
+}
+
 const queryService = createQueryService();
 const dataDir = process.env.SQL_MASTERY_DATA_DIR || path.resolve(process.cwd(), 'data');
 const progressStore = createProgressStore({ dir: path.join(dataDir, 'progress') });
