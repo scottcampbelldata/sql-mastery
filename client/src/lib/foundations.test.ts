@@ -6,7 +6,8 @@ import {
   recordCheckpointResult, advanceSession, graduationStatus,
   STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots,
   scaffoldTier, recordReviewPass,
-  isConceptUnlocked, frontierConcept, frontierOrder, recordConceptProgress, resetConcept
+  isConceptUnlocked, frontierConcept, frontierOrder, recordConceptProgress, resetConcept,
+  tileState
 } from './foundations';
 import type { Track, LearningState } from '../types';
 
@@ -236,5 +237,61 @@ describe('foundations engine', () => {
     expect(scaffoldTier(s, 'where', false)).toBe('full');
     strong(s, 'where', ['w1', 'w2', 'w3']);
     expect(scaffoldTier(s, 'where', true)).toBe('half');                // fade restarted
+  });
+
+  it('tileState: default state has exactly one now tile and gates the rest', () => {
+    const s = loadFoundations();
+    const states = track.concepts.map((c) => tileState(track, s, c));
+    expect(states.filter((x) => x === 'now').length).toBe(1);
+    expect(tileState(track, s, track.concepts[0])).toBe('now');       // c1 frontier
+    expect(tileState(track, s, track.concepts[1])).toBe('upcoming');  // c2 ahead of frontier
+    expect(tileState(track, s, track.concepts[4])).toBe('locked');    // c5 behind cpA
+  });
+
+  it('tileState: a reset concept reads unlocked and a mastered one reads done', () => {
+    const s = loadFoundations();
+    s.skillCorrect = { 'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'], 'order-limit': ['a', 'b', 'c'] };
+    s.maxUnlockedOrder = 4;
+    resetConcept(s, 'select-columns');
+    expect(tileState(track, s, track.concepts[2])).toBe('done');      // c3 still mastered
+    expect(tileState(track, s, track.concepts[1])).toBe('unlocked');  // c2 reset, clickable, not frontier
+    expect(tileState(track, s, track.concepts[3])).toBe('now');       // c4 frontier
+  });
+
+  it('buildTodaySession keeps the true frontier as main and rides a reset concept in as review', () => {
+    const s = loadFoundations();
+    s.skillCorrect = { 'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'], 'order-limit': ['a', 'b', 'c'] };
+    s.maxUnlockedOrder = 4;
+    resetConcept(s, 'select-columns');
+    const session = buildTodaySession(track, s);
+    expect(session.main.kind).toBe('lesson');
+    expect((session.main as { concept: { id: string } }).concept.id).toBe('c4');
+    expect(session.reviews.some((r) => r.skill === 'select-columns')).toBe(true);
+  });
+
+  it('buildTodaySession falls back to the reset concept as main when nothing is ahead', () => {
+    const s = loadFoundations();
+    recordConceptProgress(track, s, { id: 'c1-r1', skill: 'select-all' });
+    resetConcept(s, 'select-all');
+    const session = buildTodaySession(track, s);
+    expect(session.main.kind).toBe('lesson');
+    expect((session.main as { concept: { id: string } }).concept.id).toBe('c1');
+    expect(session.reviews.some((r) => r.skill === 'select-all')).toBe(false); // not also a review
+  });
+
+  it('buildTodaySession picks the earliest at-or-above-frontier lesson after two resets and does not re-offer a passed checkpoint', () => {
+    const s = loadFoundations();
+    s.skillCorrect = {
+      'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'],
+      'order-limit': ['a', 'b', 'c'], 'distinct': ['a', 'b', 'c']
+    };
+    s.checkpointsPassed = ['cpA'];
+    s.maxUnlockedOrder = 5;
+    resetConcept(s, 'select-all');
+    resetConcept(s, 'select-columns');
+    expect(checkpointDue(track, s)).toBeNull();                        // cpA already passed
+    const session = buildTodaySession(track, s);
+    expect((session.main as { concept: { id: string } }).concept.id).toBe('c5'); // where, frontier
+    expect(session.reviews.map((r) => r.skill).sort()).toEqual(['select-all', 'select-columns']);
   });
 });

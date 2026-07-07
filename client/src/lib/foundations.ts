@@ -166,6 +166,19 @@ export function frontierOrder(track: Track, state: LearningState): number {
   return f ? f.order : maxConceptOrder(track);
 }
 
+export type TileState = 'done' | 'now' | 'unlocked' | 'upcoming' | 'locked';
+
+// The visual state of a concept tile on the lesson map.
+export function tileState(track: Track, state: LearningState, concept: Concept): TileState {
+  if (isSkillStrong(state, concept.skill)) return 'done';
+  if (!conceptUnlocked(track, state, concept)) return 'locked';
+  const front = frontierOrder(track, state);
+  const ceiling = Math.max(front, state.maxUnlockedOrder);
+  if (concept.order > ceiling) return 'upcoming';
+  if (concept.order === front) return 'now';
+  return 'unlocked';
+}
+
 // Track-aware progress recorder. Records a correct answer (pure recordCorrect) and raises the
 // unlock high-water mark if the concept just became strong. Used by every concept-exercise
 // correct path so the guided frontier and the tile map stay in sync.
@@ -217,15 +230,42 @@ export type TodaySession = {
     | { kind: 'lesson'; concept: Concept; reps: Exercise[] };
 };
 
-export function buildTodaySession(track: Track, state: LearningState): TodaySession {
-  const reviews = dueReviews(track, state);
-  const cp = checkpointDue(track, state);
-  if (cp) return { reviews, main: { kind: 'checkpoint', checkpoint: cp } };
-  const concept = nextConcept(track, state);
-  if (!concept) return { reviews, main: { kind: 'graduated' } };
+// Reset concepts (not strong, unlocked, below the reached frontier) surface as reviews so a
+// reset re-strengthens under spacing instead of yanking the headline lesson backward.
+function resetReviews(track: Track, state: LearningState): DueReview[] {
+  const out: DueReview[] = [];
+  const ordered = [...track.concepts].sort((a, b) => a.order - b.order);
+  for (const concept of ordered) {
+    if (concept.order >= state.maxUnlockedOrder) continue;
+    if (isSkillStrong(state, concept.skill)) continue;
+    if (!conceptUnlocked(track, state, concept)) continue;
+    if (!concept.exercises.length) continue;
+    out.push({ skill: concept.skill, concept, exercise: concept.exercises[0] });
+  }
+  return out;
+}
+
+function mergedReviews(track: Track, state: LearningState): DueReview[] {
+  const resets = resetReviews(track, state);
+  const due = dueReviews(track, state).filter((d) => !resets.some((r) => r.skill === d.skill));
+  return [...resets, ...due].slice(0, MAX_REVIEWS_PER_SESSION);
+}
+
+function lessonMain(concept: Concept, state: LearningState): TodaySession['main'] {
   const answered = new Set(state.skillCorrect[concept.skill] || []);
   const reps = concept.exercises.filter((e) => !answered.has(e.id));
-  return { reviews, main: { kind: 'lesson', concept, reps: reps.length ? reps : concept.exercises } };
+  return { kind: 'lesson', concept, reps: reps.length ? reps : concept.exercises };
+}
+
+export function buildTodaySession(track: Track, state: LearningState): TodaySession {
+  const reviews = mergedReviews(track, state);
+  const cp = checkpointDue(track, state);
+  if (cp) return { reviews, main: { kind: 'checkpoint', checkpoint: cp } };
+  const frontier = frontierConcept(track, state);
+  if (frontier) return { reviews, main: lessonMain(frontier, state) };
+  const fallback = nextConcept(track, state);
+  if (!fallback) return { reviews, main: { kind: 'graduated' } };
+  return { reviews: reviews.filter((r) => r.skill !== fallback.skill), main: lessonMain(fallback, state) };
 }
 
 export function recordCheckpointResult(state: LearningState, checkpoint: Checkpoint, score: number, missedSkills: string[] = []): LearningState {
