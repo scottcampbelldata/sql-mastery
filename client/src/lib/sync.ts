@@ -1,12 +1,10 @@
 import { safeGet, safeSet } from './progress';
+import { api } from './api';
 
-// Cross-device progress sync. Progress lives in localStorage; when a sync code is set
-// we mirror the *progress* keys (not device prefs) to the backend under that code, and
-// merge on load so every device converges. Progress is monotonic, so we union-merge
-// (never delete) and can't lose completed work.
-
-export const SYNC_CODE_KEY = 'sqlm:sync-code:v1';
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+// Cross-device progress sync. Progress lives in localStorage; once signed in, we mirror
+// the *progress* keys (not device prefs) to the account under the auth token, and merge
+// on load so every device converges. Progress is monotonic, so we union-merge (never
+// delete) and can't lose completed work.
 
 // Structured JSON progress blobs (deep-merged).
 const SYNCED_JSON = new Set([
@@ -21,8 +19,7 @@ const NEVER_SYNC = new Set([
   'sqlm:welcome-dismissed:v1',
   'sqlm:product-active-session:v1',
   'sqlm:runner:sql',
-  'sqlm:runner:db',
-  SYNC_CODE_KEY
+  'sqlm:runner:db'
 ]);
 
 // A lesson checkbox: sqlm:<page>:<id> = '1'. Everything under sqlm: that isn't a known
@@ -30,10 +27,6 @@ const NEVER_SYNC = new Set([
 function isCheckboxKey(key: string): boolean {
   return key.startsWith('sqlm:') && !SYNCED_JSON.has(key) && !NEVER_SYNC.has(key) && safeGet(key) === '1';
 }
-
-export function getSyncCode(): string { return safeGet(SYNC_CODE_KEY) || ''; }
-export function setSyncCodeValue(code: string): void { safeSet(SYNC_CODE_KEY, code); }
-export function clearSyncCode(): void { try { localStorage.removeItem(SYNC_CODE_KEY); } catch { /* ignore */ } }
 
 // Gather all synced progress keys into { key: rawStringValue }.
 export function collectProgress(): Record<string, string | null> {
@@ -104,64 +97,34 @@ function stableHash(obj: Record<string, string | null>): string {
 
 let lastPushedHash: string | null = null;
 
-async function apiGet(code: string): Promise<any> {
-  const r = await fetch(`${API_BASE}/api/progress?code=${encodeURIComponent(code)}`);
-  if (!r.ok) throw new Error('sync get failed');
-  return r.json();
-}
-async function apiPut(code: string, data: Record<string, string | null>): Promise<any> {
-  const r = await fetch(`${API_BASE}/api/progress`, {
-    method: 'PUT',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ code, data })
-  });
-  if (!r.ok) throw new Error('sync put failed');
-  return r.json();
+// Drop null entries so a merged/collected snapshot can be sent over the wire.
+function toSyncPayload(values: Record<string, string | null>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(values)) if (value != null) out[key] = value;
+  return out;
 }
 
-// Pull remote, merge into local, push the union back. Returns whether local changed.
-export async function pullMergePush(code: string): Promise<boolean> {
+// Pull the account's progress, merge into local, push the union back. Monotonic:
+// never deletes. Returns whether local changed.
+export async function syncNow(): Promise<boolean> {
   const local = collectProgress();
-  let remote: Record<string, string | null> = {};
+  let remote: Record<string, string> = {};
   try {
-    const rec = await apiGet(code);
+    const rec = await api.getProgress();
     remote = (rec && rec.data) || {};
   } catch {
-    return false; // offline / server down: keep working locally
+    return false;
   }
   const merged = mergeProgress(local, remote);
   const changed = applyMerged(merged);
-  try { await apiPut(code, merged); } catch { /* best effort */ }
+  try { await api.putProgress(toSyncPayload(merged)); } catch { /* best effort */ }
   lastPushedHash = stableHash(merged);
   return changed;
 }
 
-export async function pushIfChanged(code: string): Promise<void> {
+export async function pushIfChanged(): Promise<void> {
   const snap = collectProgress();
   const h = stableHash(snap);
   if (h === lastPushedHash) return;
-  try { await apiPut(code, snap); lastPushedHash = h; } catch { /* best effort */ }
-}
-
-// Turn on sync with a code (called from the UI). Merges, then reloads so every
-// context re-reads the merged progress.
-export async function enableSync(code: string): Promise<void> {
-  setSyncCodeValue(code);
-  await pullMergePush(code);
-  window.location.reload();
-}
-
-// Called once at startup. If a code is set, converge, then keep pushing in the background.
-export async function startSync(): Promise<void> {
-  const code = getSyncCode();
-  if (!code) return;
-  const changed = await pullMergePush(code);
-  if (changed && !sessionStorage.getItem('sqlm:sync-applied')) {
-    try { sessionStorage.setItem('sqlm:sync-applied', '1'); } catch { /* ignore */ }
-    window.location.reload();
-    return;
-  }
-  setInterval(() => pushIfChanged(code), 15000);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) pushIfChanged(code); });
-  window.addEventListener('pagehide', () => pushIfChanged(code));
+  try { await api.putProgress(toSyncPayload(snap)); lastPushedHash = h; } catch { /* best effort */ }
 }

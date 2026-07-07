@@ -5,7 +5,6 @@ import App from './App';
 import './theme/tokens.css';
 import './theme/global.css';
 import { initTheme } from './theme/theme';
-import { startSync } from './lib/sync';
 
 initTheme();
 
@@ -16,6 +15,3 @@ createRoot(document.getElementById('root')!).render(
     </HashRouter>
   </React.StrictMode>
 );
-
-// Cross-device progress sync (no-op unless a sync code is set).
-startSync();

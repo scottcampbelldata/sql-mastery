@@ -6,7 +6,6 @@ import { currentSession, percent } from '../lib/curriculum';
 import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress';
 import { getTheme, setTheme } from '../theme/theme';
 import { ProgressMeter, cx } from './ui';
-import { SyncControl } from './SyncControl';
 import { LESSONS } from '../lessons/manifest';
 import './appshell.css';
 
@@ -94,7 +93,6 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
         </nav>
         <div className="sidebar-foot">
           {total ? <ProgressMeter value={percent(done, total)} label="Course" /> : null}
-          <SyncControl />
         </div>
       </aside>
       <div className="main-col">
