@@ -7,10 +7,15 @@ import type { Curriculum, CheckResponse, SchemaResponse, QueryResult, ApiError }
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
 const apiUrl = (path: string): string => `${API_BASE}${path}`;
 
-async function request<T = unknown>(url: string, options?: RequestInit): Promise<T> {
+let authToken: string | null = null;
+export function setAuthToken(token: string | null): void { authToken = token; }
+
+async function request<T = unknown>(url: string, options: RequestInit = {}): Promise<T> {
+  const headers = new Headers(options.headers);
+  if (authToken) headers.set('Authorization', `Bearer ${authToken}`);
   let response: Response;
   try {
-    response = await fetch(url, options);
+    response = await fetch(url, { ...options, headers });
   } catch {
     const error = new Error('Could not reach the local server. Is `npm start` running?') as ApiError;
     error.code = 'NETWORK';
@@ -43,5 +48,13 @@ export const api = {
     post<QueryResult>(apiUrl('/api/table-preview'), { database, schema, table, limit }),
   query: (database: string, sql: string): Promise<QueryResult> => post<QueryResult>(apiUrl('/api/query'), { database, sql }),
   check: (database: string | undefined, sql: string, expectedSql: string | undefined): Promise<CheckResponse> =>
-    post<CheckResponse>(apiUrl('/api/check'), { database, sql, expectedSql })
+    post<CheckResponse>(apiUrl('/api/check'), { database, sql, expectedSql }),
+  auth: {
+    google: (idToken: string): Promise<{ token: string; user: { sub: string; email: string; name: string } }> =>
+      post(apiUrl('/api/auth/google'), { idToken })
+  },
+  me: (): Promise<{ user: { sub: string; email: string; name: string } }> => request(apiUrl('/api/me')),
+  getProgress: (): Promise<{ data: Record<string, string> | null; updatedAt: string | null }> => request(apiUrl('/api/progress')),
+  putProgress: (data: Record<string, string>): Promise<{ ok: boolean; updatedAt: string }> =>
+    request(apiUrl('/api/progress'), { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ data }) })
 };
