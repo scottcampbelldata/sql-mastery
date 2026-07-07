@@ -132,3 +132,5 @@
   .lh-hero { grid-template-columns: 1fr; }
   .lh-ring { justify-self: start; }
 }
+
+.lh-weakspots { color: var(--ink-dim); font-size: var(--text-sm); margin: var(--s-3) 0 0; }
