@@ -279,6 +279,20 @@ describe('foundations engine', () => {
     expect(session.reviews.some((r) => r.skill === 'select-all')).toBe(false); // not also a review
   });
 
+  it('buildTodaySession routes a reset to main via the fallback branch once the learner has graduated', () => {
+    const s = loadFoundations();
+    // Every concept strong, both checkpoints passed, mark past the last concept: nothing is ahead.
+    track.concepts.forEach((c) => strong(s, c.skill, [`${c.id}-r1`, `${c.id}-r2`, `${c.id}-r3`]));
+    s.checkpointsPassed = ['cpA', 'cpB'];
+    s.maxUnlockedOrder = 6;
+    resetConcept(s, 'order-limit');                                                 // reset c3 (order 3 < 6)
+    expect(frontierConcept(track, s)).toBeNull();                                   // no not-strong concept at order >= 6
+    const session = buildTodaySession(track, s);
+    expect(session.main.kind).toBe('lesson');
+    expect((session.main as { concept: { id: string } }).concept.id).toBe('c3');    // the reset concept becomes main
+    expect(session.reviews.some((r) => r.skill === 'order-limit')).toBe(false);     // filtered out of reviews in the fallback branch
+  });
+
   it('buildTodaySession picks the earliest at-or-above-frontier lesson after two resets and does not re-offer a passed checkpoint', () => {
     const s = loadFoundations();
     s.skillCorrect = {
