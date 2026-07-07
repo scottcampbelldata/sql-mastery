@@ -26,19 +26,22 @@ interface Props {
   teach?: Teach | null;
   stepText?: string;
   onCorrect?: () => void;
+  cold?: boolean;
 }
 
 // LearnSQL-style two panel. LEFT (narrower) = instructions: theory + example + task.
 // RIGHT (wider) = console: editor on top, then results / database browser stacked below.
 // teach (optional): the concept's teach block, shown on a new lesson's reps.
-export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect }: Props) {
+// cold: start from a blank editor (used for reviews of already-mastered skills); the
+// learner can always fall back to the scaffold with the "Show the starter" button.
+export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect, cold }: Props) {
   const { update } = useFoundations();
   const [hintOpen, setHintOpen] = useState(false);
   const dbSchema = useDbSchema(exercise.database);
   const check = useSqlCheck(exercise, {
     onAttempt: () => update((s: LearningState) => recordAttempt(s, exercise.id)),
     onResult: (correct: boolean) => { if (correct) { update((s: LearningState) => recordCorrect(s, exercise)); onCorrect?.(); } },
-    cold: kind === 'review'
+    cold
   });
 
   return (
@@ -75,11 +78,12 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
         <div className="console-editor">
           <span className="wb-editor-label" aria-hidden="true">Your SQL</span>
           <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
-            placeholder={kind === 'review' ? 'Write the full query from scratch.' : editorPlaceholder(exercise)} ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
+            placeholder={cold ? 'Write the query from memory. Stuck? Use "Show the starter".' : editorPlaceholder(exercise)} ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
           <div className="console-actions">
             <Button variant="primary" onClick={check.runCheck} disabled={check.checking}>
               {check.checking ? 'Checking…' : `Run and check  ${isMac ? '⌘↵' : 'Ctrl+↵'}`}
             </Button>
+            {cold ? <Button onClick={() => check.setSql(starterSqlForExercise(exercise))}>Show the starter</Button> : null}
           </div>
         </div>
         <div role="status" aria-live="polite">
