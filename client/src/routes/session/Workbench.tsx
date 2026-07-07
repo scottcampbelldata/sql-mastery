@@ -8,6 +8,7 @@ import { formatSql } from '../../lib/sqlFormat';
 import { lessonSlug } from '../../lib/curriculum';
 import { useDbSchema } from '../../lib/dbSchema';
 import { Button, Pill, Callout } from '../../components/ui';
+import { DiffPanel } from '../../components/DiffPanel';
 import { SqlEditor } from '../../components/SqlEditor';
 import { LearnAccordion } from './LearnAccordion';
 import { OutputDock } from './OutputDock';
@@ -99,7 +100,8 @@ export function Workbench({ exercise, session, nextTarget }: Props) {
           title: body.feedbackType === 'error' ? 'Your SQL did not run' : 'Close, but not correct yet',
           message: body.feedbackType === 'error'
             ? [body.message, body.hint].filter(Boolean).join(': ')
-            : (body.hint || body.message)!
+            : (body.hint || body.message)!,
+          diff: body.diff || null
         });
       }
     } catch (error) {
@@ -144,6 +146,7 @@ export function Workbench({ exercise, session, nextTarget }: Props) {
             {feedback.message}
           </Callout>
         ) : null}
+        {feedback?.diff ? <DiffPanel diff={feedback.diff} /> : null}
       </div>
       {answerOpen ? <pre className="answer sql-block">{formatSql(exercise.expectedSql) || exercise.solutionNote || 'This exercise is manually reviewed.'}</pre> : null}
       <OutputDock exercise={exercise} result={result} />
