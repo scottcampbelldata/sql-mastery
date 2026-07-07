@@ -6,7 +6,7 @@ export const LEARNING_KEY = 'sqlm:learning:v1';
 const LEGACY_KEY = 'sqlm:foundations:v1';
 
 function defaultState(): LearningState {
-  return { skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {} };
+  return { skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {}, maxUnlockedOrder: 0 };
 }
 function asObject(v: unknown): Record<string, any> { return v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, any>) : {}; }
 function normalize(parsed: any): LearningState {
@@ -17,7 +17,8 @@ function normalize(parsed: any): LearningState {
     lastPracticedSession: asObject(parsed.lastPracticedSession),
     checkpointsPassed: Array.isArray(parsed.checkpointsPassed) ? parsed.checkpointsPassed : [],
     sessionCounter: Number.isFinite(parsed.sessionCounter) ? parsed.sessionCounter : 0,
-    reviewsPassed: asObject(parsed.reviewsPassed)
+    reviewsPassed: asObject(parsed.reviewsPassed),
+    maxUnlockedOrder: Number.isFinite(parsed.maxUnlockedOrder) && parsed.maxUnlockedOrder > 0 ? parsed.maxUnlockedOrder : 0
   };
 }
 

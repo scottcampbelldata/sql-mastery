@@ -19,7 +19,7 @@ describe('learning-path client helpers', () => {
   beforeEach(() => localStorage.clear());
 
   it('loads a safe default under its own key', () => {
-    expect(loadLearning()).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {} });
+    expect(loadLearning()).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {}, maxUnlockedOrder: 0 });
   });
 
   it('migrates an existing sqlm:foundations:v1 into sqlm:learning:v1 once', () => {
@@ -52,5 +52,20 @@ describe('learning-path client helpers', () => {
     expect(g.complete).toBe(false); // checkpoint cpB not passed
     recordCheckpointResult(s, phases[0].checkpoints[0], 6);
     expect(phaseGraduation(phases[0], s).complete).toBe(true);
+  });
+
+  it('coerces a missing maxUnlockedOrder to 0 (returning user upgrade)', () => {
+    const blob = { skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 2, reviewsPassed: {} };
+    localStorage.setItem(LEARNING_KEY, JSON.stringify(blob));
+    const loaded = loadLearning();
+    expect(Number.isFinite(loaded.maxUnlockedOrder)).toBe(true);
+    expect(loaded.maxUnlockedOrder).toBe(0);
+  });
+
+  it('coerces a non-finite or negative maxUnlockedOrder to 0 and preserves a valid one', () => {
+    localStorage.setItem(LEARNING_KEY, JSON.stringify({ maxUnlockedOrder: -3 }));
+    expect(loadLearning().maxUnlockedOrder).toBe(0);
+    localStorage.setItem(LEARNING_KEY, JSON.stringify({ maxUnlockedOrder: 5 }));
+    expect(loadLearning().maxUnlockedOrder).toBe(5);
   });
 });
