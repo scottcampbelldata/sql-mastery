@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { SqlEditor } from './SqlEditor';
 import { OutputDock } from '../routes/session/OutputDock';
 import { Button, Callout } from './ui';
+import { DiffPanel } from './DiffPanel';
 import { useSqlCheck } from '../lib/useSqlCheck';
 import { useDbSchema } from '../lib/dbSchema';
 import type { Exercise } from '../types';
@@ -59,6 +60,7 @@ export function DrillModal({ exercise, onClose, onSolved }: Props) {
             </div>
             <div role="status" aria-live="polite">
               {check.feedback ? <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout> : null}
+              {check.feedback?.diff ? <DiffPanel diff={check.feedback.diff} /> : null}
             </div>
             <OutputDock exercise={exercise} result={check.result} />
           </>

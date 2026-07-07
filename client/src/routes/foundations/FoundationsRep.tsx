@@ -8,6 +8,7 @@ import { useDbSchema } from '../../lib/dbSchema';
 import { SqlEditor } from '../../components/SqlEditor';
 import { OutputDock } from '../session/OutputDock';
 import { Button, Callout } from '../../components/ui';
+import { DiffPanel } from '../../components/DiffPanel';
 import type { Exercise, Teach, LearningState } from '../../types';
 
 const isMac = navigator.platform.toUpperCase().includes('MAC');
@@ -82,6 +83,7 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
         </div>
         <div role="status" aria-live="polite">
           {check.feedback ? <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout> : null}
+          {check.feedback?.diff ? <DiffPanel diff={check.feedback.diff} /> : null}
         </div>
         <OutputDock exercise={exercise} result={check.result} />
       </section>
