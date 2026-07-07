@@ -4,7 +4,7 @@ import {
   skillLevel, isSkillStrong, recordCorrect, recordAttempt,
   dueReviews, nextConcept, checkpointDue, buildTodaySession,
   recordCheckpointResult, advanceSession, graduationStatus,
-  STRONG_THRESHOLD, SPACING_GAP
+  STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots
 } from './foundations';
 import type { Track, LearningState } from '../types';
 
@@ -113,5 +113,41 @@ describe('foundations engine', () => {
     const s2 = loadFoundations();
     recordCheckpointResult(s2, track.checkpoints[0], 3, ['distinct']);
     expect(s2.checkpointsPassed).not.toContain('cpA');
+  });
+
+  it('skillMastery reaches 100 at the strong threshold and decays with time', () => {
+    const s = loadFoundations();
+    s.skillCorrect = { where: ['a', 'b', 'c'] };            // count 3 = strong
+    s.lastPracticedSession = { where: 0 };
+    s.sessionCounter = 0;
+    expect(skillMastery(s, 'where').pct).toBe(100);         // fresh
+    s.sessionCounter = 8;                                    // long unpracticed
+    expect(skillMastery(s, 'where').pct).toBeLessThan(100);  // rusty
+    expect(skillMastery(s, 'never-touched').pct).toBe(0);
+  });
+
+  it('weakSpots lists the lowest-mastery learned skills first', () => {
+    const track = { skills: [], checkpoints: [], concepts: [
+      { id: 'c1', order: 1, skill: 'where', title: 'Where', exercises: [] },
+      { id: 'c2', order: 2, skill: 'group', title: 'Group', exercises: [] }
+    ] } as any;
+    const s = loadFoundations();
+    s.skillCorrect = { where: ['a', 'b', 'c'], group: ['x'] };  // where strong, group weak
+    s.lastPracticedSession = { where: 0, group: 0 };
+    const weak = weakSpots(track, s, 2);
+    expect(weak[0].skill).toBe('group');
+  });
+
+  it('dueReviews returns the weakest due skill first', () => {
+    const track = { checkpoints: [], skills: [{ skill: 'where' }, { skill: 'group' }], concepts: [
+      { id: 'c1', order: 1, skill: 'where', title: 'Where', exercises: [{ id: 'w1', skill: 'where' }, { id: 'w2', skill: 'where' }] },
+      { id: 'c2', order: 2, skill: 'group', title: 'Group', exercises: [{ id: 'g1', skill: 'group' }, { id: 'g2', skill: 'group' }] }
+    ] } as any;
+    const s = loadFoundations();
+    s.skillCorrect = { where: ['w1', 'w2', 'w3'], group: ['g1'] };  // where count 3, group count 1
+    s.lastPracticedSession = { where: 0, group: 0 };
+    s.sessionCounter = 3;                                            // both due (gap satisfied)
+    const due = dueReviews(track, s);
+    expect(due[0].skill).toBe('group');
   });
 });

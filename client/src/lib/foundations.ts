@@ -40,6 +40,28 @@ export function skillLevel(state: LearningState, skill: string): { count: number
 }
 export function isSkillStrong(state: LearningState, skill: string): boolean { return skillLevel(state, skill).count >= STRONG_THRESHOLD; }
 
+export interface SkillMastery { count: number; tier: string; pct: number; sessionsSince: number; }
+
+// Visual mastery: progress toward "strong", dimmed by how long since you practiced.
+// Purely for display and review ordering; it never changes count, isSkillStrong, or graduation.
+export function skillMastery(state: LearningState, skill: string): SkillMastery {
+  const { count, tier } = skillLevel(state, skill);
+  const last = state.lastPracticedSession[skill];
+  const sessionsSince = last === undefined ? 0 : Math.max(0, state.sessionCounter - last);
+  const base = Math.min(1, count / STRONG_THRESHOLD);
+  const decay = Math.max(0.5, 1 - 0.15 * Math.max(0, sessionsSince - SPACING_GAP));
+  return { count, tier, pct: Math.round(base * decay * 100), sessionsSince };
+}
+
+// The lowest-mastery skills you have started (count > 0), weakest first.
+export function weakSpots(track: Track, state: LearningState, n = 3): { skill: string; title: string; pct: number }[] {
+  return track.concepts
+    .filter((c) => (state.skillCorrect[c.skill] || []).length > 0)
+    .map((c) => ({ skill: c.skill, title: c.title, pct: skillMastery(state, c.skill).pct }))
+    .sort((a, b) => a.pct - b.pct)
+    .slice(0, n);
+}
+
 // Mutating recorders (return the same state; callers persist). New leaf objects/arrays
 // are created so a shallow snapshot of state is not corrupted.
 export function recordCorrect(state: LearningState, exercise: Exercise): LearningState {
@@ -65,7 +87,7 @@ export interface DueReview {
 }
 
 export function dueReviews(track: Track, state: LearningState): DueReview[] {
-  const out: DueReview[] = [];
+  const due: { skill: string; concept: Concept; count: number; last: number }[] = [];
   for (const s of track.skills) {
     if (!isLearned(state, s.skill)) continue;
     const last = state.lastPracticedSession[s.skill];
@@ -73,12 +95,17 @@ export function dueReviews(track: Track, state: LearningState): DueReview[] {
     if (state.sessionCounter - last < SPACING_GAP) continue;
     const concept = track.concepts.find((c) => c.skill === s.skill);
     if (!concept) continue;
-    const answered = new Set(state.skillCorrect[s.skill] || []);
-    const unseen = concept.exercises.find((e) => !answered.has(e.id));
-    const exercise = unseen || concept.exercises[(state.sessionCounter + out.length) % concept.exercises.length];
-    out.push({ skill: s.skill, concept, exercise });
-    if (out.length >= MAX_REVIEWS_PER_SESSION) break;
+    due.push({ skill: s.skill, concept, count: (state.skillCorrect[s.skill] || []).length, last });
   }
+  // Weakest first: fewest correct, then longest since practiced.
+  due.sort((a, b) => (a.count - b.count) || (a.last - b.last));
+  const out: DueReview[] = [];
+  due.slice(0, MAX_REVIEWS_PER_SESSION).forEach((d, i) => {
+    const answered = new Set(state.skillCorrect[d.skill] || []);
+    const unseen = d.concept.exercises.find((e) => !answered.has(e.id));
+    const exercise = unseen || d.concept.exercises[(state.sessionCounter + i) % d.concept.exercises.length];
+    out.push({ skill: d.skill, concept: d.concept, exercise });
+  });
   return out;
 }
 
