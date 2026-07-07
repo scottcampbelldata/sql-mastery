@@ -138,6 +138,57 @@ function conceptUnlocked(track: Track, state: LearningState, concept: Concept): 
   return !gating || checkpointPassed(state, gating.id);
 }
 
+export function isConceptUnlocked(track: Track, state: LearningState, concept: Concept): boolean {
+  return conceptUnlocked(track, state, concept);
+}
+
+function maxConceptOrder(track: Track): number {
+  return track.concepts.reduce((m, c) => Math.max(m, c.order), 0);
+}
+
+// The learner's true frontier: the earliest not-strong, unlocked concept at or beyond the
+// reached high-water mark. Concepts below the mark that are not strong are reset concepts and
+// are handled as reviews, not as the headline lesson. Returns null when the next such concept
+// is checkpoint-gated, or when none remains (every concept at or above the mark is strong).
+export function frontierConcept(track: Track, state: LearningState): Concept | null {
+  const ordered = [...track.concepts].sort((a, b) => a.order - b.order);
+  for (const concept of ordered) {
+    if (concept.order < state.maxUnlockedOrder) continue;
+    if (isSkillStrong(state, concept.skill)) continue;
+    if (!conceptUnlocked(track, state, concept)) return null;
+    return concept;
+  }
+  return null;
+}
+
+export function frontierOrder(track: Track, state: LearningState): number {
+  const f = frontierConcept(track, state);
+  return f ? f.order : maxConceptOrder(track);
+}
+
+// Track-aware progress recorder. Records a correct answer (pure recordCorrect) and raises the
+// unlock high-water mark if the concept just became strong. Used by every concept-exercise
+// correct path so the guided frontier and the tile map stay in sync.
+export function recordConceptProgress(track: Track, state: LearningState, exercise: Exercise): LearningState {
+  recordCorrect(state, exercise);
+  const concept = track.concepts.find((c) => c.skill === exercise.skill);
+  if (concept && isSkillStrong(state, exercise.skill as string)) {
+    state.maxUnlockedOrder = Math.max(state.maxUnlockedOrder, concept.order + 1);
+  }
+  return state;
+}
+
+// Clears one concept's mastery so its full scaffold returns, without touching the path, the
+// high-water mark, checkpoints, or any other skill. Reassigns fresh maps (never mutates in
+// place) so a prior state snapshot is not corrupted.
+export function resetConcept(state: LearningState, skill: string): LearningState {
+  const omit = (m: Record<string, unknown>) => { const n = { ...m }; delete n[skill]; return n; };
+  state.skillCorrect = omit(state.skillCorrect) as Record<string, string[]>;
+  state.reviewsPassed = omit(state.reviewsPassed) as Record<string, number>;
+  state.lastPracticedSession = omit(state.lastPracticedSession) as Record<string, number>;
+  return state;
+}
+
 export function nextConcept(track: Track, state: LearningState): Concept | null {
   const ordered = [...track.concepts].sort((a, b) => a.order - b.order);
   for (const concept of ordered) {
