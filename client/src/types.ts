@@ -137,6 +137,9 @@ export interface LearningState {
   // Times a spaced review of each skill has been passed; drives the scaffold fade
   // (full -> half -> blank) once a skill is mastered.
   reviewsPassed: Record<string, number>;
+  // Monotonic unlock high-water mark: the furthest concept.order the learner has ever been
+  // cleared to reach (set to order + 1 when a concept becomes strong). Only ever raised.
+  maxUnlockedOrder: number;
 }
 
 // A { tableName: columnNames[] } map for editor autocomplete and the schema browser.

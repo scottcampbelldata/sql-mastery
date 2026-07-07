@@ -39,7 +39,7 @@ describe('foundations engine', () => {
 
   it('loads a safe default and round-trips under its own key', () => {
     const s = loadFoundations();
-    expect(s).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {} });
+    expect(s).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {}, maxUnlockedOrder: 0 });
     s.attempts['x'] = 2; saveFoundations(s);
     expect(JSON.parse(localStorage.getItem(FOUNDATIONS_KEY)!).attempts.x).toBe(2);
   });
