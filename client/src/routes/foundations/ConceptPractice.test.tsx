@@ -1,6 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import type { ReactNode } from 'react';
+
+vi.mock('../../components/AppShell', () => ({
+  AppShell: ({ children }: { children: ReactNode }) => <div>{children}</div>
+}));
+
+vi.mock('./FoundationsRep', () => ({
+  FoundationsRep: (props: { kind: string; tier: string }) => <div data-testid="rep" data-kind={props.kind} data-tier={props.tier} />
+}));
 
 vi.mock('../../state/FoundationsContext', () => ({
   useFoundations: () => ({
@@ -27,5 +36,18 @@ describe('ConceptPractice route guard', () => {
       </MemoryRouter>
     );
     expect(screen.getByText('foundations home')).toBeInTheDocument();
+  });
+
+  it('drives focused practice at full scaffold with the new-lesson kind (no fade, no clock tick)', () => {
+    render(
+      <MemoryRouter initialEntries={['/learn/concept/c1']}>
+        <Routes>
+          <Route path="/learn/concept/:conceptId" element={<ConceptPractice />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    const rep = screen.getByTestId('rep');
+    expect(rep.getAttribute('data-kind')).toBe('new');   // never 'review', so the scaffold never fades
+    expect(rep.getAttribute('data-tier')).toBe('full');  // focused practice always shows the full scaffold
   });
 });
