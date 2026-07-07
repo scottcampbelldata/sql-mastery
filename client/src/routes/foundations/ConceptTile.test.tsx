@@ -44,4 +44,14 @@ describe('ConceptTile', () => {
     expect(screen.queryByRole('link')).toBeNull();
     expect(screen.getByText(/locked/i)).toBeInTheDocument();
   });
+
+  it('an unlocked (reset, in-progress) tile is a clickable link that still offers a reset', () => {
+    const { onReset } = renderTile({ state: 'unlocked', count: 1 });
+    const link = screen.getByRole('link');
+    expect(link.getAttribute('href')).toBe('/learn/concept/c1');
+    expect(link).toHaveAccessibleName(/practice/i);
+    fireEvent.click(screen.getByRole('button', { name: /reset lesson/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^reset$/i }));
+    expect(onReset).toHaveBeenCalledWith('select-all');
+  });
 });

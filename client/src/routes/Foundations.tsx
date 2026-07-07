@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../components/AppShell';
 import { EmptyState, Button } from '../components/ui';
 import { useFoundations } from '../state/FoundationsContext';
-import { skillLevel, buildTodaySession, graduationStatus, skillMastery, weakSpots, frontierConcept, tileState, resetConcept } from '../lib/foundations';
+import { skillLevel, buildTodaySession, graduationStatus, skillMastery, weakSpots, tileState, resetConcept } from '../lib/foundations';
 import { currentPhase, phaseGraduation } from '../lib/learning-path';
 import type { Concept, Checkpoint, Phase, LearningState } from '../types';
 import { ConceptTile } from './foundations/ConceptTile';
