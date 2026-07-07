@@ -1,11 +1,20 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import path from 'path';
 import { createApp } from './src/app';
 import { createQueryService } from './src/query-service';
+import { createProgressStore } from './src/progress-store';
+import { createUserStore } from './src/user-store';
+import { createAuthService } from './src/auth-service';
 
 const queryService = createQueryService();
-const app = createApp({ queryService });
+const dataDir = process.env.SQL_MASTERY_DATA_DIR || path.resolve(process.cwd(), 'data');
+const progressStore = createProgressStore({ dir: path.join(dataDir, 'progress') });
+const userStore = createUserStore({ dir: path.join(dataDir, 'users') });
+const authService = createAuthService();
+
+const app = createApp({ queryService, progressStore, userStore, authService });
 const preferredPort = Number(process.env.PORT || 3000);
 const host = process.env.HOST || '127.0.0.1';
 
