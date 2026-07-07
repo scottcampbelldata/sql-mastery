@@ -1,5 +1,7 @@
-// Phase 1: Foundations. Content is the exact CONCEPTS/CHECKPOINTS from the original
-// src/foundations.js (unchanged); only the phase wrapper is added.
+// Phase 1: Foundations. Beginner concepts for querying one table. Every exercise
+// carries a granular starterSql: the keyword skeleton stays visible and each value the
+// task asks for (column, table, filter, sort key, limit) is its own ____ blank, so the
+// number of blanks matches the number of things the learner supplies.
 const DB = 'chinook';
 
 function ex(
@@ -30,9 +32,9 @@ const CONCEPTS = [
       example: { sql: 'SELECT * FROM genre;', note: 'Returns all 25 genres with both columns (genre_id and name).' }
     },
     exercises: [
-      ex('c1-r1', 'select-all', 'Show everything, every column and every row, from the genre table.', 'SELECT * FROM genre;', { starterSql: 'SELECT ____ FROM genre;', hint: 'The star * means "all columns".' }),
-      ex('c1-r2', 'select-all', 'Show everything in the media_type table.', 'SELECT * FROM media_type;', { hint: 'Same shape as the example, different table name.' }),
-      ex('c1-r3', 'select-all', 'Show everything in the playlist table.', 'SELECT * FROM playlist;', { hint: 'SELECT * FROM <table>;' })
+      ex('c1-r1', 'select-all', 'Show everything, every column and every row, from the genre table.', 'SELECT * FROM genre;', { starterSql: 'SELECT ____ FROM ____;', hint: 'The star * means "all columns"; the table is genre.' }),
+      ex('c1-r2', 'select-all', 'Show everything in the media_type table.', 'SELECT * FROM media_type;', { starterSql: 'SELECT ____ FROM ____;', hint: 'Same shape as the example, different table name.' }),
+      ex('c1-r3', 'select-all', 'Show everything in the playlist table.', 'SELECT * FROM playlist;', { starterSql: 'SELECT ____ FROM ____;', hint: 'SELECT * FROM <table>;' })
     ]
   },
   {
@@ -44,9 +46,9 @@ const CONCEPTS = [
       example: { sql: 'SELECT name, composer FROM track;', note: 'Shows just two columns: the track name and its composer.' }
     },
     exercises: [
-      ex('c2-r1', 'select-columns', 'Show only the name column from the genre table.', 'SELECT name FROM genre;', { starterSql: 'SELECT ____ FROM genre;', hint: 'Put the column name where the * used to be.' }),
-      ex('c2-r2', 'select-columns', 'Show only the name column from the media_type table.', 'SELECT name FROM media_type;', { hint: 'One column: name.' }),
-      ex('c2-r3', 'select-columns', 'Show the genre_id and name columns (in that order) from the genre table.', 'SELECT genre_id, name FROM genre;', { hint: 'Two columns separated by a comma.' })
+      ex('c2-r1', 'select-columns', 'Show only the name column from the genre table.', 'SELECT name FROM genre;', { starterSql: 'SELECT ____ FROM ____;', hint: 'Put the one column name where the * used to be.' }),
+      ex('c2-r2', 'select-columns', 'Show only the name column from the media_type table.', 'SELECT name FROM media_type;', { starterSql: 'SELECT ____ FROM ____;', hint: 'One column: name.' }),
+      ex('c2-r3', 'select-columns', 'Show the genre_id and name columns (in that order) from the genre table.', 'SELECT genre_id, name FROM genre;', { starterSql: 'SELECT ____, ____ FROM ____;', hint: 'Two columns separated by a comma, then the table.' })
     ]
   },
   {
@@ -58,9 +60,9 @@ const CONCEPTS = [
       example: { sql: 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 5;', note: 'The 5 longest tracks, longest first.' }
     },
     exercises: [
-      ex('c3-r1', 'order-limit', 'Show the 10 longest tracks, their name and milliseconds, longest first.', 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 10;', { starterSql: 'SELECT name, milliseconds FROM track ORDER BY ____ DESC LIMIT 10;', hint: 'Longest first means sort by milliseconds DESC, then LIMIT 10.' }),
-      ex('c3-r2', 'order-limit', 'Show the genre_id and name of every genre, sorted alphabetically by name.', 'SELECT genre_id, name FROM genre ORDER BY name;', { hint: 'ORDER BY name (no DESC = A to Z).' }),
-      ex('c3-r3', 'order-limit', 'Show the genre_id and name of every genre, from highest genre_id to lowest.', 'SELECT genre_id, name FROM genre ORDER BY genre_id DESC;', { hint: 'Highest first means DESC.' })
+      ex('c3-r1', 'order-limit', 'Show the 10 longest tracks, their name and milliseconds, longest first.', 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 10;', { starterSql: 'SELECT ____, ____ FROM ____ ORDER BY ____ DESC LIMIT ____;', hint: 'Two columns, the track table, sort by milliseconds DESC, keep 10.' }),
+      ex('c3-r2', 'order-limit', 'Show the genre_id and name of every genre, sorted alphabetically by name.', 'SELECT genre_id, name FROM genre ORDER BY name;', { starterSql: 'SELECT ____, ____ FROM ____ ORDER BY ____;', hint: 'ORDER BY name (no DESC = A to Z).' }),
+      ex('c3-r3', 'order-limit', 'Show the genre_id and name of every genre, from highest genre_id to lowest.', 'SELECT genre_id, name FROM genre ORDER BY genre_id DESC;', { starterSql: 'SELECT ____, ____ FROM ____ ORDER BY ____ DESC;', hint: 'Highest first means DESC.' })
     ]
   },
   {
@@ -72,9 +74,9 @@ const CONCEPTS = [
       example: { sql: 'SELECT DISTINCT unit_price FROM track ORDER BY unit_price;', note: 'Only two prices exist in the whole track table: 0.99 and 1.99.' }
     },
     exercises: [
-      ex('c4-r1', 'distinct', 'Show each unit price that appears in the track table, with no duplicates, lowest first.', 'SELECT DISTINCT unit_price FROM track ORDER BY unit_price;', { starterSql: 'SELECT DISTINCT ____ FROM track ORDER BY unit_price;', hint: 'DISTINCT goes right after SELECT.' }),
-      ex('c4-r2', 'distinct', 'Show each distinct genre_id used by tracks, lowest first.', 'SELECT DISTINCT genre_id FROM track ORDER BY genre_id;', { hint: 'SELECT DISTINCT genre_id ...' }),
-      ex('c4-r3', 'distinct', 'Show each distinct media_type_id used by tracks, lowest first.', 'SELECT DISTINCT media_type_id FROM track ORDER BY media_type_id;', { hint: 'SELECT DISTINCT media_type_id ...' })
+      ex('c4-r1', 'distinct', 'Show each unit price that appears in the track table, with no duplicates, lowest first.', 'SELECT DISTINCT unit_price FROM track ORDER BY unit_price;', { starterSql: 'SELECT DISTINCT ____ FROM ____ ORDER BY ____;', hint: 'DISTINCT stays; fill the column, table, and sort column.' }),
+      ex('c4-r2', 'distinct', 'Show each distinct genre_id used by tracks, lowest first.', 'SELECT DISTINCT genre_id FROM track ORDER BY genre_id;', { starterSql: 'SELECT DISTINCT ____ FROM ____ ORDER BY ____;', hint: 'SELECT DISTINCT genre_id ...' }),
+      ex('c4-r3', 'distinct', 'Show each distinct media_type_id used by tracks, lowest first.', 'SELECT DISTINCT media_type_id FROM track ORDER BY media_type_id;', { starterSql: 'SELECT DISTINCT ____ FROM ____ ORDER BY ____;', hint: 'SELECT DISTINCT media_type_id ...' })
     ]
   },
   {
@@ -86,10 +88,10 @@ const CONCEPTS = [
       example: { sql: 'SELECT track_id, name FROM track WHERE unit_price > 0.99 ORDER BY track_id;', note: 'Only the more expensive (1.99) tracks survive the filter.' }
     },
     exercises: [
-      ex('c5-r1', 'where', 'Show the track_id and name of tracks that cost more than 0.99, lowest track_id first.', 'SELECT track_id, name FROM track WHERE unit_price > 0.99 ORDER BY track_id;', { starterSql: 'SELECT track_id, name FROM track WHERE unit_price ____ 0.99 ORDER BY track_id;', hint: '"more than" is the > operator.' }),
-      ex('c5-r2', 'where', 'Show the name and unit_price of tracks that cost exactly 1.99, ordered by track_id.', 'SELECT name, unit_price FROM track WHERE unit_price = 1.99 ORDER BY track_id;', { hint: 'Exactly means = . You can ORDER BY a column you did not select.' }),
-      ex('c5-r3', 'where', 'Show the track_id and name of tracks in genre 1 (Rock), lowest track_id first.', 'SELECT track_id, name FROM track WHERE genre_id = 1 ORDER BY track_id;', { hint: 'WHERE genre_id = 1.' }),
-      ex('c5-r4', 'where', 'Show the track_id and name of tracks whose genre_id is 1, 2, or 3, lowest track_id first.', 'SELECT track_id, name FROM track WHERE genre_id IN (1, 2, 3) ORDER BY track_id;', { hint: 'WHERE genre_id IN (1, 2, 3).' })
+      ex('c5-r1', 'where', 'Show the track_id and name of tracks that cost more than 0.99, lowest track_id first.', 'SELECT track_id, name FROM track WHERE unit_price > 0.99 ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE unit_price ____ 0.99 ORDER BY ____;', hint: '"more than" is the > operator.' }),
+      ex('c5-r2', 'where', 'Show the name and unit_price of tracks that cost exactly 1.99, ordered by track_id.', 'SELECT name, unit_price FROM track WHERE unit_price = 1.99 ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE unit_price ____ 1.99 ORDER BY ____;', hint: 'Exactly means = . You can ORDER BY a column you did not select.' }),
+      ex('c5-r3', 'where', 'Show the track_id and name of tracks in genre 1 (Rock), lowest track_id first.', 'SELECT track_id, name FROM track WHERE genre_id = 1 ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE genre_id ____ 1 ORDER BY ____;', hint: 'WHERE genre_id = 1.' }),
+      ex('c5-r4', 'where', 'Show the track_id and name of tracks whose genre_id is 1, 2, or 3, lowest track_id first.', 'SELECT track_id, name FROM track WHERE genre_id IN (1, 2, 3) ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE genre_id IN (____, ____, ____) ORDER BY ____;', hint: 'IN lists the values to match: IN (1, 2, 3).' })
     ]
   },
   {
@@ -101,9 +103,9 @@ const CONCEPTS = [
       example: { sql: 'SELECT track_id, name FROM track WHERE composer IS NULL ORDER BY track_id;', note: '977 tracks have no composer recorded.' }
     },
     exercises: [
-      ex('c6-r1', 'null', 'Show the track_id and name of tracks that have no composer listed, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NULL ORDER BY track_id;', { starterSql: 'SELECT track_id, name FROM track WHERE composer ____ ORDER BY track_id;', hint: '"no composer" means composer IS NULL.' }),
-      ex('c6-r2', 'null', 'Show the track_id and name of tracks that DO have a composer, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NOT NULL ORDER BY track_id;', { hint: 'IS NOT NULL.' }),
-      ex('c6-r3', 'null', 'Show the track_id and name of Rock tracks (genre_id 1) that have no composer, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NULL AND genre_id = 1 ORDER BY track_id;', { hint: 'Combine two conditions with AND.' })
+      ex('c6-r1', 'null', 'Show the track_id and name of tracks that have no composer listed, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NULL ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE composer ____ ORDER BY ____;', hint: '"no composer" means composer IS NULL.' }),
+      ex('c6-r2', 'null', 'Show the track_id and name of tracks that DO have a composer, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NOT NULL ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE composer ____ ORDER BY ____;', hint: 'IS NOT NULL.' }),
+      ex('c6-r3', 'null', 'Show the track_id and name of Rock tracks (genre_id 1) that have no composer, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NULL AND genre_id = 1 ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE composer ____ AND genre_id = ____ ORDER BY ____;', hint: 'Combine two conditions with AND.' })
     ]
   },
   {
@@ -115,10 +117,10 @@ const CONCEPTS = [
       example: { sql: 'SELECT COUNT(*), ROUND(AVG(milliseconds)) FROM track;', note: 'How many tracks there are, and their average length rounded to a whole number.' }
     },
     exercises: [
-      ex('c7-r1', 'aggregate', 'Count how many rows are in the track table.', 'SELECT COUNT(*) FROM track;', { starterSql: 'SELECT ____ FROM track;', hint: 'COUNT(*) counts every row.' }),
-      ex('c7-r2', 'aggregate', 'Show the average track length in milliseconds, rounded to a whole number.', 'SELECT ROUND(AVG(milliseconds)) FROM track;', { hint: 'ROUND(AVG(milliseconds)). Do not add an alias.' }),
-      ex('c7-r3', 'aggregate', 'Show the lowest and highest unit_price in the track table (min first, then max).', 'SELECT MIN(unit_price), MAX(unit_price) FROM track;', { hint: 'Two functions: MIN(unit_price), MAX(unit_price).' }),
-      ex('c7-r4', 'aggregate', 'Show the total of all milliseconds across every track.', 'SELECT SUM(milliseconds) FROM track;', { hint: 'SUM(milliseconds).' })
+      ex('c7-r1', 'aggregate', 'Count how many rows are in the track table.', 'SELECT COUNT(*) FROM track;', { starterSql: 'SELECT COUNT(____) FROM ____;', hint: 'COUNT(*) counts every row.' }),
+      ex('c7-r2', 'aggregate', 'Show the average track length in milliseconds, rounded to a whole number.', 'SELECT ROUND(AVG(milliseconds)) FROM track;', { starterSql: 'SELECT ROUND(AVG(____)) FROM ____;', hint: 'ROUND(AVG(milliseconds)). Do not add an alias.' }),
+      ex('c7-r3', 'aggregate', 'Show the lowest and highest unit_price in the track table (min first, then max).', 'SELECT MIN(unit_price), MAX(unit_price) FROM track;', { starterSql: 'SELECT MIN(____), MAX(____) FROM ____;', hint: 'Two functions: MIN(unit_price), MAX(unit_price).' }),
+      ex('c7-r4', 'aggregate', 'Show the total of all milliseconds across every track.', 'SELECT SUM(milliseconds) FROM track;', { starterSql: 'SELECT SUM(____) FROM ____;', hint: 'SUM(milliseconds).' })
     ]
   },
   {
@@ -130,10 +132,25 @@ const CONCEPTS = [
       example: { sql: 'SELECT genre_id, COUNT(*) FROM track GROUP BY genre_id ORDER BY genre_id;', note: 'One row per genre, showing how many tracks it has.' }
     },
     exercises: [
-      ex('c8-r1', 'group-by', 'For each genre_id, count how many tracks it has. Show genre_id and the count, lowest genre_id first.', 'SELECT genre_id, COUNT(*) FROM track GROUP BY genre_id ORDER BY genre_id;', { starterSql: 'SELECT genre_id, COUNT(*) FROM track GROUP BY ____ ORDER BY genre_id;', hint: 'GROUP BY the column you are counting per: genre_id.' }),
-      ex('c8-r2', 'group-by', 'For each album_id, count how many tracks it has. Show album_id and the count, lowest album_id first.', 'SELECT album_id, COUNT(*) FROM track GROUP BY album_id ORDER BY album_id;', { hint: 'GROUP BY album_id.' }),
-      ex('c8-r3', 'group-by', 'For each unit_price, count how many tracks have that price. Show unit_price and the count, lowest price first.', 'SELECT unit_price, COUNT(*) FROM track GROUP BY unit_price ORDER BY unit_price;', { hint: 'GROUP BY unit_price.' }),
-      ex('c8-r4', 'group-by', 'For each genre_id, show the average track length rounded to a whole number. Show genre_id and the rounded average, lowest genre_id first.', 'SELECT genre_id, ROUND(AVG(milliseconds)) FROM track GROUP BY genre_id ORDER BY genre_id;', { hint: 'ROUND(AVG(milliseconds)) with GROUP BY genre_id.' })
+      ex('c8-r1', 'group-by', 'For each genre_id, count how many tracks it has. Show genre_id and the count, lowest genre_id first.', 'SELECT genre_id, COUNT(*) FROM track GROUP BY genre_id ORDER BY genre_id;', { starterSql: 'SELECT ____, COUNT(*) FROM ____ GROUP BY ____ ORDER BY ____;', hint: 'GROUP BY the column you are counting per: genre_id.' }),
+      ex('c8-r2', 'group-by', 'For each album_id, count how many tracks it has. Show album_id and the count, lowest album_id first.', 'SELECT album_id, COUNT(*) FROM track GROUP BY album_id ORDER BY album_id;', { starterSql: 'SELECT ____, COUNT(*) FROM ____ GROUP BY ____ ORDER BY ____;', hint: 'GROUP BY album_id.' }),
+      ex('c8-r3', 'group-by', 'For each unit_price, count how many tracks have that price. Show unit_price and the count, lowest price first.', 'SELECT unit_price, COUNT(*) FROM track GROUP BY unit_price ORDER BY unit_price;', { starterSql: 'SELECT ____, COUNT(*) FROM ____ GROUP BY ____ ORDER BY ____;', hint: 'GROUP BY unit_price.' }),
+      ex('c8-r4', 'group-by', 'For each genre_id, show the average track length rounded to a whole number. Show genre_id and the rounded average, lowest genre_id first.', 'SELECT genre_id, ROUND(AVG(milliseconds)) FROM track GROUP BY genre_id ORDER BY genre_id;', { starterSql: 'SELECT ____, ROUND(AVG(____)) FROM ____ GROUP BY ____ ORDER BY ____;', hint: 'ROUND(AVG(milliseconds)) with GROUP BY genre_id.' })
+    ]
+  },
+  {
+    id: 'c9-alias', order: 9, skill: 'alias',
+    title: 'Rename columns with AS',
+    teach: {
+      plain: 'A column comes back named after its source (name, milliseconds), which is not always what you want in a report. AS renames a column in the output: SELECT name AS track shows the track names under the heading "track". You can alias several columns, and you can alias an aggregate like COUNT(*) AS tracks.',
+      mentalModel: 'SELECT <column> AS <new name> renames just the output heading, not the data.',
+      example: { sql: 'SELECT name AS track, milliseconds AS length FROM track;', note: 'The two columns come back headed "track" and "length" instead of "name" and "milliseconds".' }
+    },
+    exercises: [
+      ex('c9-r1', 'alias', 'Show the track name labeled as "track" and its milliseconds labeled as "length".', 'SELECT name AS track, milliseconds AS length FROM track;', { starterSql: 'SELECT ____ AS track, ____ AS length FROM ____;', hint: 'Rename each column with AS: name AS track, milliseconds AS length.' }),
+      ex('c9-r2', 'alias', 'Show the genre name labeled as "genre".', 'SELECT name AS genre FROM genre;', { starterSql: 'SELECT ____ AS genre FROM ____;', hint: 'SELECT name AS genre FROM genre.' }),
+      ex('c9-r3', 'alias', 'Show each track name labeled as "title" and its unit_price labeled as "price", most expensive first.', 'SELECT name AS title, unit_price AS price FROM track ORDER BY unit_price DESC;', { starterSql: 'SELECT ____ AS title, ____ AS price FROM ____ ORDER BY ____ DESC;', hint: 'Alias both columns with AS; sort by unit_price DESC.' }),
+      ex('c9-r4', 'alias', 'For each genre_id labeled "genre", show the track count labeled "tracks", lowest genre_id first.', 'SELECT genre_id AS genre, COUNT(*) AS tracks FROM track GROUP BY genre_id ORDER BY genre_id;', { starterSql: 'SELECT ____ AS genre, COUNT(*) AS tracks FROM ____ GROUP BY ____ ORDER BY ____;', hint: 'You can alias an aggregate too: COUNT(*) AS tracks.' })
     ]
   }
 ];
@@ -147,7 +164,7 @@ const foundationsPhase = {
   id: 'foundations',
   order: 1,
   title: 'Foundations',
-  goal: 'Query one table with confidence: SELECT, filtering, sorting, NULLs, and grouping.',
+  goal: 'Query one table with confidence: SELECT, filtering, sorting, NULLs, grouping, and column aliases.',
   concepts: CONCEPTS,
   checkpoints: CHECKPOINTS
 };
