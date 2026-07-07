@@ -1,7 +1,7 @@
-import { createContext, useContext, useMemo, useState, useCallback } from 'react';
+import { createContext, useContext, useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { useCurriculum } from './CurriculumContext';
-import { loadLearning, saveLearning } from '../lib/learning-path';
+import { loadLearning, saveLearning, reconcileUnlock, duplicateSkills } from '../lib/learning-path';
 import type { LearningState, Track, Phase } from '../types';
 
 interface FoundationsContextValue {
@@ -30,7 +30,8 @@ export function FoundationsProvider({ children }: FoundationsProviderProps) {
         attempts: { ...prev.attempts },
         lastSql: { ...prev.lastSql },
         lastPracticedSession: { ...prev.lastPracticedSession },
-        checkpointsPassed: [...prev.checkpointsPassed]
+        checkpointsPassed: [...prev.checkpointsPassed],
+        reviewsPassed: { ...prev.reviewsPassed }
       };
       mutate(next);
       saveLearning(next);
@@ -42,6 +43,19 @@ export function FoundationsProvider({ children }: FoundationsProviderProps) {
   // `phases` is the grouped structure for the phase-map home.
   const track = curriculum ? curriculum.learningPath : null;
   const phases = curriculum ? curriculum.learningPath.phases : [];
+
+  const reconciled = useRef(false);
+  useEffect(() => {
+    if (!track || reconciled.current) return;
+    reconciled.current = true;
+    const mark = reconcileUnlock(track, state);
+    if (mark > state.maxUnlockedOrder) update((s) => { s.maxUnlockedOrder = mark; });
+    if (import.meta.env.DEV) {
+      const dups = duplicateSkills(track);
+      if (dups.length) console.error('Duplicate concept skills in learning track:', dups);
+    }
+  }, [track]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const value = useMemo(() => ({ track, phases, state, update }), [track, phases, state, update]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

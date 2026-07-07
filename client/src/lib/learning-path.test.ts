@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { LEARNING_KEY, loadLearning, saveLearning, currentPhase, phaseGraduation } from './learning-path';
+import { LEARNING_KEY, loadLearning, saveLearning, currentPhase, phaseGraduation, reconcileUnlock, duplicateSkills } from './learning-path';
 import { recordCorrect, recordCheckpointResult } from './foundations';
 import type { Phase, LearningState } from '../types';
 
@@ -67,5 +67,30 @@ describe('learning-path client helpers', () => {
     expect(loadLearning().maxUnlockedOrder).toBe(0);
     localStorage.setItem(LEARNING_KEY, JSON.stringify({ maxUnlockedOrder: 5 }));
     expect(loadLearning().maxUnlockedOrder).toBe(5);
+  });
+
+  const track = {
+    dataset: 'chinook', phases, skills: [], exercises: [],
+    concepts: [
+      { id: 'c1', order: 1, skill: 'select-all', title: 'A', exercises: [] },
+      { id: 'c2', order: 2, skill: 'where', title: 'B', exercises: [] },
+      { id: 'c3', order: 3, skill: 'inner-join', title: 'C', exercises: [] }
+    ],
+    checkpoints: [{ id: 'cpB', afterOrder: 2, drawFromSkills: [], title: 'B' }]
+  } as any;
+
+  it('reconcileUnlock raises the mark from strong concepts and passed checkpoints, never lowers it', () => {
+    const s = loadLearning();
+    strong(s, 'select-all', ['a', 'b', 'c']);   // c1 strong -> order 1 + 1 = 2
+    s.checkpointsPassed = ['cpB'];                // cpB afterOrder 2 -> 2 + 1 = 3
+    expect(reconcileUnlock(track, s)).toBe(3);
+    s.maxUnlockedOrder = 9;                        // already higher
+    expect(reconcileUnlock(track, s)).toBe(9);    // never lowers
+  });
+
+  it('duplicateSkills flags a skill shared by two concepts', () => {
+    expect(duplicateSkills(track)).toEqual([]);
+    const dup = { ...track, concepts: [...track.concepts, { id: 'c4', order: 4, skill: 'where', title: 'D', exercises: [] }] } as any;
+    expect(duplicateSkills(dup)).toContain('where');
   });
 });
