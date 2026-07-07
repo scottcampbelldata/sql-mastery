@@ -7,7 +7,7 @@ import {
   STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots,
   scaffoldTier, recordReviewPass,
   isConceptUnlocked, frontierConcept, frontierOrder, recordConceptProgress, resetConcept,
-  tileState
+  tileState, conceptPracticeTarget
 } from './foundations';
 import type { Track, LearningState } from '../types';
 
@@ -291,6 +291,16 @@ describe('foundations engine', () => {
     expect(session.main.kind).toBe('lesson');
     expect((session.main as { concept: { id: string } }).concept.id).toBe('c3');    // the reset concept becomes main
     expect(session.reviews.some((r) => r.skill === 'order-limit')).toBe(false);     // filtered out of reviews in the fallback branch
+  });
+
+  it('conceptPracticeTarget returns the concept only when reachable and non-empty', () => {
+    const s = loadFoundations();
+    expect(conceptPracticeTarget(track, s, 'c1')!.id).toBe('c1'); // frontier, has exercises
+    expect(conceptPracticeTarget(track, s, 'c2')).toBeNull();     // upcoming
+    expect(conceptPracticeTarget(track, s, 'c5')).toBeNull();     // locked
+    expect(conceptPracticeTarget(track, s, 'nope')).toBeNull();   // unknown id
+    const emptyTrack = { ...track, concepts: [{ id: 'e1', order: 1, skill: 'x', title: 'E', exercises: [] }] } as Track;
+    expect(conceptPracticeTarget(emptyTrack, loadFoundations(), 'e1')).toBeNull(); // no exercises
   });
 
   it('buildTodaySession picks the earliest at-or-above-frontier lesson after two resets and does not re-offer a passed checkpoint', () => {

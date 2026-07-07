@@ -179,6 +179,18 @@ export function tileState(track: Track, state: LearningState, concept: Concept):
   return 'unlocked';
 }
 
+// The concept a focused-practice route may open, or null if the id is unknown, the concept is
+// checkpoint-locked, beyond the reached frontier, or has no exercises. Drives the /learn/concept
+// route guard.
+export function conceptPracticeTarget(track: Track, state: LearningState, conceptId: string): Concept | null {
+  const concept = track.concepts.find((c) => c.id === conceptId);
+  if (!concept || !concept.exercises.length) return null;
+  if (!conceptUnlocked(track, state, concept)) return null;
+  const ceiling = Math.max(frontierOrder(track, state), state.maxUnlockedOrder);
+  if (concept.order > ceiling) return null;
+  return concept;
+}
+
 // Track-aware progress recorder. Records a correct answer (pure recordCorrect) and raises the
 // unlock high-water mark if the concept just became strong. Used by every concept-exercise
 // correct path so the guided frontier and the tile map stay in sync.

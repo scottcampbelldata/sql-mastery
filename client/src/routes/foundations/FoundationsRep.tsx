@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFoundations } from '../../state/FoundationsContext';
 import { useSqlCheck } from '../../lib/useSqlCheck';
-import { recordCorrect, recordAttempt, recordReviewPass, isSkillStrong } from '../../lib/foundations';
+import { recordConceptProgress, recordAttempt, recordReviewPass, isSkillStrong } from '../../lib/foundations';
 import type { ScaffoldTier } from '../../lib/foundations';
 import { starterSqlForExercise, revealHalfScaffold } from '../../lib/sqlScaffold';
 import { formatSql } from '../../lib/sqlFormat';
@@ -37,7 +37,7 @@ interface Props {
 // half the blanks), or 'blank'. A "Show the starter" button always restores the full
 // scaffold so a learner is never stranded.
 export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect, tier = 'full' }: Props) {
-  const { state, update } = useFoundations();
+  const { track, state, update } = useFoundations();
   const [hintOpen, setHintOpen] = useState(false);
   const dbSchema = useDbSchema(exercise.database);
   const fullStarter = starterSqlForExercise(exercise);
@@ -46,7 +46,7 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
     onAttempt: () => update((s: LearningState) => recordAttempt(s, exercise.id)),
     onResult: (correct: boolean) => {
       if (!correct) return;
-      update((s: LearningState) => recordCorrect(s, exercise));
+      update((s: LearningState) => { if (track) recordConceptProgress(track, s, exercise); });
       // A passed review of an already-mastered skill advances its scaffold fade.
       if (kind === 'review' && exercise.skill && isSkillStrong(state, exercise.skill)) {
         update((s: LearningState) => recordReviewPass(s, exercise.skill as string));
