@@ -1,6 +1,6 @@
 import { safeGet, safeSet } from './progress';
 import { isSkillStrong } from './foundations';
-import type { LearningState, Phase } from '../types';
+import type { LearningState, Phase, Track } from '../types';
 
 export const LEARNING_KEY = 'sqlm:learning:v1';
 const LEGACY_KEY = 'sqlm:foundations:v1';
@@ -58,4 +58,30 @@ export function phaseGraduation(phase: Phase, state: LearningState): { strong: n
   const total = phase.concepts.length;
   const checkpointsDone = phase.checkpoints.every((cp) => state.checkpointsPassed.includes(cp.id));
   return { strong, total, checkpointsDone, complete: strong === total && checkpointsDone };
+}
+
+// Back-fill the unlock high-water mark for a returning learner from what they have already
+// achieved, so no reached lesson re-locks after this feature ships. Returns a value greater
+// than or equal to the current mark; callers persist only if it increased.
+export function reconcileUnlock(track: Track, state: LearningState): number {
+  let mark = state.maxUnlockedOrder;
+  for (const c of track.concepts) {
+    if (isSkillStrong(state, c.skill)) mark = Math.max(mark, c.order + 1);
+  }
+  for (const cp of track.checkpoints) {
+    if (state.checkpointsPassed.includes(cp.id)) mark = Math.max(mark, cp.afterOrder + 1);
+  }
+  return mark;
+}
+
+// Dev-time integrity: every concept.skill must be unique across the flattened track, because
+// the engine and per-lesson reset key by skill. Returns the list of skills used more than once.
+export function duplicateSkills(track: Track): string[] {
+  const seen = new Set<string>();
+  const dups = new Set<string>();
+  for (const c of track.concepts) {
+    if (seen.has(c.skill)) dups.add(c.skill);
+    seen.add(c.skill);
+  }
+  return [...dups];
 }
