@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useCurriculum } from '../state/CurriculumContext';
 import { currentSession, percent } from '../lib/curriculum';
-import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress';
+import { SIDEBAR_KEY, safeGet, safeSet, resetAllProgress } from '../lib/progress';
 import { getTheme, setTheme } from '../theme/theme';
 import { ProgressMeter, cx } from './ui';
 import { LESSONS } from '../lessons/manifest';
@@ -95,6 +95,12 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
         <div className="sidebar-foot">
           {total ? <ProgressMeter value={percent(done, total)} label="Course" /> : null}
           <AccountMenu />
+          <button type="button" className="sync-link" onClick={() => {
+            if (window.confirm('Reset all your progress back to zero? This wipes every lesson, review, and mastery record on this device and cannot be undone.')) {
+              resetAllProgress();
+              window.location.href = '/';
+            }
+          }}>Reset progress</button>
         </div>
       </aside>
       <div className="main-col">

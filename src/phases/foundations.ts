@@ -27,9 +27,9 @@ const CONCEPTS = [
     id: 'c1-select-all', order: 1, skill: 'select-all',
     title: 'Ask a table for everything',
     teach: {
-      plain: 'A database table is like a spreadsheet: columns across the top, one row per record. A query is a question you ask a table. SELECT * FROM genre means "show every column (the * ) for every row in the genre table."',
-      mentalModel: 'SELECT = "show me", * = "all columns", FROM genre = "from this table".',
-      example: { sql: 'SELECT * FROM genre;', note: 'Returns all 25 genres with both columns (genre_id and name).' }
+      plain: 'A database table is like a spreadsheet: columns across the top, one row per record. A query is a question you ask a table. SELECT * FROM artist means "show every column (the * ) for every row in the artist table."',
+      mentalModel: 'SELECT = "show me", * = "all columns", FROM artist = "from this table".',
+      example: { sql: 'SELECT * FROM artist;', note: 'Returns every artist, with all of its columns.' }
     },
     exercises: [
       ex('c1-r1', 'select-all', 'Show everything, every column and every row, from the genre table.', 'SELECT * FROM genre;', { starterSql: 'SELECT ____ FROM ____;', hint: 'The star * means "all columns"; the table is genre.' }),
@@ -57,7 +57,7 @@ const CONCEPTS = [
     teach: {
       plain: 'ORDER BY sorts the rows by a column. Add DESC after the column for high-to-low (default is low-to-high). LIMIT keeps only the first N rows, which is how you answer "top" or "longest" questions.',
       mentalModel: 'ORDER BY <column> [DESC] sorts; LIMIT <n> keeps the first n rows.',
-      example: { sql: 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 5;', note: 'The 5 longest tracks, longest first.' }
+      example: { sql: 'SELECT name, unit_price FROM track ORDER BY unit_price DESC LIMIT 3;', note: 'The three most expensive tracks, priciest first.' }
     },
     exercises: [
       ex('c3-r1', 'order-limit', 'Show the 10 longest tracks, their name and milliseconds, longest first.', 'SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 10;', { starterSql: 'SELECT ____, ____ FROM ____ ORDER BY ____ DESC LIMIT ____;', hint: 'Two columns, the track table, sort by milliseconds DESC, keep 10.' }),
@@ -69,9 +69,9 @@ const CONCEPTS = [
     id: 'c4-distinct', order: 4, skill: 'distinct',
     title: 'Remove duplicate values',
     teach: {
-      plain: 'DISTINCT removes duplicate rows from the result, so you see each value only once. SELECT DISTINCT unit_price FROM track lists each price that appears, without repeats.',
+      plain: 'DISTINCT removes duplicate rows from the result, so you see each value only once. SELECT DISTINCT album_id FROM track lists each album that owns a track, without repeats.',
       mentalModel: 'SELECT DISTINCT <columns> = the unique combinations of those columns.',
-      example: { sql: 'SELECT DISTINCT unit_price FROM track ORDER BY unit_price;', note: 'Only two prices exist in the whole track table: 0.99 and 1.99.' }
+      example: { sql: 'SELECT DISTINCT album_id FROM track ORDER BY album_id;', note: 'Each album_id that appears on a track, listed once.' }
     },
     exercises: [
       ex('c4-r1', 'distinct', 'Show each unit price that appears in the track table, with no duplicates, lowest first.', 'SELECT DISTINCT unit_price FROM track ORDER BY unit_price;', { starterSql: 'SELECT DISTINCT ____ FROM ____ ORDER BY ____;', hint: 'DISTINCT stays; fill the column, table, and sort column.' }),
@@ -85,7 +85,7 @@ const CONCEPTS = [
     teach: {
       plain: 'WHERE filters rows to only those that match a condition. Use comparisons like > < = , combine them with AND / OR, and use IN (a, b, c) to match any of several values. The WHERE clause goes after FROM and before ORDER BY.',
       mentalModel: 'FROM picks the table, WHERE throws away rows that fail the test, ORDER BY sorts what is left.',
-      example: { sql: 'SELECT track_id, name FROM track WHERE unit_price > 0.99 ORDER BY track_id;', note: 'Only the more expensive (1.99) tracks survive the filter.' }
+      example: { sql: 'SELECT track_id, name FROM track WHERE milliseconds > 300000 ORDER BY track_id;', note: 'Only tracks longer than five minutes (300000 ms) survive the filter.' }
     },
     exercises: [
       ex('c5-r1', 'where', 'Show the track_id and name of tracks that cost more than 0.99, lowest track_id first.', 'SELECT track_id, name FROM track WHERE unit_price > 0.99 ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE unit_price ____ 0.99 ORDER BY ____;', hint: '"more than" is the > operator.' }),
@@ -98,9 +98,9 @@ const CONCEPTS = [
     id: 'c6-null', order: 6, skill: 'null',
     title: 'Handle missing values (NULL)',
     teach: {
-      plain: 'NULL means "no value": the data is missing. You cannot test it with = ; you must use IS NULL or IS NOT NULL. In the track table, many rows have no composer listed, so composer is NULL for them.',
+      plain: 'NULL means "no value": the data is missing. You cannot test it with = ; you must use IS NULL or IS NOT NULL. In the track table, some rows belong to no album, so album_id is NULL for them.',
       mentalModel: 'NULL is "unknown". Use IS NULL / IS NOT NULL, never = NULL.',
-      example: { sql: 'SELECT track_id, name FROM track WHERE composer IS NULL ORDER BY track_id;', note: '977 tracks have no composer recorded.' }
+      example: { sql: 'SELECT track_id, name FROM track WHERE album_id IS NULL ORDER BY track_id;', note: 'These tracks are not attached to any album.' }
     },
     exercises: [
       ex('c6-r1', 'null', 'Show the track_id and name of tracks that have no composer listed, lowest track_id first.', 'SELECT track_id, name FROM track WHERE composer IS NULL ORDER BY track_id;', { starterSql: 'SELECT ____, ____ FROM ____ WHERE composer ____ ORDER BY ____;', hint: '"no composer" means composer IS NULL.' }),
@@ -127,9 +127,9 @@ const CONCEPTS = [
     id: 'c8-group-by', order: 8, skill: 'group-by',
     title: 'Summarize per group with GROUP BY',
     teach: {
-      plain: 'GROUP BY splits the table into groups and runs the aggregate once per group. SELECT genre_id, COUNT(*) FROM track GROUP BY genre_id gives one row per genre with its track count. Every non-aggregated column in SELECT must also appear in GROUP BY.',
+      plain: 'GROUP BY splits the table into groups and runs the aggregate once per group. SELECT media_type_id, COUNT(*) FROM track GROUP BY media_type_id gives one row per media type with its track count. Every non-aggregated column in SELECT must also appear in GROUP BY.',
       mentalModel: 'GROUP BY <column> = "for each value of that column, summarize its rows".',
-      example: { sql: 'SELECT genre_id, COUNT(*) FROM track GROUP BY genre_id ORDER BY genre_id;', note: 'One row per genre, showing how many tracks it has.' }
+      example: { sql: 'SELECT media_type_id, COUNT(*) FROM track GROUP BY media_type_id ORDER BY media_type_id;', note: 'One row per media type, showing how many tracks use it.' }
     },
     exercises: [
       ex('c8-r1', 'group-by', 'For each genre_id, count how many tracks it has. Show genre_id and the count, lowest genre_id first.', 'SELECT genre_id, COUNT(*) FROM track GROUP BY genre_id ORDER BY genre_id;', { starterSql: 'SELECT ____, COUNT(*) FROM ____ GROUP BY ____ ORDER BY ____;', hint: 'GROUP BY the column you are counting per: genre_id.' }),
@@ -142,9 +142,9 @@ const CONCEPTS = [
     id: 'c9-alias', order: 9, skill: 'alias',
     title: 'Rename columns with AS',
     teach: {
-      plain: 'A column comes back named after its source (name, milliseconds), which is not always what you want in a report. AS renames a column in the output: SELECT name AS track shows the track names under the heading "track". You can alias several columns, and you can alias an aggregate like COUNT(*) AS tracks.',
+      plain: 'A column comes back named after its source (title, name), which is not always what you want in a report. AS renames a column in the output: SELECT title AS album shows the album titles under the heading "album". You can alias several columns, and you can alias an aggregate like COUNT(*) AS tracks.',
       mentalModel: 'SELECT <column> AS <new name> renames just the output heading, not the data.',
-      example: { sql: 'SELECT name AS track, milliseconds AS length FROM track;', note: 'The two columns come back headed "track" and "length" instead of "name" and "milliseconds".' }
+      example: { sql: 'SELECT title AS album FROM album;', note: 'The title column comes back headed "album" instead of "title".' }
     },
     exercises: [
       ex('c9-r1', 'alias', 'Show the track name labeled as "track" and its milliseconds labeled as "length".', 'SELECT name AS track, milliseconds AS length FROM track;', { starterSql: 'SELECT ____ AS track, ____ AS length FROM ____;', hint: 'Rename each column with AS: name AS track, milliseconds AS length.' }),
