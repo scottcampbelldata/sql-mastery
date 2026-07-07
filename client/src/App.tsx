@@ -12,6 +12,7 @@ import Databases from './routes/Databases';
 import Foundations from './routes/Foundations';
 import FoundationsSession from './routes/foundations/FoundationsSession';
 import Checkpoint from './routes/foundations/Checkpoint';
+import ConceptPractice from './routes/foundations/ConceptPractice';
 
 function RootRedirect() {
   const { track, state } = useFoundations();
@@ -30,6 +31,7 @@ function Body() {
       <Route path="/learn" element={<Foundations />} />
       <Route path="/learn/session" element={<FoundationsSession />} />
       <Route path="/learn/checkpoint/:id" element={<Checkpoint />} />
+      <Route path="/learn/concept/:conceptId" element={<ConceptPractice />} />
       <Route path="/academy" element={<Dashboard />} />
       <Route path="/session/:sessionId/:exerciseId?" element={<Session />} />
       <Route path="/lessons/:slug/:step?" element={<Lesson />} />
