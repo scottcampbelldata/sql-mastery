@@ -151,6 +151,17 @@ export interface QueryResult {
   rowCount?: number;
 }
 
+export interface SqlDiff {
+  reason: 'columns' | 'row-count' | 'row-values';
+  yourColumns?: string[];
+  expectedColumns?: string[];
+  yourRowCount: number;
+  expectedRowCount: number;
+  orderOnly: boolean;
+  extraRows: number;
+  missingRows: number;
+}
+
 export interface CheckResponse {
   correct: boolean;
   message?: string;
@@ -158,6 +169,7 @@ export interface CheckResponse {
   hint?: string;
   feedbackType?: string;
   result?: QueryResult | null;
+  diff?: SqlDiff;
 }
 
 // A UI feedback banner. Session uses `tone`; the foundations hook uses `toneClass`.
@@ -166,6 +178,7 @@ export interface Feedback {
   toneClass?: string;
   title: string;
   message: string;
+  diff?: SqlDiff | null;
 }
 
 // A fetch error decorated with server-provided fields.

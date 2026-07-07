@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from './api';
 import { hasSqlBlank, starterSqlForExercise } from './sqlScaffold';
-import type { Exercise, Feedback, QueryResult, CheckResponse, ApiError } from '../types';
+import type { Exercise, Feedback, QueryResult, CheckResponse, ApiError, SqlDiff } from '../types';
 
 const TONE = { ok: 'tip', err: 'warn', warn: 'caution', info: 'info' };
 
@@ -58,7 +58,8 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt }: UseSqlC
         setFeedback({
           toneClass: body.feedbackType === 'error' ? TONE.err : TONE.warn,
           title: body.feedbackType === 'error' ? 'Your SQL did not run' : 'Not quite yet',
-          message: body.feedbackType === 'error' ? [body.message, body.hint].filter(Boolean).join(': ') : (body.hint || body.message || '')
+          message: body.feedbackType === 'error' ? [body.message, body.hint].filter(Boolean).join(': ') : (body.hint || body.message || ''),
+          diff: body.diff || null
         });
       }
       onResult?.(Boolean(body.correct), body);
