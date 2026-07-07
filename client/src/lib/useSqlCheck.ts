@@ -8,7 +8,9 @@ const TONE = { ok: 'tip', err: 'warn', warn: 'caution', info: 'info' };
 interface UseSqlCheckOptions {
   onResult?: (correct: boolean, body: CheckResponse) => void;
   onAttempt?: () => void;
-  cold?: boolean;
+  // Initial editor content. When omitted, the exercise's full scaffold is used; callers
+  // pass a faded scaffold or '' (blank) to seed the editor differently for reviews.
+  seed?: string;
 }
 
 interface UseSqlCheckReturn {
@@ -22,18 +24,18 @@ interface UseSqlCheckReturn {
 
 // Runs one graded SQL check against an exercise's expectedSql. onResult(correct, body)
 // lets the caller record mastery / advance. Feedback tone maps to Callout tones.
-export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, cold }: UseSqlCheckOptions = {}): UseSqlCheckReturn {
-  const [sql, setSql] = useState<string>(() => (cold ? '' : starterSqlForExercise(exercise)));
+export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: UseSqlCheckOptions = {}): UseSqlCheckReturn {
+  const [sql, setSql] = useState<string>(() => (seed !== undefined ? seed : starterSqlForExercise(exercise)));
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [result, setResult] = useState<QueryResult | null>(null);
   const [checking, setChecking] = useState<boolean>(false);
 
   useEffect(() => {
-    setSql(cold ? '' : starterSqlForExercise(exercise));
+    setSql(seed !== undefined ? seed : starterSqlForExercise(exercise));
     setFeedback(null);
     setResult(null);
     setChecking(false);
-  }, [exercise.id, exercise.starterSql, exercise.expectedSql, cold]);
+  }, [exercise.id, exercise.starterSql, exercise.expectedSql, seed]);
 
   async function runCheck(): Promise<void> {
     if (checking) return;

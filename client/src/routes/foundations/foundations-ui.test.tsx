@@ -80,9 +80,9 @@ describe('Foundations teach + scaffolding', () => {
     expect(result.current.feedback!.diff!.extraRows).toBe(1);
   });
 
-  it('seeds an empty editor for a cold review', () => {
+  it('seeds the editor from the seed option (blank for a cold review)', () => {
     const ex = { id: 'c1-r1', database: 'chinook', task: 't', starterSql: 'SELECT ____ FROM genre;', expectedSql: 'SELECT * FROM genre;' };
-    const { result } = renderHook(() => useSqlCheck(ex, { cold: true }));
+    const { result } = renderHook(() => useSqlCheck(ex, { seed: '' }));
     expect(result.current.sql).toBe('');
   });
 });

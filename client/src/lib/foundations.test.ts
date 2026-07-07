@@ -4,7 +4,8 @@ import {
   skillLevel, isSkillStrong, recordCorrect, recordAttempt,
   dueReviews, nextConcept, checkpointDue, buildTodaySession,
   recordCheckpointResult, advanceSession, graduationStatus,
-  STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots
+  STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots,
+  scaffoldTier, recordReviewPass
 } from './foundations';
 import type { Track, LearningState } from '../types';
 
@@ -38,7 +39,7 @@ describe('foundations engine', () => {
 
   it('loads a safe default and round-trips under its own key', () => {
     const s = loadFoundations();
-    expect(s).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0 });
+    expect(s).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {} });
     s.attempts['x'] = 2; saveFoundations(s);
     expect(JSON.parse(localStorage.getItem(FOUNDATIONS_KEY)!).attempts.x).toBe(2);
   });
@@ -149,5 +150,19 @@ describe('foundations engine', () => {
     s.sessionCounter = 3;                                            // both due (gap satisfied)
     const due = dueReviews(track, s);
     expect(due[0].skill).toBe('group');
+  });
+
+  it('scaffoldTier keeps the full scaffold for beginners and fades only mastered reviews', () => {
+    const s = loadFoundations();
+    // A new lesson always gets the full scaffold.
+    expect(scaffoldTier(s, 'where', false)).toBe('full');
+    // A review of a not-yet-strong skill still gets the full scaffold.
+    strong(s, 'where', ['w1']); // count 1, learning
+    expect(scaffoldTier(s, 'where', true)).toBe('full');
+    // A review of a mastered (strong) skill starts at half, then goes blank.
+    strong(s, 'where', ['w2', 'w3']); // count 3, strong
+    expect(scaffoldTier(s, 'where', true)).toBe('half');
+    recordReviewPass(s, 'where');
+    expect(scaffoldTier(s, 'where', true)).toBe('blank');
   });
 });
