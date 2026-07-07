@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './state/AuthContext';
 import { CurriculumProvider, useCurriculum } from './state/CurriculumContext';
 import { FoundationsProvider, useFoundations } from './state/FoundationsContext';
 import { AppShell } from './components/AppShell';
@@ -40,10 +41,12 @@ function Body() {
 
 export default function App() {
   return (
-    <CurriculumProvider>
-      <FoundationsProvider>
-        <Body />
-      </FoundationsProvider>
-    </CurriculumProvider>
+    <AuthProvider>
+      <CurriculumProvider>
+        <FoundationsProvider>
+          <Body />
+        </FoundationsProvider>
+      </CurriculumProvider>
+    </AuthProvider>
   );
 }
