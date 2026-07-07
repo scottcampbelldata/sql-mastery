@@ -7,8 +7,8 @@ vi.mock('./GoogleSignIn', () => ({ GoogleSignIn: () => <div>sign in</div> }));
 import { AccountMenu } from './AccountMenu';
 
 describe('AccountMenu', () => {
-  it('offers a Reset everything action even when signed out', () => {
+  it('does not render a global reset button (reset is per-lesson only)', () => {
     render(<AccountMenu />);
-    expect(screen.getByRole('button', { name: /reset everything/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /reset/i })).toBeNull();
   });
 });
