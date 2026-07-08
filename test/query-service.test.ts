@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { createQueryService, QueryServiceError, mismatchFeedback } from '../src/query-service';
+import { buildFingerprint } from '../src/fingerprint';
 
 const R = (columns: string[], rows: Record<string, unknown>[]) => ({ columns, rows });
 
@@ -55,11 +56,47 @@ test('executeQuery connects to the selected local database and formats results',
   assert.equal(FakePool.configs[0].user, 'scott');
   assert.deepEqual(FakePool.queries, ['SELECT 42 AS answer']);
   assert.deepEqual(result.columns, ['answer', 'label']);
+  assert.deepEqual(result.fields, [{ name: 'answer' }, { name: 'label' }]);
   assert.deepEqual(result.rows, [{ answer: 42, label: 'life' }]);
   assert.equal(result.command, 'SELECT');
   assert.equal(result.rowCount, 1);
   assert.equal(result.database, 'northwind');
   assert.equal(typeof result.durationMs, 'number');
+});
+
+test('executeQuery passes rowMode array through to pg and returns fields', async () => {
+  class ArrayModePool {
+    static queries: any[] = [];
+
+    async query(query: any) {
+      ArrayModePool.queries.push(query);
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        fields: [{ name: 'answer' }, { name: 'answer' }],
+        rows: [[42, 'life']]
+      };
+    }
+
+    async end() {}
+  }
+
+  ArrayModePool.queries = [];
+  const service = createQueryService({
+    Pool: ArrayModePool,
+    env: { SQL_MASTERY_DATABASES: 'northwind' }
+  });
+
+  const result = await service.executeQuery({
+    database: 'northwind',
+    sql: ' SELECT 42 AS answer, $q$life$q$ AS answer ',
+    rowMode: 'array'
+  });
+
+  assert.deepEqual(ArrayModePool.queries, [{ text: 'SELECT 42 AS answer, $q$life$q$ AS answer', rowMode: 'array' }]);
+  assert.deepEqual(result.columns, ['answer', 'answer']);
+  assert.deepEqual(result.fields, [{ name: 'answer' }, { name: 'answer' }]);
+  assert.deepEqual(result.rows, [[42, 'life']]);
 });
 
 test('executeQuery rejects empty SQL with a structured validation error', async () => {
@@ -214,6 +251,206 @@ test('checkQuery turns SQL errors into learning feedback', async () => {
   assert.equal(feedback.feedbackType, 'error');
   assert.equal(feedback.code, '42703');
   assert.match(feedback.hint, /column/i);
+});
+
+test('checkQuery accepts a matching fingerprint without expectedSql', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'ok' }],
+    rows: [[1], [2]]
+  });
+
+  class FingerprintPool {
+    static queries: any[] = [];
+
+    async query(query: any) {
+      FingerprintPool.queries.push(query);
+      return {
+        command: 'SELECT',
+        rowCount: 2,
+        fields: [{ name: 'ok' }],
+        rows: [[1], [2]]
+      };
+    }
+
+    async end() {}
+  }
+
+  FingerprintPool.queries = [];
+  const service = createQueryService({ Pool: FingerprintPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'chinook',
+    sql: 'SELECT ok FROM answers',
+    fingerprint,
+    orderMatters: true
+  });
+
+  assert.equal(FingerprintPool.queries.length, 1);
+  assert.deepEqual(FingerprintPool.queries[0], { text: 'SELECT ok FROM answers', rowMode: 'array' });
+  assert.equal(feedback.correct, true);
+  assert.equal(feedback.feedbackType, 'success');
+  assert.deepEqual(feedback.expectedSummary, { columns: ['ok'], rowCount: 2 });
+});
+
+test('checkQuery reports fingerprint column mismatches', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'ok' }],
+    rows: [[1]]
+  });
+
+  class ColumnMismatchPool {
+    async query() {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        fields: [{ name: 'wrong_name' }],
+        rows: [[1]]
+      };
+    }
+
+    async end() {}
+  }
+
+  const service = createQueryService({ Pool: ColumnMismatchPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'chinook',
+    sql: 'SELECT 1 AS wrong_name',
+    fingerprint
+  });
+
+  assert.equal(feedback.correct, false);
+  assert.equal(feedback.reason, 'columns');
+  assert.deepEqual(feedback.diff.yourColumns, ['wrong_name']);
+  assert.deepEqual(feedback.diff.expectedColumns, ['ok']);
+});
+
+test('checkQuery reports fingerprint row-count mismatches', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'ok' }],
+    rows: [[1], [2]]
+  });
+
+  class RowCountMismatchPool {
+    async query() {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        fields: [{ name: 'ok' }],
+        rows: [[1]]
+      };
+    }
+
+    async end() {}
+  }
+
+  const service = createQueryService({ Pool: RowCountMismatchPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'chinook',
+    sql: 'SELECT ok FROM answers LIMIT 1',
+    fingerprint
+  });
+
+  assert.equal(feedback.correct, false);
+  assert.equal(feedback.reason, 'row-count');
+  assert.equal(feedback.yourRowCount, 1);
+  assert.equal(feedback.expectedRowCount, 2);
+  assert.equal(feedback.diff.yourRowCount, 1);
+  assert.equal(feedback.diff.expectedRowCount, 2);
+});
+
+test('checkQuery compares duplicate columns positionally on fingerprint path', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'answer' }, { name: 'answer' }],
+    rows: [[1, 2]]
+  });
+
+  class DuplicateColumnPool {
+    async query() {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        fields: [{ name: 'answer' }, { name: 'answer' }],
+        rows: [[2, 1]]
+      };
+    }
+
+    async end() {}
+  }
+
+  const service = createQueryService({ Pool: DuplicateColumnPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'chinook',
+    sql: 'SELECT 2 AS answer, 1 AS answer',
+    fingerprint
+  });
+
+  assert.equal(feedback.correct, false);
+  assert.equal(feedback.reason, 'row-values');
+  assert.equal(feedback.orderOnly, false);
+  assert.equal(feedback.diff.orderOnly, false);
+});
+
+test('checkQuery accepts unordered fingerprint row matches when order does not matter', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'ok' }],
+    rows: [[1], [2]]
+  });
+
+  class UnorderedPool {
+    async query() {
+      return {
+        command: 'SELECT',
+        rowCount: 2,
+        fields: [{ name: 'ok' }],
+        rows: [[2], [1]]
+      };
+    }
+
+    async end() {}
+  }
+
+  const service = createQueryService({ Pool: UnorderedPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'chinook',
+    sql: 'SELECT ok FROM answers',
+    fingerprint,
+    orderMatters: false
+  });
+
+  assert.equal(feedback.correct, true);
+  assert.equal(feedback.feedbackType, 'success');
+});
+
+test('checkQuery flags order-only fingerprint mismatches', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'ok' }],
+    rows: [[1], [2]]
+  });
+
+  class OrderOnlyPool {
+    async query() {
+      return {
+        command: 'SELECT',
+        rowCount: 2,
+        fields: [{ name: 'ok' }],
+        rows: [[2], [1]]
+      };
+    }
+
+    async end() {}
+  }
+
+  const service = createQueryService({ Pool: OrderOnlyPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'chinook',
+    sql: 'SELECT ok FROM answers ORDER BY ok DESC',
+    fingerprint,
+    orderMatters: true
+  });
+
+  assert.equal(feedback.correct, false);
+  assert.equal(feedback.reason, 'row-values');
+  assert.equal(feedback.orderOnly, true);
+  assert.equal(feedback.diff.orderOnly, true);
 });
 
 test('describeDatabase groups table columns with key metadata', async () => {

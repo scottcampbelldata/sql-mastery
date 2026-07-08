@@ -4,6 +4,13 @@ import {
   getDatabaseNames,
   isAllowedDatabase
 } from './db-config';
+import {
+  hashRowsOrdered,
+  hashRowsUnordered,
+  normalizeCell,
+  toPositionalRows,
+  type Fingerprint
+} from './fingerprint';
 
 class QueryServiceError extends Error {
   statusCode?: number;
@@ -56,16 +63,19 @@ function makePgError(error: any): QueryServiceError {
   });
 }
 
-function normalizeCell(value: any): string | null {
-  if (value === null || value === undefined) return null;
-  if (value instanceof Date) return value.toISOString();
-  if (Buffer.isBuffer(value)) return value.toString('base64');
-  if (typeof value === 'object') return JSON.stringify(value);
-  return String(value);
+function normalizeRowsByName(result: any): (string | null)[][] {
+  return result.rows.map((row: any) => result.columns.map((column: string) => normalizeCell(row[column])));
 }
 
 function normalizeRows(result: any): (string | null)[][] {
-  return result.rows.map((row: any) => result.columns.map((column: string) => normalizeCell(row[column])));
+  if (!Array.isArray(result.rows) || result.rows.some((row: any) => !Array.isArray(row))) {
+    throw new QueryServiceError('Fingerprint checks require array-mode query results.', 500, 'ARRAY_ROW_MODE_REQUIRED');
+  }
+
+  return toPositionalRows({
+    fields: Array.isArray(result.fields) ? result.fields : [],
+    rows: result.rows
+  });
 }
 
 function boundedLimit(value: unknown, fallback = 20, max = 100): number {
@@ -202,8 +212,8 @@ function mismatchFeedback(userResult: any, expectedResult: any): any {
     };
   }
 
-  const userRows = normalizeRows(userResult);
-  const expectedRows = normalizeRows(expectedResult);
+  const userRows = normalizeRowsByName(userResult);
+  const expectedRows = normalizeRowsByName(expectedResult);
   const { extra, missing } = multisetDiff(userRows, expectedRows);
 
   if (yourRowCount !== expectedRowCount) {
@@ -219,6 +229,90 @@ function mismatchFeedback(userResult: any, expectedResult: any): any {
       reason: 'row-values',
       hint: 'Your query returned the right shape, but the values or row order differ. Check expressions, NULL handling, and ORDER BY.',
       diff: { reason: 'row-values', yourRowCount, expectedRowCount, orderOnly: extra === 0 && missing === 0, extraRows: extra, missingRows: missing }
+    };
+  }
+
+  return null;
+}
+
+function isFingerprint(value: any): value is Fingerprint {
+  return !!value
+    && Array.isArray(value.columns)
+    && typeof value.rowCount === 'number'
+    && typeof value.orderedRowHash === 'string'
+    && typeof value.unorderedRowHash === 'string';
+}
+
+function learningErrorFeedback(error: any): any {
+  const err = error as { message?: string; code?: string; detail?: string; hint?: string; position?: string; statusCode?: number };
+  return {
+    correct: false,
+    feedbackType: 'error',
+    message: err.message || 'Your SQL did not run.',
+    code: err.code || 'QUERY_FAILED',
+    hint: hintForError(error),
+    detail: err.detail,
+    position: err.position
+  };
+}
+
+function fingerprintMismatchFeedback(userResult: any, fingerprint: Fingerprint, orderMatters: boolean): any {
+  const yourRowCount = userResult.rows.length;
+  const expectedRowCount = fingerprint.rowCount;
+
+  if (!arraysMatch(userResult.columns, fingerprint.columns)) {
+    return {
+      reason: 'columns',
+      hint: 'Your query ran, but the output columns do not match. Check the SELECT list, aliases, and column order.',
+      diff: {
+        reason: 'columns',
+        yourColumns: userResult.columns,
+        expectedColumns: fingerprint.columns,
+        yourRowCount,
+        expectedRowCount,
+        orderOnly: false,
+        extraRows: 0,
+        missingRows: 0
+      }
+    };
+  }
+
+  if (yourRowCount !== expectedRowCount) {
+    return {
+      reason: 'row-count',
+      hint: 'Your query ran, but it returned a different number of rows. Check filters, joins, grouping, and LIMIT.',
+      diff: {
+        reason: 'row-count',
+        yourRowCount,
+        expectedRowCount,
+        orderOnly: false,
+        extraRows: Math.max(0, yourRowCount - expectedRowCount),
+        missingRows: Math.max(0, expectedRowCount - yourRowCount)
+      }
+    };
+  }
+
+  const userRows = normalizeRows(userResult);
+  const orderedRowHash = hashRowsOrdered(userRows);
+  const unorderedRowHash = hashRowsUnordered(userRows);
+  const matches = orderMatters
+    ? orderedRowHash === fingerprint.orderedRowHash
+    : unorderedRowHash === fingerprint.unorderedRowHash;
+
+  if (!matches) {
+    return {
+      reason: 'row-values',
+      hint: orderMatters
+        ? 'Your query returned the right shape, but the values or row order differ. Check expressions, NULL handling, and ORDER BY.'
+        : 'Your query returned the right shape, but the values differ. Check expressions, filters, joins, grouping, and NULL handling.',
+      diff: {
+        reason: 'row-values',
+        yourRowCount,
+        expectedRowCount,
+        orderOnly: orderMatters && unorderedRowHash === fingerprint.unorderedRowHash,
+        extraRows: 0,
+        missingRows: 0
+      }
     };
   }
 
@@ -265,14 +359,17 @@ function createQueryService(options: any = {}): any {
     const startedAt = clock();
 
     try {
-      const result = await getPool(database).query(sql);
+      const queryInput = input.rowMode === 'array' ? { text: sql, rowMode: 'array' } : sql;
+      const result = await getPool(database).query(queryInput);
       const durationMs = Math.max(0, Math.round(clock() - startedAt));
       const rows = Array.isArray(result.rows) ? result.rows : [];
+      const fields = Array.isArray(result.fields) ? result.fields.map((field: any) => ({ name: field.name })) : [];
 
       return {
         database,
         sql,
-        columns: Array.isArray(result.fields) ? result.fields.map((field: any) => field.name) : [],
+        columns: fields.map((field: any) => field.name),
+        fields,
         rows,
         rowCount: Number.isInteger(result.rowCount) ? result.rowCount : rows.length,
         command: result.command || 'QUERY',
@@ -427,6 +524,54 @@ function createQueryService(options: any = {}): any {
   async function checkQuery(input: any = {}) {
     const database = input.database;
     const sql = typeof input.sql === 'string' ? input.sql : '';
+    const fingerprint = input.fingerprint;
+
+    if (fingerprint !== undefined && fingerprint !== null) {
+      if (!isFingerprint(fingerprint)) {
+        throw new QueryServiceError('This exercise has an invalid result fingerprint.', 500, 'INVALID_FINGERPRINT');
+      }
+
+      let userResult;
+      try {
+        userResult = await executeQuery({ database, sql, rowMode: 'array' });
+      } catch (error) {
+        return learningErrorFeedback(error);
+      }
+
+      const expectedSummary = {
+        columns: fingerprint.columns,
+        rowCount: fingerprint.rowCount
+      };
+      const mismatch = fingerprintMismatchFeedback(userResult, fingerprint, input.orderMatters !== false);
+
+      if (mismatch) {
+        return {
+          correct: false,
+          feedbackType: 'mismatch',
+          message: 'Your SQL ran, but it does not match the expected result yet.',
+          reason: mismatch.reason,
+          orderOnly: mismatch.diff.orderOnly,
+          yourRowCount: mismatch.diff.yourRowCount,
+          expectedRowCount: mismatch.diff.expectedRowCount,
+          hint: mismatch.hint,
+          diff: mismatch.diff,
+          result: userResult,
+          expectedSummary
+        };
+      }
+
+      return {
+        correct: true,
+        feedbackType: 'success',
+        message: 'You got it right.',
+        why: input.orderMatters === false
+          ? 'Your columns, row count, and row values match the model answer on this database.'
+          : 'Your columns, row count, row values, and row order match the model answer on this database.',
+        result: userResult,
+        expectedSummary
+      };
+    }
+
     const expectedSql = typeof input.expectedSql === 'string' ? input.expectedSql.trim() : '';
 
     if (!expectedSql) {
@@ -437,16 +582,7 @@ function createQueryService(options: any = {}): any {
     try {
       userResult = await executeQuery({ database, sql });
     } catch (error) {
-      const err = error as { message?: string; code?: string; detail?: string; hint?: string; position?: string; statusCode?: number };
-      return {
-        correct: false,
-        feedbackType: 'error',
-        message: err.message || 'Your SQL did not run.',
-        code: err.code || 'QUERY_FAILED',
-        hint: hintForError(error),
-        detail: err.detail,
-        position: err.position
-      };
+      return learningErrorFeedback(error);
     }
 
     let expectedResult;
