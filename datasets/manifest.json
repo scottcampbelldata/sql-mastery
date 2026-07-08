@@ -1,0 +1,31 @@
+{
+  "aperture": {
+    "stars": [60, 60],
+    "planets": [180, 180],
+    "moons": [40, 40]
+  },
+  "sideline": {
+    "region": [8, 8],
+    "team": [40, 40],
+    "player": [280, 280],
+    "tournament": [24, 24],
+    "match": [1200, 1200],
+    "map_result": [3000, 3000],
+    "roster_change": [600, 600],
+    "sponsor": [30, 30],
+    "team_sponsor": [120, 120]
+  },
+  "rove": {
+    "cities": [16, 16],
+    "merchants": [1200, 1200],
+    "promos": [45, 45],
+    "customers": [46000, 48500],
+    "couriers": [3800, 3800],
+    "orders": [520000, 520000],
+    "payments": [480000, 498000],
+    "event_log": [1220000, 1270000],
+    "promo_redemption": [104000, 119000],
+    "ratings": [150000, 150000],
+    "support_tickets": [22000, 22000]
+  }
+}
