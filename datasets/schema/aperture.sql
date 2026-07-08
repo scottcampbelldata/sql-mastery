@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS planets, stars, facility, seed_meta CASCADE;
+DROP TABLE IF EXISTS moons, planets, stars, facility, seed_meta CASCADE;
 
 CREATE TABLE seed_meta (
   db text,
