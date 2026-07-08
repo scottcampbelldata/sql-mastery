@@ -190,18 +190,21 @@ async function runApertureChecks(client: PoolClient): Promise<void> {
     '7'
   );
 
+  // Bands mirror the exact derivation rule in generate.ts (spectralTypeFromTemp): half-open,
+  // lower-bound-inclusive, no fixed upper/lower extremes. Real source data includes values a
+  // fixed real-astronomy band would reject (e.g. a ~580K brown dwarf host still classed M).
   await checkCount(
     client,
     db,
     '0 stars violating their spectral-type temperature band',
     `SELECT COUNT(*) AS n FROM stars WHERE NOT (
-       (spectral_type = 'O' AND temperature_k BETWEEN 30000 AND 45000) OR
-       (spectral_type = 'B' AND temperature_k BETWEEN 10000 AND 30000) OR
-       (spectral_type = 'A' AND temperature_k BETWEEN 7500 AND 10000) OR
-       (spectral_type = 'F' AND temperature_k BETWEEN 6000 AND 7500) OR
-       (spectral_type = 'G' AND temperature_k BETWEEN 5200 AND 6000) OR
-       (spectral_type = 'K' AND temperature_k BETWEEN 3700 AND 5200) OR
-       (spectral_type = 'M' AND temperature_k BETWEEN 2400 AND 3700)
+       (spectral_type = 'O' AND temperature_k >= 30000) OR
+       (spectral_type = 'B' AND temperature_k >= 10000 AND temperature_k < 30000) OR
+       (spectral_type = 'A' AND temperature_k >= 7500 AND temperature_k < 10000) OR
+       (spectral_type = 'F' AND temperature_k >= 6000 AND temperature_k < 7500) OR
+       (spectral_type = 'G' AND temperature_k >= 5200 AND temperature_k < 6000) OR
+       (spectral_type = 'K' AND temperature_k >= 3700 AND temperature_k < 5200) OR
+       (spectral_type = 'M' AND temperature_k < 3700)
      )`,
     (n) => n === 0,
     '0'
@@ -210,11 +213,11 @@ async function runApertureChecks(client: PoolClient): Promise<void> {
   await checkCount(
     client,
     db,
-    '>= 2 planetless stars',
+    '>= 5 planetless stars',
     `SELECT COUNT(*) AS n FROM stars s
      WHERE NOT EXISTS (SELECT 1 FROM planets p WHERE p.star_id = s.star_id)`,
-    (n) => n >= 2,
-    '>= 2'
+    (n) => n >= 5,
+    '>= 5'
   );
 
   await checkCount(
@@ -238,50 +241,41 @@ async function runApertureChecks(client: PoolClient): Promise<void> {
   await checkCount(
     client,
     db,
-    '0 orphan moons (planet_id not in planets)',
-    `SELECT COUNT(*) AS n FROM moons m LEFT JOIN planets p ON m.planet_id = p.planet_id WHERE p.planet_id IS NULL`,
+    '0 orphan planets (facility_id not in facility)',
+    `SELECT COUNT(*) AS n FROM planets p LEFT JOIN facility f ON p.facility_id = f.facility_id WHERE f.facility_id IS NULL`,
     (n) => n === 0,
     '0'
   );
 
-  await checkRate(
+  await checkCount(
     client,
     db,
-    'mass_earth NULL rate near 35%',
-    `SELECT COUNT(*) FILTER (WHERE mass_earth IS NULL) AS numerator, COUNT(*) AS denominator FROM planets`,
-    0.28,
-    0.42
-  );
-
-  await checkRate(
-    client,
-    db,
-    'radius_earth NULL rate near 18%',
-    `SELECT COUNT(*) FILTER (WHERE radius_earth IS NULL) AS numerator, COUNT(*) AS denominator FROM planets`,
-    0.12,
-    0.24
+    'equilibrium_temp_k has >= 5 NULLs',
+    `SELECT COUNT(*) AS n FROM planets WHERE equilibrium_temp_k IS NULL`,
+    (n) => n >= 5,
+    '>= 5'
   );
 
   await checkCount(
     client,
     db,
-    'ORDER BY ties exist (distance_ly)',
+    'a GROUP BY ... HAVING group qualifies (facility with several discoveries)',
     `SELECT COUNT(*) AS n FROM (
-       SELECT distance_ly FROM stars GROUP BY distance_ly HAVING COUNT(*) > 1
-     ) t`,
-    (n) => n >= 1,
-    '>= 1 tie group'
-  );
-
-  await checkCount(
-    client,
-    db,
-    'a GROUP BY ... HAVING group qualifies (stars with > 3 planets)',
-    `SELECT COUNT(*) AS n FROM (
-       SELECT star_id FROM planets GROUP BY star_id HAVING COUNT(*) > 3
+       SELECT facility_id FROM planets GROUP BY facility_id HAVING COUNT(*) >= 10
      ) t`,
     (n) => n >= 1,
     '>= 1'
+  );
+
+  await checkCount(
+    client,
+    db,
+    'planet -> star -> facility join returns rows',
+    `SELECT COUNT(*) AS n FROM planets p
+     JOIN stars s ON p.star_id = s.star_id
+     JOIN facility f ON p.facility_id = f.facility_id`,
+    (n) => n === 140,
+    '140'
   );
 }
 
