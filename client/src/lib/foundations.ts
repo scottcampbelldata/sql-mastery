@@ -1,7 +1,7 @@
 import { safeGet, safeSet } from './progress';
 import type { LearningState, Track, Concept, Checkpoint, Exercise } from '../types';
 
-export const FOUNDATIONS_KEY = 'sqlm:foundations:v1';
+export const FOUNDATIONS_KEY = 'sqlm:foundations:v2';
 export const STRONG_THRESHOLD = 3;
 export const SPACING_GAP = 2;
 export const MAX_REVIEWS_PER_SESSION = 2;
@@ -14,22 +14,46 @@ function defaultState(): LearningState {
 
 function asObject(v: unknown): Record<string, any> { return v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, any>) : {}; }
 
-export function loadFoundations(): LearningState {
-  try {
-    const parsed = JSON.parse(safeGet(FOUNDATIONS_KEY) as string);
-    if (parsed && typeof parsed === 'object') {
-      return {
-        skillCorrect: asObject(parsed.skillCorrect),
-        attempts: asObject(parsed.attempts),
-        lastSql: asObject(parsed.lastSql),
-        lastPracticedSession: asObject(parsed.lastPracticedSession),
-        checkpointsPassed: Array.isArray(parsed.checkpointsPassed) ? parsed.checkpointsPassed : [],
-        sessionCounter: Number.isFinite(parsed.sessionCounter) ? parsed.sessionCounter : 0,
-        reviewsPassed: asObject(parsed.reviewsPassed),
-        maxUnlockedOrder: Number.isFinite(parsed.maxUnlockedOrder) && parsed.maxUnlockedOrder > 0 ? parsed.maxUnlockedOrder : 0
-      };
-    }
-  } catch { /* fall through */ }
+function sanitizeState(parsed: Record<string, any>): LearningState {
+  return {
+    skillCorrect: asObject(parsed.skillCorrect),
+    attempts: asObject(parsed.attempts),
+    lastSql: asObject(parsed.lastSql),
+    lastPracticedSession: asObject(parsed.lastPracticedSession),
+    checkpointsPassed: Array.isArray(parsed.checkpointsPassed) ? parsed.checkpointsPassed : [],
+    sessionCounter: Number.isFinite(parsed.sessionCounter) ? parsed.sessionCounter : 0,
+    reviewsPassed: asObject(parsed.reviewsPassed),
+    maxUnlockedOrder: Number.isFinite(parsed.maxUnlockedOrder) && parsed.maxUnlockedOrder > 0 ? parsed.maxUnlockedOrder : 0
+  };
+}
+
+// v2 clamp-on-load migration. Track-keyed state is pruned to the live curriculum, while
+// exercise-keyed attempts and lastSql are only sanitized.
+export function migrateFoundationsState(parsed: unknown, track: Track): LearningState {
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return defaultState();
+  const base = sanitizeState(parsed as Record<string, any>);
+  const validSkills = new Set(track.concepts.map((c) => c.skill));
+  const validCheckpoints = new Set(track.checkpoints.map((cp) => cp.id));
+  const pruneBySkill = <T>(m: Record<string, T>): Record<string, T> => {
+    const out: Record<string, T> = {};
+    Object.keys(m).forEach((k) => { if (validSkills.has(k)) out[k] = m[k]; });
+    return out;
+  };
+  return {
+    ...base,
+    skillCorrect: pruneBySkill(base.skillCorrect),
+    reviewsPassed: pruneBySkill(base.reviewsPassed),
+    lastPracticedSession: pruneBySkill(base.lastPracticedSession),
+    checkpointsPassed: base.checkpointsPassed.filter((id) => validCheckpoints.has(id)),
+    maxUnlockedOrder: Math.min(base.maxUnlockedOrder, maxConceptOrder(track))
+  };
+}
+
+export function loadFoundations(track?: Track): LearningState {
+  let parsed: unknown = null;
+  try { parsed = JSON.parse(safeGet(FOUNDATIONS_KEY) as string); } catch { parsed = null; }
+  if (track) return migrateFoundationsState(parsed, track);
+  if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return sanitizeState(parsed as Record<string, any>);
   return defaultState();
 }
 
@@ -142,7 +166,8 @@ export function isConceptUnlocked(track: Track, state: LearningState, concept: C
   return conceptUnlocked(track, state, concept);
 }
 
-function maxConceptOrder(track: Track): number {
+// The largest (already-globalized) concept.order present in the flattened track.
+export function maxConceptOrder(track: Track): number {
   return track.concepts.reduce((m, c) => Math.max(m, c.order), 0);
 }
 
