@@ -15,7 +15,7 @@ Full design detail (per-concept taxonomy, generator internals) is captured in th
 
 **Intermediate -> Sideline (database=sideline, prefix sl-).** 21 concepts: the join/subquery core (inner, multi-join, left, anti in 3 forms, semi, the signature two-FK self-join on match with loser-via-CASE, self-join-compare, right/full-outer, join-aggregate incl. ROLLUP/GROUPING SETS/string_agg/FILTER, case-expressions, scalar/IN/correlated subqueries, CTE, set operations, date functions, SCD temporal roster as-of lookup) PLUS four window basics moved down from Advanced and taught on CLEAN data (sl-window-rank, sl-window-lag-lead, sl-window-running, sl-window-frame-basic). Checkpoints cpF..cpH mid-band + cpI capstone. Yield ~380-520. SEED REQUIREMENT: guarantee >=1 each of never-played team, sponsorless team, team-less sponsor, player-less team, NULL-region tournament, and an intra-region elo tie (so RANK vs DENSE_RANK vs ROW_NUMBER differ). Existence-dependent anti/semi/FULL-OUTER exercises are curated from a confirmed-unmatched-rows manifest, not blind-expanded.
 
-**Advanced -> Rove (database=rove, prefix rv-).** 23 concepts. Cleaning (1-12): profile-dirty-data, text-normalize, case-canonicalize-synonyms, null-coalesce-nullif, money-text-cast, regex-clean-contacts, timezone-city-join (AT TIME ZONE via cities.timezone; utc_offset_hours is the stale trap), dedup-rownumber (on master_customer_id), orphan-anti-join, soft-delete-valid-population, payment-dedup-retries (DISTINCT ON), rating-outlier-clean. Applied windows on a cleaned layer (13-18; windows already learned in Intermediate): rank-leaderboard, topn-per-group, lag-lead-deltas, running-total, moving-average-frame (on a generate_series DATE SPINE with RANGE BETWEEN INTERVAL, calendar-correct), ntile-bucketing (+ percentile_cont). Behavioral (19-22): sessionization-gap-island, funnel-conversion, retention-cohort, lifecycle-latency-intervals. Capstone + perf (23 + rv-explain-fanout): clean-layer-cte-capstone (stack 3-4 cleaning CTEs then an analytic) and a performance concept graded by the corrected result on a bounded slice (not plan text). Checkpoints 1-4 mid-band + capstone 5. Yield ~250-360.
+**Advanced -> Rove (database=rove, prefix rv-).** 24 concepts (recursive CTE included per the 2026-07-08 decision). Cleaning (1-12): profile-dirty-data, text-normalize, case-canonicalize-synonyms, null-coalesce-nullif, money-text-cast, regex-clean-contacts, timezone-city-join (AT TIME ZONE via cities.timezone; utc_offset_hours is the stale trap), dedup-rownumber (on master_customer_id), orphan-anti-join, soft-delete-valid-population, payment-dedup-retries (DISTINCT ON), rating-outlier-clean. Applied windows on a cleaned layer (13-18; windows already learned in Intermediate): rank-leaderboard, topn-per-group, lag-lead-deltas, running-total, moving-average-frame (on a generate_series DATE SPINE with RANGE BETWEEN INTERVAL, calendar-correct), ntile-bucketing (+ percentile_cont). Behavioral (19-22): sessionization-gap-island, funnel-conversion, retention-cohort, lifecycle-latency-intervals. Capstone + perf (23 + rv-explain-fanout): clean-layer-cte-capstone (stack 3-4 cleaning CTEs then an analytic) and a performance concept graded by the corrected result on a bounded slice (not plan text). Hierarchy (24): rv-recursive-cte, a WITH RECURSIVE walk of a new self-referencing merchant-category tree (traverse descendants or ancestors from a fixed root, ORDER BY the materialized path; the tree is tiny so the result is deterministic and well under the row ceiling). Checkpoints 1-4 mid-band + capstone 5. Yield ~260-375. DATASET EXTENSION for rv-recursive-cte: add a small self-referencing categories tree (categories: category_id, name, parent_category_id; ~40 rows, <=3 levels of delivery categories) plus a merchants.category_id FK, with one reversible mess defect (a few orphaned parent pointers to clean before traversal) and a verify check; reseed rove locally, then on the VPS.
 
 **CRITICAL Coverage-H2 rule (Advanced):** every Advanced expectedSql is scoped to a single city and/or fixed date range, or produces a small aggregated output (per-city, per-month, top-N), with a hard row-count ceiling (default <=200) enforced by the validation gate, so grading and the harness stay small, fast, and deterministic over 520k orders / 1.2M events.
 
@@ -75,21 +75,27 @@ Tiers as an ordered scale full > half > blank ("more help" = min-on-scale), comp
 
 ## Build order (task-sized; validate against local Postgres at each content step)
 
-0. Namespacing + engine guardrails: build-time unique/1:1 skill<->concept assertion; FOUNDATIONS_KEY v2 + maxUnlockedOrder clamp-on-load.
-1. Grading fingerprint refactor (query-service): fingerprint fields, checkQuery fast path, positional normalizeRows; ship behind existing ex() so foundations/joins still pass during transition.
-2. schema-catalog.ts over describeDatabase for all three DBs + typed helpers + joinPairs; unit-tested against the seeded schemas.
-3. concept-template model + DSL; author BEGINNER (aperture) templates (17) as the reference family.
-4. bind.ts (PRNG, real-value + co-occurring literal probe, join-pair binding); emit.ts (per-family tiebreak, unique aliases, ROUND wrap).
-5. task-text.ts + scaffold.ts + hint.ts + assemble.ts (one binding object); emit generated aperture phase modules.
-6. validate-exercises.ts + gates G0-G9 + fingerprint production; run against seeded aperture until 100% pass.
-7. curate.ts (skeleton dedup + difficulty + sampler); freeze the aperture shipped set with honest counts.
-8. INTERMEDIATE (sideline) templates incl. the 4 window basics, ROLLUP/string_agg/FILTER, curated existence-dependent exercises (seed the required unmatched rows first).
-9. ADVANCED (rove) templates: all bounded to city+date slices, rowCeiling<=200; cleaning 1-12, applied windows 13-18 (date-spine moving average), behavioral 19-22, capstone 23, rv-explain-fanout.
-10. Level-structure wiring: banded phase objects, getPhases() union, mid-band + boundary-capstone checkpoints, per-band graduationStatus.
-11. Scaffold tapering: levelBaseTier + scaffoldTier(ctx) + first-exposure bump + clamp unit tests.
-12. db-config allowlist swap + env; retire foundations.ts/joins.ts/academy-expansion/interview-expansion/HTML.
-13. curriculum-service reassembly around getLearningPath(); preserve client keys; recompute stats.
-14. Level-aware UI: band-grouped tile map + capstone-locked overlays + dataset badges + tier label; snapshot-identity check; full `npm run validate-exercises` as the release gate.
+Modules and shared types are frozen up front (task 0) so the per-dataset authors cannot diverge; the tightly-coupled generation core is authored as coherent units (tasks 4 and 5), and each dataset is split into a templates task and a phase-assembly+freeze task.
+
+0. Shared generator foundation: src/generator/types.ts (Exercise, DraftExercise, StarterSql, BlankMap, Level, TeachBlock, Concept, Checkpoint, and the Template DSL types), src/generator/index.ts (buildAllExercises), src/fingerprint.ts (Fingerprint type + positional hashing). CommonJS extensionless imports, tests under top-level test/. Everything downstream imports from here.
+1. Grading fingerprint refactor (query-service): checkQuery fingerprint fast path + positional normalizeRows; ship behind existing ex() so foundations/joins still pass during transition.
+2. Skill-id guardrail (build-time unique/1:1 skill<->concept assertion) + FOUNDATIONS_KEY v2 clamp-on-load + the loadFoundations(track) call-site update so the clamp actually runs.
+3. schema-catalog.ts over describeDatabase for all three DBs + typed helpers + joinPairs; unit-tested against the seeded schemas.
+4. Generation core: the Template DSL semantics + bind.ts (PRNG, real-value + co-occurring literal probe, join-pair binding) + emit.ts. emit OWNS the trailing ORDER BY tiebreak, the AS aliases, and a single ROUND wrap; templates carry no ORDER BY/ROUND. Literal slots are probe-drawn ({kind:'literal',op,col}); tiebreak slot names are fixed (sortKey/groupCols/partitionCols/rankKey).
+5. Packaging: task-text.ts + scaffold.ts + hint.ts + assemble.ts + src/generator/index.ts buildAllExercises (one binding object drives all four).
+6. validate-exercises.ts + gates G0-G9 (single G0/snapshot mechanism) + fingerprint production + the generate-exercises and validate-exercises npm scripts wired into build+test.
+7. BEGINNER (aperture) templates: all 17 concepts + teach blocks + concept-meta (concept skills == template skills exactly).
+8. Aperture phase assembly: gen -> src/phases/aperture/*, all 17 concepts wired, checkpoints cpA..cpE, curate + freeze honest counts, validate 100% against seeded aperture.
+9. Rove dataset extension for recursive CTE: categories self-referencing tree + merchants.category_id FK + one reversible defect (orphaned parents) + a verify check; reseed rove locally.
+10. INTERMEDIATE (sideline) templates: all 21 (incl. the 4 window basics, ROLLUP/GROUPING SETS/string_agg/FILTER) + teach + concept-meta; seed the required unmatched rows first and build the confirmed-unmatched manifest for curated existence-dependent exercises.
+11. Sideline phase assembly: gen -> src/phases/sideline/*, checkpoints cpF..cpI, curate + freeze, validate 100%.
+12. ADVANCED (rove) templates: all 24 incl. rv-recursive-cte; every template bounded to a city/date slice with rowCeiling<=200 + teach + concept-meta.
+13. Rove phase assembly: gen -> src/phases/rove/*, checkpoints 1-5, curate + freeze, validate 100%.
+14. Level-structure wiring: banded phase objects (level+database), getPhases() union with contiguous unique monotonic order, getLearningPath extended to surface level+database, mid-band + boundary-capstone checkpoints, per-band + whole-track graduationStatus.
+15. Scaffold tapering: levelBaseTier + scaffoldTier(ctx) + first-exposure bump + clamp unit tests.
+16. db-config allowlist swap + env; retire foundations.ts/joins.ts/academy-expansion/interview-expansion/HTML + dead lesson scripts.
+17. curriculum-service reassembly around getLearningPath(): drop weeks/sessions, preserve the learningPath field + client-facing keys, recompute stats, update the one affected test.
+18. Level-aware UI: band-grouped tile map + capstone-locked overlays + dataset badges + tier label; serve-time snapshot-identity assertion; full `npm run validate-exercises` as the release gate.
 
 ## Test plan
 
@@ -111,5 +117,5 @@ Tiers as an ordered scale full > half > blank ("more help" = min-on-scale), comp
 ## Open decisions (resolved defaults; flag if you disagree)
 
 - Tapering unlock keyed on the prior band's CAPSTONE passed (not full band-graduation), to avoid over-gating on one weak skill. RESOLVED: capstone-passed.
-- Optional rv-recursive-cte concept only if a cheap reversible `merchants.parent_category_id` self-ref is added; otherwise recursive CTE is explicitly out of the interview target. DEFAULT: skip recursive CTE unless you want it (it is a minor senior-interview item).
+- rv-recursive-cte is INCLUDED (2026-07-08 user decision). It is a secondary DA/BI topic but closes a visible senior-syllabus gap for a paid product; the cost is bounded (a small self-referencing categories tree on Rove plus one reversible defect and a reseed). Determinism is easy here (tiny fixed-root tree, path-ordered, under the row ceiling).
 - Honest per-concept exercise counts reported (thin concepts like select-all are legitimately ~3-6); the product copy says the real total, not a blanket "hundreds". RESOLVED: honest counts.
