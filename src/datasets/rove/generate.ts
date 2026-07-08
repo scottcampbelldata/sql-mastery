@@ -141,6 +141,10 @@ const PROMO_SLOT_TARGET = 158000;
 const RATING_SAMPLE_COUNT = 150000;
 const SUPPORT_TICKET_COUNT = 22000;
 const PAYMENT_SKIP_COUNT = 50000;
+// Rolled inside buildFunnel only for orders that clear the cancel decision, so the realized
+// share of ALL orders landing in-flight is smaller than this raw rate (see buildFunnel comment).
+// Tuned so the realized split lands close to delivered ~80-83% / cancelled ~12% / in-flight ~5-7%.
+const IN_FLIGHT_RATE = 0.07;
 
 // Double lunch/dinner peaks, local hour of day, 0..23.
 const HOUR_WEIGHTS: readonly number[] = [
@@ -417,6 +421,7 @@ interface CustomersResult {
   signupMs: number[];
   segment: string[];
   channel: string[];
+  retentionThreshold: number[];
   byCityMonth: Map<string, number[]>;
   byCity: number[][];
 }
@@ -430,6 +435,7 @@ function buildCustomers(seed: number, cityWeights: number[], cityDayDist: CityDa
   const signupMs: number[] = [];
   const segmentArr: string[] = [];
   const channelArr: string[] = [];
+  const retentionThresholdArr: number[] = [];
   const byCityMonth = new Map<string, number[]>();
   const byCity: number[][] = ROVE_CITIES.map(() => []);
 
@@ -452,6 +458,13 @@ function buildCustomers(seed: number, cityWeights: number[], cityDayDist: CityDa
       const seg = weightedPick(rng, SEGMENT_WEIGHTS);
 
       const referredBy = acqChannel === 'referral' && customerId > 1 ? intBetween(rng, 1, customerId - 1) : null;
+      // Retention gate (believability #2): a per-customer uniform draw compared, at order time,
+      // against RETENTION_WEIGHTS[tenure] / RETENTION_WEIGHTS[0] in pickCustomerForOrder. Lower
+      // draws survive longer, so the SET of customers still eligible to order shrinks
+      // monotonically as tenure grows, making the cohort's realized active-rate curve track the
+      // spec's ~100/48/33/26/22... decay directly instead of emerging (too shallow) from
+      // segment/channel weighting alone.
+      const retentionThreshold = rng();
 
       const idx = rows.length;
       rows.push({
@@ -472,6 +485,7 @@ function buildCustomers(seed: number, cityWeights: number[], cityDayDist: CityDa
       signupMs.push(ms);
       segmentArr.push(seg);
       channelArr.push(acqChannel);
+      retentionThresholdArr.push(retentionThreshold);
       byCity[c].push(idx);
       const month = monthIndexOf(dayOffset);
       const key = `${c}|${month}`;
@@ -481,7 +495,16 @@ function buildCustomers(seed: number, cityWeights: number[], cityDayDist: CityDa
       customerId += 1;
     }
   }
-  return { rows, cityIdx, signupMs, segment: segmentArr, channel: channelArr, byCityMonth, byCity };
+  return {
+    rows,
+    cityIdx,
+    signupMs,
+    segment: segmentArr,
+    channel: channelArr,
+    retentionThreshold: retentionThresholdArr,
+    byCityMonth,
+    byCity,
+  };
 }
 
 // Picks a customer for an order at (cityIdx, orderMonth): first samples a signup-cohort "tenure"
@@ -500,13 +523,31 @@ function pickCustomerForOrder(rng: Prng, cityIdx: number, orderMonth: number, cu
   }
   const cohortMonth = weightedPick(rng, candidates);
   const bucket = customers.byCityMonth.get(`${cityIdx}|${cohortMonth}`)!;
+  const tenure = orderMonth - cohortMonth;
+
+  // Retention gate: only customers whose individually assigned retentionThreshold clears this
+  // tenure's cohort-wide survival rate are eligible this month, so the SET of customers an order
+  // can land on shrinks monotonically with tenure (see buildCustomers). RETENTION_WEIGHTS[0] is
+  // the normalizer (100), so survivalRate at tenure 0 is 1.0 (everyone still eligible in their
+  // signup month) and decays to RETENTION_WEIGHTS[tenure]/100 beyond that.
+  const survivalRate = RETENTION_WEIGHTS[Math.min(tenure, RETENTION_WEIGHTS.length - 1)] / RETENTION_WEIGHTS[0];
 
   // Allocation-free weighted pick within the cohort bucket (called once per order, up to 520000
-  // times): power/referral/organic customers are proportionally more likely within their cohort.
-  const custWeight = (idx: number): number =>
-    SEGMENT_ACTIVITY_MULT[customers.segment[idx]] * CHANNEL_RETENTION_MULT[customers.channel[idx]];
+  // times): power/referral/organic customers are proportionally more likely within their cohort,
+  // among those still retention-eligible at this tenure.
+  const custWeight = (idx: number): number => {
+    if (customers.retentionThreshold[idx] > survivalRate) return 0;
+    return SEGMENT_ACTIVITY_MULT[customers.segment[idx]] * CHANNEL_RETENTION_MULT[customers.channel[idx]];
+  };
   let total = 0;
   for (const idx of bucket) total += custWeight(idx);
+  if (total <= 0) {
+    // Small-bucket edge case: nobody in this cohort survives to this tenure under the gate.
+    // Fall back to an ungated pick from the same bucket rather than leaving the order without a
+    // customer; rare, and only matters for tiny tail cohorts (e.g. Charlotte/Baltimore's first
+    // months), so it does not meaningfully dilute the retention curve.
+    return pick(rng, bucket);
+  }
   let target = rng() * total;
   for (const idx of bucket) {
     target -= custWeight(idx);
@@ -682,6 +723,24 @@ function buildFunnel(
     }
     const cancelledMs = pickedUpMs + intBetween(rng, 10, 600) * 1000;
     return { status: 'cancelled', acceptedAt: acceptedMs, pickedUpAt: pickedUpMs, deliveredAt: null, cancelledAt: cancelledMs, courierIdx };
+  }
+
+  // Snapshot in-flight orders (believability #1): a realistic operational snapshot always has
+  // some live orders that simply have not advanced yet at export time, independent of how close
+  // placedMs is to DATASET_END_MS. cancelled_at stays NULL for every sub-stage below, and a
+  // courier is only ever attached via pickCourierForOrder, which -- exactly like every other
+  // branch -- is only reachable here because cityHasActiveCourier already confirmed a real,
+  // active courier exists at acceptedMs.
+  if (bernoulli(rng, IN_FLIGHT_RATE)) {
+    const stage = weightedPick(rng, [['placed', 15], ['accepted', 40], ['picked_up', 45]] as const);
+    if (stage === 'placed') {
+      return { status: 'placed', acceptedAt: null, pickedUpAt: null, deliveredAt: null, cancelledAt: null, courierIdx: null };
+    }
+    const inFlightCourierIdx = pickCourierForOrder(rng, cityIdx, acceptedMs, couriers);
+    if (stage === 'accepted') {
+      return { status: 'accepted', acceptedAt: acceptedMs, pickedUpAt: null, deliveredAt: null, cancelledAt: null, courierIdx: inFlightCourierIdx };
+    }
+    return { status: 'picked_up', acceptedAt: acceptedMs, pickedUpAt: pickedUpMs, deliveredAt: null, cancelledAt: null, courierIdx: inFlightCourierIdx };
   }
 
   if (deliveredMs > DATASET_END_MS) {

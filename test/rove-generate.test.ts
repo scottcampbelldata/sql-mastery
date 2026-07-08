@@ -57,6 +57,37 @@ test('rove clean core generates deterministic, funnel-consistent, believable dat
     assert.equal(o.amount_cents, expectedAmount, `order ${o.order_id} amount_cents does not reconcile`);
   }
 
+  // In-flight orders (believability #1): a realistic operational snapshot always has some orders
+  // still in progress at DATASET_END_MS. Every sub-stage keeps cancelled_at/delivered_at NULL and
+  // carries exactly the trailing NULLs (and courier presence/absence) its stage implies.
+  const inFlightStatuses = new Set(['placed', 'accepted', 'picked_up']);
+  let inFlightCount = 0;
+  for (const o of d1.orders as any[]) {
+    if (!inFlightStatuses.has(o.status)) continue;
+    inFlightCount += 1;
+    assert.equal(o.cancelled_at, null, `in-flight order ${o.order_id} (${o.status}) has cancelled_at set`);
+    assert.equal(o.delivered_at, null, `in-flight order ${o.order_id} (${o.status}) has delivered_at set`);
+    if (o.status === 'placed') {
+      assert.equal(o.accepted_at, null, `placed order ${o.order_id} has accepted_at set`);
+      assert.equal(o.picked_up_at, null, `placed order ${o.order_id} has picked_up_at set`);
+      assert.equal(o.courier_id, null, `placed order ${o.order_id} has a courier_id set`);
+    } else if (o.status === 'accepted') {
+      assert.ok(o.accepted_at !== null, `accepted order ${o.order_id} missing accepted_at`);
+      assert.equal(o.picked_up_at, null, `accepted order ${o.order_id} has picked_up_at set`);
+      assert.ok(o.courier_id !== null, `accepted order ${o.order_id} missing courier_id`);
+    } else {
+      assert.ok(o.accepted_at !== null, `picked_up order ${o.order_id} missing accepted_at`);
+      assert.ok(o.picked_up_at !== null, `picked_up order ${o.order_id} missing picked_up_at`);
+      assert.ok(o.courier_id !== null, `picked_up order ${o.order_id} missing courier_id`);
+    }
+  }
+  assert.ok(inFlightCount > 0, 'expected some in-flight (placed/accepted/picked_up) orders to exist');
+  const inFlightRate = inFlightCount / d1.orders.length;
+  assert.ok(
+    inFlightRate >= 0.03 && inFlightRate <= 0.1,
+    `in-flight order rate ${inFlightRate.toFixed(4)} outside the expected [0.03, 0.10] band`
+  );
+
   // every master_customer_id distinct in the clean core (one row per person, no dups yet)
   const masterIds = (d1.customers as any[]).map((c) => c.master_customer_id);
   assert.equal(new Set(masterIds).size, masterIds.length, 'master_customer_id values are not all distinct');
@@ -64,6 +95,53 @@ test('rove clean core generates deterministic, funnel-consistent, believable dat
   // cohorts span >= 12 distinct signup months
   const months = new Set((d1.customers as any[]).map((c) => String(c.signup_ts).slice(0, 7)));
   assert.ok(months.size >= 12, `expected >= 12 distinct signup months, got ${months.size}`);
+
+  // Retention curve (believability #2): take the largest of the first 12 signup-month cohorts and,
+  // for tenure offsets 0..3, count distinct cohort customers with >= 1 order placed in that offset
+  // month. The spec targets a smooth ~100/48/33/26/22...% decay; verify the realized curve is
+  // monotonic non-increasing and that month-3 activity, relative to month-0, lands in [0.20, 0.34]
+  // (i.e. materially steeper than a shallow ~0.49 falloff).
+  {
+    const monthKey = (ts: string): string => ts.slice(0, 7);
+    const addMonths = (ym: string, n: number): string => {
+      const [y, mo] = ym.split('-').map(Number);
+      const dt = new Date(Date.UTC(y, mo - 1 + n, 1));
+      return `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, '0')}`;
+    };
+
+    const cohortOfCustomer = new Map<number, string>();
+    const cohortSizes = new Map<string, number>();
+    for (const c of d1.customers as any[]) {
+      const m = monthKey(c.signup_ts as string);
+      cohortOfCustomer.set(c.customer_id as number, m);
+      cohortSizes.set(m, (cohortSizes.get(m) ?? 0) + 1);
+    }
+    const first12 = [...cohortSizes.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1)).slice(0, 12);
+    const bestCohort = [...first12].sort((a, b) => b[1] - a[1])[0][0];
+    const cohortCustomerIds = new Set(
+      [...cohortOfCustomer.entries()].filter(([, m]) => m === bestCohort).map(([id]) => id)
+    );
+
+    const activeByOffset: Set<number>[] = [0, 1, 2, 3].map(() => new Set());
+    for (const o of d1.orders as any[]) {
+      const custId = o.customer_id as number;
+      if (!cohortCustomerIds.has(custId)) continue;
+      const orderMonth = monthKey(o.placed_at as string);
+      for (let off = 0; off <= 3; off += 1) {
+        if (orderMonth === addMonths(bestCohort, off)) activeByOffset[off].add(custId);
+      }
+    }
+    const curve = activeByOffset.map((s) => s.size);
+    assert.ok(curve[0] > 0, `expected a non-empty month-0 active cohort, got curve=[${curve.join(', ')}]`);
+    for (let i = 1; i < curve.length; i += 1) {
+      assert.ok(curve[i] <= curve[i - 1], `retention curve is not monotonic non-increasing: [${curve.join(', ')}]`);
+    }
+    const month3Ratio = curve[3] / curve[0];
+    assert.ok(
+      month3Ratio >= 0.2 && month3Ratio <= 0.34,
+      `month-3 retention ratio ${month3Ratio.toFixed(3)} outside [0.20, 0.34] (curve=[${curve.join(', ')}])`
+    );
+  }
 
   // naive timestamps (no timezone suffix) across every timestamp-bearing table
   const timestampSamples: string[] = [

@@ -225,12 +225,32 @@ function dirtyEnumCell(rng: Prng, canonical: string, synonymRate: number, casing
   return s;
 }
 
+// orders.status has the richest synonym vocabulary of any dirtied enum (5 canonical values + 11
+// synonyms = 16 distinct base spellings, vs. 2-4 for the other enum columns). Compounding that
+// against the full case(3) x whitespace(4) product used by dirtyEnumCell above would multiply out
+// to 200+ distinct raw strings -- more surface-form "explosion" than is believable for a single
+// legacy status column. orders.status instead applies one fixed noise transform (not an
+// independent case x whitespace product), holding the raw distinct-string count in the tens while
+// remaining fully reversible via the same TRIM+LOWER+SYNONYM_MAP recipe (the transform only adds
+// leading whitespace and uppercases, both undone by TRIM/LOWER).
+function dirtyOrderStatusCell(rng: Prng, canonical: string, synonymRate: number, casingRate: number): string {
+  let s = canonical;
+  const synonyms = SYNONYMS_BY_CANONICAL[canonical];
+  if (synonyms && synonyms.length > 0 && bernoulli(rng, synonymRate)) {
+    s = pick(rng, synonyms);
+  }
+  if (bernoulli(rng, casingRate)) {
+    s = `  ${s.toUpperCase()}`;
+  }
+  return s;
+}
+
 // ---------------------------------------------------------------------------------------------
 // R01 / R02: enum casing + whitespace + synonym variance.
 // ---------------------------------------------------------------------------------------------
 
 function injectOrderStatusMess(orders: Row[], rng: Prng): void {
-  for (const o of orders) o.status = dirtyEnumCell(rng, str(o.status), 0.2, 0.4);
+  for (const o of orders) o.status = dirtyOrderStatusCell(rng, str(o.status), 0.2, 0.4);
 }
 
 function injectPaymentEnumMess(payments: Row[], rng: Prng): void {
