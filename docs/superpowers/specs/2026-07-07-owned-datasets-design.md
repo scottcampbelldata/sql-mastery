@@ -41,10 +41,12 @@ Schema lives as plain versioned SQL files. Server unit tests run via `node --tes
 - A fixed `DATASET_END` constant (a literal instant, proposed 2022-01-01 = ANCHOR + 24 months)
   defines "now" so "still active" / "in-flight" NULLs and the newest cohorts are reproducible.
 - Rounding: monetary and physical values pass through a pure round helper before emit.
-- Enforcement: `seed_meta` stores seed + generator version + a content checksum; `verify-datasets`
-  recomputes an ordered md5 over key columns and compares to a committed `manifest.json`; unit
-  tests pin the first N PRNG outputs and run `generate(seed)` twice under different `TZ` asserting
-  identical JSON.
+- Enforcement (as shipped): `seed_meta` stores seed + generator version + per-table row counts;
+  `verify-datasets` asserts each table's count against committed `[min,max]` bands in
+  `manifest.json`. Byte-determinism itself is enforced by the unit suite: a pinned golden PRNG
+  vector plus per-generator double-run equality tests (including under different `TZ`) asserting
+  identical output. (An ordered-md5 content checksum was considered and dropped as redundant given
+  the golden-vector and double-run guarantees.)
 
 ### Insert + idempotency
 

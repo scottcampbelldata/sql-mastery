@@ -148,10 +148,6 @@ export const PLAYER_ROLES: readonly string[] = ['Duelist', 'Sentinel', 'Controll
 // Valorant's standard competitive map pool.
 export const MAP_POOL: readonly string[] = ['Ascent', 'Bind', 'Haven', 'Split', 'Lotus', 'Sunset', 'Icebox'];
 
-export const CHANGE_REASONS: readonly string[] = ['Signed', 'Transfer', 'Promoted', 'Loan', 'Released', 'Retired', 'Benched'];
-
-export const TOURNAMENT_STAGES: readonly string[] = ['Group', 'Quarterfinal', 'Semifinal', 'Final', 'Grand Final'];
-
 // International (region_id NULL) event names: enough for every non-regional tournament slot.
 export const INTERNATIONAL_TOURNAMENT_NAMES: readonly string[] = [
   'Global Championship', 'World Masters', 'Champions Cup', 'Ignition World Finals',
