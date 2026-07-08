@@ -31,3 +31,19 @@ export function formatDate(ms: number): string {
   const date = pad(d.getUTCDate());
   return `${year}-${month}-${date}`;
 }
+
+// Inverse of formatTimestamp: parses a naive "YYYY-MM-DD HH:MM:SS" string back to the integer ms
+// it was formatted from. Pure field extraction plus Date.UTC (not "new Date()"), so this stays
+// TZ-independent like the rest of this file. Added for the Rove mess layer (task 11), which needs
+// to shift an already-formatted event_ts/authorized_at string by a bounded number of seconds
+// (clock-skew, retried-payment offsets) without introducing a second, ad hoc parsing convention
+// outside this file.
+export function parseTimestamp(s: string): number {
+  const year = Number(s.slice(0, 4));
+  const month = Number(s.slice(5, 7));
+  const day = Number(s.slice(8, 10));
+  const hour = Number(s.slice(11, 13));
+  const minute = Number(s.slice(14, 16));
+  const second = Number(s.slice(17, 19));
+  return Date.UTC(year, month - 1, day, hour, minute, second);
+}
