@@ -77,4 +77,46 @@ test('rove clean core generates deterministic, funnel-consistent, believable dat
   for (const ts of timestampSamples) {
     assert.ok(NAIVE_TS_RE.test(ts), `timestamp ${ts} is not naive (no tz suffix)`);
   }
+
+  // Courier-activation consistency: an assigned courier must have been active (activated, not yet
+  // churned) at the order's accepted_at, and every order that reached accepted/picked_up/delivered
+  // must carry a non-null courier_id. Guards against the "no active courier in city" fallback ever
+  // assigning an inactive home-city courier instead of cancelling the order.
+  const courierWindowById = new Map<number, { activatedMs: number | null; churnedMs: number | null }>();
+  for (const c of d1.couriers as any[]) {
+    courierWindowById.set(c.courier_id as number, {
+      activatedMs: c.activated_at === null ? null : Date.parse(`${c.activated_at}Z`),
+      churnedMs: c.churned_at === null ? null : Date.parse(`${c.churned_at}Z`),
+    });
+  }
+
+  let courierNotActiveAtAccept = 0;
+  let acceptedOrLaterMissingCourier = 0;
+  for (const o of d1.orders as any[]) {
+    if (o.courier_id !== null) {
+      const window = courierWindowById.get(o.courier_id as number);
+      const acceptedMs = o.accepted_at === null ? null : Date.parse(`${o.accepted_at}Z`);
+      const active =
+        window !== undefined &&
+        acceptedMs !== null &&
+        window.activatedMs !== null &&
+        window.activatedMs <= acceptedMs &&
+        (window.churnedMs === null || window.churnedMs > acceptedMs);
+      if (!active) courierNotActiveAtAccept += 1;
+    }
+
+    if ((o.status === 'accepted' || o.status === 'picked_up' || o.status === 'delivered') && o.courier_id === null) {
+      acceptedOrLaterMissingCourier += 1;
+    }
+  }
+  assert.equal(
+    courierNotActiveAtAccept,
+    0,
+    `${courierNotActiveAtAccept} orders have a courier_id that was not active at accepted_at`
+  );
+  assert.equal(
+    acceptedOrLaterMissingCourier,
+    0,
+    `${acceptedOrLaterMissingCourier} accepted/picked_up/delivered orders have a null courier_id`
+  );
 });
