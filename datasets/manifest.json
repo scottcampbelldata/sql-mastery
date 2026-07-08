@@ -1,8 +1,8 @@
 {
   "aperture": {
-    "stars": [60, 60],
-    "planets": [180, 180],
-    "moons": [40, 40]
+    "stars": [77, 77],
+    "planets": [140, 140],
+    "facility": [23, 23]
   },
   "sideline": {
     "region": [8, 8],
