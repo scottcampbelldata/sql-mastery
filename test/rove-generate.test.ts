@@ -5,8 +5,8 @@ import * as rove from '../src/datasets/rove/generate';
 const NAIVE_TS_RE = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 test('rove clean core generates deterministic, funnel-consistent, believable data', () => {
-  const d1 = rove.generate(rove.SEED);
-  const d2 = rove.generate(rove.SEED);
+  const d1 = rove.generateClean(rove.SEED);
+  const d2 = rove.generateClean(rove.SEED);
   assert.deepEqual(d1, d2); // deterministic
 
   assert.ok(d1.orders.length >= 100000, `expected >= 100000 orders, got ${d1.orders.length}`);

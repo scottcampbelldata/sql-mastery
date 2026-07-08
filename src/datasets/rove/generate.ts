@@ -2,6 +2,7 @@ import path from 'path';
 
 import type { Prng } from '../framework/prng';
 import { deriveStream } from '../framework/prng';
+import { injectMess } from './mess';
 import { intBetween, floatBetween, pick, weightedPick, bernoulli, gaussian, sampleWithout, round2 } from '../framework/random';
 import { formatDate, formatTimestamp, ANCHOR_MS, DATASET_END_MS, addDays } from '../framework/dates';
 import { GIVEN_NAMES, SURNAMES } from '../framework/pools';
@@ -1136,7 +1137,12 @@ function patchCourierStats(couriers: CouriersResult, orders: OrdersResult, ratin
   }
 }
 
-export function generate(seed: number): Record<string, Row[]> {
+// The clean, fully consistent core (Task 10). Every column that the mess layer (Task 11, ./mess)
+// later dirties is exactly correct here: canonical enum spellings, real distinct
+// master_customer_id per row, plain decimal money-as-text, no orphaned FKs, no sentinel text, a
+// clean stars domain, one row per customer/payment/event. This is the answer key mess.ts's
+// injected defects must remain reversible to.
+export function generateClean(seed: number): Record<string, Row[]> {
   const cityWeights = buildCityWeights();
   const cityDayDist = ROVE_CITIES.map((c) => buildCityDayDist(c));
 
@@ -1176,6 +1182,15 @@ export function generate(seed: number): Record<string, Row[]> {
     ratings,
     support_tickets: supportTickets,
   };
+}
+
+// The seeded entrypoint (scripts/seed-rove.ts and the DatasetModule below both call THIS
+// function): builds the clean core, then applies the mess layer over it in place using an
+// independent named stream so adding/removing other streams elsewhere never perturbs the mess.
+export function generate(seed: number): Record<string, Row[]> {
+  const data = generateClean(seed);
+  injectMess(data, deriveStream(seed, 'mess'));
+  return data;
 }
 
 const mod: DatasetModule = { DB_NAME, SCHEMA_FILE, SEED, VERSION, TABLES, generate };
