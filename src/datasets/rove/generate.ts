@@ -599,6 +599,17 @@ function courierWeight(couriers: CouriersResult, idx: number, atMs: number): num
   return 1 + Math.min(40, tenureDays / 30);
 }
 
+// True when at least one home-city courier is activated and not yet churned at atMs. buildFunnel
+// checks this before deciding an order's funnel branch, so pickCourierForOrder below is only ever
+// asked to pick a courier when a real, active candidate exists in the city at that instant.
+function cityHasActiveCourier(couriers: CouriersResult, cityIdx: number, atMs: number): boolean {
+  const cityList = couriers.byCity[cityIdx];
+  for (const idx of cityList) {
+    if (courierWeight(couriers, idx, atMs) > 0) return true;
+  }
+  return false;
+}
+
 function pickCourierForOrder(
   rng: Prng,
   cityIdx: number,
@@ -615,9 +626,10 @@ function pickCourierForOrder(
       if (target < 0) return idx;
     }
   }
-  // Fallback for brand-new cities with no activated courier yet: relax the activation/churn
-  // window and assign from anyone home-based in the city, so tiny newest cities still function.
-  if (cityList.length > 0) return pick(rng, cityList);
+  // No active (activated, not-churned) courier exists in this city at atMs. Callers must not
+  // paper over this with an arbitrary home-city courier, since that would assign a courier who
+  // was not actually active at accept time. buildFunnel guarantees this path is never taken for
+  // an order that ends up accepted/picked_up/delivered by calling cityHasActiveCourier first.
   return null;
 }
 
@@ -641,6 +653,15 @@ function buildFunnel(
 ): FunnelResult {
   const acceptDelaySec = intBetween(rng, 30, 360);
   const acceptedMs = placedMs + acceptDelaySec * 1000;
+
+  if (!cityHasActiveCourier(couriers, cityIdx, acceptedMs)) {
+    // No courier is active in this city at accept time (e.g. a brand-new city before its first
+    // activation), so the order cannot actually be served. Cancel it up front instead of falling
+    // through to a branch that would assign a courier who was not active at accepted_at.
+    const cancelledMs = placedMs + intBetween(rng, 10, 600) * 1000;
+    return { status: 'cancelled', acceptedAt: null, pickedUpAt: null, deliveredAt: null, cancelledAt: cancelledMs, courierIdx: null };
+  }
+
   const prepMs = Math.max(2, prepMinutes) * 60000;
   const pickedUpMs = acceptedMs + prepMs;
   const travelMinutes = (distanceKm / 20) * 60 + intBetween(rng, 2, 10);
