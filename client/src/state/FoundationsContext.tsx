@@ -2,6 +2,7 @@ import { createContext, useContext, useMemo, useState, useCallback, useEffect, u
 import type { ReactNode } from 'react';
 import { useCurriculum } from './CurriculumContext';
 import { loadLearning, saveLearning, reconcileUnlock, duplicateSkills } from '../lib/learning-path';
+import { migrateFoundationsState } from '../lib/foundations';
 import type { LearningState, Track, Phase } from '../types';
 
 interface FoundationsContextValue {
@@ -48,8 +49,12 @@ export function FoundationsProvider({ children }: FoundationsProviderProps) {
   useEffect(() => {
     if (!track || reconciled.current) return;
     reconciled.current = true;
-    const mark = reconcileUnlock(track, state);
-    if (mark > state.maxUnlockedOrder) update((s) => { s.maxUnlockedOrder = mark; });
+    // Clamp and prune stale persisted state before back-filling from real achievements.
+    update((s) => {
+      Object.assign(s, migrateFoundationsState(s, track));
+      const mark = reconcileUnlock(track, s);
+      if (mark > s.maxUnlockedOrder) s.maxUnlockedOrder = mark;
+    });
     if (import.meta.env.DEV) {
       const dups = duplicateSkills(track);
       if (dups.length) console.error('Duplicate concept skills in learning track:', dups);
