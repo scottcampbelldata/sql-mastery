@@ -180,13 +180,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "rv-lag-lead-deltas": [
     {
-      "id": "rv-lag-lead-deltas-1w32uij",
+      "id": "rv-lag-lead-deltas-mkrdbr",
       "skill": "rv-lag-lead-deltas",
       "database": "rove",
       "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-07T03:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-07T03:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
-        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-07T03:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-07T03:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -202,13 +202,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
-          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-07T03:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-07T03:33:53.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
           "__BLANK_4__": "100"
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-07T03:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-07T03:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -220,8 +220,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "amount_delta_cents"
         ],
         "rowCount": 100,
-        "orderedRowHash": "ddbc00edc5a746b2eb434a80dba80cb7b90dd3050192e7b905f5db6b81780088",
-        "unorderedRowHash": "7b931f68f88aa29e4f53e4684514763170882fec19dcd74b2c8718e7a6062983"
+        "orderedRowHash": "315d285d4ab87ed18e025015d7fc40d36c6ab127a7e1a48ee1cab372efe52371",
+        "unorderedRowHash": "2f04dbd4b49a63255ce58b04b3de13f0355b14c09ead8c95f339ca5a8bc84d31"
       }
     }
   ],
@@ -265,7 +265,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "avg_approve_to_active_seconds"
         ],
         "rowCount": 139,
-        "orderedRowHash": "530bf662879aa0d7e84400ab80a0a059a185086108c901de38565353be747f5b",
+        "orderedRowHash": "e58af5bfbbda23c296c2057edcc13e8d7ef35682e0976c394e587bf78c80af6c",
         "unorderedRowHash": "cc1150f4df47a4da60ad8e6595d548e79be6c18096df4d63f288b091008b48e0"
       }
     }
@@ -315,13 +315,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "rv-moving-average-frame": [
     {
-      "id": "rv-moving-average-frame-bjakmp",
+      "id": "rv-moving-average-frame-13pnvoe",
       "skill": "rv-moving-average-frame",
       "database": "rove",
       "task": "Compute a framed moving average over a gap-free date spine for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T06:05:36.000Z'::date, '2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-02-07T06:05:36.000Z'::date AND ('2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
-        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T06:05:36.000Z'::date, '2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T06:05:36.000Z'::date AND ('2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -336,12 +336,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         },
         "blank": {
           "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
-          "__BLANK_1__": "generate_series('2020-02-07T06:05:36.000Z'::date, '2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T06:05:36.000Z'::date AND ('2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_1__": "generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T06:05:36.000Z'::date, '2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T06:05:36.000Z'::date AND ('2020-02-07T06:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -353,8 +353,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "trailing_7day_avg_cents"
         ],
         "rowCount": 30,
-        "orderedRowHash": "dcc50fd469e595198e1538814d7e87c71bcde7702db03509a94d641e3d523126",
-        "unorderedRowHash": "dcc50fd469e595198e1538814d7e87c71bcde7702db03509a94d641e3d523126"
+        "orderedRowHash": "57c100a0b1b23c2a51f017904d870bbf4de9ea44be1ca6190d454e007f4ff666",
+        "unorderedRowHash": "57c100a0b1b23c2a51f017904d870bbf4de9ea44be1ca6190d454e007f4ff666"
       }
     }
   ],
@@ -799,20 +799,20 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "active_customers"
         ],
         "rowCount": 24,
-        "orderedRowHash": "d2092059883985caa111007318aa8a510119836229bba9c4a0ce59c8d91f96a9",
-        "unorderedRowHash": "d2092059883985caa111007318aa8a510119836229bba9c4a0ce59c8d91f96a9"
+        "orderedRowHash": "fe07f0c6897f5f420bb6b545037070ed7736db1581fcff37a69fcabee9fe46f2",
+        "unorderedRowHash": "fe07f0c6897f5f420bb6b545037070ed7736db1581fcff37a69fcabee9fe46f2"
       }
     }
   ],
   "rv-running-total": [
     {
-      "id": "rv-running-total-1174ck1",
+      "id": "rv-running-total-vdwqk",
       "skill": "rv-running-total",
       "database": "rove",
       "task": "Add a city-level running_gross_cents window value to the bounded order rows for city 1. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-02-01T19:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T19:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
-        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-02-01T19:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T19:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -828,13 +828,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
-          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-02-01T19:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T19:21:46.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
           "__BLANK_4__": "100"
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-02-01T19:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T19:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -846,8 +846,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "running_gross_cents"
         ],
         "rowCount": 100,
-        "orderedRowHash": "6e9bcab1ce3f1dac1d3b64772db8358bf8907055d2ba197e120983ffa04b8c8b",
-        "unorderedRowHash": "67ceeb373c52dc3dfccd5fa9b202cb6eb9af7ba01f6cf8fbd0597e2d9259513f"
+        "orderedRowHash": "040dadace931b19b7c8bf6260141997e5fab50d840d43aeb542017aadab6aee4",
+        "unorderedRowHash": "9a45dbee363451372bb4256997917560ff06023750a0ae5a9b582450de11cdff"
       }
     }
   ],
@@ -894,8 +894,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "event_count"
         ],
         "rowCount": 100,
-        "orderedRowHash": "6f84d3e0d27ef678fbdfa59a62561fc548d9a03922615120d1cba6f3cf78f61a",
-        "unorderedRowHash": "6f84d3e0d27ef678fbdfa59a62561fc548d9a03922615120d1cba6f3cf78f61a"
+        "orderedRowHash": "66cd73f982217df9aa6d58444dd4918a9b0c646d0ccaa526f901c8ae4e09a65f",
+        "unorderedRowHash": "66cd73f982217df9aa6d58444dd4918a9b0c646d0ccaa526f901c8ae4e09a65f"
       }
     }
   ],
@@ -939,7 +939,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "valid_tickets"
         ],
         "rowCount": 173,
-        "orderedRowHash": "ad23e5adb2fa867bf667846c9e23442df1b485540a7e1fa3e4b61180ec450df9",
+        "orderedRowHash": "17e762a3a54098f921af84ec1e876461f499a88fd55a0110b9e11ea5c875c068",
         "unorderedRowHash": "4fa2eed697399a526016385ef4b3d5bdc9b04d6ca2766ba01bbb078f3cf859d2"
       }
     }

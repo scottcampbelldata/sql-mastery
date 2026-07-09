@@ -409,8 +409,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "annual_value_usd"
         ],
         "rowCount": 127,
-        "orderedRowHash": "914e5993dcf3d074fc3f3ff9444c05498d734ef4c40f88b03ac9f009ef666681",
-        "unorderedRowHash": "35314acd054d2766401eee4648e2e0f49682c801f2ff9788d8fa9c42ac8251e5"
+        "orderedRowHash": "a94d3dc9b3e8ee42efc21b67863eb0534a41f3fd5c8595e97d612b6f5c58e588",
+        "unorderedRowHash": "c33020ed065845d04d766383669d2e5cd311207ae5eff032c2cc3f6cf313924c"
       }
     }
   ],
@@ -541,8 +541,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 3,
-        "orderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7",
-        "unorderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7"
+        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
+        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
       }
     }
   ],
@@ -884,8 +884,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "smoothed_prize"
         ],
         "rowCount": 16,
-        "orderedRowHash": "09be6e46ec9ab235e4a36fddc140482d77b28c9e6313a5ccbac767e7cc1107a7",
-        "unorderedRowHash": "b9cbe187dd33c00e0126701e526c7af35347e6c2cf6167dff1ab70501cb2657c"
+        "orderedRowHash": "420da25df71e4dcf9f350e0443cd26689cbcd0612364b0285d9acd084f5f0e48",
+        "unorderedRowHash": "3e1405d4e268c16eb7843d07f6fe6da6b7af814b4f425ba91814051713655388"
       }
     }
   ],
@@ -933,8 +933,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "prev_start"
         ],
         "rowCount": 16,
-        "orderedRowHash": "6ac82f385e43e62c483d7254c0f248574645ca02c402e604793a5beef3668db0",
-        "unorderedRowHash": "e9633a18eb96637dc47264ef6616a8386ef84ebafe5ffcbc8374e0b1036eb822"
+        "orderedRowHash": "c61e44e788c0740eb55311d902d864f1d65518b03c42f627f1a270cdc8140ec1",
+        "unorderedRowHash": "3e9ad90b2d687fe608af87204c12df87cc926835796a30e5dcb516274d9cbf49"
       }
     }
   ],
