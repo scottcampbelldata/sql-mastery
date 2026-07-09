@@ -9,10 +9,11 @@ import {
   resolveDatabaseName
 } from '../src/db-config';
 
-test('defaults to the two curriculum databases', () => {
+test('defaults to the three owned curriculum databases', () => {
   assert.deepEqual(DEFAULT_DATABASES, [
-    'chinook',
-    'stackoverflow'
+    'aperture',
+    'sideline',
+    'rove'
   ]);
 
   assert.deepEqual(getDatabaseNames({}), DEFAULT_DATABASES);
