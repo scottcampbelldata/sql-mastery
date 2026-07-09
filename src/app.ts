@@ -60,7 +60,7 @@ function createApp(options: any = {}) {
 
   app.get('/api/curriculum', (request: Request, response: Response) => {
     try {
-      response.json(curriculumService.buildCurriculum({ rootDir: contentDir }));
+      response.json(curriculumService.buildCurriculum());
     } catch (error) {
       const err = error as { message?: string; code?: string; detail?: string; hint?: string; position?: string; statusCode?: number };
       response.status(500).json({
