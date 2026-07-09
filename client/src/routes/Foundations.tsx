@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../components/AppShell';
 import { EmptyState, Button } from '../components/ui';
 import { useFoundations } from '../state/FoundationsContext';
-import { skillLevel, buildTodaySession, graduationStatus, skillMastery, weakSpots, tileState, resetConcept } from '../lib/foundations';
-import { currentPhase, phaseGraduation } from '../lib/learning-path';
-import type { Concept, Checkpoint, Phase, LearningState } from '../types';
-import { ConceptTile } from './foundations/ConceptTile';
+import { buildTodaySession, graduationStatus, weakSpots, resetConcept } from '../lib/foundations';
+import { bandGroups } from '../lib/bands';
+import type { LearningState } from '../types';
+import { BandSection } from './foundations/BandSection';
 import './foundations/foundations.css';
+import './foundations/bands.css';
 
 interface RingProps {
   value: number;
@@ -31,6 +32,7 @@ export default function Foundations() {
   const navigate = useNavigate();
   const [undo, setUndo] = useState<{ skill: string; title: string; slice: { correct?: string[]; reviews?: number; last?: number } } | null>(null);
   if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading your path..." /></AppShell>;
+  if (!phases.length) return <AppShell breadcrumb={<span className="here">Your path</span>}><EmptyState title="Learning path unavailable" /></AppShell>;
 
   function handleReset(skill: string) {
     const concept = track!.concepts.find((c) => c.skill === skill);
@@ -56,9 +58,9 @@ export default function Foundations() {
   const grad = graduationStatus(track, state);
   const session = buildTodaySession(track, state);
   const weak = weakSpots(track, state, 3);
-  const active = currentPhase(phases, state);
   const started = Object.values(state.skillCorrect).some((a) => (a as string[]).length);
-  const pct = Math.round((grad.strongSkills / grad.totalSkills) * 100);
+  const pct = grad.totalSkills ? Math.round((grad.strongSkills / grad.totalSkills) * 100) : 0;
+  const bands = bandGroups(phases, state);
 
   const todayLabel = session.main.kind === 'graduated' ? 'Every phase complete'
     : session.main.kind === 'checkpoint' ? session.main.checkpoint.title
@@ -74,7 +76,7 @@ export default function Foundations() {
         <div className="lh-hero-copy">
           <span className="lh-kick">{started ? 'Keep going' : 'Start here'}</span>
           <h1>Your path to senior SQL</h1>
-          <p className="lh-sub">From your first query to interview-ready analysis: one dataset, one step at a time, with everything you learn coming back so it sticks.</p>
+          <p className="lh-sub">From your first query to interview-ready analysis: three datasets, one step at a time, with everything you learn coming back so it sticks.</p>
           {session.main.kind === 'graduated'
             ? <>
                 <p className="lh-grad">You have completed every phase. Senior ready.</p>
@@ -99,28 +101,10 @@ export default function Foundations() {
         </div>
       </section>
 
-      <div className="lh-sec-head">
-        <h2><span className="lh-sec-num">Phase {active.order}</span> {active.title}</h2>
-        <p>{active.goal}</p>
-      </div>
-      <div className="lh-grid">
-        {active.concepts.map((c: Concept) => (
-          <ConceptTile key={c.id} concept={c} state={tileState(track, state, c)}
-            count={skillLevel(state, c.skill).count} masteryPct={skillMastery(state, c.skill).pct}
-            onReset={handleReset} />
+      <div className="band-stack">
+        {bands.map((band) => (
+          <BandSection key={band.meta.level} group={band} track={track} state={state} onReset={handleReset} />
         ))}
-        {active.checkpoints.map((cp: Checkpoint) => {
-          const passed = state.checkpointsPassed.includes(cp.id);
-          return (
-            <div key={cp.id} className={`lh-tile lh-tile-cp ${passed ? 'ok' : ''}`}>
-              <div className="lh-tile-head">
-                <span className="lh-tile-num">{passed ? '✓' : '★'}</span>
-                <strong>{cp.title}</strong>
-                <span className="lh-tile-tier">{passed ? 'passed' : 'checkpoint'}</span>
-              </div>
-            </div>
-          );
-        })}
       </div>
       {undo ? (
         <div className="lh-toast" role="status" aria-live="polite">
@@ -134,27 +118,6 @@ export default function Foundations() {
       ) : (
         <p className="lh-weakspots">A short session a day beats a long one a week.</p>
       )}
-
-      <div className="lh-sec-head lh-sec-head-sub"><h2>All phases</h2></div>
-      <div className="lh-phaselist">
-        {phases.map((phase: Phase) => {
-          const pg = phaseGraduation(phase, state);
-          const isActive = phase.id === active.id;
-          const locked = phase.order > active.order;
-          const status = locked ? 'locked' : pg.complete ? 'complete' : isActive ? 'in progress' : 'available';
-          return (
-            <div key={phase.id} className={`lh-prow ${isActive ? 'active' : ''} ${locked ? 'locked' : ''} ${pg.complete ? 'done' : ''}`}>
-              <span className="lh-prow-num">{pg.complete ? '✓' : phase.order}</span>
-              <div className="lh-prow-body">
-                <strong>{phase.title}</strong>
-                <span>{phase.goal}</span>
-              </div>
-              <span className={`lh-prow-badge ${pg.complete ? 'done' : locked ? 'lock' : 'active'}`}>{status}</span>
-              <span className="lh-prow-score">{pg.strong}/{pg.total}</span>
-            </div>
-          );
-        })}
-      </div>
     </AppShell>
   );
 }

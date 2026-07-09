@@ -4,8 +4,6 @@ import { DataTable } from '../../components/DataTable';
 import { SchemaExplorer } from './SchemaExplorer';
 import type { Exercise, QueryResult } from '../../types';
 
-// The run result carries the base QueryResult plus the query metadata the dock renders
-// (command / durationMs), which the check/query endpoints attach at runtime.
 type RunResult = QueryResult & { command?: string; durationMs?: number };
 
 interface Props {
@@ -31,7 +29,7 @@ export function OutputDock({ exercise, result }: Props) {
           : result
             ? (<>
                 <div className="dock-results-meta">
-                  <Pill tone="ok">{result.command} · {result.rowCount} rows · {result.durationMs} ms</Pill>
+                  <Pill tone="ok">{result.command} | {result.rowCount} rows | {result.durationMs} ms</Pill>
                 </div>
                 <DataTable columns={result.columns || []} rows={(result.rows as any) || []} />
               </>)

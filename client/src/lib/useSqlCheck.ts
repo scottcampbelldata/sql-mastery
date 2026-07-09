@@ -51,7 +51,7 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
     }
     setChecking(true);
     onAttempt?.();
-    setFeedback({ toneClass: TONE.info, title: 'Checking…', message: 'Running your SQL against the expected answer.' });
+    setFeedback({ toneClass: TONE.info, title: 'Checking...', message: 'Running your SQL against the expected answer.' });
     try {
       const body = await api.check(exercise.database, trimmed, exercise.expectedSql);
       setResult(body.result || null);

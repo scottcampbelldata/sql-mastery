@@ -7,7 +7,7 @@ import path from 'node:path';
 // so this works whether the compiled test runs from dist/test or in place.
 const rootDir = process.cwd();
 
-test('legacy front-end files are gone', () => {
+test('retired front-end files are gone', () => {
   ['app.js', 'app.css', 'styles.css', 'shared.js', 'index.html'].forEach((file) => {
     assert.equal(fs.existsSync(path.join(rootDir, file)), false, `${file} should be deleted`);
   });
@@ -20,19 +20,19 @@ test('client design system exists with core tokens', () => {
   });
 });
 
-test('client preserves legacy localStorage keys', () => {
+test('client drops retired localStorage keys', () => {
   const progress = fs.readFileSync(path.join(rootDir, 'client', 'src', 'lib', 'progress.ts'), 'utf8');
-  assert.match(progress, /sqlm:product-progress:v1/);
-  assert.match(progress, /sqlm:product-active-session:v1/);
+  assert.doesNotMatch(progress, /sqlm:product-[a-z-]+:v1/);
 });
 
-test('retired lesson source content is gone', () => {
-  const contentDir = path.join(rootDir, 'content');
-  const content = fs.existsSync(contentDir)
-    ? fs.readdirSync(contentDir).filter((f) => f.endsWith('.html'))
+test('retired lesson and static content sources are gone', () => {
+  const staticContentPath = path.join(rootDir, 'content');
+  const content = fs.existsSync(staticContentPath)
+    ? fs.readdirSync(staticContentPath).filter((f) => f.endsWith('.html'))
     : [];
   assert.equal(content.length, 0);
 
-  const fragments = fs.readdirSync(path.join(rootDir, 'client', 'src', 'lessons', 'fragments'));
-  assert.ok(fragments.filter((f) => f.endsWith('.html')).length > 0);
+  assert.equal(fs.existsSync(path.join(rootDir, 'client', 'src', 'lessons')), false);
+  assert.equal(fs.existsSync(path.join(rootDir, 'client', 'src', 'routes', 'Lesson.tsx')), false);
+  assert.equal(fs.existsSync(path.join(rootDir, 'client', 'src', 'routes', 'Session.tsx')), false);
 });

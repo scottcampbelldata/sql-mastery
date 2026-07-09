@@ -5,7 +5,7 @@ const norm = (s: string) => s.replace(/\s+/g, ' ').trim();
 
 describe('formatSql', () => {
   it('puts each top-level clause on its own line', () => {
-    expect(formatSql('SELECT * FROM genre;')).toBe('SELECT *\nFROM genre;');
+    expect(formatSql('SELECT * FROM planets;')).toBe('SELECT *\nFROM planets;');
   });
 
   it('lays out a multi-join query with each JOIN and its ON on one line', () => {
@@ -28,8 +28,8 @@ describe('formatSql', () => {
   });
 
   it('breaks chained AND / OR in WHERE onto indented continuation lines', () => {
-    const input = 'SELECT track_id FROM track WHERE composer IS NULL AND genre_id = 1 ORDER BY track_id;';
-    expect(formatSql(input)).toBe('SELECT track_id\nFROM track\nWHERE composer IS NULL\n  AND genre_id = 1\nORDER BY track_id;');
+    const input = 'SELECT planet_id FROM planets WHERE discovery_year IS NULL AND star_id = 1 ORDER BY planet_id;';
+    expect(formatSql(input)).toBe('SELECT planet_id\nFROM planets\nWHERE discovery_year IS NULL\n  AND star_id = 1\nORDER BY planet_id;');
   });
 
   it('breaks AND in HAVING but keeps clauses like GROUP BY intact', () => {
@@ -81,7 +81,7 @@ describe('formatSql', () => {
 
   it('is idempotent: formatting a formatted query changes nothing', () => {
     const inputs = [
-      'SELECT * FROM genre;',
+      'SELECT * FROM planets;',
       'SELECT id FROM t WHERE x BETWEEN 1 AND 10 AND y = 2;',
       'SELECT t.name FROM track t JOIN album al ON t.album_id = al.album_id LIMIT 5;'
     ];
@@ -93,7 +93,7 @@ describe('formatSql', () => {
 
   it('only reflows whitespace: collapsing the output reproduces the input', () => {
     const inputs = [
-      'SELECT g.name AS genre, ROUND(SUM(il.unit_price * il.quantity), 2) AS revenue FROM invoice_line il JOIN track t ON il.track_id = t.track_id JOIN genre g ON t.genre_id = g.genre_id GROUP BY g.name ORDER BY revenue DESC, g.name LIMIT 10;',
+      'SELECT s.star_name AS star, ROUND(AVG(p.orbital_period_days), 2) AS avg_period FROM planets p JOIN stars s ON p.star_id = s.star_id GROUP BY s.star_name ORDER BY avg_period DESC, s.star_name LIMIT 10;',
       "SELECT c.relname AS table_name, c.reltuples::bigint AS estimated_rows FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = 'public' AND c.relkind = 'r' ORDER BY estimated_rows DESC, table_name;"
     ];
     for (const input of inputs) {

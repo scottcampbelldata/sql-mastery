@@ -1,49 +1,34 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { loadProgress, saveProgress, markComplete, isLessonBoxChecked, setLessonBox } from './progress';
+import { resetAllProgress, safeGet, safeSet, SIDEBAR_KEY } from './progress';
 
-describe('progress store', () => {
+describe('storage helpers', () => {
   beforeEach(() => localStorage.clear());
 
-  it('loads default shape when storage empty or corrupt', () => {
-    expect(loadProgress()).toEqual({ completed: {}, attempts: {}, lastSql: {} });
-    localStorage.setItem('sqlm:product-progress:v1', '{not json');
-    expect(loadProgress()).toEqual({ completed: {}, attempts: {}, lastSql: {} });
+  it('safeSet and safeGet round-trip values', () => {
+    safeSet('sqlm:runner:sql', 'SELECT 1;');
+    expect(safeGet('sqlm:runner:sql')).toBe('SELECT 1;');
   });
 
-  it('round-trips under the legacy key sqlm:product-progress:v1', () => {
-    const p = loadProgress();
-    p.lastSql['ex1'] = 'SELECT 1;';
-    saveProgress(p);
-    expect(JSON.parse(localStorage.getItem('sqlm:product-progress:v1')!).lastSql.ex1).toBe('SELECT 1;');
-  });
-
-  it('markComplete stamps completedAt and attempt count', () => {
-    const p = loadProgress();
-    p.attempts['ex1'] = 3;
-    markComplete(p, 'ex1');
-    expect(p.completed.ex1.attempts).toBe(3);
-    expect(typeof p.completed.ex1.completedAt).toBe('string');
-  });
-
-  it('lesson checkboxes use the legacy sqlm:<page>:<id> keys', () => {
-    setLessonBox('m1', 'p1-1', true);
-    expect(localStorage.getItem('sqlm:m1:p1-1')).toBe('1');
-    expect(isLessonBoxChecked('m1', 'p1-1')).toBe(true);
-    setLessonBox('m1', 'p1-1', false);
-    expect(localStorage.getItem('sqlm:m1:p1-1')).toBe(null);
-  });
-
-  it('saveProgress does not throw when localStorage.setItem throws', () => {
+  it('safeSet does not throw when localStorage.setItem throws', () => {
     const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
     try {
-      expect(() => saveProgress({ completed: {}, attempts: {}, lastSql: {} })).not.toThrow();
+      expect(() => safeSet('sqlm:runner:sql', 'SELECT 1;')).not.toThrow();
     } finally {
       spy.mockRestore();
     }
   });
 
-  it('loadProgress coerces non-object subkeys to {}', () => {
-    localStorage.setItem('sqlm:product-progress:v1', JSON.stringify({ completed: 'oops', attempts: 7, lastSql: null }));
-    expect(loadProgress()).toEqual({ completed: {}, attempts: {}, lastSql: {} });
+  it('resetAllProgress keeps device prefs and auth while clearing learning data', () => {
+    localStorage.setItem('sqlm:learning:v1', '{}');
+    localStorage.setItem('sqlm:runner:sql', 'SELECT 1;');
+    localStorage.setItem(SIDEBAR_KEY, '1');
+    localStorage.setItem('sqlm:auth-token:v1', 'token');
+
+    resetAllProgress();
+
+    expect(localStorage.getItem('sqlm:learning:v1')).toBeNull();
+    expect(localStorage.getItem('sqlm:runner:sql')).toBeNull();
+    expect(localStorage.getItem(SIDEBAR_KEY)).toBe('1');
+    expect(localStorage.getItem('sqlm:auth-token:v1')).toBe('token');
   });
 });

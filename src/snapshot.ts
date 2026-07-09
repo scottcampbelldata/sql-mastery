@@ -96,9 +96,8 @@ export function readServedSnapshot(database: string): string | null {
     const parsed = JSON.parse(fs.readFileSync(file, 'utf8')) as unknown;
     if (typeof parsed === 'string') return parsed;
     if (parsed && typeof parsed === 'object') {
-      const record = parsed as { snapshotHash?: unknown; hash?: unknown };
+      const record = parsed as { snapshotHash?: unknown };
       if (typeof record.snapshotHash === 'string') return record.snapshotHash;
-      if (typeof record.hash === 'string') return record.hash;
     }
     return null;
   } catch {

@@ -1,32 +1,27 @@
-// Shared domain types for the SQL Mastery client. Kept broad where the server sends
-// loosely shaped data and different sources populate different field subsets; tightened
-// where the client relies on structure. Runtime data crossing the API boundary is cast
-// to these shapes in lib/api.ts.
+export type Level = 'beginner' | 'intermediate' | 'advanced';
+export type ScaffoldTier = 'full' | 'half' | 'blank';
 
-export interface CompletionRecord {
-  completedAt: string;
-  attempts: number;
+export interface StarterSql {
+  full: string;
+  half: string;
+  blank: string;
 }
 
-// Product progress persisted to localStorage.
-export interface Progress {
-  completed: Record<string, CompletionRecord>;
-  attempts: Record<string, number>;
-  lastSql: Record<string, string>;
-}
+export type ExerciseStarterSql = string | StarterSql;
 
-// An exercise parsed from lesson content or defined in a learning-path phase. Most
-// fields are optional because the schema-recon, curriculum, expansion, and phase
-// sources each populate a different subset.
 export interface Exercise {
   id: string;
   title?: string;
   task?: string;
   database?: string;
-  level?: string;
+  level?: Level;
   hint?: string;
   expectedSql?: string;
-  starterSql?: string;
+  starterSql?: ExerciseStarterSql;
+  blankMap?: Record<ScaffoldTier, Record<string, string>>;
+  orderMatters?: boolean;
+  rowCeiling?: number;
+  fingerprint?: unknown;
   solutionNote?: string;
   workedExample?: string;
   checkable?: boolean;
@@ -35,30 +30,6 @@ export interface Exercise {
   moduleTitle?: string;
   stage?: string;
   sourceFile?: string;
-}
-
-export interface Session {
-  id: string;
-  sequence?: number;
-  week?: number;
-  day?: number;
-  moduleId?: string;
-  moduleTitle?: string;
-  stage?: string;
-  title: string;
-  durationMinutes?: number;
-  type?: string;
-  goal?: string;
-  exerciseIds: string[];
-}
-
-export interface Week {
-  id: string;
-  number: number;
-  title: string;
-  outcome?: string;
-  sessions: string[];
-  minutes?: number;
 }
 
 export interface TeachExample {
@@ -80,6 +51,8 @@ export interface Concept {
   teach?: Teach;
   exercises: Exercise[];
   phaseId?: string;
+  level?: Level;
+  database?: string;
 }
 
 export interface Checkpoint {
@@ -88,6 +61,8 @@ export interface Checkpoint {
   drawFromSkills?: string[];
   title: string;
   phaseId?: string;
+  level?: Level;
+  database?: string;
 }
 
 export interface Phase {
@@ -95,6 +70,8 @@ export interface Phase {
   order: number;
   title: string;
   goal?: string;
+  level: Level;
+  database: string;
   concepts: Concept[];
   checkpoints: Checkpoint[];
 }
@@ -105,9 +82,10 @@ export interface SkillRef {
   title: string;
   order: number;
   phaseId?: string;
+  level?: Level;
+  database?: string;
 }
 
-// The flattened learning-path track the foundations engine consumes.
 export interface Track {
   dataset?: string;
   phases: Phase[];
@@ -118,15 +96,23 @@ export interface Track {
 }
 
 export interface Curriculum {
-  product: { name: string; promise: string; cadence: string };
-  weeks: Week[];
-  sessions: Session[];
-  exercises: Exercise[];
+  product: {
+    name: string;
+    promise: string;
+    cadence: string;
+    bands?: Array<{
+      level: Level;
+      database: string;
+      title: string;
+      story: string;
+      phaseCount?: number;
+      conceptCount?: number;
+    }>;
+  };
   learningPath: Track;
   stats: Record<string, number>;
 }
 
-// Foundations / learning progression state persisted to localStorage.
 export interface LearningState {
   skillCorrect: Record<string, string[]>;
   attempts: Record<string, number>;
@@ -134,23 +120,16 @@ export interface LearningState {
   lastPracticedSession: Record<string, number>;
   checkpointsPassed: string[];
   sessionCounter: number;
-  // Times a spaced review of each skill has been passed; drives the scaffold fade
-  // (full -> half -> blank) once a skill is mastered.
   reviewsPassed: Record<string, number>;
-  // Monotonic unlock high-water mark: the furthest concept.order the learner has ever been
-  // cleared to reach (set to order + 1 when a concept becomes strong). Only ever raised.
   maxUnlockedOrder: number;
 }
 
-// A { tableName: columnNames[] } map for editor autocomplete and the schema browser.
 export type DbSchemaMap = Record<string, string[]>;
 
 export interface SchemaColumn { name: string; type?: string }
 export interface SchemaTable { name: string; columns?: SchemaColumn[] }
 export interface SchemaResponse { tables?: SchemaTable[] }
 
-// Result set returned by /api/query and /api/check. Rows are pg row objects keyed by
-// column name (DataTable reads row[columnName]).
 export interface QueryResult {
   columns: string[];
   rows: Record<string, unknown>[];
@@ -178,7 +157,6 @@ export interface CheckResponse {
   diff?: SqlDiff;
 }
 
-// A UI feedback banner. Session uses `tone`; the foundations hook uses `toneClass`.
 export interface Feedback {
   tone?: string;
   toneClass?: string;
@@ -187,7 +165,6 @@ export interface Feedback {
   diff?: SqlDiff | null;
 }
 
-// A fetch error decorated with server-provided fields.
 export interface ApiError extends Error {
   code?: string;
   hint?: string;

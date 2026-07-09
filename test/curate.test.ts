@@ -27,8 +27,8 @@ const meta: ConceptMeta[] = [{
 }];
 
 test('curate collapses two exercises differing only by a numeric literal', () => {
-  const a = draft('id-a', 'ap-a', 'SELECT name FROM track WHERE genre_id = 1 ORDER BY track_id;');
-  const b = draft('id-b', 'ap-a', 'SELECT name FROM track WHERE genre_id = 2 ORDER BY track_id;');
+  const a = draft('id-a', 'ap-a', 'SELECT title FROM articles WHERE author_id = 1 ORDER BY article_id;');
+  const b = draft('id-b', 'ap-a', 'SELECT title FROM articles WHERE author_id = 2 ORDER BY article_id;');
   const out = curate([a, b], meta);
   assert.equal(out.length, 1);
   assert.equal(out[0].skill, 'ap-a');

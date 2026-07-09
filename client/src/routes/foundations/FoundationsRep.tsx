@@ -3,19 +3,19 @@ import { useFoundations } from '../../state/FoundationsContext';
 import { useSqlCheck } from '../../lib/useSqlCheck';
 import { recordConceptProgress, recordAttempt, recordReviewPass, isSkillStrong } from '../../lib/foundations';
 import type { ScaffoldTier } from '../../lib/foundations';
-import { starterSqlForExercise, revealHalfScaffold } from '../../lib/sqlScaffold';
+import { pickStarter, starterSqlForExercise } from '../../lib/sqlScaffold';
 import { formatSql } from '../../lib/sqlFormat';
 import { useDbSchema } from '../../lib/dbSchema';
 import { SqlEditor } from '../../components/SqlEditor';
-import { OutputDock } from '../session/OutputDock';
+import { OutputDock } from './OutputDock';
 import { Button, Callout } from '../../components/ui';
 import { DiffPanel } from '../../components/DiffPanel';
 import type { Exercise, Teach, LearningState } from '../../types';
 
 const isMac = navigator.platform.toUpperCase().includes('MAC');
 
-export function editorPlaceholder(exercise: Exercise): string {
-  return starterSqlForExercise(exercise)
+export function editorPlaceholder(exercise: Exercise, tier: ScaffoldTier = 'full'): string {
+  return starterSqlForExercise(exercise, tier)
     ? 'Replace ____ in the starter SQL, then run it.'
     : 'Type your SQL here...';
 }
@@ -30,24 +30,17 @@ interface Props {
   tier?: ScaffoldTier;
 }
 
-// LearnSQL-style two panel. LEFT (narrower) = instructions: theory + example + task.
-// RIGHT (wider) = console: editor on top, then results / database browser stacked below.
-// teach (optional): the concept's teach block, shown on a new lesson's reps.
-// tier: how much starter to seed the editor with - 'full' scaffold, 'half' (reveal about
-// half the blanks), or 'blank'. A "Show the starter" button always restores the full
-// scaffold so a learner is never stranded.
 export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect, tier = 'full' }: Props) {
   const { track, state, update } = useFoundations();
   const [hintOpen, setHintOpen] = useState(false);
   const dbSchema = useDbSchema(exercise.database);
-  const fullStarter = starterSqlForExercise(exercise);
-  const seed = tier === 'blank' ? '' : tier === 'half' ? revealHalfScaffold(fullStarter, exercise.expectedSql) : undefined;
+  const fullStarter = pickStarter(exercise, 'full');
+  const seed = pickStarter(exercise, tier);
   const check = useSqlCheck(exercise, {
     onAttempt: () => update((s: LearningState) => recordAttempt(s, exercise.id)),
     onResult: (correct: boolean) => {
       if (!correct) return;
       update((s: LearningState) => { if (track) recordConceptProgress(track, s, exercise); });
-      // A passed review of an already-mastered skill advances its scaffold fade.
       if (kind === 'review' && exercise.skill && isSkillStrong(state, exercise.skill)) {
         update((s: LearningState) => recordReviewPass(s, exercise.skill as string));
       }
@@ -90,14 +83,16 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
         <div className="console-editor">
           <span className="wb-editor-label" aria-hidden="true">Your SQL</span>
           <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
-            placeholder={tier === 'blank' ? 'Write the query from memory. Stuck? Use "Show the starter".'
+            placeholder={tier === 'blank' && !seed ? 'Write the query from memory. Stuck? Use "Show the starter".'
+              : tier === 'blank' ? 'Fill in the broad starter blanks. Stuck? Use "Show the starter".'
               : tier === 'half' ? 'Fill in the remaining blanks. Stuck? Use "Show the starter".'
-              : editorPlaceholder(exercise)} ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
+              : editorPlaceholder(exercise, tier)}
+            ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
           <div className="console-actions">
             <Button variant="primary" onClick={check.runCheck} disabled={check.checking}>
-              {check.checking ? 'Checking…' : `Run and check  ${isMac ? '⌘↵' : 'Ctrl+↵'}`}
+              {check.checking ? 'Checking...' : `Run and check  ${isMac ? 'Cmd+Enter' : 'Ctrl+Enter'}`}
             </Button>
-            {tier !== 'full' ? <Button onClick={() => check.setSql(fullStarter)}>Show the starter</Button> : null}
+            {tier !== 'full' && fullStarter ? <Button onClick={() => check.setSql(fullStarter)}>Show the starter</Button> : null}
           </div>
         </div>
         <div role="status" aria-live="polite">

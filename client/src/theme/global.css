@@ -26,7 +26,7 @@ pre {
    breaks a token when it genuinely cannot fit, so ordinary identifiers still wrap at
    whitespace rather than being chopped mid-word. */
 .sql-block { white-space: pre-wrap; overflow-wrap: break-word; }
-/* legacy lesson syntax spans keep working */
+/* Syntax-highlighted SQL snippets. */
 pre .k { color: var(--syn-keyword); font-weight: 600; }
 pre .f { color: var(--syn-function); }
 pre .s { color: var(--syn-string); }

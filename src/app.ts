@@ -14,10 +14,9 @@ function createApp(options: any = {}) {
   const progressStore = options.progressStore || createProgressStore();
   const userStore = options.userStore || createUserStore();
   const authService = options.authService || createAuthService();
-  // Resolve default dirs from the project root (process.cwd()) rather than __dirname,
-  // because the compiled file runs from dist/src/ while content/ and client/dist/ stay
-  // at the project root and the server is always started from the project root.
-  const contentDir = options.contentDir || path.resolve(process.cwd(), 'content');
+  // Resolve the built client from the project root (process.cwd()) rather than __dirname,
+  // because the compiled file runs from dist/src/ while client/dist/ stays at the project
+  // root and the server is always started from the project root.
   const clientDir = options.clientDir || path.resolve(process.cwd(), 'client', 'dist');
 
   // Whether this backend also serves the built front end (all-in-one). In a split
@@ -210,9 +209,6 @@ function createApp(options: any = {}) {
   // is false (split deployment) the VPS runs API-only and Cloudflare Pages serves the UI.
   if (serveClient) {
     app.use(express.static(clientDir));
-    app.use(express.static(contentDir, {
-      extensions: ['html']
-    }));
   }
 
   return app;

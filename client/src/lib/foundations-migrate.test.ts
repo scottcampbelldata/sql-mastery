@@ -34,15 +34,15 @@ describe('FOUNDATIONS_KEY v2 clamp-on-load migration', () => {
     expect(maxConceptOrder(track)).toBe(3);
   });
 
-  it('safely migrates a stale v1 blob: clamps out-of-range maxUnlockedOrder and drops unknown ids', () => {
+  it('safely clamps an out-of-range blob and drops unknown ids', () => {
     const stale = {
-      skillCorrect: { 'ap-select-all': ['c1-r1'], 'legacy-window-fn': ['z9'] },
+      skillCorrect: { 'ap-select-all': ['c1-r1'], 'unknown-window-fn': ['z9'] },
       attempts: { 'c1-r1': 2 },
       lastSql: { 'c1-r1': 'select 1' },
-      lastPracticedSession: { 'ap-select-all': 4, 'legacy-window-fn': 7 },
-      checkpointsPassed: ['cpA', 'cp-legacy'],
+      lastPracticedSession: { 'ap-select-all': 4, 'unknown-window-fn': 7 },
+      checkpointsPassed: ['cpA', 'cp-unknown'],
       sessionCounter: 9,
-      reviewsPassed: { 'ap-select-all': 1, 'legacy-window-fn': 3 },
+      reviewsPassed: { 'ap-select-all': 1, 'unknown-window-fn': 3 },
       maxUnlockedOrder: 999
     };
     const migrated = migrateFoundationsState(stale, track);
