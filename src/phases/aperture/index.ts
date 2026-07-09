@@ -4,7 +4,7 @@ import {
   APERTURE_CONCEPT_META,
   APERTURE_PHASES
 } from '../../generator/templates/aperture/index';
-import { APERTURE_EXERCISES } from './exercises.generated';
+import { GENERATED_EXERCISES as APERTURE_EXERCISES } from './exercises.generated';
 
 function buildAperturePhases(): Phase[] {
   return [...APERTURE_PHASES]
