@@ -1,25 +1,13 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './state/AuthContext';
 import { CurriculumProvider, useCurriculum } from './state/CurriculumContext';
-import { FoundationsProvider, useFoundations } from './state/FoundationsContext';
-import { AppShell } from './components/AppShell';
+import { FoundationsProvider } from './state/FoundationsContext';
 import { EmptyState } from './components/ui';
-import { graduationStatus } from './lib/foundations';
-import Dashboard from './routes/Dashboard';
-import Session from './routes/Session';
-import Lesson from './routes/Lesson';
 import Databases from './routes/Databases';
 import Foundations from './routes/Foundations';
 import FoundationsSession from './routes/foundations/FoundationsSession';
 import Checkpoint from './routes/foundations/Checkpoint';
 import ConceptPractice from './routes/foundations/ConceptPractice';
-
-function RootRedirect() {
-  const { track, state } = useFoundations();
-  if (!track) return <AppShell breadcrumb={<span className="here">Loading…</span>}><EmptyState title="Loading your training path" /></AppShell>;
-  const grad = graduationStatus(track, state);
-  return <Navigate to={grad.graduated ? '/academy' : '/learn'} replace />;
-}
 
 function Body() {
   const { curriculum, error } = useCurriculum();
@@ -27,14 +15,11 @@ function Body() {
   if (!curriculum) return <EmptyState title="Loading your training path" />;
   return (
     <Routes>
-      <Route path="/" element={<RootRedirect />} />
+      <Route path="/" element={<Navigate to="/learn" replace />} />
       <Route path="/learn" element={<Foundations />} />
       <Route path="/learn/session" element={<FoundationsSession />} />
       <Route path="/learn/checkpoint/:id" element={<Checkpoint />} />
       <Route path="/learn/concept/:conceptId" element={<ConceptPractice />} />
-      <Route path="/academy" element={<Dashboard />} />
-      <Route path="/session/:sessionId/:exerciseId?" element={<Session />} />
-      <Route path="/lessons/:slug/:step?" element={<Lesson />} />
       <Route path="/databases" element={<Databases />} />
       <Route path="*" element={<EmptyState title="Page not found" />} />
     </Routes>

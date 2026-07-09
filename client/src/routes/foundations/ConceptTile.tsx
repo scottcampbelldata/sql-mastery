@@ -43,7 +43,7 @@ export function ConceptTile({ concept, state, count, masteryPct, onReset }: Prop
     <div className={cls}>
       <Link to={`/learn/concept/${concept.id}`} className="lh-tile-open" aria-label={name}>
         <div className="lh-tile-head">
-          <span className="lh-tile-num">{state === 'done' ? '✓' : concept.order}</span>
+          <span className="lh-tile-num">{state === 'done' ? 'OK' : concept.order}</span>
           <strong>{concept.title}</strong>
           <span className="lh-tile-tier">{tier}</span>
           <span className="lh-tile-go" aria-hidden="true">Practice</span>

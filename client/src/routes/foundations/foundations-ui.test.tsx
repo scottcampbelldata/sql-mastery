@@ -12,7 +12,7 @@ const concept = {
   teach: {
     plain: 'A database table is like a spreadsheet.',
     mentalModel: 'SELECT = show me, * = all columns.',
-    example: { sql: 'SELECT * FROM genre;', note: 'Returns all 25 genres.' }
+    example: { sql: 'SELECT * FROM planets;', note: 'Returns every seeded planet.' }
   }
 } as Concept;
 
@@ -21,42 +21,59 @@ describe('Foundations teach + scaffolding', () => {
     render(<TeachCard concept={concept} />);
     expect(screen.getByRole('heading', { name: 'Ask a table for everything' })).toBeInTheDocument();
     expect(screen.getByText(/like a spreadsheet/)).toBeInTheDocument();
-    expect(screen.getByText('SELECT * FROM genre;')).toBeInTheDocument();
-    expect(screen.getByText('Returns all 25 genres.')).toBeInTheDocument();
+    expect(screen.getByText('SELECT * FROM planets;')).toBeInTheDocument();
+    expect(screen.getByText('Returns every seeded planet.')).toBeInTheDocument();
   });
 
   it('useSqlCheck seeds the editor value from the exercise starterSql (scaffolding prefill)', () => {
-    const exercise = { id: 'c1-r1', skill: 'select-all', database: 'chinook', task: 't', starterSql: 'SELECT ____ FROM genre;', expectedSql: 'SELECT * FROM genre;' } as Exercise;
+    const exercise = { id: 'c1-r1', skill: 'select-all', database: 'aperture', task: 't', starterSql: 'SELECT ____ FROM planets;', expectedSql: 'SELECT * FROM planets;' } as Exercise;
     const { result } = renderHook(() => useSqlCheck(exercise));
-    expect(result.current.sql).toBe('SELECT ____\nFROM genre;');
+    expect(result.current.sql).toBe('SELECT ____\nFROM planets;');
+  });
+
+  it('useSqlCheck seeds generated starterSql objects without fetching a scaffold', () => {
+    const exercise = {
+      id: 'ap-r1',
+      skill: 'ap-order-by',
+      database: 'aperture',
+      task: 't',
+      starterSql: {
+        full: 'SELECT planet_name FROM planets ORDER BY __BLANK_0__;',
+        half: 'SELECT planet_name FROM __BLANK_0__ ORDER BY __BLANK_1__;',
+        blank: 'SELECT __BLANK_0__ FROM __BLANK_1__;'
+      },
+      expectedSql: 'SELECT planet_name FROM planets ORDER BY planet_name;'
+    } as Exercise;
+    const { result } = renderHook(() => useSqlCheck(exercise));
+    expect(result.current.sql).toBe('SELECT planet_name\nFROM planets\nORDER BY ____;');
   });
 
   it('useSqlCheck creates scaffold SQL when the exercise has no starter code', () => {
-    const exercise = { id: 'c2-r2', skill: 'select-columns', database: 'chinook', task: 't', starterSql: '', expectedSql: 'SELECT name FROM genre;' } as Exercise;
+    const exercise = { id: 'c2-r2', skill: 'select-columns', database: 'aperture', task: 't', starterSql: '', expectedSql: 'SELECT planet_name FROM planets;' } as Exercise;
     const { result } = renderHook(() => useSqlCheck(exercise));
     expect(result.current.sql).toBe('SELECT ____\nFROM ____;');
   });
 
   it('useSqlCheck resets the editor when the exercise changes', () => {
-    const first = { id: 'c1-r1', skill: 'select-all', database: 'chinook', task: 't', starterSql: 'SELECT ____ FROM genre;', expectedSql: 'SELECT * FROM genre;' } as Exercise;
-    const second = { id: 'c1-r2', skill: 'select-all', database: 'chinook', task: 't', starterSql: '', expectedSql: 'SELECT * FROM media_type;' } as Exercise;
+    const first = { id: 'c1-r1', skill: 'select-all', database: 'aperture', task: 't', starterSql: 'SELECT ____ FROM planets;', expectedSql: 'SELECT * FROM planets;' } as Exercise;
+    const second = { id: 'c1-r2', skill: 'select-all', database: 'aperture', task: 't', starterSql: '', expectedSql: 'SELECT * FROM stars;' } as Exercise;
     const { result, rerender } = renderHook(({ exercise }) => useSqlCheck(exercise), { initialProps: { exercise: first } });
 
-    act(() => result.current.setSql('SELECT * FROM genre;'));
+    act(() => result.current.setSql('SELECT * FROM planets;'));
     rerender({ exercise: second });
 
     expect(result.current.sql).toBe('SELECT ____\nFROM ____;');
   });
 
   it('does not use the model answer as placeholder when there is no starter SQL', () => {
-    const exercise = { id: 'c1-r2', starterSql: '', expectedSql: 'SELECT * FROM media_type;' } as Exercise;
+    const exercise = { id: 'c1-r2', starterSql: '', expectedSql: 'SELECT * FROM stars;' } as Exercise;
 
-    expect(editorPlaceholder(exercise)).not.toBe('SELECT * FROM media_type;');
+    expect(editorPlaceholder(exercise)).not.toBe('SELECT * FROM stars;');
     expect(editorPlaceholder(exercise)).toMatch(/replace/i);
   });
 
   it('running an untouched scaffold asks for blanks instead of treating it as empty', async () => {
-    const exercise = { id: 'c1-r2', skill: 'select-all', database: 'chinook', task: 't', starterSql: '', expectedSql: 'SELECT * FROM media_type;' } as Exercise;
+    const exercise = { id: 'c1-r2', skill: 'select-all', database: 'aperture', task: 't', starterSql: '', expectedSql: 'SELECT * FROM stars;' } as Exercise;
     const { result } = renderHook(() => useSqlCheck(exercise));
 
     await act(async () => {
@@ -68,7 +85,7 @@ describe('Foundations teach + scaffolding', () => {
   });
 
   it('carries the server diff into feedback on a mismatch', async () => {
-    const ex = { id: 'd1', database: 'chinook', task: 't', starterSql: '', expectedSql: 'SELECT 1' };
+    const ex = { id: 'd1', database: 'aperture', task: 't', starterSql: '', expectedSql: 'SELECT 1' };
     vi.spyOn(apiModule.api, 'check').mockResolvedValue({
       correct: false, feedbackType: 'mismatch', hint: 'h',
       diff: { reason: 'row-count', yourRowCount: 3, expectedRowCount: 2, orderOnly: false, extraRows: 1, missingRows: 0 }
@@ -81,7 +98,7 @@ describe('Foundations teach + scaffolding', () => {
   });
 
   it('seeds the editor from the seed option (blank for a cold review)', () => {
-    const ex = { id: 'c1-r1', database: 'chinook', task: 't', starterSql: 'SELECT ____ FROM genre;', expectedSql: 'SELECT * FROM genre;' };
+    const ex = { id: 'c1-r1', database: 'aperture', task: 't', starterSql: 'SELECT ____ FROM planets;', expectedSql: 'SELECT * FROM planets;' };
     const { result } = renderHook(() => useSqlCheck(ex, { seed: '' }));
     expect(result.current.sql).toBe('');
   });

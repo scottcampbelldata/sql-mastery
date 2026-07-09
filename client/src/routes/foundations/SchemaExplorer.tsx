@@ -48,7 +48,7 @@ export function SchemaExplorer({ database }: Props) {
   }, [database, activeTable]);
 
   if (error) return <Callout tone="warn" title={`Could not load ${database}`}>{error.message}{error.hint ? `: ${error.hint}` : ''}</Callout>;
-  if (!schema) return <div className="table-note">Loading {database} tables…</div>;
+  if (!schema) return <div className="table-note">Loading {database} tables...</div>;
   if (!schema.tables.length) return <div className="table-note">{database} has no user tables.</div>;
 
   const isActive = (t: ExplorerTable) => activeTable && t.name === activeTable.name && t.schema === activeTable.schema;
@@ -66,7 +66,7 @@ export function SchemaExplorer({ database }: Props) {
       <div className="db-grid">
         {previewError ? <Callout tone="warn" title="Preview failed">{previewError.message}</Callout>
           : preview ? <DataTable columns={preview.columns || []} rows={(preview.rows as any) || []} maxRows={50} />
-          : <div className="table-note">Loading {activeTable?.name}…</div>}
+          : <div className="table-note">Loading {activeTable?.name}...</div>}
       </div>
     </div>
   );

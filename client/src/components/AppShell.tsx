@@ -1,14 +1,18 @@
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { useCurriculum } from '../state/CurriculumContext';
-import { currentSession, percent } from '../lib/curriculum';
+import { useFoundations } from '../state/FoundationsContext';
+import { graduationStatus } from '../lib/foundations';
 import { SIDEBAR_KEY, safeGet, safeSet } from '../lib/progress';
 import { getTheme, setTheme } from '../theme/theme';
 import { ProgressMeter, cx } from './ui';
-import { LESSONS } from '../lessons/manifest';
 import { AccountMenu } from './AccountMenu';
 import './appshell.css';
+
+function percent(done: number, total: number): number {
+  if (!total) return 0;
+  return Math.round((done / total) * 100);
+}
 
 function ThemeToggle() {
   const [theme, setThemeState] = useState(getTheme);
@@ -19,7 +23,7 @@ function ThemeToggle() {
   }
   return (
     <button className="theme-toggle" onClick={flip} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} title="Toggle light / dark">
-      <span aria-hidden="true">{theme === 'dark' ? '☾' : '☀'}</span>
+      <span aria-hidden="true">{theme === 'dark' ? 'dark' : 'light'}</span>
     </button>
   );
 }
@@ -30,17 +34,16 @@ interface AppShellProps {
 }
 
 export function AppShell({ children, breadcrumb }: AppShellProps) {
-  const { curriculum, progress, activeSessionId } = useCurriculum();
+  const { track, state } = useFoundations();
   const [collapsed, setCollapsed] = useState(() => safeGet(SIDEBAR_KEY) === '1');
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
-  // The mobile drawer closes whenever navigation happens.
   useEffect(() => { setMenuOpen(false); }, [location]);
 
-  const done = curriculum ? Object.keys(progress.completed).length : 0;
-  const total = curriculum ? curriculum.exercises.length : 0;
-  const cont = curriculum ? currentSession(curriculum.sessions, progress.completed, activeSessionId) : null;
+  const grad = track ? graduationStatus(track, state) : null;
+  const done = grad ? grad.strongSkills : 0;
+  const total = grad ? grad.totalSkills : 0;
 
   function toggle() {
     const next = !collapsed;
@@ -56,7 +59,7 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
           <ThemeToggle />
           <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}
             aria-expanded={menuOpen} aria-controls="app-sidebar" aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
-            {menuOpen ? '✕ Close' : '☰ Menu'}
+            {menuOpen ? 'Close' : 'Menu'}
           </button>
         </div>
       </header>
@@ -65,35 +68,25 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
         <div className="brand">
           <Link to="/" className="brand-mark">SQL<span>/</span>Mastery</Link>
           <button className="collapse-btn" onClick={toggle} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
-            {collapsed ? '»' : '«'}
+            {collapsed ? '>>' : '<<'}
           </button>
         </div>
         <nav className="side-nav">
           <div className="nav-group">
             <span className="nav-group-label">Learn</span>
-            <NavLink to="/learn" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">◎</span><span className="nav-label">Foundations</span></NavLink>
-          </div>
-          <div className="nav-group">
-            <span className="nav-group-label">Extra problems</span>
-            <NavLink to="/academy" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">◆</span><span className="nav-label">Interview problem bank</span></NavLink>
-            {/* Continue is a section indicator: active for any /session path, not a per-URL match. */}
-            {cont ? <NavLink to={`/session/${cont.id}`} className={() => cx('nav-item', location.pathname.startsWith('/session') && 'active')}><span className="nav-ico">▶</span><span className="nav-label">Continue</span></NavLink> : null}
-          </div>
-          <div className="nav-group">
-            <span className="nav-group-label">Lessons</span>
-            {LESSONS.map((l) => (
-              <NavLink key={l.slug} to={`/lessons/${l.slug}`} className={({ isActive }) => cx('nav-item', 'nav-sub', isActive && 'active')}>
-                <span className="nav-ico">{l.short}</span><span className="nav-label">{l.title}</span>
-              </NavLink>
-            ))}
+            <NavLink to="/learn" className={({ isActive }) => cx('nav-item', isActive && 'active')}>
+              <span className="nav-ico">SQL</span><span className="nav-label">Three-band path</span>
+            </NavLink>
           </div>
           <div className="nav-group">
             <span className="nav-group-label">Explore</span>
-            <NavLink to="/databases" className={({ isActive }) => cx('nav-item', isActive && 'active')}><span className="nav-ico">⛁</span><span className="nav-label">Databases</span></NavLink>
+            <NavLink to="/databases" className={({ isActive }) => cx('nav-item', isActive && 'active')}>
+              <span className="nav-ico">DB</span><span className="nav-label">Databases</span>
+            </NavLink>
           </div>
         </nav>
         <div className="sidebar-foot">
-          {total ? <ProgressMeter value={percent(done, total)} label="Course" /> : null}
+          {total ? <ProgressMeter value={percent(done, total)} label="Skills" /> : null}
           <AccountMenu />
         </div>
       </aside>

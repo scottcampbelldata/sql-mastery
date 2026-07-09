@@ -43,16 +43,16 @@ test('executeQuery connects to the selected local database and formats results',
 
   const service = createQueryService({
     Pool: FakePool,
-    env: { SQL_MASTERY_DATABASES: 'northwind,aperture', PGUSER: 'scott' },
+    env: { SQL_MASTERY_DATABASES: 'sideline,aperture', PGUSER: 'scott' },
     clock: () => 100
   });
 
   const result = await service.executeQuery({
-    database: 'northwind',
+    database: 'sideline',
     sql: 'SELECT 42 AS answer'
   });
 
-  assert.equal(FakePool.configs[0].database, 'northwind');
+  assert.equal(FakePool.configs[0].database, 'sideline');
   assert.equal(FakePool.configs[0].user, 'scott');
   assert.deepEqual(FakePool.queries, ['SELECT 42 AS answer']);
   assert.deepEqual(result.columns, ['answer', 'label']);
@@ -60,7 +60,7 @@ test('executeQuery connects to the selected local database and formats results',
   assert.deepEqual(result.rows, [{ answer: 42, label: 'life' }]);
   assert.equal(result.command, 'SELECT');
   assert.equal(result.rowCount, 1);
-  assert.equal(result.database, 'northwind');
+  assert.equal(result.database, 'sideline');
   assert.equal(typeof result.durationMs, 'number');
 });
 
@@ -84,11 +84,11 @@ test('executeQuery passes rowMode array through to pg and returns fields', async
   ArrayModePool.queries = [];
   const service = createQueryService({
     Pool: ArrayModePool,
-    env: { SQL_MASTERY_DATABASES: 'northwind' }
+    env: { SQL_MASTERY_DATABASES: 'sideline' }
   });
 
   const result = await service.executeQuery({
-    database: 'northwind',
+    database: 'sideline',
     sql: ' SELECT 42 AS answer, $q$life$q$ AS answer ',
     rowMode: 'array'
   });
@@ -103,7 +103,7 @@ test('executeQuery rejects empty SQL with a structured validation error', async 
   const service = createQueryService({ Pool: FakePool, env: {} });
 
   await assert.rejects(
-    () => service.executeQuery({ database: 'northwind', sql: '   ' }),
+    () => service.executeQuery({ database: 'sideline', sql: '   ' }),
     (error: any) => {
       assert.ok(error instanceof QueryServiceError);
       assert.equal(error.statusCode, 400);
@@ -116,11 +116,11 @@ test('executeQuery rejects empty SQL with a structured validation error', async 
 test('executeQuery rejects databases outside the configured list', async () => {
   const service = createQueryService({
     Pool: FakePool,
-    env: { SQL_MASTERY_DATABASES: 'northwind' }
+    env: { SQL_MASTERY_DATABASES: 'sideline' }
   });
 
   await assert.rejects(
-    () => service.executeQuery({ database: 'nyctaxi', sql: 'SELECT 1' }),
+    () => service.executeQuery({ database: 'rove', sql: 'SELECT 1' }),
     (error: any) => {
       assert.ok(error instanceof QueryServiceError);
       assert.equal(error.statusCode, 400);
@@ -497,12 +497,12 @@ test('describeDatabase groups table columns with key metadata', async () => {
 
   const service = createQueryService({
     Pool: SchemaPool,
-    env: { SQL_MASTERY_DATABASES: 'northwind' }
+    env: { SQL_MASTERY_DATABASES: 'sideline' }
   });
 
-  const schema = await service.describeDatabase({ database: 'northwind' });
+  const schema = await service.describeDatabase({ database: 'sideline' });
 
-  assert.equal(schema.database, 'northwind');
+  assert.equal(schema.database, 'sideline');
   assert.equal(schema.stats.tableCount, 1);
   assert.equal(schema.stats.columnCount, 2);
   assert.equal(schema.tables[0].name, 'orders');
@@ -531,9 +531,9 @@ test('describeDatabase treats negative PostgreSQL row estimates as unknown', asy
         rows: [
           {
             table_schema: 'public',
-            table_name: 'genre',
+            table_name: 'articles',
             estimated_rows: '-1',
-            column_name: 'genre_id',
+            column_name: 'article_id',
             formatted_type: 'integer',
             is_nullable: 'NO',
             column_default: null,

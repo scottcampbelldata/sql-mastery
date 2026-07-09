@@ -31,7 +31,7 @@ export default function FoundationsSession() {
   const [index, setIndex] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading…" /></AppShell>;
+  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading..." /></AppShell>;
   // Declarative redirects (safe during render) for the boundary cases: a checkpoint is due,
   // or the learner has graduated and has no lesson queued.
   if (plan!.main.kind === 'checkpoint') return <Navigate to={`/learn/checkpoint/${plan!.main.checkpoint.id}`} replace />;
@@ -58,9 +58,9 @@ export default function FoundationsSession() {
   const isLast = index === steps.length - 1;
   const showTeach = step.type === 'rep' && (index === 0 || steps[index - 1].type !== 'rep');
   const label = step.type === 'review'
-    ? `Review · ${step.concept.title}`
-    : `New · ${step.concept.title}`;
-  const stepText = `Step ${index + 1} of ${steps.length}${step.type === 'review' ? ' · spaced review' : ''}`;
+    ? `Review | ${step.concept.title}`
+    : `New | ${step.concept.title}`;
+  const stepText = `Step ${index + 1} of ${steps.length}${step.type === 'review' ? ' | spaced review' : ''}`;
 
   function next() { if (isLast) completeSession(); else setIndex((i) => i + 1); }
 
@@ -71,7 +71,7 @@ export default function FoundationsSession() {
         tier={scaffoldTier(state, step.concept.skill, step.type === 'review')}
         teach={showTeach ? step.concept.teach : null} stepText={stepText} />
       <div className="session-footer">
-        <Button variant="primary" onClick={next}>{isLast ? 'Finish session' : 'Next exercise →'}</Button>
+        <Button variant="primary" onClick={next}>{isLast ? 'Finish session' : 'Next exercise'}</Button>
       </div>
     </AppShell>
   );

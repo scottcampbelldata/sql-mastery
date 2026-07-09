@@ -22,7 +22,7 @@ export default function ConceptPractice() {
     return (
       <AppShell breadcrumb={<span className="here">Learn / {concept.title}</span>}>
         <div className="fnd-done">
-          <h1>Lesson practiced.</h1>
+          <h1>Concept practiced.</h1>
           <p style={{ color: 'var(--ink-dim)' }}>
             {cpDue ? 'A checkpoint is ready. Run your guided session to take it and bank your reviews.'
               : 'Run your guided session to keep your spaced reviews on track.'}

@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { AppShell } from '../components/AppShell';
 import { api } from '../lib/api';
-import { SchemaExplorer } from './session/SchemaExplorer';
+import { SchemaExplorer } from './foundations/SchemaExplorer';
 import { SqlEditor } from '../components/SqlEditor';
 import { DataTable } from '../components/DataTable';
 import { Button, Callout, Pill, cx } from '../components/ui';
 import { safeGet, safeSet } from '../lib/progress';
 import { useDbSchema } from '../lib/dbSchema';
 import type { QueryResult, ApiError } from '../types';
-import './session/session.css';
 import './databases.css';
 
 const RUNNER_SQL_KEY = 'sqlm:runner:sql';
@@ -45,7 +44,9 @@ export default function Databases() {
     const db = active;
     safeSet(RUNNER_SQL_KEY, sql);
     safeSet(RUNNER_DB_KEY, db);
-    setRunning(true); setError(null); setResult(null);
+    setRunning(true);
+    setError(null);
+    setResult(null);
     try {
       const body = await api.query(db, sql.trim());
       if (db === activeRef.current) setResult(body);
@@ -58,10 +59,10 @@ export default function Databases() {
 
   return (
     <AppShell breadcrumb={<span className="here">Databases</span>}>
-      <div className="session-head">
+      <div className="db-page-head">
         <span className="kicker">Explore</span>
         <h1>Databases</h1>
-        <p className="goal">Browse every practice database and run scratch queries against it.</p>
+        <p className="goal">Browse Aperture, Sideline, and Rove, then run scratch queries against the same datasets used in the path.</p>
       </div>
       <div className="db-chip-row">
         {databases.map((db) => (
@@ -78,9 +79,9 @@ export default function Databases() {
             placeholder="SELECT * FROM orders LIMIT 20;" ariaLabel="Scratch query editor" schema={dbSchema} />
           <div className="db-action-row">
             <Button variant="primary" onClick={run} disabled={running || !sql.trim()}>
-              {running ? 'Running…' : `Run  ${isMac ? '⌘⏎' : 'Ctrl+⏎'}`}
+              {running ? 'Running...' : `Run  ${isMac ? 'Cmd+Enter' : 'Ctrl+Enter'}`}
             </Button>
-            {result ? <Pill tone="ok">{(result as QueryResult & { command?: string }).command} · {result.rowCount} rows · {(result as QueryResult & { durationMs?: number }).durationMs} ms</Pill> : null}
+            {result ? <Pill tone="ok">{(result as QueryResult & { command?: string }).command} | {result.rowCount} rows | {(result as QueryResult & { durationMs?: number }).durationMs} ms</Pill> : null}
           </div>
           {error ? <Callout tone="warn" title="Query failed">{error.message}{error.hint ? `: ${error.hint}` : ''}</Callout> : null}
           {result ? <DataTable columns={result.columns || []} rows={result.rows || []} maxRows={500} /> : null}

@@ -3,8 +3,6 @@ import { isSkillStrong } from './foundations';
 import type { LearningState, Phase, Track } from '../types';
 
 export const LEARNING_KEY = 'sqlm:learning:v1';
-const LEGACY_KEY = 'sqlm:foundations:v1';
-
 function defaultState(): LearningState {
   return { skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {}, maxUnlockedOrder: 0 };
 }
@@ -26,15 +24,6 @@ export function loadLearning(): LearningState {
   try {
     const current = JSON.parse(safeGet(LEARNING_KEY) as string);
     if (current && typeof current === 'object') return normalize(current);
-  } catch { /* fall through */ }
-  // One-time migration from the Foundations-only key.
-  try {
-    const legacy = JSON.parse(safeGet(LEGACY_KEY) as string);
-    if (legacy && typeof legacy === 'object') {
-      const migrated = normalize(legacy);
-      safeSet(LEARNING_KEY, JSON.stringify(migrated));
-      return migrated;
-    }
   } catch { /* fall through */ }
   return defaultState();
 }

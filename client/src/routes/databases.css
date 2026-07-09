@@ -2,3 +2,5 @@
 .db-action-row { display: flex; gap: var(--s-2); margin: var(--s-3) 0; align-items: center; }
 .db-dock { margin-top: var(--s-5); }
 .db-tables-heading { font-size: var(--text-lg); margin-bottom: var(--s-3); }
+.db-page-head h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-1); }
+.db-page-head .goal { color: var(--ink-dim); max-width: 70ch; }

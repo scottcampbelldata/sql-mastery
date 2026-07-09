@@ -22,9 +22,9 @@ function getDatabaseAliases(env: NodeJS.ProcessEnv = process.env): Record<string
     const equalsIndex = pair.indexOf('=');
     if (equalsIndex === -1) return aliases;
 
-    const lessonName = pair.slice(0, equalsIndex).trim();
+    const logicalName = pair.slice(0, equalsIndex).trim();
     const physicalName = pair.slice(equalsIndex + 1).trim();
-    if (lessonName && physicalName) aliases[lessonName] = physicalName;
+    if (logicalName && physicalName) aliases[logicalName] = physicalName;
     return aliases;
   }, {});
 }

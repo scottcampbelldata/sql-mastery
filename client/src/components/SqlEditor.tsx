@@ -21,7 +21,7 @@ const theme = EditorView.theme({
 }, { dark: true });
 
 // A blank is a run of two or more underscores (the starter SQL uses ____). Real
-// identifiers like genre_id / unit_price only ever have single underscores, so a
+// identifiers like planet_id / unit_price only ever have single underscores, so a
 // run of 2+ never collides with actual column or table names.
 const BLANK_RE = /_{2,}/g;
 

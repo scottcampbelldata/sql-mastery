@@ -24,7 +24,7 @@ test('buildCurriculum exposes the three-band product and generated learning path
   assert.equal(path.exercises.length > 0, true);
 });
 
-test('buildCurriculum reports band and path counts without legacy scheduler fields', () => {
+test('buildCurriculum reports band and path counts without retired scheduler fields', () => {
   const curriculum = buildCurriculum();
   const path = curriculum.learningPath;
 

@@ -36,7 +36,7 @@ export default function Checkpoint() {
   const [results, setResults] = useState<boolean[]>([]); // booleans, per question
   const [done, setDone] = useState(false);
 
-  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading…" /></AppShell>;
+  if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading..." /></AppShell>;
   if (!checkpoint) return <AppShell breadcrumb={<span className="here">Checkpoint</span>}><EmptyState title="Checkpoint not found" /></AppShell>;
 
   function answer(correct: boolean, exercise: Exercise) {
@@ -73,7 +73,7 @@ export default function Checkpoint() {
   const q = questions[index];
   return (
     <AppShell breadcrumb={<span className="here">{checkpoint.title}</span>}>
-      <div className="fnd-session-progress">Mixed practice · Question {index + 1} of {questions.length}</div>
+      <div className="fnd-session-progress">Mixed practice | Question {index + 1} of {questions.length}</div>
       <div className="cp-dots">
         {questions.map((_, i) => (
           <span key={i} className={`cp-dot ${i < results.length ? (results[i] ? 'pass' : 'fail') : ''} ${i === index ? 'current' : ''}`} />
@@ -81,7 +81,7 @@ export default function Checkpoint() {
       </div>
       <FoundationsRep key={q.id} exercise={q} label="Mixed practice" kind="new" onCorrect={() => { /* advance handled by button */ }} />
       <div style={{ marginTop: 'var(--s-4)', display: 'flex', gap: 'var(--s-2)' }}>
-        <Button variant="primary" onClick={() => answer(true, q)}>I solved it → next</Button>
+        <Button variant="primary" onClick={() => answer(true, q)}>I solved it, next</Button>
         <Button variant="secondary" onClick={() => answer(false, q)}>Skip / couldn't solve</Button>
       </div>
       <p style={{ color: 'var(--ink-faint)', fontSize: 'var(--text-xs)', marginTop: 'var(--s-2)' }}>

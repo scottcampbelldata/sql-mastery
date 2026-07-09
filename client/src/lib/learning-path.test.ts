@@ -4,11 +4,11 @@ import { recordCorrect, recordCheckpointResult } from './foundations';
 import type { Phase, LearningState } from '../types';
 
 const phases = [
-  { id: 'foundations', order: 1, title: 'F', goal: '', concepts: [
+  { id: 'foundations', order: 1, title: 'F', goal: '', level: 'beginner', database: 'aperture', concepts: [
     { id: 'c1', order: 1, skill: 'select-all', title: 'A', exercises: [] },
     { id: 'c2', order: 2, skill: 'where', title: 'B', exercises: [] }
   ], checkpoints: [{ id: 'cpB', afterOrder: 2, drawFromSkills: ['select-all', 'where'], title: 'B' }] },
-  { id: 'joins', order: 2, title: 'J', goal: '', concepts: [
+  { id: 'joins', order: 2, title: 'J', goal: '', level: 'intermediate', database: 'sideline', concepts: [
     { id: 'c3', order: 3, skill: 'inner-join', title: 'C', exercises: [] }
   ], checkpoints: [{ id: 'cpD', afterOrder: 3, drawFromSkills: ['inner-join'], title: 'D' }] }
 ] as Phase[];
@@ -22,13 +22,11 @@ describe('learning-path client helpers', () => {
     expect(loadLearning()).toEqual({ skillCorrect: {}, attempts: {}, lastSql: {}, lastPracticedSession: {}, checkpointsPassed: [], sessionCounter: 0, reviewsPassed: {}, maxUnlockedOrder: 0 });
   });
 
-  it('migrates an existing sqlm:foundations:v1 into sqlm:learning:v1 once', () => {
-    const legacy = { skillCorrect: { 'select-all': ['c1-r1'] }, attempts: {}, lastSql: {}, lastPracticedSession: { 'select-all': 0 }, checkpointsPassed: ['cpA'], sessionCounter: 4 };
-    localStorage.setItem('sqlm:foundations:v1', JSON.stringify(legacy));
+  it('ignores old storage keys and starts from the learning key only', () => {
+    localStorage.setItem('sqlm:foundations:v1', JSON.stringify({ skillCorrect: { 'select-all': ['c1-r1'] } }));
     const loaded = loadLearning();
-    expect(loaded.skillCorrect['select-all']).toEqual(['c1-r1']);
-    expect(loaded.checkpointsPassed).toContain('cpA');
-    expect(JSON.parse(localStorage.getItem(LEARNING_KEY)!).sessionCounter).toBe(4); // migrated + persisted
+    expect(loaded.skillCorrect).toEqual({});
+    expect(localStorage.getItem(LEARNING_KEY)).toBeNull();
   });
 
   it('currentPhase stays on a phase until its concepts are strong AND its checkpoints pass', () => {
@@ -36,7 +34,7 @@ describe('learning-path client helpers', () => {
     expect(currentPhase(phases, s).id).toBe('foundations');
     strong(s, 'select-all', ['a', 'b', 'c']);
     strong(s, 'where', ['a', 'b', 'c']);
-    // Concepts all strong, but cpB is not yet passed → foundations is not left, joins stays locked.
+    // Concepts all strong, but cpB is not yet passed, so foundations is not left.
     expect(currentPhase(phases, s).id).toBe('foundations');
     recordCheckpointResult(s, phases[0].checkpoints[0], 6); // pass cpB
     expect(currentPhase(phases, s).id).toBe('joins'); // now foundations has fully graduated
@@ -70,7 +68,7 @@ describe('learning-path client helpers', () => {
   });
 
   const track = {
-    dataset: 'chinook', phases, skills: [], exercises: [],
+    dataset: 'three-band', phases, skills: [], exercises: [],
     concepts: [
       { id: 'c1', order: 1, skill: 'select-all', title: 'A', exercises: [] },
       { id: 'c2', order: 2, skill: 'where', title: 'B', exercises: [] },

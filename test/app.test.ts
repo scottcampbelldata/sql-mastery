@@ -25,7 +25,7 @@ async function withServer(app: RequestListener, run: (baseUrl: string) => Promis
 test('GET /api/databases returns the configured database names', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind', 'chinook']
+      listDatabases: () => ['aperture', 'sideline']
     }
   });
 
@@ -34,14 +34,14 @@ test('GET /api/databases returns the configured database names', async () => {
     const body = await response.json() as any;
 
     assert.equal(response.status, 200);
-    assert.deepEqual(body.databases, ['northwind', 'chinook']);
+    assert.deepEqual(body.databases, ['aperture', 'sideline']);
   });
 });
 
 test('POST /api/query returns query results from the service', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind'],
+      listDatabases: () => ['aperture'],
       executeQuery: async ({ database, sql }: { database: string; sql: string }) => ({
         database,
         sql,
@@ -58,21 +58,21 @@ test('POST /api/query returns query results from the service', async () => {
     const response = await fetch(`${baseUrl}/api/query`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ database: 'northwind', sql: 'SELECT 1 AS ok' })
+      body: JSON.stringify({ database: 'aperture', sql: 'SELECT 1 AS ok' })
     });
     const body = await response.json() as any;
 
     assert.equal(response.status, 200);
     assert.deepEqual(body.rows, [{ ok: 1 }]);
     assert.deepEqual(body.columns, ['ok']);
-    assert.equal(body.database, 'northwind');
+    assert.equal(body.database, 'aperture');
   });
 });
 
 test('POST /api/query returns structured errors', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind'],
+      listDatabases: () => ['aperture'],
       executeQuery: async () => {
         const error = new Error('SQL is required.') as Error & { statusCode?: number; code?: string };
         error.statusCode = 400;
@@ -86,7 +86,7 @@ test('POST /api/query returns structured errors', async () => {
     const response = await fetch(`${baseUrl}/api/query`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ database: 'northwind', sql: '' })
+      body: JSON.stringify({ database: 'aperture', sql: '' })
     });
     const body = await response.json() as any;
 
@@ -99,7 +99,7 @@ test('POST /api/query returns structured errors', async () => {
 test('POST /api/check returns guided feedback', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind'],
+      listDatabases: () => ['aperture'],
       checkQuery: async ({ database, sql, expectedSql }: { database: string; sql: string; expectedSql: string }) => ({
         correct: true,
         feedbackType: 'success',
@@ -128,7 +128,7 @@ test('POST /api/check returns guided feedback', async () => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        database: 'northwind',
+        database: 'aperture',
         sql: 'SELECT 1 AS ok',
         expectedSql: 'SELECT 1 AS ok'
       })
@@ -145,7 +145,7 @@ test('POST /api/check returns guided feedback', async () => {
 test('GET /api/curriculum returns the banded learning path', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind']
+      listDatabases: () => ['aperture']
     },
     curriculumService: {
       buildCurriculum: (...args: unknown[]) => {
@@ -184,7 +184,7 @@ test('GET /api/curriculum returns the banded learning path', async () => {
 test('GET /api/schema returns table metadata for the selected database', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind'],
+      listDatabases: () => ['aperture'],
       describeDatabase: async ({ database }: { database: string }) => ({
         database,
         tables: [
@@ -203,11 +203,11 @@ test('GET /api/schema returns table metadata for the selected database', async (
   });
 
   await withServer(app, async (baseUrl) => {
-    const response = await fetch(`${baseUrl}/api/schema?database=northwind`);
+    const response = await fetch(`${baseUrl}/api/schema?database=aperture`);
     const body = await response.json() as any;
 
     assert.equal(response.status, 200);
-    assert.equal(body.database, 'northwind');
+    assert.equal(body.database, 'aperture');
     assert.equal(body.tables[0].name, 'products');
     assert.equal(body.tables[0].columns[0].isPrimaryKey, true);
   });
@@ -216,14 +216,14 @@ test('GET /api/schema returns table metadata for the selected database', async (
 test('POST /api/table-preview returns sample rows for a schema table', async () => {
   const app = createApp({
     queryService: {
-      listDatabases: () => ['northwind'],
+      listDatabases: () => ['aperture'],
       previewTable: async ({ database, schema, table, limit }: { database: string; schema: string; table: string; limit: number }) => ({
         database,
         schema,
         table,
         limit,
         columns: ['product_id', 'product_name'],
-        rows: [{ product_id: 1, product_name: 'Chai' }],
+        rows: [{ product_id: 1, product_name: 'Aperture Basic' }],
         rowCount: 1,
         durationMs: 4
       })
@@ -235,7 +235,7 @@ test('POST /api/table-preview returns sample rows for a schema table', async () 
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        database: 'northwind',
+        database: 'aperture',
         schema: 'public',
         table: 'products',
         limit: 5
@@ -245,14 +245,14 @@ test('POST /api/table-preview returns sample rows for a schema table', async () 
 
     assert.equal(response.status, 200);
     assert.deepEqual(body.columns, ['product_id', 'product_name']);
-    assert.deepEqual(body.rows, [{ product_id: 1, product_name: 'Chai' }]);
+    assert.deepEqual(body.rows, [{ product_id: 1, product_name: 'Aperture Basic' }]);
     assert.equal(body.table, 'products');
   });
 });
 
 test('serveClient=false runs API-only (no static front end)', async () => {
   const app = createApp({
-    queryService: { listDatabases: () => ['chinook', 'stackoverflow'] },
+    queryService: { listDatabases: () => ['sideline', 'rove'] },
     serveClient: false
   });
 
@@ -260,7 +260,7 @@ test('serveClient=false runs API-only (no static front end)', async () => {
     // API still works.
     const api = await fetch(`${baseUrl}/api/databases`);
     assert.equal(api.status, 200);
-    assert.deepEqual((await api.json() as any).databases, ['chinook', 'stackoverflow']);
+    assert.deepEqual((await api.json() as any).databases, ['sideline', 'rove']);
     // The front end is not served: a non-API path 404s instead of returning index.html.
     const root = await fetch(`${baseUrl}/`);
     assert.equal(root.status, 404);
@@ -269,7 +269,7 @@ test('serveClient=false runs API-only (no static front end)', async () => {
 
 test('CORS reflects allowed origins, answers preflight, and ignores others', async () => {
   const app = createApp({
-    queryService: { listDatabases: () => ['chinook'] },
+    queryService: { listDatabases: () => ['sideline'] },
     allowedOrigins: ['https://sql-mastery.pages.dev']
   });
 
@@ -311,7 +311,7 @@ function authApp() {
     }
   });
   return createApp({
-    queryService: { listDatabases: () => ['chinook'] },
+    queryService: { listDatabases: () => ['sideline'] },
     userStore: createUserStore({ dir: nodePath.join(dir, 'users') }),
     progressStore: createProgressStore({ dir: nodePath.join(dir, 'progress') }),
     authService

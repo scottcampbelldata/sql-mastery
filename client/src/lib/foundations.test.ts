@@ -14,7 +14,7 @@ import type { Track, LearningState } from '../types';
 
 // Minimal track fixture mirroring src/foundations.js shape.
 const track = {
-  dataset: 'chinook',
+  dataset: 'three-band',
   skills: [
     { skill: 'select-all', conceptId: 'c1', title: 'A', order: 1 },
     { skill: 'select-columns', conceptId: 'c2', title: 'B', order: 2 },
