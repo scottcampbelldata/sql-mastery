@@ -23,7 +23,7 @@ sudo -u sqlmastery npm prune --omit=dev    # optional: drop build-only deps afte
 sudo -u sqlmastery cp .env.example .env    # then edit:
 #   HOST=127.0.0.1  PORT=3000
 #   PGHOST/PGUSER/PGPASSWORD -> a READ-ONLY role (see Security)
-#   SQL_MASTERY_DATABASES=chinook,stackoverflow  (+ aliases)
+#   SQL_MASTERY_DATABASES=aperture,sideline,rove
 #   SQL_MASTERY_ALLOWED_ORIGINS=https://<your-project>.pages.dev
 sudo chmod 600 /opt/sql-mastery/.env && sudo chown sqlmastery:sqlmastery /opt/sql-mastery/.env
 
@@ -46,7 +46,35 @@ sudo systemctl restart sql-mastery
 systemctl status sql-mastery && curl http://127.0.0.1:3000/api/databases
 ```
 
-## 2. nginx
+## 2. Install or refresh the owned databases
+
+Create the three databases once, then run the compiled seed script from the repo root.
+The seed script drops/recreates tables inside each database, but it does not create the
+databases themselves.
+
+```bash
+sudo -u postgres psql -v ON_ERROR_STOP=1 <<'SQL'
+SELECT 'CREATE DATABASE aperture'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'aperture')\gexec
+SELECT 'CREATE DATABASE sideline'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'sideline')\gexec
+SELECT 'CREATE DATABASE rove'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'rove')\gexec
+SQL
+
+cd /opt/sql-mastery
+sudo -u sqlmastery env \
+  PGHOST=localhost \
+  PGPORT=5432 \
+  PGUSER=postgres \
+  PGPASSWORD="$POSTGRES_ADMIN_PASSWORD" \
+  SQL_MASTERY_DATABASES=aperture,sideline,rove \
+  node dist/scripts/seed-all.js
+```
+
+After seeding, point the service `.env` at a read-only role as described below.
+
+## 3. nginx
 
 ```bash
 sudo cp deploy/nginx/sql-mastery-http.conf /etc/nginx/conf.d/
@@ -57,10 +85,10 @@ sudo ln -s /etc/nginx/sites-available/api.example.com.conf /etc/nginx/sites-enab
 sudo certbot certonly --webroot -w /opt/sql-mastery/public -d api.example.com
 
 sudo nginx -t && sudo systemctl reload nginx
-curl https://api.example.com/api/databases      # -> {"databases":["chinook","stackoverflow"]}
+curl https://api.example.com/api/databases      # -> {"databases":["aperture","sideline","rove"]}
 ```
 
-## 3. Cloudflare Pages (front end)
+## 4. Cloudflare Pages (front end)
 
 - **Build command:** `npm install && npm --prefix client install && npm run build`
 - **Build output directory:** `client/dist`
@@ -74,16 +102,16 @@ backend's `SQL_MASTERY_ALLOWED_ORIGINS`, then `sudo systemctl restart sql-master
 
 `/api/query` and `/api/check` run **arbitrary read SQL with no authentication**.
 
-1. **Read-only Postgres role** scoped to only the two databases - the single most
+1. **Read-only Postgres role** scoped to only the three databases - the single most
    important control:
    ```sql
    CREATE ROLE sqlrunner LOGIN PASSWORD '...';
-   \c chinook_serial
-   GRANT CONNECT ON DATABASE chinook_serial TO sqlrunner;
+   \c aperture
+   GRANT CONNECT ON DATABASE aperture TO sqlrunner;
    GRANT USAGE ON SCHEMA public TO sqlrunner;
    GRANT SELECT ON ALL TABLES IN SCHEMA public TO sqlrunner;
    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO sqlrunner;
-   -- repeat for stackoverflow_dba
+   -- repeat for sideline and rove
    ```
    Point `PGUSER`/`PGPASSWORD` at `sqlrunner`.
 2. **Keep the nginx rate/conn limits** (`sql-mastery-http.conf`) and a low
