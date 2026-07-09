@@ -1,51 +1,20 @@
-import {
-  APERTURE_CHECKPOINTS,
-  APERTURE_CONCEPT_META,
-  APERTURE_PHASES,
-  APERTURE_SKILLS,
-  APERTURE_TEMPLATES
-} from './templates/aperture/index';
-import {
-  SIDELINE_CHECKPOINTS,
-  SIDELINE_CONCEPT_META,
-  SIDELINE_PHASES,
-  SIDELINE_SKILLS,
-  SIDELINE_TEMPLATES
-} from './templates/sideline/index';
-import {
-  ROVE_CHECKPOINTS,
-  ROVE_CONCEPT_META,
-  ROVE_PHASES,
-  ROVE_SKILLS,
-  ROVE_TEMPLATES
-} from './templates/rove/index';
-import type { DraftExercise } from './types';
+import { createQueryService } from '../query-service';
+import { assembleExercise } from './assemble';
+import { bindTemplate } from './bind';
+import type { LiteralProbe } from './bind';
+import { loadCatalog } from './schema-catalog';
+import { APERTURE_TEMPLATES } from './templates/aperture/index';
+import { SIDELINE_TEMPLATES } from './templates/sideline/index';
+import { ROVE_TEMPLATES } from './templates/rove/index';
+import type { DraftExercise, Template } from './types';
 
 type CurriculumDatabase = 'aperture' | 'sideline' | 'rove';
 
-const REGISTRIES = {
-  aperture: {
-    templates: APERTURE_TEMPLATES,
-    skills: APERTURE_SKILLS,
-    conceptMeta: APERTURE_CONCEPT_META,
-    phases: APERTURE_PHASES,
-    checkpoints: APERTURE_CHECKPOINTS
-  },
-  sideline: {
-    templates: SIDELINE_TEMPLATES,
-    skills: SIDELINE_SKILLS,
-    conceptMeta: SIDELINE_CONCEPT_META,
-    phases: SIDELINE_PHASES,
-    checkpoints: SIDELINE_CHECKPOINTS
-  },
-  rove: {
-    templates: ROVE_TEMPLATES,
-    skills: ROVE_SKILLS,
-    conceptMeta: ROVE_CONCEPT_META,
-    phases: ROVE_PHASES,
-    checkpoints: ROVE_CHECKPOINTS
-  }
-} satisfies Record<CurriculumDatabase, unknown>;
+const REGISTRY: Record<CurriculumDatabase, Template[]> = {
+  aperture: APERTURE_TEMPLATES,
+  sideline: SIDELINE_TEMPLATES,
+  rove: ROVE_TEMPLATES
+};
 
 export async function buildAllExercises(): Promise<Record<CurriculumDatabase, DraftExercise[]>> {
   return {
@@ -56,7 +25,26 @@ export async function buildAllExercises(): Promise<Record<CurriculumDatabase, Dr
 }
 
 export async function buildExercisesFor(database: string): Promise<DraftExercise[]> {
-  const registry = REGISTRIES[database as CurriculumDatabase];
-  void registry;
-  return [];
+  const templates = REGISTRY[database as CurriculumDatabase] ?? [];
+  if (templates.length === 0) return [];
+
+  const svc = createQueryService();
+  try {
+    const catalog = await loadCatalog(database);
+    const probe: LiteralProbe = async (sql) => {
+      const res = await svc.executeQuery({ database, sql, rowMode: 'array' });
+      return res.rows as (string | null)[][];
+    };
+
+    const drafts: DraftExercise[] = [];
+    for (const template of templates) {
+      const bindings = await bindTemplate(template, catalog, probe);
+      for (const binding of bindings) {
+        drafts.push(assembleExercise(template, binding, catalog));
+      }
+    }
+    return drafts;
+  } finally {
+    await svc.close();
+  }
 }
