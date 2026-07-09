@@ -26,9 +26,13 @@ test('client preserves legacy localStorage keys', () => {
   assert.match(progress, /sqlm:product-active-session:v1/);
 });
 
-test('lesson content lives in content/ and fragments are generated', () => {
-  const content = fs.readdirSync(path.join(rootDir, 'content')).filter((f) => f.endsWith('.html'));
-  assert.equal(content.length, 12);
+test('retired lesson source content is gone', () => {
+  const contentDir = path.join(rootDir, 'content');
+  const content = fs.existsSync(contentDir)
+    ? fs.readdirSync(contentDir).filter((f) => f.endsWith('.html'))
+    : [];
+  assert.equal(content.length, 0);
+
   const fragments = fs.readdirSync(path.join(rootDir, 'client', 'src', 'lessons', 'fragments'));
-  assert.equal(fragments.filter((f) => f.endsWith('.html')).length, content.length);
+  assert.ok(fragments.filter((f) => f.endsWith('.html')).length > 0);
 });

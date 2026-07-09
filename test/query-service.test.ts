@@ -43,7 +43,7 @@ test('executeQuery connects to the selected local database and formats results',
 
   const service = createQueryService({
     Pool: FakePool,
-    env: { SQL_MASTERY_DATABASES: 'northwind,chinook', PGUSER: 'scott' },
+    env: { SQL_MASTERY_DATABASES: 'northwind,aperture', PGUSER: 'scott' },
     clock: () => 100
   });
 
@@ -142,7 +142,7 @@ test('executeQuery maps missing SCRAM passwords to a setup error', async () => {
   const service = createQueryService({ Pool: AuthPool, env: {} });
 
   await assert.rejects(
-    () => service.executeQuery({ database: 'chinook', sql: 'SELECT 1' }),
+    () => service.executeQuery({ database: 'aperture', sql: 'SELECT 1' }),
     (error: any) => {
       assert.ok(error instanceof QueryServiceError);
       assert.equal(error.statusCode, 503);
@@ -179,7 +179,7 @@ test('checkQuery returns success when user and expected result sets match', asyn
 
   const service = createQueryService({ Pool: QueuePool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT 1 AS ok',
     expectedSql: 'SELECT 1 AS ok'
   });
@@ -216,7 +216,7 @@ test('checkQuery explains column mismatches without exposing expected rows', asy
 
   const service = createQueryService({ Pool: QueuePool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT 1 AS wrong_name',
     expectedSql: 'SELECT 1 AS ok'
   });
@@ -242,7 +242,7 @@ test('checkQuery turns SQL errors into learning feedback', async () => {
 
   const service = createQueryService({ Pool: ErrorPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT bad_column FROM orders',
     expectedSql: 'SELECT order_id FROM orders'
   });
@@ -278,7 +278,7 @@ test('checkQuery accepts a matching fingerprint without expectedSql', async () =
   FingerprintPool.queries = [];
   const service = createQueryService({ Pool: FingerprintPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT ok FROM answers',
     fingerprint,
     orderMatters: true
@@ -312,7 +312,7 @@ test('checkQuery reports fingerprint column mismatches', async () => {
 
   const service = createQueryService({ Pool: ColumnMismatchPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT 1 AS wrong_name',
     fingerprint
   });
@@ -344,7 +344,7 @@ test('checkQuery reports fingerprint row-count mismatches', async () => {
 
   const service = createQueryService({ Pool: RowCountMismatchPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT ok FROM answers LIMIT 1',
     fingerprint
   });
@@ -378,7 +378,7 @@ test('checkQuery compares duplicate columns positionally on fingerprint path', a
 
   const service = createQueryService({ Pool: DuplicateColumnPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT 2 AS answer, 1 AS answer',
     fingerprint
   });
@@ -410,7 +410,7 @@ test('checkQuery accepts unordered fingerprint row matches when order does not m
 
   const service = createQueryService({ Pool: UnorderedPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT ok FROM answers',
     fingerprint,
     orderMatters: false
@@ -441,7 +441,7 @@ test('checkQuery flags order-only fingerprint mismatches', async () => {
 
   const service = createQueryService({ Pool: OrderOnlyPool, env: {} });
   const feedback = await service.checkQuery({
-    database: 'chinook',
+    database: 'aperture',
     sql: 'SELECT ok FROM answers ORDER BY ok DESC',
     fingerprint,
     orderMatters: true
@@ -552,10 +552,10 @@ test('describeDatabase treats negative PostgreSQL row estimates as unknown', asy
 
   const service = createQueryService({
     Pool: UnknownEstimatePool,
-    env: { SQL_MASTERY_DATABASES: 'chinook' }
+    env: { SQL_MASTERY_DATABASES: 'aperture' }
   });
 
-  const schema = await service.describeDatabase({ database: 'chinook' });
+  const schema = await service.describeDatabase({ database: 'aperture' });
 
   assert.equal(schema.tables[0].estimatedRows, null);
 });
