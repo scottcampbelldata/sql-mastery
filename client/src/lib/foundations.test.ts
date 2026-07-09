@@ -5,10 +5,11 @@ import {
   dueReviews, nextConcept, checkpointDue, buildTodaySession,
   recordCheckpointResult, advanceSession, graduationStatus,
   STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots,
-  scaffoldTier, recordReviewPass,
+  scaffoldTier, recordReviewPass, levelBaseTier, TIER_RANK,
   isConceptUnlocked, frontierConcept, frontierOrder, recordConceptProgress, resetConcept,
   tileState, conceptPracticeTarget
 } from './foundations';
+import type { Level, ScaffoldCtx } from './foundations';
 import type { Track, LearningState } from '../types';
 
 // Minimal track fixture mirroring src/foundations.js shape.
@@ -317,5 +318,69 @@ describe('foundations engine', () => {
     const session = buildTodaySession(track, s);
     expect((session.main as { concept: { id: string } }).concept.id).toBe('c5'); // where, frontier
     expect(session.reviews.map((r) => r.skill).sort()).toEqual(['select-all', 'select-columns']);
+  });
+});
+
+describe('scaffold tapering (ctx) and the deterministic clamp', () => {
+  beforeEach(() => localStorage.clear());
+
+  it('levelBaseTier maps each band to its help floor', () => {
+    const cases: Array<[Level, ReturnType<typeof levelBaseTier>]> = [
+      ['beginner', 'full'],
+      ['intermediate', 'half'],
+      ['advanced', 'blank']
+    ];
+    cases.forEach(([level, tier]) => expect(levelBaseTier(level)).toBe(tier));
+  });
+
+  it('TIER_RANK orders help full > half > blank', () => {
+    expect(TIER_RANK.full).toBe(2);
+    expect(TIER_RANK.half).toBe(1);
+    expect(TIER_RANK.blank).toBe(0);
+  });
+
+  it('omitting ctx reproduces todays exact behavior', () => {
+    const s = loadFoundations();
+    expect(scaffoldTier(s, 'where', false)).toBe('full');
+    strong(s, 'where', ['w1', 'w2', 'w3']);
+    expect(scaffoldTier(s, 'where', true)).toBe('half');
+    recordReviewPass(s, 'where');
+    expect(scaffoldTier(s, 'where', true)).toBe('blank');
+  });
+
+  it('reduced floor applies only once the prior-band capstone is passed, else degrades to full', () => {
+    const s = loadFoundations();
+    const notEarned: ScaffoldCtx = { level: 'advanced', priorBandCapstonePassed: false, firstExposure: true };
+    expect(scaffoldTier(s, 'rv-x', false, notEarned)).toBe('full');
+    const earned: ScaffoldCtx = { level: 'advanced', priorBandCapstonePassed: true, firstExposure: true };
+    expect(scaffoldTier(s, 'rv-x', false, earned)).toBe('half');
+  });
+
+  it('first non-review sighting bumps one step MORE help than the floor', () => {
+    const s = loadFoundations();
+    const inter: ScaffoldCtx = { level: 'intermediate', priorBandCapstonePassed: true, firstExposure: true };
+    expect(scaffoldTier(s, 'sl-x', false, inter)).toBe('full');
+    const beg: ScaffoldCtx = { level: 'beginner', priorBandCapstonePassed: true, firstExposure: true };
+    expect(scaffoldTier(s, 'ap-x', false, beg)).toBe('full');
+  });
+
+  it('advanced reviews taper down to the band floor (blank)', () => {
+    const s = loadFoundations();
+    strong(s, 'rv-y', ['a', 'b', 'c']);
+    const advReview: ScaffoldCtx = { level: 'advanced', priorBandCapstonePassed: true, firstExposure: false };
+    expect(scaffoldTier(s, 'rv-y', true, advReview)).toBe('blank');
+  });
+
+  it('a mastered beginner review never shows more help than a fresh advanced first attempt', () => {
+    const beg = loadFoundations();
+    strong(beg, 'ap-z', ['a', 'b', 'c']);
+    const begCtx: ScaffoldCtx = { level: 'beginner', priorBandCapstonePassed: true, firstExposure: false };
+    const begReview = scaffoldTier(beg, 'ap-z', true, begCtx);
+
+    const adv = loadFoundations();
+    const advCtx: ScaffoldCtx = { level: 'advanced', priorBandCapstonePassed: true, firstExposure: true };
+    const advFirst = scaffoldTier(adv, 'rv-new', false, advCtx);
+
+    expect(TIER_RANK[begReview]).toBeLessThanOrEqual(TIER_RANK[advFirst]);
   });
 });
