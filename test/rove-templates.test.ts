@@ -43,14 +43,12 @@ test('ROVE_SKILLS is the 24 advanced slugs, unique, incl recursive cte', () => {
   assert.ok(ROVE_SKILLS.includes('rv-recursive-cte'));
 });
 
-test('24 templates, all rove, all bounded, all <=200, no ORDER BY / no ROUND in sqlShape', () => {
-  assert.equal(ROVE_TEMPLATES.length, 24);
-  assert.deepEqual(
-    [...ROVE_TEMPLATES.map((template) => template.skill)].sort(),
-    [...ROVE_SKILLS].sort()
-  );
+test('every skill has a template; all templates are rove, bounded, <=200, no ORDER BY / no ROUND in sqlShape', () => {
+  const covered = new Set(ROVE_TEMPLATES.map((template) => template.skill));
+  for (const skill of ROVE_SKILLS) assert.ok(covered.has(skill), `no template for ${skill}`);
 
   for (const template of ROVE_TEMPLATES) {
+    assert.ok(ROVE_SKILLS.includes(template.skill), `unknown skill ${template.skill}`);
     assert.equal(template.database, 'rove', `${template.skill} database`);
     assert.equal(template.gateHints.boundedSlice, true, `${template.skill} boundedSlice`);
     assert.ok(template.gateHints.rowCeiling <= 200, `${template.skill} rowCeiling`);

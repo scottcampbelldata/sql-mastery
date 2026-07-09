@@ -26,12 +26,19 @@ const meta: ConceptMeta[] = [{
   teach: { plain: '', mentalModel: '', example: { sql: '', note: '' } }
 }];
 
-test('curate collapses two exercises differing only by a numeric literal', () => {
+test('curate keeps exercises differing by a numeric literal', () => {
   const a = draft('id-a', 'ap-a', 'SELECT title FROM articles WHERE author_id = 1 ORDER BY article_id;');
   const b = draft('id-b', 'ap-a', 'SELECT title FROM articles WHERE author_id = 2 ORDER BY article_id;');
   const out = curate([a, b], meta);
-  assert.equal(out.length, 1);
+  assert.equal(out.length, 2);
   assert.equal(out[0].skill, 'ap-a');
+});
+
+test('curate collapses exact duplicate SQL for the same skill', () => {
+  const a = draft('id-a', 'ap-a', 'SELECT title FROM articles WHERE author_id = 1 ORDER BY article_id;');
+  const b = draft('id-b', 'ap-a', 'select title from articles where author_id = 1 order by article_id;');
+  const out = curate([a, b], meta);
+  assert.equal(out.length, 1);
 });
 
 test('curate drops skills not in meta; honestCounts reports per-skill', () => {

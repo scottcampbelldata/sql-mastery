@@ -8,6 +8,7 @@ import type { ConceptMeta, DraftExercise, Exercise } from '../src/generator/type
 import { APERTURE_CONCEPT_META } from '../src/generator/templates/aperture/index';
 import { SIDELINE_CONCEPT_META } from '../src/generator/templates/sideline/index';
 import { ROVE_CONCEPT_META } from '../src/generator/templates/rove/index';
+import { exerciseDiversityIssues, MIN_EXERCISES_PER_SKILL } from '../src/generator/diversity';
 import { recordSnapshot } from '../src/snapshot';
 import { validateExercises } from './validate-exercises';
 
@@ -61,12 +62,25 @@ async function main(): Promise<void> {
       const drafts: DraftExercise[] = await buildExercisesFor(db);
       const curated = curate(drafts, META[db as Db]);
       const exercises = curated as unknown as Exercise[];
+      const diversityIssues = exerciseDiversityIssues(curated, META[db as Db]);
 
       if (exercises.length === 0) {
         const file = generatedFilePath(db);
         fs.mkdirSync(path.dirname(file), { recursive: true });
         fs.writeFileSync(file, serializeGeneratedFile({}));
         console.log(`generate-exercises: wrote 0 exercises across 0 skills -> ${file}`);
+        continue;
+      }
+
+      if (diversityIssues.length) {
+        anyFailure = true;
+        console.error(
+          `generate-exercises: ${db} FAILED diversity; each skill needs ` +
+            `${MIN_EXERCISES_PER_SKILL} distinct expectedSql exercises`
+        );
+        for (const issue of diversityIssues) {
+          console.error(`  FAIL ${issue.skill} -> ${issue.count}/${issue.required} distinct expectedSql`);
+        }
         continue;
       }
 

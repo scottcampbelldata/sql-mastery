@@ -106,7 +106,7 @@ export function assembleExercise(
 ): DraftExercise {
   const expectedSql = emitSql(template, binding, catalog).trim();
   const { starterSql, blankMap } = buildScaffold(expectedSql, binding, template);
-  const id = `${template.skill}-${fnv1a(`${template.skill}::${canonicalBinding(binding)}`).toString(36)}`;
+  const id = `${template.skill}-${fnv1a(`${template.skill}::${canonicalBinding(binding)}::${expectedSql}`).toString(36)}`;
   return {
     id,
     skill: template.skill,

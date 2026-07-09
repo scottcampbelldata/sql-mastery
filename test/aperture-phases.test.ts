@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { aperturePhases } from '../src/phases/aperture/index';
 import { flattenLearningPath } from '../src/learning-path';
+import { MIN_EXERCISES_PER_SKILL } from '../src/generator/diversity';
 
 const APERTURE_PHASE_IDS = ['ap-basics', 'ap-filtering', 'ap-shaping', 'ap-aggregation', 'ap-join'];
 
@@ -33,11 +34,11 @@ test('aperture band totals 17 concepts with contiguous LOCAL order per phase', (
   assert.equal(skills.size, 17);
 });
 
-test('every concept carries a teach block and >=1 fingerprinted exercise', () => {
+test('every concept carries a teach block and enough fingerprinted exercises', () => {
   for (const p of aperturePhases) {
     for (const c of p.concepts) {
       assert.ok(c.teach && typeof c.teach.plain === 'string' && c.teach.plain.length > 0);
-      assert.ok(c.exercises.length >= 1, `${c.skill} has no exercises`);
+      assert.ok(c.exercises.length >= MIN_EXERCISES_PER_SKILL, `${c.skill} has only ${c.exercises.length} exercises`);
       for (const ex of c.exercises) {
         assert.equal(ex.database, 'aperture');
         assert.ok(ex.fingerprint && Array.isArray(ex.fingerprint.columns), `${ex.id} missing fingerprint`);

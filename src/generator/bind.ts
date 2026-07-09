@@ -1,11 +1,9 @@
-import { deriveStream } from '../datasets/framework/prng';
 import type { Template, Slot, Binding } from './types';
 import type { Catalog } from './schema-catalog';
 
 export type { Binding } from './types';
 export type LiteralProbe = (sql: string) => Promise<unknown[][]>;
 
-const BIND_SEED = 0x5f3759df;
 const LIMIT_CANDIDATES = ['3', '5', '10'];
 const TARGET_WITH_LITERALS = 8;
 const MAX_BINDINGS = 24;
@@ -52,7 +50,7 @@ async function drawCompoundLiterals(
   template: Template,
   compound: Slot[],
   probe: LiteralProbe,
-  stream: () => number
+  bindingIndex: number
 ): Promise<Record<string, string>> {
   const out: Record<string, string> = {};
   if (compound.length === 0) return out;
@@ -63,12 +61,12 @@ async function drawCompoundLiterals(
     return slot.col;
   });
   const guards = cols.map((col) => `${col} IS NOT NULL`).join(' AND ');
-  const sql = `SELECT ${cols.join(', ')} FROM ${table} WHERE ${guards} ORDER BY ${cols.join(', ')} LIMIT 500`;
+  const sql = `SELECT DISTINCT ${cols.join(', ')} FROM ${table} WHERE ${guards} ORDER BY ${cols.join(', ')} LIMIT 500`;
   const rows = await probe(sql);
 
   if (rows.length === 0) return out;
 
-  const row = rows[Math.floor(stream() * rows.length)];
+  const row = rows[bindingIndex % rows.length];
   compound.forEach((slot, index) => {
     const value = literalValue(row[index]);
     if (value !== null) out[slot.name] = value;
@@ -80,7 +78,7 @@ async function drawSingleLiterals(
   template: Template,
   singles: Slot[],
   probe: LiteralProbe,
-  stream: () => number
+  bindingIndex: number
 ): Promise<Record<string, string>> {
   const out: Record<string, string> = {};
 
@@ -91,7 +89,7 @@ async function drawSingleLiterals(
     const rows = await probe(sql);
 
     if (rows.length > 0) {
-      const value = literalValue(rows[Math.floor(stream() * rows.length)][0]);
+      const value = literalValue(rows[bindingIndex % rows.length][0]);
       if (value !== null) out[slot.name] = value;
     }
   }
@@ -103,13 +101,13 @@ async function drawLiterals(
   template: Template,
   literalSlots: Slot[],
   probe: LiteralProbe,
-  stream: () => number
+  bindingIndex: number
 ): Promise<Record<string, string>> {
   const compound = literalSlots.filter((slot) => slot.sampleStrategy === 'compound-row');
   const singles = literalSlots.filter((slot) => slot.sampleStrategy !== 'compound-row');
   return {
-    ...(await drawCompoundLiterals(template, compound, probe, stream)),
-    ...(await drawSingleLiterals(template, singles, probe, stream))
+    ...(await drawCompoundLiterals(template, compound, probe, bindingIndex)),
+    ...(await drawSingleLiterals(template, singles, probe, bindingIndex))
   };
 }
 
@@ -154,8 +152,7 @@ export async function bindTemplate(
   const bindings: Binding[] = [];
   for (let bindingIndex = 0; bindingIndex < count; bindingIndex += 1) {
     const slots = accepted[bindingIndex % accepted.length];
-    const stream = deriveStream(BIND_SEED, `${template.skill}:${bindingIndex}`);
-    const literals = await drawLiterals(template, literalSlots, probe, stream);
+    const literals = await drawLiterals(template, literalSlots, probe, bindingIndex);
     bindings.push({
       skill: template.skill,
       database: template.database,

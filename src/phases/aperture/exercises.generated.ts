@@ -5,44 +5,232 @@ import type { Exercise } from '../../generator/types';
 export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   "ap-aggregate-scalar": [
     {
-      "id": "ap-aggregate-scalar-eo4hpu",
+      "id": "ap-aggregate-scalar-1iq6j4l",
       "skill": "ap-aggregate-scalar",
       "database": "aperture",
-      "task": "Return planet_count and avg_mass for all planets, ordered by planet_count. Return columns: planet_count, avg_mass. Order by: planet_count.",
+      "task": "Return planet_count and avg_value by averaging equilibrium_temp_k for all planets, ordered by planet_count. Return columns: planet_count, avg_value. Order by: planet_count.",
       "starterSql": {
-        "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_mass FROM planets ORDER BY planet_count",
-        "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_mass FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
+        "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(equilibrium_temp_k), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
-        "full": {},
+        "full": {
+          "__BLANK_0__": "equilibrium_temp_k"
+        },
         "half": {
           "__BLANK_0__": "planet_count"
         },
         "blank": {
-          "__BLANK_0__": "COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_mass",
+          "__BLANK_0__": "COUNT(*) AS planet_count, ROUND(AVG(equilibrium_temp_k), 2) AS avg_value",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_count"
         }
       },
-      "hint": "With no GROUP BY, COUNT and AVG summarize the whole table into one row.",
-      "expectedSql": "SELECT COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_mass FROM planets ORDER BY planet_count",
+      "hint": "With no GROUP BY, COUNT and AVG(equilibrium_temp_k) summarize the whole table into one row.",
+      "expectedSql": "SELECT COUNT(*) AS planet_count, ROUND(AVG(equilibrium_temp_k), 2) AS avg_value FROM planets ORDER BY planet_count",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
         "columns": [
           "planet_count",
-          "avg_mass"
+          "avg_value"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "5d9d446f16f42b4df6da91acb9331545739213f4fe8991163d04a20bf2e9244c",
+        "unorderedRowHash": "5d9d446f16f42b4df6da91acb9331545739213f4fe8991163d04a20bf2e9244c"
+      }
+    },
+    {
+      "id": "ap-aggregate-scalar-1mr8hqt",
+      "skill": "ap-aggregate-scalar",
+      "database": "aperture",
+      "task": "Count all planets as planet_count and show the average radius_earth as avg_value, ordered by planet_count. Return columns: planet_count, avg_value. Order by: planet_count.",
+      "starterSql": {
+        "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
+        "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(radius_earth), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_earth"
+        },
+        "half": {
+          "__BLANK_0__": "planet_count"
+        },
+        "blank": {
+          "__BLANK_0__": "COUNT(*) AS planet_count, ROUND(AVG(radius_earth), 2) AS avg_value",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_count"
+        }
+      },
+      "hint": "With no GROUP BY, COUNT and AVG(radius_earth) summarize the whole table into one row.",
+      "expectedSql": "SELECT COUNT(*) AS planet_count, ROUND(AVG(radius_earth), 2) AS avg_value FROM planets ORDER BY planet_count",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_count",
+          "avg_value"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "29416af71f3a5afb18356e06e73b3bb0560832ebffe9432de391de3d37baa55e",
+        "unorderedRowHash": "29416af71f3a5afb18356e06e73b3bb0560832ebffe9432de391de3d37baa55e"
+      }
+    },
+    {
+      "id": "ap-aggregate-scalar-dljnmp",
+      "skill": "ap-aggregate-scalar",
+      "database": "aperture",
+      "task": "Count all planets as planet_count and show the average semi_major_axis_au as avg_value, ordered by planet_count. Return columns: planet_count, avg_value. Order by: planet_count.",
+      "starterSql": {
+        "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
+        "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(semi_major_axis_au), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "semi_major_axis_au"
+        },
+        "half": {
+          "__BLANK_0__": "planet_count"
+        },
+        "blank": {
+          "__BLANK_0__": "COUNT(*) AS planet_count, ROUND(AVG(semi_major_axis_au), 2) AS avg_value",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_count"
+        }
+      },
+      "hint": "With no GROUP BY, COUNT and AVG(semi_major_axis_au) summarize the whole table into one row.",
+      "expectedSql": "SELECT COUNT(*) AS planet_count, ROUND(AVG(semi_major_axis_au), 2) AS avg_value FROM planets ORDER BY planet_count",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_count",
+          "avg_value"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "86591407cf5ef86527e066fbd2cbe65e50d8b5fdb5f71f950d998df84d0dd4fe",
+        "unorderedRowHash": "86591407cf5ef86527e066fbd2cbe65e50d8b5fdb5f71f950d998df84d0dd4fe"
+      }
+    },
+    {
+      "id": "ap-aggregate-scalar-p0kkdt",
+      "skill": "ap-aggregate-scalar",
+      "database": "aperture",
+      "task": "Return planet_count and avg_value by averaging mass_earth for all planets, ordered by planet_count. Return columns: planet_count, avg_value. Order by: planet_count.",
+      "starterSql": {
+        "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
+        "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "mass_earth"
+        },
+        "half": {
+          "__BLANK_0__": "planet_count"
+        },
+        "blank": {
+          "__BLANK_0__": "COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_value",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_count"
+        }
+      },
+      "hint": "With no GROUP BY, COUNT and AVG(mass_earth) summarize the whole table into one row.",
+      "expectedSql": "SELECT COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_value FROM planets ORDER BY planet_count",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_count",
+          "avg_value"
         ],
         "rowCount": 1,
         "orderedRowHash": "fa5cefa58e4200ef6221d7271d6d2606b87afce57056b7dded787e9a09268d70",
         "unorderedRowHash": "fa5cefa58e4200ef6221d7271d6d2606b87afce57056b7dded787e9a09268d70"
       }
+    },
+    {
+      "id": "ap-aggregate-scalar-uwwfzx",
+      "skill": "ap-aggregate-scalar",
+      "database": "aperture",
+      "task": "Return planet_count and avg_value by averaging orbital_period_days for all planets, ordered by planet_count. Return columns: planet_count, avg_value. Order by: planet_count.",
+      "starterSql": {
+        "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
+        "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(orbital_period_days), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "orbital_period_days"
+        },
+        "half": {
+          "__BLANK_0__": "planet_count"
+        },
+        "blank": {
+          "__BLANK_0__": "COUNT(*) AS planet_count, ROUND(AVG(orbital_period_days), 2) AS avg_value",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_count"
+        }
+      },
+      "hint": "With no GROUP BY, COUNT and AVG(orbital_period_days) summarize the whole table into one row.",
+      "expectedSql": "SELECT COUNT(*) AS planet_count, ROUND(AVG(orbital_period_days), 2) AS avg_value FROM planets ORDER BY planet_count",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_count",
+          "avg_value"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "24a135b72a4281011faa3e05c74e5a9185bab795862eb8a0c9cdf9b0bbcc3699",
+        "unorderedRowHash": "24a135b72a4281011faa3e05c74e5a9185bab795862eb8a0c9cdf9b0bbcc3699"
+      }
     }
   ],
   "ap-column-alias": [
     {
-      "id": "ap-column-alias-dole9j",
+      "id": "ap-column-alias-18chypt",
+      "skill": "ap-column-alias",
+      "database": "aperture",
+      "task": "Alias name as facility_name, with facility_id, ordered by facility_id. Return columns: facility_id, facility_name. Order by: facility_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS facility_id, name AS facility_name FROM facility ORDER BY __BLANK_1__",
+        "half": "SELECT facility_id AS facility_id, name AS facility_name FROM facility ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "facility_id",
+          "__BLANK_1__": "facility_id"
+        },
+        "half": {
+          "__BLANK_0__": "facility_id"
+        },
+        "blank": {
+          "__BLANK_0__": "facility_id AS facility_id, name AS facility_name",
+          "__BLANK_1__": "facility",
+          "__BLANK_2__": "facility_id"
+        }
+      },
+      "hint": "Use AS to rename name as facility_name.",
+      "expectedSql": "SELECT facility_id AS facility_id, name AS facility_name FROM facility ORDER BY facility_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "facility_id",
+          "facility_name"
+        ],
+        "rowCount": 23,
+        "orderedRowHash": "c1a8c7f28f17eb783aa6b85eb9dfbd3ba4b56b6e8a76d50a05e3be5a6f844443",
+        "unorderedRowHash": "c53ec34abfd9405aad05d00f11b27a878e6279f8437dabb3b56d6caa484acbea"
+      }
+    },
+    {
+      "id": "ap-column-alias-1gc5y0",
       "skill": "ap-column-alias",
       "database": "aperture",
       "task": "Alias star_name as name and distance_ly as light_years, with star_id, ordered by star_id. Return columns: star_id, name, light_years. Order by: star_id.",
@@ -79,11 +267,245 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "44a2fac2f7d24263f253107309c92bef42b90d85247998696eb4ec6f57ffdeca",
         "unorderedRowHash": "fab45a03efab771aa8e9475db903fe719fa1061ef5062fe315ddf5d3acf4d220"
       }
+    },
+    {
+      "id": "ap-column-alias-1rctp3v",
+      "skill": "ap-column-alias",
+      "database": "aperture",
+      "task": "Alias planet_name as name and planet_type as type, with planet_id, ordered by planet_id. Return columns: planet_id, name, type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS name, planet_type AS type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_id"
+        }
+      },
+      "hint": "AS changes the column headers in the result.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "name",
+          "type"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "3dcd60e95d1bb2c32e35d9975a1311e53fce130c1ed9df8b87729211aa320087",
+        "unorderedRowHash": "f688b9fd4df2293a2c6938f6825d60dc96dbb2e495283e54a4fa9e01c914f92f"
+      }
+    },
+    {
+      "id": "ap-column-alias-5lq5fk",
+      "skill": "ap-column-alias",
+      "database": "aperture",
+      "task": "Alias spectral_type as star_class and temperature_k as kelvin, with star_id, ordered by temperature_k with star_id as the tie-breaker. Return columns: star_id, star_class, kelvin. Order by: temperature_k, star_id.",
+      "starterSql": {
+        "full": "SELECT star_id AS star_id, spectral_type AS star_class, __BLANK_0__ AS kelvin FROM stars ORDER BY __BLANK_1__, star_id",
+        "half": "SELECT star_id AS star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "temperature_k",
+          "__BLANK_1__": "temperature_k"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, spectral_type AS star_class, temperature_k AS kelvin",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k, star_id"
+        }
+      },
+      "hint": "AS gives the output column a new name.",
+      "expectedSql": "SELECT star_id AS star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars ORDER BY temperature_k, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_class",
+          "kelvin"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "2b627dff25ff3c9294ec858e2d54812388129d3ee29c44e7d669a54b56959c87",
+        "unorderedRowHash": "c71f118ffa2146772390a316ac71742da8f3b40d6bc611d3b424a21c805a65a0"
+      }
+    },
+    {
+      "id": "ap-column-alias-9w02uy",
+      "skill": "ap-column-alias",
+      "database": "aperture",
+      "task": "Alias mass_earth as earth_masses and radius_earth as earth_radii, with planet_id, ordered by mass_earth with planet_id as the tie-breaker. Return columns: planet_id, earth_masses, earth_radii. Order by: mass_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, __BLANK_0__ AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id AS planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "mass_earth",
+          "__BLANK_1__": "mass_earth"
+        },
+        "half": {
+          "__BLANK_0__": "mass_earth, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "mass_earth, planet_id"
+        }
+      },
+      "hint": "The alias is the output name, not a table change.",
+      "expectedSql": "SELECT planet_id AS planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY mass_earth, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "earth_masses",
+          "earth_radii"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "c321f6f43fa8a64592f1b343f1a885a1afa8b037ef9fb345107d51e9a280b936",
+        "unorderedRowHash": "93068743de680065c38d45ba3c71208d9820559287f6d1e8921d097bc45424f4"
+      }
     }
   ],
   "ap-computed-columns": [
     {
-      "id": "ap-computed-columns-1h9sxfv",
+      "id": "ap-computed-columns-138fwix",
+      "skill": "ap-computed-columns",
+      "database": "aperture",
+      "task": "Show planet_id, planet_name, and axis_km from planets, ordered by semi_major_axis_au with planet_id as the tie-breaker. Return columns: planet_id, planet_name, axis_km. Order by: semi_major_axis_au, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "semi_major_axis_au",
+          "__BLANK_1__": "semi_major_axis_au"
+        },
+        "half": {
+          "__BLANK_0__": "semi_major_axis_au, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "semi_major_axis_au, planet_id"
+        }
+      },
+      "hint": "A computed column can multiply a stored value by a constant.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY semi_major_axis_au, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "axis_km"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "d8dbdb07d0f2ed6ff65cc5bf32e60a4687a254911c101ebcfb56f1b7d36a5a1f",
+        "unorderedRowHash": "516ab6407e8536c5c0392eb66b81606d247f15afa895f137b93bfdf6403fc03b"
+      }
+    },
+    {
+      "id": "ap-computed-columns-1bkmo0x",
+      "skill": "ap-computed-columns",
+      "database": "aperture",
+      "task": "Show planet_id, planet_name, and temp_c from planets, ordered by equilibrium_temp_k with planet_id as the tie-breaker. Return columns: planet_id, planet_name, temp_c. Order by: equilibrium_temp_k, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ - 273.15 AS temp_c FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "equilibrium_temp_k",
+          "__BLANK_1__": "equilibrium_temp_k"
+        },
+        "half": {
+          "__BLANK_0__": "equilibrium_temp_k, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "equilibrium_temp_k, planet_id"
+        }
+      },
+      "hint": "A computed column can subtract a constant from a stored value.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY equilibrium_temp_k, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "temp_c"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "6a5aa05f3754a178ad6a275f99f35a8d15434789811f81ed778ded7ecd4b773a",
+        "unorderedRowHash": "5f74aefed670908750f12d58d09fed764f8c3bd41cf8ff2507bb06b7e133a35e"
+      }
+    },
+    {
+      "id": "ap-computed-columns-1wec98e",
+      "skill": "ap-computed-columns",
+      "database": "aperture",
+      "task": "Show planet_id, planet_name, and radius_km from planets, ordered by radius_earth with planet_id as the tie-breaker. Return columns: planet_id, planet_name, radius_km. Order by: radius_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ * 6371 AS radius_km FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_earth",
+          "__BLANK_1__": "radius_earth"
+        },
+        "half": {
+          "__BLANK_0__": "radius_earth, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "radius_earth, planet_id"
+        }
+      },
+      "hint": "Put radius_earth * 6371 in the SELECT list and name it with AS.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY radius_earth, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "radius_km"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "817d4f7d877467c83fe0dd59c3fedb8dd7346847e182f310ad80522d9a6b2b95",
+        "unorderedRowHash": "1822b1b60fea81c79e4eacaed3c12747aebed99c6d922f312c8f5a8d0a61349e"
+      }
+    },
+    {
+      "id": "ap-computed-columns-3zkb27",
       "skill": "ap-computed-columns",
       "database": "aperture",
       "task": "Show planet_id, planet_name, and orbital_years from planets, ordered by planet_id. Return columns: planet_id, planet_name, orbital_years. Order by: planet_id.",
@@ -120,48 +542,124 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "a7ffd68c7285899caa0ef8182743ec97c3d4f2a4ca4081c467038a0c4919dec1",
         "unorderedRowHash": "2658b99b19c6747b5a9373d488f45369376bd733bb8a87c257d371c69a6ad30f"
       }
-    }
-  ],
-  "ap-distinct": [
+    },
     {
-      "id": "ap-distinct-1hbgeyg",
-      "skill": "ap-distinct",
+      "id": "ap-computed-columns-kuonjh",
+      "skill": "ap-computed-columns",
       "database": "aperture",
-      "task": "List every distinct planet_name value in planets, ordered by planet_name. Return columns: planet_name. Order by: planet_name.",
+      "task": "Show planet_id, planet_name, and mass_per_radius from planets, ordered by mass_earth with planet_id as the tie-breaker. Return columns: planet_id, planet_name, mass_per_radius. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS planet_name FROM planets ORDER BY __BLANK_1__",
-        "half": "SELECT DISTINCT planet_name AS planet_name FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_name",
-          "__BLANK_1__": "planet_name"
+          "__BLANK_0__": "mass_earth",
+          "__BLANK_1__": "mass_earth"
         },
         "half": {
-          "__BLANK_0__": "planet_name"
+          "__BLANK_0__": "mass_earth, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "DISTINCT planet_name AS planet_name",
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius",
           "__BLANK_1__": "planets",
-          "__BLANK_2__": "planet_name"
+          "__BLANK_2__": "mass_earth, planet_id"
         }
       },
-      "hint": "SELECT DISTINCT keeps one row for each unique planet_name.",
-      "expectedSql": "SELECT DISTINCT planet_name AS planet_name FROM planets ORDER BY planet_name",
+      "hint": "A computed column can divide one numeric column by another.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY mass_earth, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
         "columns": [
-          "planet_name"
+          "planet_id",
+          "planet_name",
+          "mass_per_radius"
         ],
         "rowCount": 140,
-        "orderedRowHash": "44a4a4f9e76b29e5c9fee8e0af9ee20b51b79d68871493a0a0dcf9f5f673cba2",
-        "unorderedRowHash": "d98d8e3b236d2f29d1234f13343f9e204ff365bfc44c318150e37b11c8435545"
+        "orderedRowHash": "0b39ed6c45e2eee38014b745942abbc57865cfef1b1d2581bd3f9eeef43b2bd2",
+        "unorderedRowHash": "efa8ad0c2ef53cce552baf69439dae089337434e0dfb9ac7887134cfd278b884"
+      }
+    }
+  ],
+  "ap-distinct": [
+    {
+      "id": "ap-distinct-199fd8e",
+      "skill": "ap-distinct",
+      "database": "aperture",
+      "task": "Show each unique spectral_type from stars once, ordered by spectral_type. Return columns: spectral_type. Order by: spectral_type.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS spectral_type FROM stars ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT spectral_type AS spectral_type FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "spectral_type",
+          "__BLANK_1__": "spectral_type"
+        },
+        "half": {
+          "__BLANK_0__": "spectral_type"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT spectral_type AS spectral_type",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "spectral_type"
+        }
+      },
+      "hint": "SELECT DISTINCT keeps one row for each unique spectral_type.",
+      "expectedSql": "SELECT DISTINCT spectral_type AS spectral_type FROM stars ORDER BY spectral_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "spectral_type"
+        ],
+        "rowCount": 7,
+        "orderedRowHash": "57d62114c92778027de1d52cc63a91529c1d2eb2c4dce0939df0d01eb098ebbf",
+        "unorderedRowHash": "57d62114c92778027de1d52cc63a91529c1d2eb2c4dce0939df0d01eb098ebbf"
       }
     },
     {
-      "id": "ap-distinct-4m3a1l",
+      "id": "ap-distinct-1f2rdka",
+      "skill": "ap-distinct",
+      "database": "aperture",
+      "task": "List every distinct star_name value in stars, ordered by star_name. Return columns: star_name. Order by: star_name.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS star_name FROM stars ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT star_name AS star_name FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_name",
+          "__BLANK_1__": "star_name"
+        },
+        "half": {
+          "__BLANK_0__": "star_name"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name"
+        }
+      },
+      "hint": "SELECT DISTINCT keeps one row for each unique star_name.",
+      "expectedSql": "SELECT DISTINCT star_name AS star_name FROM stars ORDER BY star_name",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_name"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "8715d532b9ab9a23b2d7c4be349d5cf8010935b905302355c9fd508a228c3920",
+        "unorderedRowHash": "a948bce1057a955dca05b2d315f5ddd1b768bde5cf98681e60a430c2ec8e494d"
+      }
+    },
+    {
+      "id": "ap-distinct-1pcjdc0",
       "skill": "ap-distinct",
       "database": "aperture",
       "task": "Show each unique planet_type from planets once, ordered by planet_type. Return columns: planet_type. Order by: planet_type.",
@@ -198,7 +696,44 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-distinct-qwrokc",
+      "id": "ap-distinct-1pgyc34",
+      "skill": "ap-distinct",
+      "database": "aperture",
+      "task": "List every distinct planet_name value in planets, ordered by planet_name. Return columns: planet_name. Order by: planet_name.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS planet_name FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT planet_name AS planet_name FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_name",
+          "__BLANK_1__": "planet_name"
+        },
+        "half": {
+          "__BLANK_0__": "planet_name"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT planet_name AS planet_name",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_name"
+        }
+      },
+      "hint": "SELECT DISTINCT keeps one row for each unique planet_name.",
+      "expectedSql": "SELECT DISTINCT planet_name AS planet_name FROM planets ORDER BY planet_name",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_name"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "44a4a4f9e76b29e5c9fee8e0af9ee20b51b79d68871493a0a0dcf9f5f673cba2",
+        "unorderedRowHash": "d98d8e3b236d2f29d1234f13343f9e204ff365bfc44c318150e37b11c8435545"
+      }
+    },
+    {
+      "id": "ap-distinct-b1eu62",
       "skill": "ap-distinct",
       "database": "aperture",
       "task": "List every distinct discovery_method value in planets, ordered by discovery_method. Return columns: discovery_method. Order by: discovery_method.",
@@ -237,7 +772,48 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "ap-group-by": [
     {
-      "id": "ap-group-by-1df2jwu",
+      "id": "ap-group-by-10x9od",
+      "skill": "ap-group-by",
+      "database": "aperture",
+      "task": "Count planets into n for each planet_type value, returning planet_type and n ordered by planet_type. Return columns: planet_type, n. Order by: planet_type.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_type",
+          "__BLANK_1__": "planet_type",
+          "__BLANK_2__": "planet_type"
+        },
+        "half": {
+          "__BLANK_0__": "planet_type",
+          "__BLANK_1__": "planet_type"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_type",
+          "__BLANK_3__": "planet_type"
+        }
+      },
+      "hint": "GROUP BY planet_type creates one bucket per value, then COUNT(*) counts the bucket.",
+      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_type",
+          "n"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e",
+        "unorderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e"
+      }
+    },
+    {
+      "id": "ap-group-by-147e0c8",
       "skill": "ap-group-by",
       "database": "aperture",
       "task": "Count planets into n for each discovery_year value, returning discovery_year and n ordered by discovery_year. Return columns: discovery_year, n. Order by: discovery_year.",
@@ -278,7 +854,89 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-group-by-frzqdy",
+      "id": "ap-group-by-1dexhat",
+      "skill": "ap-group-by",
+      "database": "aperture",
+      "task": "Return facility_id and n by counting planets for each facility_id, ordered by facility_id. Return columns: facility_id, n. Order by: facility_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "facility_id",
+          "__BLANK_1__": "facility_id",
+          "__BLANK_2__": "facility_id"
+        },
+        "half": {
+          "__BLANK_0__": "facility_id",
+          "__BLANK_1__": "facility_id"
+        },
+        "blank": {
+          "__BLANK_0__": "facility_id AS facility_id, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "facility_id",
+          "__BLANK_3__": "facility_id"
+        }
+      },
+      "hint": "GROUP BY facility_id creates one bucket per value, then COUNT(*) counts the bucket.",
+      "expectedSql": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id ORDER BY facility_id",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "facility_id",
+          "n"
+        ],
+        "rowCount": 23,
+        "orderedRowHash": "ac1d9babb650dca667ab031106987436f72317fbb7c5a1cc8b0cfb4382cc537f",
+        "unorderedRowHash": "2bbaa49dbca883a1e5b67a1dd6ce235ee4ccf252d10b824f63cf696f88f6fc38"
+      }
+    },
+    {
+      "id": "ap-group-by-xta2k3",
+      "skill": "ap-group-by",
+      "database": "aperture",
+      "task": "Count planets into n for each in_habitable_zone value, returning in_habitable_zone and n ordered by in_habitable_zone. Return columns: in_habitable_zone, n. Order by: in_habitable_zone.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "in_habitable_zone",
+          "__BLANK_1__": "in_habitable_zone",
+          "__BLANK_2__": "in_habitable_zone"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone",
+          "__BLANK_1__": "in_habitable_zone"
+        },
+        "blank": {
+          "__BLANK_0__": "in_habitable_zone AS in_habitable_zone, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone",
+          "__BLANK_3__": "in_habitable_zone"
+        }
+      },
+      "hint": "GROUP BY in_habitable_zone creates one bucket per value, then COUNT(*) counts the bucket.",
+      "expectedSql": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone ORDER BY in_habitable_zone",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "in_habitable_zone",
+          "n"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "83e32163f8de5898bf183f976b4b03b8b115dd1c6d812df9bbd17a965d7dee5c",
+        "unorderedRowHash": "83e32163f8de5898bf183f976b4b03b8b115dd1c6d812df9bbd17a965d7dee5c"
+      }
+    },
+    {
+      "id": "ap-group-by-xztnv0",
       "skill": "ap-group-by",
       "database": "aperture",
       "task": "Return discovery_method and n by counting planets for each discovery_method, ordered by discovery_method. Return columns: discovery_method, n. Order by: discovery_method.",
@@ -317,52 +975,54 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480",
         "unorderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480"
       }
-    },
-    {
-      "id": "ap-group-by-lfl7r7",
-      "skill": "ap-group-by",
-      "database": "aperture",
-      "task": "Count planets into n for each planet_type value, returning planet_type and n ordered by planet_type. Return columns: planet_type, n. Order by: planet_type.",
-      "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
-        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
-      },
-      "blankMap": {
-        "full": {
-          "__BLANK_0__": "planet_type",
-          "__BLANK_1__": "planet_type",
-          "__BLANK_2__": "planet_type"
-        },
-        "half": {
-          "__BLANK_0__": "planet_type",
-          "__BLANK_1__": "planet_type"
-        },
-        "blank": {
-          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
-          "__BLANK_1__": "planets",
-          "__BLANK_2__": "planet_type",
-          "__BLANK_3__": "planet_type"
-        }
-      },
-      "hint": "GROUP BY planet_type creates one bucket per value, then COUNT(*) counts the bucket.",
-      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type",
-      "orderMatters": false,
-      "rowCeiling": 200,
-      "fingerprint": {
-        "columns": [
-          "planet_type",
-          "n"
-        ],
-        "rowCount": 4,
-        "orderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e",
-        "unorderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e"
-      }
     }
   ],
   "ap-group-by-sort-top": [
     {
-      "id": "ap-group-by-sort-top-1ns26nk",
+      "id": "ap-group-by-sort-top-10di5ae",
+      "skill": "ap-group-by-sort-top",
+      "database": "aperture",
+      "task": "Show 10 discovery_method groups with n, ordered by discovery_method. Return columns: discovery_method, n. Order by: discovery_method.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "discovery_method",
+          "__BLANK_1__": "discovery_method",
+          "__BLANK_2__": "discovery_method",
+          "__BLANK_3__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_method",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_method",
+          "__BLANK_3__": "discovery_method",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Group first, then keep only 10 grouped rows.",
+      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "discovery_method",
+          "n"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480",
+        "unorderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480"
+      }
+    },
+    {
+      "id": "ap-group-by-sort-top-1kcrwxg",
       "skill": "ap-group-by-sort-top",
       "database": "aperture",
       "task": "Show 3 discovery_method groups with n, ordered by discovery_method. Return columns: discovery_method, n. Order by: discovery_method.",
@@ -405,7 +1065,136 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-group-by-sort-top-b8eqmd",
+      "id": "ap-group-by-sort-top-3r52lo",
+      "skill": "ap-group-by-sort-top",
+      "database": "aperture",
+      "task": "Return the first 5 grouped rows with discovery_method and n, ordered by discovery_method. Return columns: discovery_method, n. Order by: discovery_method.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "discovery_method",
+          "__BLANK_1__": "discovery_method",
+          "__BLANK_2__": "discovery_method",
+          "__BLANK_3__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_method",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_method",
+          "__BLANK_3__": "discovery_method",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Group first, then keep only 5 grouped rows.",
+      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "discovery_method",
+          "n"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480",
+        "unorderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480"
+      }
+    },
+    {
+      "id": "ap-group-by-sort-top-gtza59",
+      "skill": "ap-group-by-sort-top",
+      "database": "aperture",
+      "task": "Show 5 planet_type groups with n, ordered by planet_type. Return columns: planet_type, n. Order by: planet_type.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_type",
+          "__BLANK_1__": "planet_type",
+          "__BLANK_2__": "planet_type",
+          "__BLANK_3__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "planet_type",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_type",
+          "__BLANK_3__": "planet_type",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Group first, then keep only 5 grouped rows.",
+      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_type",
+          "n"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e",
+        "unorderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e"
+      }
+    },
+    {
+      "id": "ap-group-by-sort-top-ildvc3",
+      "skill": "ap-group-by-sort-top",
+      "database": "aperture",
+      "task": "Return the first 10 grouped rows with planet_type and n, ordered by planet_type. Return columns: planet_type, n. Order by: planet_type.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_type",
+          "__BLANK_1__": "planet_type",
+          "__BLANK_2__": "planet_type",
+          "__BLANK_3__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "planet_type",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "planet_type",
+          "__BLANK_3__": "planet_type",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Group first, then keep only 10 grouped rows.",
+      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_type",
+          "n"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e",
+        "unorderedRowHash": "38c462bbb04354f99c55e50d1c97fe98fdf0960aa2f8a39564569a912314be5e"
+      }
+    },
+    {
+      "id": "ap-group-by-sort-top-qy3fwh",
       "skill": "ap-group-by-sort-top",
       "database": "aperture",
       "task": "Return the first 3 grouped rows with planet_type and n, ordered by planet_type. Return columns: planet_type, n. Order by: planet_type.",
@@ -450,7 +1239,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "ap-having": [
     {
-      "id": "ap-having-11np061",
+      "id": "ap-having-1f35xgk",
       "skill": "ap-having",
       "database": "aperture",
       "task": "Group planets by planet_type, keep groups with COUNT(*) >= 1, and return planet_type and n ordered by planet_type. Return columns: planet_type, n. Order by: planet_type.",
@@ -492,7 +1281,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-having-k6g4v0",
+      "id": "ap-having-1r2i3qr",
       "skill": "ap-having",
       "database": "aperture",
       "task": "Return discovery_method and n for groups with COUNT(*) at least 1, ordered by discovery_method. Return columns: discovery_method, n. Order by: discovery_method.",
@@ -532,14 +1321,312 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480",
         "unorderedRowHash": "124b6aca2a9c268d466f35cfef5deb22b77af232f2bd6cd5c22869649cb98480"
       }
+    },
+    {
+      "id": "ap-having-1wk18pk",
+      "skill": "ap-having",
+      "database": "aperture",
+      "task": "Return facility_id and n for groups with COUNT(*) at least 1, ordered by facility_id. Return columns: facility_id, n. Order by: facility_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "half": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "facility_id",
+          "__BLANK_1__": "facility_id",
+          "__BLANK_2__": "facility_id"
+        },
+        "half": {
+          "__BLANK_0__": "COUNT(*) >= 1",
+          "__BLANK_1__": "facility_id"
+        },
+        "blank": {
+          "__BLANK_0__": "facility_id AS facility_id, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "facility_id",
+          "__BLANK_3__": "COUNT(*) >= 1",
+          "__BLANK_4__": "facility_id"
+        }
+      },
+      "hint": "HAVING filters aggregate groups after GROUP BY.",
+      "expectedSql": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING COUNT(*) >= 1 ORDER BY facility_id",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "facility_id",
+          "n"
+        ],
+        "rowCount": 23,
+        "orderedRowHash": "ac1d9babb650dca667ab031106987436f72317fbb7c5a1cc8b0cfb4382cc537f",
+        "unorderedRowHash": "2bbaa49dbca883a1e5b67a1dd6ce235ee4ccf252d10b824f63cf696f88f6fc38"
+      }
+    },
+    {
+      "id": "ap-having-hg5mc3",
+      "skill": "ap-having",
+      "database": "aperture",
+      "task": "Group planets by discovery_year, keep groups with COUNT(*) >= 1, and return discovery_year and n ordered by discovery_year. Return columns: discovery_year, n. Order by: discovery_year.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS discovery_year, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "half": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "discovery_year",
+          "__BLANK_1__": "discovery_year",
+          "__BLANK_2__": "discovery_year"
+        },
+        "half": {
+          "__BLANK_0__": "COUNT(*) >= 1",
+          "__BLANK_1__": "discovery_year"
+        },
+        "blank": {
+          "__BLANK_0__": "discovery_year AS discovery_year, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year",
+          "__BLANK_3__": "COUNT(*) >= 1",
+          "__BLANK_4__": "discovery_year"
+        }
+      },
+      "hint": "HAVING filters aggregate groups after GROUP BY.",
+      "expectedSql": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING COUNT(*) >= 1 ORDER BY discovery_year",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "discovery_year",
+          "n"
+        ],
+        "rowCount": 29,
+        "orderedRowHash": "66f0d134f94290a8ec3bcd4be93aae9357602f3d97459fe49614ab9e4b5ac6c3",
+        "unorderedRowHash": "66f0d134f94290a8ec3bcd4be93aae9357602f3d97459fe49614ab9e4b5ac6c3"
+      }
+    },
+    {
+      "id": "ap-having-wixvza",
+      "skill": "ap-having",
+      "database": "aperture",
+      "task": "Group planets by in_habitable_zone, keep groups with COUNT(*) >= 1, and return in_habitable_zone and n ordered by in_habitable_zone. Return columns: in_habitable_zone, n. Order by: in_habitable_zone.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "half": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "in_habitable_zone",
+          "__BLANK_1__": "in_habitable_zone",
+          "__BLANK_2__": "in_habitable_zone"
+        },
+        "half": {
+          "__BLANK_0__": "COUNT(*) >= 1",
+          "__BLANK_1__": "in_habitable_zone"
+        },
+        "blank": {
+          "__BLANK_0__": "in_habitable_zone AS in_habitable_zone, COUNT(*) AS n",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone",
+          "__BLANK_3__": "COUNT(*) >= 1",
+          "__BLANK_4__": "in_habitable_zone"
+        }
+      },
+      "hint": "HAVING filters aggregate groups after GROUP BY.",
+      "expectedSql": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING COUNT(*) >= 1 ORDER BY in_habitable_zone",
+      "orderMatters": false,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "in_habitable_zone",
+          "n"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "83e32163f8de5898bf183f976b4b03b8b115dd1c6d812df9bbd17a965d7dee5c",
+        "unorderedRowHash": "83e32163f8de5898bf183f976b4b03b8b115dd1c6d812df9bbd17a965d7dee5c"
+      }
     }
   ],
   "ap-join-intro": [
     {
-      "id": "ap-join-intro-166k04k",
+      "id": "ap-join-intro-135bk2s",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, and star_name for joined rows matching the habitable-zone condition, ordered by planet_id. Return columns: planet_id, planet_name, star_name. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year, ordered by planet_id. Return columns: planet_id, planet_name, star_name, spectral_type, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1995",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_year = 1995",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_year = 1995",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 1995 ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "spectral_type",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "e263bcd506bb7f55acc5ca57b9510039e773b027a3d501cee05a379061b8e449",
+        "unorderedRowHash": "e263bcd506bb7f55acc5ca57b9510039e773b027a3d501cee05a379061b8e449"
+      }
+    },
+    {
+      "id": "ap-join-intro-14shbzs",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2004, ordered by planet_id. Return columns: planet_id, planet_name, star_name, spectral_type, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2004",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_year = 2004",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_year = 2004",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2004 ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "spectral_type",
+          "discovery_year"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "109918c5bfaf601e248da6f1bf761f636ca8ab799cb4053e668cf6b981a66762",
+        "unorderedRowHash": "109918c5bfaf601e248da6f1bf761f636ca8ab799cb4053e668cf6b981a66762"
+      }
+    },
+    {
+      "id": "ap-join-intro-1hcuuwo",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2000, ordered by planet_id. Return columns: planet_id, planet_name, star_name, spectral_type, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2000",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_year = 2000",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_year = 2000",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2000 ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "spectral_type",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "f9aa4b1bb741415f585f18159bb289e2bcaee72db97b181cdfc021276adf7a30",
+        "unorderedRowHash": "f9aa4b1bb741415f585f18159bb289e2bcaee72db97b181cdfc021276adf7a30"
+      }
+    },
+    {
+      "id": "ap-join-intro-1iq6mbo",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year, ordered by planet_id. Return columns: planet_id, planet_name, star_name, spectral_type, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1999",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_year = 1999",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_year = 1999",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 1999 ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "spectral_type",
+          "discovery_year"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "1f5e786e4ba230df9e1c16fe34c27f6e4cbf7b6964e32f9d15904df7625823b5",
+        "unorderedRowHash": "69e0f25f2093a5a099287fb03166cfef69624597b359de414781552a00bb50f6"
+      }
+    },
+    {
+      "id": "ap-join-intro-1kk5fw4",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Join planets to stars and list planet_id, planet_name, and star_name where in_habitable_zone is true, ordered by planet_id. Return columns: planet_id, planet_name, star_name. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -577,10 +1664,137 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-join-intro-v6joon",
+      "id": "ap-join-intro-1p8ur21",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Join planets to stars and list planet_id, planet_name, and star_name where in_habitable_zone is false, ordered by planet_id. Return columns: planet_id, planet_name, star_name. Order by: planet_id.",
+      "task": "Join planets to stars and list planet_id, planet_name, star_name, and discovery_method where discovery_method is Radial Velocity, ordered by planet_id. Return columns: planet_id, planet_name, star_name, discovery_method. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Radial Velocity' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_method = 'Radial Velocity'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_method = 'Radial Velocity'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Keep the ON clause for the relationship, then filter planets.discovery_method.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Radial Velocity' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "discovery_method"
+        ],
+        "rowCount": 89,
+        "orderedRowHash": "51c2930f4b80b3846c2df1bc8b396d6384fa0ffbd9e89efe7c3935b1964d1617",
+        "unorderedRowHash": "726f06d828ac1ff39fd1465b48344c44e03df5beea76fcb2cee0f094f6db7676"
+      }
+    },
+    {
+      "id": "ap-join-intro-1r29er0",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2002, ordered by planet_id. Return columns: planet_id, planet_name, star_name, spectral_type, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2002",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_year = 2002",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_year = 2002",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2002 ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "spectral_type",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "aac87a8f245ebe140eb46cdae8f504677ac872f6dbccbff700c0ef73df1bcc28",
+        "unorderedRowHash": "aac87a8f245ebe140eb46cdae8f504677ac872f6dbccbff700c0ef73df1bcc28"
+      }
+    },
+    {
+      "id": "ap-join-intro-1s5974g",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year, ordered by planet_id. Return columns: planet_id, planet_name, star_name, spectral_type, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2001",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_year = 2001",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_year = 2001",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2001 ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "spectral_type",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "30a0215dcac5666eebbd041cdd645aba46965887080f0f30c30350f789e14ce4",
+        "unorderedRowHash": "30a0215dcac5666eebbd041cdd645aba46965887080f0f30c30350f789e14ce4"
+      }
+    },
+    {
+      "id": "ap-join-intro-1tzir4e",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and star_name for joined rows matching the habitable-zone condition, ordered by planet_id. Return columns: planet_id, planet_name, star_name. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -616,14 +1830,467 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "5fb32abfae135ecdad907f40e573af9f189550241970ad60d7dfa1784455b825",
         "unorderedRowHash": "6294f108a705fd8449561ad960a4e44c062e79ad93cea9feb72cc2b107203760"
       }
+    },
+    {
+      "id": "ap-join-intro-1wnga2h",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method, ordered by planet_id. Return columns: planet_id, planet_name, star_name, discovery_method. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_method = 'Eclipse Timing Variations'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_method = 'Eclipse Timing Variations'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Keep the ON clause for the relationship, then filter planets.discovery_method.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "discovery_method"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "1938879d68bccca56afaaa09025d5ab0e6864746a1cc18e581e1f0ad85f4516e",
+        "unorderedRowHash": "1938879d68bccca56afaaa09025d5ab0e6864746a1cc18e581e1f0ad85f4516e"
+      }
+    },
+    {
+      "id": "ap-join-intro-3jvhjt",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is Neptune-like, ordered by planet_id. Return columns: planet_id, planet_name, star_name, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Neptune-like' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.planet_type = 'Neptune-like'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.planet_type = 'Neptune-like'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Neptune-like' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "planet_type"
+        ],
+        "rowCount": 36,
+        "orderedRowHash": "a43c51773cc0861ecede1f8e2b4b41e8bea5cce684eea3e5f3b116befb1dd1d0",
+        "unorderedRowHash": "b1163e5620474f83c6ba578d3737cd681a756fb4d26fe72734b875a192adfaf5"
+      }
+    },
+    {
+      "id": "ap-join-intro-45k6sr",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type, ordered by planet_id. Return columns: planet_id, planet_name, star_name, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Gas Giant' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.planet_type = 'Gas Giant'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.planet_type = 'Gas Giant'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "planet_type"
+        ],
+        "rowCount": 44,
+        "orderedRowHash": "3c2cb4bd43f11ffcf4301231326cadf352c05cc2a517ee0cd1df4602d50db43d",
+        "unorderedRowHash": "6afab2a821a195552fa0fbbc3a768051cde0c7c6238046fad3a2c416c0e48cca"
+      }
+    },
+    {
+      "id": "ap-join-intro-9ahfvp",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is Terrestrial, ordered by planet_id. Return columns: planet_id, planet_name, star_name, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Terrestrial' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.planet_type = 'Terrestrial'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.planet_type = 'Terrestrial'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Terrestrial' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "planet_type"
+        ],
+        "rowCount": 35,
+        "orderedRowHash": "ff4f33802415bd0b94e97a854ed93f1b5688a2ebff4555c208fb7becfc42722b",
+        "unorderedRowHash": "3347e7280c336f3ab1e062ff612cae71b489c046542cf3d03df9ceff29ae2ee5"
+      }
+    },
+    {
+      "id": "ap-join-intro-9oesor",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type, ordered by planet_id. Return columns: planet_id, planet_name, star_name, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Super-Earth' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.planet_type = 'Super-Earth'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.planet_type = 'Super-Earth'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "planet_type"
+        ],
+        "rowCount": 25,
+        "orderedRowHash": "52765046be5c4e984f5db40e372e8a76ea3e9effd95e760beaa1ea58e18a2655",
+        "unorderedRowHash": "e67dba5d2da4c802e0efbd4c386462e57a939b8b715ff6f00f9090fbb2856d3e"
+      }
+    },
+    {
+      "id": "ap-join-intro-a8vuz9",
+      "skill": "ap-join-intro",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method, ordered by planet_id. Return columns: planet_id, planet_name, star_name, discovery_method. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Transit' ORDER BY __BLANK_0__",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "planets.discovery_method = 'Transit'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
+          "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_2__": "planets.discovery_method = 'Transit'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "Keep the ON clause for the relationship, then filter planets.discovery_method.",
+      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "star_name",
+          "discovery_method"
+        ],
+        "rowCount": 42,
+        "orderedRowHash": "739aef4e8afd306e05b9bba62ea96b44a07884d6b8cc0dd02d8dcab0dacfdb99",
+        "unorderedRowHash": "2b1ee787486bae62ed770ea1e3145653c393bcb20d21b519f70608a785c8c0c5"
+      }
     }
   ],
   "ap-limit-topn": [
     {
-      "id": "ap-limit-topn-bc9a0z",
+      "id": "ap-limit-topn-1gmwwr8",
       "skill": "ap-limit-topn",
       "database": "aperture",
-      "task": "Return 3 rows with planet_id, planet_name, and mass_earth from planets, ordered by mass_earth and planet_id. Return columns: planet_id, planet_name, mass_earth. Order by: mass_earth, planet_id.",
+      "task": "Show the first 5 planet_id, planet_name, and mass_earth rows after ordering by radius_earth and then planet_id. Return columns: planet_id, planet_name, mass_earth. Order by: radius_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_earth",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "radius_earth, planet_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "radius_earth, planet_id",
+          "__BLANK_3__": "5"
+        }
+      },
+      "hint": "LIMIT 5 keeps only the first 5 rows of the ordered result.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "mass_earth"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "6c4d42cc2bf41d6bd8289dedddcfd2ebf5beeb7dae97296a86d65a3f005a9234",
+        "unorderedRowHash": "27985903d978119e19c3b68935a7d8f257b859641d8f4a207811834e76773115"
+      }
+    },
+    {
+      "id": "ap-limit-topn-1u9k9ss",
+      "skill": "ap-limit-topn",
+      "database": "aperture",
+      "task": "Show the first 3 planet_id, planet_name, and mass_earth rows after ordering by radius_earth and then planet_id. Return columns: planet_id, planet_name, mass_earth. Order by: radius_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_earth",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "radius_earth, planet_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "radius_earth, planet_id",
+          "__BLANK_3__": "3"
+        }
+      },
+      "hint": "LIMIT 3 keeps only the first 3 rows of the ordered result.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "mass_earth"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "7367afa304815250699b5ba4440f17b3c7760a8d12509c1a66101fe541c24ce5",
+        "unorderedRowHash": "d5f74b18e9ff9b71a4717cc6a192ad5527eb007861222b7c52b183a20a520c8a"
+      }
+    },
+    {
+      "id": "ap-limit-topn-5wm7t4",
+      "skill": "ap-limit-topn",
+      "database": "aperture",
+      "task": "Return 10 rows with planet_id, planet_name, and mass_earth from planets, ordered by mass_earth with planet_id as the tie-breaker. Return columns: planet_id, planet_name, mass_earth. Order by: mass_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS mass_earth FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "mass_earth",
+          "__BLANK_1__": "mass_earth",
+          "__BLANK_2__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "mass_earth, planet_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "mass_earth, planet_id",
+          "__BLANK_3__": "10"
+        }
+      },
+      "hint": "LIMIT 10 keeps only the first 10 rows of the ordered result.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "mass_earth"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "d3937ebb101c8648d5fc42f1e2b16581dee163526dce473fc4411c4e9880662a",
+        "unorderedRowHash": "5f44305a820d6adee2638c7aa3ce9cfb809aaed3c248370653c0ee43376c99f5"
+      }
+    },
+    {
+      "id": "ap-limit-topn-9dbblk",
+      "skill": "ap-limit-topn",
+      "database": "aperture",
+      "task": "Return 5 rows with planet_id, planet_name, and mass_earth from planets, ordered by mass_earth with planet_id as the tie-breaker. Return columns: planet_id, planet_name, mass_earth. Order by: mass_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS mass_earth FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "mass_earth",
+          "__BLANK_1__": "mass_earth",
+          "__BLANK_2__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "mass_earth, planet_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "mass_earth, planet_id",
+          "__BLANK_3__": "5"
+        }
+      },
+      "hint": "LIMIT 5 keeps only the first 5 rows of the ordered result.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "mass_earth"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "b3826fd0b3894a84e7a77e747054817b67033e3de42edd516afb794aaa1708d3",
+        "unorderedRowHash": "66ea7e2cbb93bce8cdd5dd18fd8d5c245940e1b3effcd2a8a73d6533fa7de679"
+      }
+    },
+    {
+      "id": "ap-limit-topn-mdg88",
+      "skill": "ap-limit-topn",
+      "database": "aperture",
+      "task": "Show the first 10 planet_id, planet_name, and mass_earth rows after ordering by radius_earth and then planet_id. Return columns: planet_id, planet_name, mass_earth. Order by: radius_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_earth",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "radius_earth, planet_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "radius_earth, planet_id",
+          "__BLANK_3__": "10"
+        }
+      },
+      "hint": "LIMIT 10 keeps only the first 10 rows of the ordered result.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "mass_earth"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "99c315098fd4956967126376232e23684890ed521fdb821040b3f7d61c80679c",
+        "unorderedRowHash": "5979174927c857ef97f1e7c271e927d261d141e7c172cbab5b296002e2fe35d6"
+      }
+    },
+    {
+      "id": "ap-limit-topn-wi1l90",
+      "skill": "ap-limit-topn",
+      "database": "aperture",
+      "task": "Return 3 rows with planet_id, planet_name, and mass_earth from planets, ordered by mass_earth with planet_id as the tie-breaker. Return columns: planet_id, planet_name, mass_earth. Order by: mass_earth, planet_id.",
       "starterSql": {
         "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS mass_earth FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -664,7 +2331,133 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "ap-null-handling": [
     {
-      "id": "ap-null-handling-1ykv15p",
+      "id": "ap-null-handling-16lv5h3",
+      "skill": "ap-null-handling",
+      "database": "aperture",
+      "task": "Return star_id, star_name, and radius_solar for rows with missing radius_solar, ordered by radius_solar with star_id as the tie-breaker. Return columns: star_id, star_name, radius_solar. Order by: radius_solar, star_id.",
+      "starterSql": {
+        "full": "SELECT star_id AS star_id, star_name AS star_name, __BLANK_0__ AS radius_solar FROM stars WHERE __BLANK_1__ IS NULL ORDER BY __BLANK_2__, star_id",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, radius_solar AS radius_solar FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_solar",
+          "__BLANK_1__": "radius_solar",
+          "__BLANK_2__": "radius_solar"
+        },
+        "half": {
+          "__BLANK_0__": "radius_solar IS NULL",
+          "__BLANK_1__": "radius_solar, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, radius_solar AS radius_solar",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "radius_solar IS NULL",
+          "__BLANK_3__": "radius_solar, star_id"
+        }
+      },
+      "hint": "Use IS NULL to test for missing star radius values.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, radius_solar AS radius_solar FROM stars WHERE radius_solar IS NULL ORDER BY radius_solar, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "radius_solar"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "c2cd2c7df7e93f1550b4a26fea289ab8b318e37895c0d2813f8ec328394d5aca",
+        "unorderedRowHash": "03309c2aca164fc0e54c38d20d72a214d487fb7e8c6c89aef186a1a98dabc558"
+      }
+    },
+    {
+      "id": "ap-null-handling-1bluim2",
+      "skill": "ap-null-handling",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and semi_major_axis_au for rows with missing semi_major_axis_au, ordered by semi_major_axis_au with planet_id as the tie-breaker. Return columns: planet_id, planet_name, semi_major_axis_au. Order by: semi_major_axis_au, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS semi_major_axis_au FROM planets WHERE __BLANK_1__ IS NULL ORDER BY __BLANK_2__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "semi_major_axis_au",
+          "__BLANK_1__": "semi_major_axis_au",
+          "__BLANK_2__": "semi_major_axis_au"
+        },
+        "half": {
+          "__BLANK_0__": "semi_major_axis_au IS NULL",
+          "__BLANK_1__": "semi_major_axis_au, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "semi_major_axis_au IS NULL",
+          "__BLANK_3__": "semi_major_axis_au, planet_id"
+        }
+      },
+      "hint": "Use IS NULL rather than = NULL.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NULL ORDER BY semi_major_axis_au, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "semi_major_axis_au"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "f1b99b2a70b3106003fa8c4d128343e860b11bd6e8b16d937f237f9489253e82",
+        "unorderedRowHash": "f1b99b2a70b3106003fa8c4d128343e860b11bd6e8b16d937f237f9489253e82"
+      }
+    },
+    {
+      "id": "ap-null-handling-1yv6pnn",
+      "skill": "ap-null-handling",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and semi_major_axis_au for rows with present semi_major_axis_au, ordered by semi_major_axis_au with planet_id as the tie-breaker. Return columns: planet_id, planet_name, semi_major_axis_au. Order by: semi_major_axis_au, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS semi_major_axis_au FROM planets WHERE __BLANK_1__ IS NOT NULL ORDER BY __BLANK_2__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "semi_major_axis_au",
+          "__BLANK_1__": "semi_major_axis_au",
+          "__BLANK_2__": "semi_major_axis_au"
+        },
+        "half": {
+          "__BLANK_0__": "semi_major_axis_au IS NOT NULL",
+          "__BLANK_1__": "semi_major_axis_au, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "semi_major_axis_au IS NOT NULL",
+          "__BLANK_3__": "semi_major_axis_au, planet_id"
+        }
+      },
+      "hint": "IS NOT NULL checks whether the value is present.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NOT NULL ORDER BY semi_major_axis_au, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "semi_major_axis_au"
+        ],
+        "rowCount": 138,
+        "orderedRowHash": "e9ef3c3cc01bad0c158fd52d584098fc0a635c2b2316e3b4d94df782830cdae5",
+        "unorderedRowHash": "f49d0bbf59e0e737c84f831c2d8358f322f8293069fc5c4dc7f3456c2c77955d"
+      }
+    },
+    {
+      "id": "ap-null-handling-g7iam2",
       "skill": "ap-null-handling",
       "database": "aperture",
       "task": "Return planet_id, planet_name, and equilibrium_temp_k for rows with missing equilibrium_temp_k, ordered by planet_id. Return columns: planet_id, planet_name, equilibrium_temp_k. Order by: planet_id.",
@@ -703,11 +2496,91 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "a579f19fa463d9c4435f74f60a677bc0adc5a6b0618ec5a29dbf2f700b72c780",
         "unorderedRowHash": "bf4525c58c77f7599a6ef212db2f3d3c1e3cfdc34d592294ccce9f60738f9f1e"
       }
+    },
+    {
+      "id": "ap-null-handling-y9bygx",
+      "skill": "ap-null-handling",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and equilibrium_temp_k for rows with present equilibrium_temp_k, ordered by equilibrium_temp_k with planet_id as the tie-breaker. Return columns: planet_id, planet_name, equilibrium_temp_k. Order by: equilibrium_temp_k, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS equilibrium_temp_k FROM planets WHERE __BLANK_1__ IS NOT NULL ORDER BY __BLANK_2__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "equilibrium_temp_k",
+          "__BLANK_1__": "equilibrium_temp_k",
+          "__BLANK_2__": "equilibrium_temp_k"
+        },
+        "half": {
+          "__BLANK_0__": "equilibrium_temp_k IS NOT NULL",
+          "__BLANK_1__": "equilibrium_temp_k, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "equilibrium_temp_k IS NOT NULL",
+          "__BLANK_3__": "equilibrium_temp_k, planet_id"
+        }
+      },
+      "hint": "Use IS NOT NULL to keep rows where equilibrium_temp_k is present.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NOT NULL ORDER BY equilibrium_temp_k, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "equilibrium_temp_k"
+        ],
+        "rowCount": 131,
+        "orderedRowHash": "6eb7491755b3871bc7d8e5c983d08067246188958b8cdde6fd625c1550ad0d4e",
+        "unorderedRowHash": "2c4a57570be6da6ede57214ac572b33b10ca8dbb6cf14d086a0e033e5a38e0a9"
+      }
     }
   ],
   "ap-order-by": [
     {
-      "id": "ap-order-by-1pq5s5w",
+      "id": "ap-order-by-1dso4j4",
+      "skill": "ap-order-by",
+      "database": "aperture",
+      "task": "List star_id, star_name, and temperature_k, ordered by distance_ly and then star_id. Return columns: star_id, star_name, temperature_k. Order by: distance_ly, star_id.",
+      "starterSql": {
+        "full": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "distance_ly"
+        },
+        "half": {
+          "__BLANK_0__": "distance_ly, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "distance_ly, star_id"
+        }
+      },
+      "hint": "The template projects star_name and temperature_k; the emitted query adds the deterministic sort.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY distance_ly, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "13ff50fd61267dc7a2ff940b0e054d3d64f941bb7b6521b8a50460e40158995a",
+        "unorderedRowHash": "ab04023a5cfc58e302f89f95885764e71e1232fffea512ac9920a5719d06b706"
+      }
+    },
+    {
+      "id": "ap-order-by-1ugvtia",
       "skill": "ap-order-by",
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k from stars in radius_solar order, tied by star_id. Return columns: star_id, star_name, temperature_k. Order by: radius_solar, star_id.",
@@ -745,7 +2618,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-order-by-1r9ftqu",
+      "id": "ap-order-by-8b0fh4",
       "skill": "ap-order-by",
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k, ordered by star_id and then star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
@@ -784,7 +2657,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-order-by-1tinoqy",
+      "id": "ap-order-by-ltygpw",
       "skill": "ap-order-by",
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k from stars in temperature_k order, tied by star_id. Return columns: star_id, star_name, temperature_k. Order by: temperature_k, star_id.",
@@ -823,45 +2696,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-order-by-khjduv",
-      "skill": "ap-order-by",
-      "database": "aperture",
-      "task": "List star_id, star_name, and temperature_k, ordered by distance_ly and then star_id. Return columns: star_id, star_name, temperature_k. Order by: distance_ly, star_id.",
-      "starterSql": {
-        "full": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
-        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
-      },
-      "blankMap": {
-        "full": {
-          "__BLANK_0__": "distance_ly"
-        },
-        "half": {
-          "__BLANK_0__": "distance_ly, star_id"
-        },
-        "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
-          "__BLANK_1__": "stars",
-          "__BLANK_2__": "distance_ly, star_id"
-        }
-      },
-      "hint": "The template projects star_name and temperature_k; the emitted query adds the deterministic sort.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY distance_ly, star_id",
-      "orderMatters": true,
-      "rowCeiling": 200,
-      "fingerprint": {
-        "columns": [
-          "star_id",
-          "star_name",
-          "temperature_k"
-        ],
-        "rowCount": 77,
-        "orderedRowHash": "13ff50fd61267dc7a2ff940b0e054d3d64f941bb7b6521b8a50460e40158995a",
-        "unorderedRowHash": "ab04023a5cfc58e302f89f95885764e71e1232fffea512ac9920a5719d06b706"
-      }
-    },
-    {
-      "id": "ap-order-by-qw6xwa",
+      "id": "ap-order-by-vziq12",
       "skill": "ap-order-by",
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k, ordered by mass_solar and then star_id. Return columns: star_id, star_name, temperature_k. Order by: mass_solar, star_id.",
@@ -901,10 +2736,52 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "ap-select-all": [
     {
-      "id": "ap-select-all-1v8i1wq",
+      "id": "ap-select-all-16f2mv0",
       "skill": "ap-select-all",
       "database": "aperture",
-      "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by star_id. Order by: star_id.",
+      "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by mass_solar and then star_id. Order by: mass_solar, star_id.",
+      "starterSql": {
+        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "mass_solar"
+        },
+        "half": {
+          "__BLANK_0__": "mass_solar, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "mass_solar, star_id"
+        }
+      },
+      "hint": "Use SELECT * when you want every column.",
+      "expectedSql": "SELECT * FROM stars ORDER BY mass_solar, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "spectral_type",
+          "temperature_k",
+          "mass_solar",
+          "radius_solar",
+          "distance_ly"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "7c7677ce2f79945f71f92438634b160c75b2194b7a759af05fe65267a69fd6b6",
+        "unorderedRowHash": "e760c7db7f432dd368cf8c20086a92c50b7e75dea4c78afdfbfc9f7a812694ff"
+      }
+    },
+    {
+      "id": "ap-select-all-1sfjpzy",
+      "skill": "ap-select-all",
+      "database": "aperture",
+      "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by star_id and then star_id. Order by: star_id.",
       "starterSql": {
         "full": "SELECT * FROM stars ORDER BY __BLANK_0__",
         "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
@@ -941,14 +2818,140 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "75986a0c0480c363085c3e66127eb2eaf17e388e24dbea28d975f528487c7128",
         "unorderedRowHash": "e760c7db7f432dd368cf8c20086a92c50b7e75dea4c78afdfbfc9f7a812694ff"
       }
+    },
+    {
+      "id": "ap-select-all-1tpeejy",
+      "skill": "ap-select-all",
+      "database": "aperture",
+      "task": "Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars, ordered by temperature_k with star_id as the tie-breaker. Order by: temperature_k, star_id.",
+      "starterSql": {
+        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "temperature_k"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k, star_id"
+        }
+      },
+      "hint": "Use SELECT * when you want every column.",
+      "expectedSql": "SELECT * FROM stars ORDER BY temperature_k, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "spectral_type",
+          "temperature_k",
+          "mass_solar",
+          "radius_solar",
+          "distance_ly"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "3387bfa77d5227895f4d5a43cc9f34ca99a9efa2dfcdbe560277f2a59cdaaa10",
+        "unorderedRowHash": "e760c7db7f432dd368cf8c20086a92c50b7e75dea4c78afdfbfc9f7a812694ff"
+      }
+    },
+    {
+      "id": "ap-select-all-1uug0q4",
+      "skill": "ap-select-all",
+      "database": "aperture",
+      "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by distance_ly and then star_id. Order by: distance_ly, star_id.",
+      "starterSql": {
+        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "distance_ly"
+        },
+        "half": {
+          "__BLANK_0__": "distance_ly, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "distance_ly, star_id"
+        }
+      },
+      "hint": "Use SELECT * when you want every column.",
+      "expectedSql": "SELECT * FROM stars ORDER BY distance_ly, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "spectral_type",
+          "temperature_k",
+          "mass_solar",
+          "radius_solar",
+          "distance_ly"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "5043c8d01a6dc8e87a0b6acb3259adb6335c3b159332efc7ded24d84e4bf2a85",
+        "unorderedRowHash": "e760c7db7f432dd368cf8c20086a92c50b7e75dea4c78afdfbfc9f7a812694ff"
+      }
+    },
+    {
+      "id": "ap-select-all-2ex6tg",
+      "skill": "ap-select-all",
+      "database": "aperture",
+      "task": "Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars, ordered by radius_solar with star_id as the tie-breaker. Order by: radius_solar, star_id.",
+      "starterSql": {
+        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_solar"
+        },
+        "half": {
+          "__BLANK_0__": "radius_solar, star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "radius_solar, star_id"
+        }
+      },
+      "hint": "Use SELECT * when you want every column.",
+      "expectedSql": "SELECT * FROM stars ORDER BY radius_solar, star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "spectral_type",
+          "temperature_k",
+          "mass_solar",
+          "radius_solar",
+          "distance_ly"
+        ],
+        "rowCount": 77,
+        "orderedRowHash": "f7d8009fbcca3b335f8425cef4bb023580b29e0e09a059af82e32b09222e3159",
+        "unorderedRowHash": "e760c7db7f432dd368cf8c20086a92c50b7e75dea4c78afdfbfc9f7a812694ff"
+      }
     }
   ],
   "ap-select-columns": [
     {
-      "id": "ap-select-columns-ko3ozc",
+      "id": "ap-select-columns-1py725s",
       "skill": "ap-select-columns",
       "database": "aperture",
-      "task": "Show planet_id, planet_name, and planet_type from planets, ordered by planet_id. Return columns: planet_id, planet_name, planet_type. Order by: planet_id.",
+      "task": "Show planet_id, planet_name, and planet_type from planets, ordered by planet_id and then planet_id. Return columns: planet_id, planet_name, planet_type. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_1__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
@@ -982,14 +2985,166 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "3dcd60e95d1bb2c32e35d9975a1311e53fce130c1ed9df8b87729211aa320087",
         "unorderedRowHash": "f688b9fd4df2293a2c6938f6825d60dc96dbb2e495283e54a4fa9e01c914f92f"
       }
+    },
+    {
+      "id": "ap-select-columns-1yx6fd2",
+      "skill": "ap-select-columns",
+      "database": "aperture",
+      "task": "Show planet_id, planet_name, and planet_type from planets, ordered by mass_earth and then planet_id. Return columns: planet_id, planet_name, planet_type. Order by: mass_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "mass_earth"
+        },
+        "half": {
+          "__BLANK_0__": "mass_earth, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "mass_earth, planet_id"
+        }
+      },
+      "hint": "Put the exact columns you need after SELECT, separated by commas.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY mass_earth, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "planet_type"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "9926211c8eb7c55bf6843fec6c7e3b8f8528fb7744cf6f4d6f967e511b2df9ae",
+        "unorderedRowHash": "f688b9fd4df2293a2c6938f6825d60dc96dbb2e495283e54a4fa9e01c914f92f"
+      }
+    },
+    {
+      "id": "ap-select-columns-mbc7pm",
+      "skill": "ap-select-columns",
+      "database": "aperture",
+      "task": "Return planet_id with each planet_name and planet_type, ordered by star_id with planet_id as the tie-breaker. Return columns: planet_id, planet_name, planet_type. Order by: star_id, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_id, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "star_id, planet_id"
+        }
+      },
+      "hint": "Put the exact columns you need after SELECT, separated by commas.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY star_id, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "planet_type"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "3dcd60e95d1bb2c32e35d9975a1311e53fce130c1ed9df8b87729211aa320087",
+        "unorderedRowHash": "f688b9fd4df2293a2c6938f6825d60dc96dbb2e495283e54a4fa9e01c914f92f"
+      }
+    },
+    {
+      "id": "ap-select-columns-ttu3am",
+      "skill": "ap-select-columns",
+      "database": "aperture",
+      "task": "Show planet_id, planet_name, and planet_type from planets, ordered by orbital_period_days and then planet_id. Return columns: planet_id, planet_name, planet_type. Order by: orbital_period_days, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "orbital_period_days"
+        },
+        "half": {
+          "__BLANK_0__": "orbital_period_days, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "orbital_period_days, planet_id"
+        }
+      },
+      "hint": "Put the exact columns you need after SELECT, separated by commas.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY orbital_period_days, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "planet_type"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "12d4815faef23ddab8e7c9d54533148853dd3ddeb062aed7cab8ccb5eaa83469",
+        "unorderedRowHash": "f688b9fd4df2293a2c6938f6825d60dc96dbb2e495283e54a4fa9e01c914f92f"
+      }
+    },
+    {
+      "id": "ap-select-columns-w5k41m",
+      "skill": "ap-select-columns",
+      "database": "aperture",
+      "task": "Return planet_id with each planet_name and planet_type, ordered by radius_earth with planet_id as the tie-breaker. Return columns: planet_id, planet_name, planet_type. Order by: radius_earth, planet_id.",
+      "starterSql": {
+        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "radius_earth"
+        },
+        "half": {
+          "__BLANK_0__": "radius_earth, planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "radius_earth, planet_id"
+        }
+      },
+      "hint": "Put the exact columns you need after SELECT, separated by commas.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY radius_earth, planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "planet_type"
+        ],
+        "rowCount": 140,
+        "orderedRowHash": "16d14b949395663d8694496941f4847b635cc8af43d9744f72db3158bd0c00a9",
+        "unorderedRowHash": "f688b9fd4df2293a2c6938f6825d60dc96dbb2e495283e54a4fa9e01c914f92f"
+      }
     }
   ],
   "ap-where-between-in": [
     {
-      "id": "ap-where-between-in-14nz2f8",
+      "id": "ap-where-between-in-16y5vir",
       "skill": "ap-where-between-in",
       "database": "aperture",
-      "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (2006), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (2003), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -998,22 +3153,148 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "blankMap": {
         "full": {
           "__BLANK_0__": "planet_id",
-          "__BLANK_1__": "2006",
+          "__BLANK_1__": "2003",
           "__BLANK_2__": "planet_id"
         },
         "half": {
-          "__BLANK_0__": "discovery_year IN (2006)",
+          "__BLANK_0__": "discovery_year IN (2003)",
           "__BLANK_1__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
           "__BLANK_1__": "planets",
-          "__BLANK_2__": "discovery_year IN (2006)",
+          "__BLANK_2__": "discovery_year IN (2003)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2006) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2003) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "3eda591bab08d464f4f18257e24d0f3822a2d442b7dd7536300bf29b48d9d5ab",
+        "unorderedRowHash": "3eda591bab08d464f4f18257e24d0f3822a2d442b7dd7536300bf29b48d9d5ab"
+      }
+    },
+    {
+      "id": "ap-where-between-in-1qqaymb",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (1995), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "1995",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (1995)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (1995)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (1995) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "ced66cab4e83eb542f5fe0b85408482e1f4084f0820f0442d1f7ec69b40a4fc3",
+        "unorderedRowHash": "ced66cab4e83eb542f5fe0b85408482e1f4084f0820f0442d1f7ec69b40a4fc3"
+      }
+    },
+    {
+      "id": "ap-where-between-in-1rinbdn",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (2000), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "2000",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (2000)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (2000)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2000) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "9605de3bd1020c3be5abbb8bda78571c4b7ac95c56471f1fe1606922b34b735f",
+        "unorderedRowHash": "9605de3bd1020c3be5abbb8bda78571c4b7ac95c56471f1fe1606922b34b735f"
+      }
+    },
+    {
+      "id": "ap-where-between-in-334u0j",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (1999), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "1999",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (1999)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (1999)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (1999) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1023,14 +3304,225 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "discovery_year"
         ],
         "rowCount": 4,
-        "orderedRowHash": "9ada3cab441a3b407d1d8846e85eba00aebbb8400179d5cd2b2d6f0103d64df7",
-        "unorderedRowHash": "9ada3cab441a3b407d1d8846e85eba00aebbb8400179d5cd2b2d6f0103d64df7"
+        "orderedRowHash": "04d71f06433e1a27fe993529ff0280735c51a24bd7d2dc52951cd1332a5fc077",
+        "unorderedRowHash": "a4c3914a9791f121fb5155a68bb96b224141fb08c8087e27fd6f6fe7cd9d925b"
+      }
+    },
+    {
+      "id": "ap-where-between-in-by73p3",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (2001), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "2001",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (2001)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (2001)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2001) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "eecff389e7fcd01fcb14d727667f0b113efb3cc6c6fc7da135cdc16e2ab0a28d",
+        "unorderedRowHash": "eecff389e7fcd01fcb14d727667f0b113efb3cc6c6fc7da135cdc16e2ab0a28d"
+      }
+    },
+    {
+      "id": "ap-where-between-in-jhfh0r",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (2004), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "2004",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (2004)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (2004)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2004) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "fc2400f899396052ab4562d924ccbb6d598039a302bda0258514146602457e01",
+        "unorderedRowHash": "fc2400f899396052ab4562d924ccbb6d598039a302bda0258514146602457e01"
+      }
+    },
+    {
+      "id": "ap-where-between-in-n0lj0f",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (1996), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "1996",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (1996)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (1996)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (1996) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "ed5342fca25e820984790255e059b57b1aeb6089abdeca1df00b3d20d618485a",
+        "unorderedRowHash": "e95d06d0947a025aa7113be4f584fcf397ece48a20821e1a20cb2d5032ced999"
+      }
+    },
+    {
+      "id": "ap-where-between-in-n9xjr3",
+      "skill": "ap-where-between-in",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (2002), ordered by planet_id. Return columns: planet_id, planet_name, discovery_year. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "2002",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "discovery_year IN (2002)",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "discovery_year IN (2002)",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2002) ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "discovery_year"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "4310741cefb28f5e01916e197f3dd6fc4cc76901a417785f8320b25476f704e4",
+        "unorderedRowHash": "4310741cefb28f5e01916e197f3dd6fc4cc76901a417785f8320b25476f704e4"
       }
     }
   ],
   "ap-where-boolean-logic": [
     {
-      "id": "ap-where-boolean-logic-16xm5do",
+      "id": "ap-where-boolean-logic-14urq9f",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is true and planet_type is Terrestrial, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Terrestrial' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "true",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = true AND planet_type = 'Terrestrial'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Terrestrial'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "AND means both WHERE conditions must be true for the same row.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Terrestrial' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "planet_type"
+        ],
+        "rowCount": 13,
+        "orderedRowHash": "97af405ce494dfb14d87514c6025ddb808d821dbf2635220174fea33ee0ab2f0",
+        "unorderedRowHash": "05d888fd9dc0940c9f7e07abb06a07bae8b6b698aa1dfa15d234d93aa3698d93"
+      }
+    },
+    {
+      "id": "ap-where-boolean-logic-16dhind",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
       "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is true and planet_type is Neptune-like, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
@@ -1073,7 +3565,221 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "ap-where-boolean-logic-qcbu3u",
+      "id": "ap-where-boolean-logic-183ae7v",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows matching either the habitable-zone condition or the missing-temperature condition, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, equilibrium_temp_k. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY __BLANK_1__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = true OR equilibrium_temp_k IS NULL",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = true OR equilibrium_temp_k IS NULL",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "OR keeps a row when either condition is true.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "equilibrium_temp_k"
+        ],
+        "rowCount": 37,
+        "orderedRowHash": "4fadd4ad9b615d5dc1eec2273d2772bfc1ab5145e2501f9529a500d35ffb1168",
+        "unorderedRowHash": "ecd6d4ed029dcb1d84b010e9f66b26b509b993406ca32f59e1565982935c0ea9"
+      }
+    },
+    {
+      "id": "ap-where-boolean-logic-1jhjc1f",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "true",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = true AND planet_type = 'Gas Giant'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Gas Giant'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "AND means both WHERE conditions must be true for the same row.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Gas Giant' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "planet_type"
+        ],
+        "rowCount": 7,
+        "orderedRowHash": "a7394b8b7f8eaf98761ce887f4ef273b41c178b1decd75f83fa14674742d9497",
+        "unorderedRowHash": "99670b12a3723ea783a81f986a190f1c6accfcedfa7ec68a330a9030f8f62c0a"
+      }
+    },
+    {
+      "id": "ap-where-boolean-logic-1o03e8v",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is false and planet_type is Terrestrial, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Terrestrial' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "false",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = false AND planet_type = 'Terrestrial'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Terrestrial'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "AND means both WHERE conditions must be true for the same row.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Terrestrial' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "planet_type"
+        ],
+        "rowCount": 22,
+        "orderedRowHash": "f1421c3487ba4782652c214e10def3157babebc8ce0f8fd4f4a73c2c67426d2e",
+        "unorderedRowHash": "ce621932e8a50d281a4178584f4c50833d6affb297c248db6cdddd9c0f812656"
+      }
+    },
+    {
+      "id": "ap-where-boolean-logic-1t9q4nn",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is false and planet_type is Neptune-like, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Neptune-like' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "false",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = false AND planet_type = 'Neptune-like'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Neptune-like'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "AND means both WHERE conditions must be true for the same row.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Neptune-like' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "planet_type"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "81477fb126a0f7f6b4e16cbb68ae8b55633185b64ae45414e1de4d0ddd06dd16",
+        "unorderedRowHash": "1fe762244518d8c4599d58408913e4c8b82c8dc58b789b22d2a0d0540b030fb6"
+      }
+    },
+    {
+      "id": "ap-where-boolean-logic-1wfwamv",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "true",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = true AND planet_type = 'Super-Earth'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Super-Earth'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "AND means both WHERE conditions must be true for the same row.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Super-Earth' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "planet_type"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "8b0402f92996cedd3137ab551dc7998e80f41df6f7d393b3d3c9672863b7de21",
+        "unorderedRowHash": "8b0402f92996cedd3137ab551dc7998e80f41df6f7d393b3d3c9672863b7de21"
+      }
+    },
+    {
+      "id": "ap-where-boolean-logic-7ck6pl",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
       "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
@@ -1114,14 +3820,57 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "62f7c184a5e8122ef326770f46a747a5180b5b3d9145c9ac4cbb97602009e393",
         "unorderedRowHash": "48c20b7ed8329d309ab6d83708a7c0e5c774205cb0b986fb811c9c53992d81c9"
       }
+    },
+    {
+      "id": "ap-where-boolean-logic-irn7ul",
+      "skill": "ap-where-boolean-logic",
+      "database": "aperture",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions, ordered by planet_id. Return columns: planet_id, planet_name, in_habitable_zone, planet_type. Order by: planet_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "false",
+          "__BLANK_2__": "planet_id"
+        },
+        "half": {
+          "__BLANK_0__": "in_habitable_zone = false AND planet_type = 'Super-Earth'",
+          "__BLANK_1__": "planet_id"
+        },
+        "blank": {
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_1__": "planets",
+          "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Super-Earth'",
+          "__BLANK_3__": "planet_id"
+        }
+      },
+      "hint": "AND means both WHERE conditions must be true for the same row.",
+      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Super-Earth' ORDER BY planet_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "planet_id",
+          "planet_name",
+          "in_habitable_zone",
+          "planet_type"
+        ],
+        "rowCount": 23,
+        "orderedRowHash": "74f08fdcfe62d33661aff60fa0ab108b740203838dd8e9c5b5a8b650d448207f",
+        "unorderedRowHash": "7b3070f54a02cf741d34306818fb6a30dd8c975d288e3c9e84f6c346ac4ea258"
+      }
     }
   ],
   "ap-where-comparison": [
     {
-      "id": "ap-where-comparison-14x8sec",
+      "id": "ap-where-comparison-115ivf6",
       "skill": "ap-where-comparison",
       "database": "aperture",
-      "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 6091, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 2566, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
         "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1130,22 +3879,22 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "blankMap": {
         "full": {
           "__BLANK_0__": "star_id",
-          "__BLANK_1__": "6091",
+          "__BLANK_1__": "2566",
           "__BLANK_2__": "star_id"
         },
         "half": {
-          "__BLANK_0__": "temperature_k = 6091",
+          "__BLANK_0__": "temperature_k = 2566",
           "__BLANK_1__": "star_id"
         },
         "blank": {
           "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
           "__BLANK_1__": "stars",
-          "__BLANK_2__": "temperature_k = 6091",
+          "__BLANK_2__": "temperature_k = 2566",
           "__BLANK_3__": "star_id"
         }
       },
-      "hint": "Put the comparison in WHERE: temperature_k = 6091.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 6091 ORDER BY star_id",
+      "hint": "Put the comparison in WHERE: temperature_k = 2566.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2566 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1155,19 +3904,313 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "temperature_k"
         ],
         "rowCount": 1,
-        "orderedRowHash": "4f7581280e360156b35ec63f266c3fab3e89a5b0c5e2979a82649269c329b230",
-        "unorderedRowHash": "4f7581280e360156b35ec63f266c3fab3e89a5b0c5e2979a82649269c329b230"
+        "orderedRowHash": "4c2cc15c2786bd67f832bce13693c5a449b97c82fe42d3457ffe8ca85b8610bf",
+        "unorderedRowHash": "4c2cc15c2786bd67f832bce13693c5a449b97c82fe42d3457ffe8ca85b8610bf"
+      }
+    },
+    {
+      "id": "ap-where-comparison-1olr9cq",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 581, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "581",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 581",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 581",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 581.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 581 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "23f98bf279e5591f722b96a64ace73de3ce998923fad26d918bf4376e3101679",
+        "unorderedRowHash": "23f98bf279e5591f722b96a64ace73de3ce998923fad26d918bf4376e3101679"
+      }
+    },
+    {
+      "id": "ap-where-comparison-6k9i6a",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 3101, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "3101",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 3101",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 3101",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 3101.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 3101 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "c6890f7bd5347c3bda9603b21bb54009b1025d5e35fb0e41f4bcb31e8688203d",
+        "unorderedRowHash": "c6890f7bd5347c3bda9603b21bb54009b1025d5e35fb0e41f4bcb31e8688203d"
+      }
+    },
+    {
+      "id": "ap-where-comparison-h44bas",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 2620, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "2620",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 2620",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 2620",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 2620.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2620 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "6dbceaf40381b069f7fa22ecde59fc23879dec1a7173294bed2fcc85c124f66b",
+        "unorderedRowHash": "6dbceaf40381b069f7fa22ecde59fc23879dec1a7173294bed2fcc85c124f66b"
+      }
+    },
+    {
+      "id": "ap-where-comparison-h7kwms",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 3034, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "3034",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 3034",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 3034",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 3034.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 3034 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "9a933839ad4e50b8c501d7b118c2619b81142c8c69bd5c90fdd5db5983dfbfe4",
+        "unorderedRowHash": "9a933839ad4e50b8c501d7b118c2619b81142c8c69bd5c90fdd5db5983dfbfe4"
+      }
+    },
+    {
+      "id": "ap-where-comparison-sndxe2",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 2900, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "2900",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 2900",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 2900",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 2900.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2900 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "b087c6293ec5a40f78c5b9b77e7b27e8f062310424e864375c5ee1499dd2006a",
+        "unorderedRowHash": "b087c6293ec5a40f78c5b9b77e7b27e8f062310424e864375c5ee1499dd2006a"
+      }
+    },
+    {
+      "id": "ap-where-comparison-v2tafm",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 2953, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "2953",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 2953",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 2953",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 2953.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2953 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "25a0e77e33825c23f7ea8d850ba268ea90c314f92f64ba148d7c6106997cc2a4",
+        "unorderedRowHash": "25a0e77e33825c23f7ea8d850ba268ea90c314f92f64ba148d7c6106997cc2a4"
+      }
+    },
+    {
+      "id": "ap-where-comparison-z8vc",
+      "skill": "ap-where-comparison",
+      "database": "aperture",
+      "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 3096, ordered by star_id. Return columns: star_id, star_name, temperature_k. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "3096",
+          "__BLANK_2__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "temperature_k = 3096",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "temperature_k = 3096",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "Put the comparison in WHERE: temperature_k = 3096.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 3096 ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name",
+          "temperature_k"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "1defb3f0019ac8608943e44330f8934b5dfff69dae78e133f87fcf394f48cd30",
+        "unorderedRowHash": "1defb3f0019ac8608943e44330f8934b5dfff69dae78e133f87fcf394f48cd30"
       }
     }
   ],
   "ap-where-like": [
     {
-      "id": "ap-where-like-1l8a7zj",
+      "id": "ap-where-like-113hiyo",
       "skill": "ap-where-like",
       "database": "aperture",
-      "task": "Return star_id and star_name for stars whose star_name matches Pollux%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "task": "Return star_id and star_name for stars whose star_name matches 47 UMa%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Pollux%' ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '47 UMa%' ORDER BY __BLANK_1__",
         "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -1177,18 +4220,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "half": {
-          "__BLANK_0__": "star_name LIKE 'Pollux%'",
+          "__BLANK_0__": "star_name LIKE '47 UMa%'",
           "__BLANK_1__": "star_id"
         },
         "blank": {
           "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
           "__BLANK_1__": "stars",
-          "__BLANK_2__": "star_name LIKE 'Pollux%'",
+          "__BLANK_2__": "star_name LIKE '47 UMa%'",
           "__BLANK_3__": "star_id"
         }
       },
-      "hint": "LIKE compares star_name against the text pattern Pollux%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Pollux%' ORDER BY star_id",
+      "hint": "LIKE compares star_name against the text pattern 47 UMa%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '47 UMa%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1197,8 +4240,288 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "star_name"
         ],
         "rowCount": 1,
-        "orderedRowHash": "bcd42da8326c4d6249097fbf1036a5b278467c55c0723adf6af1e9bf29fdf4a2",
-        "unorderedRowHash": "bcd42da8326c4d6249097fbf1036a5b278467c55c0723adf6af1e9bf29fdf4a2"
+        "orderedRowHash": "652447e1340dad3a1d5e3afcf56b78db6ec4dc0b904b86cbcbbcdcb5f2263692",
+        "unorderedRowHash": "652447e1340dad3a1d5e3afcf56b78db6ec4dc0b904b86cbcbbcdcb5f2263692"
+      }
+    },
+    {
+      "id": "ap-where-like-1bqnnj6",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "List star_id and star_name where star_name LIKE AT2021ueyL%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE 'AT2021ueyL%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE 'AT2021ueyL%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern AT2021ueyL%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "2d46da6c4c6c5394491abaa679321424e8168d3a12fcb5fa16021e4093a8cfe0",
+        "unorderedRowHash": "2d46da6c4c6c5394491abaa679321424e8168d3a12fcb5fa16021e4093a8cfe0"
+      }
+    },
+    {
+      "id": "ap-where-like-1erz9js",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "Return star_id and star_name for stars whose star_name matches Aldebaran%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE 'Aldebaran%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE 'Aldebaran%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern Aldebaran%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "2e380872487d65f2d2182f398a831faf381ac66a4c4c5f7159cd30eed275ce1e",
+        "unorderedRowHash": "2e380872487d65f2d2182f398a831faf381ac66a4c4c5f7159cd30eed275ce1e"
+      }
+    },
+    {
+      "id": "ap-where-like-1mjn1oa",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "Return star_id and star_name for stars whose star_name matches Arcturus%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE 'Arcturus%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE 'Arcturus%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern Arcturus%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "7b69e7e4c9341d5a96f98fc02ba6d7ccec79b1ba9da43b08e8849977b45eb68a",
+        "unorderedRowHash": "7b69e7e4c9341d5a96f98fc02ba6d7ccec79b1ba9da43b08e8849977b45eb68a"
+      }
+    },
+    {
+      "id": "ap-where-like-1qrr1rg",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "List star_id and star_name where star_name LIKE 51 Peg%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '51 Peg%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE '51 Peg%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE '51 Peg%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern 51 Peg%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '51 Peg%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "0503d63393218df6a00c44156bb77396977140630a436e88e309ab95c5678a94",
+        "unorderedRowHash": "0503d63393218df6a00c44156bb77396977140630a436e88e309ab95c5678a94"
+      }
+    },
+    {
+      "id": "ap-where-like-naspuo",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "List star_id and star_name where star_name LIKE Antares%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE 'Antares%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE 'Antares%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern Antares%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "1146376dc4652d0f2ef31ed95e95d3ede2df03cc345812e34395b8c51e797d62",
+        "unorderedRowHash": "1146376dc4652d0f2ef31ed95e95d3ede2df03cc345812e34395b8c51e797d62"
+      }
+    },
+    {
+      "id": "ap-where-like-rofpxs",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "List star_id and star_name where star_name LIKE 61 Vir%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '61 Vir%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE '61 Vir%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE '61 Vir%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern 61 Vir%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '61 Vir%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "17212804c45d034dfba592ae7f77fe40e2b97bf2ea826574e4e62149a9bde9d3",
+        "unorderedRowHash": "17212804c45d034dfba592ae7f77fe40e2b97bf2ea826574e4e62149a9bde9d3"
+      }
+    },
+    {
+      "id": "ap-where-like-s8egfk",
+      "skill": "ap-where-like",
+      "database": "aperture",
+      "task": "Return star_id and star_name for stars whose star_name matches 55 Cnc%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '55 Cnc%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "star_id",
+          "__BLANK_1__": "star_id"
+        },
+        "half": {
+          "__BLANK_0__": "star_name LIKE '55 Cnc%'",
+          "__BLANK_1__": "star_id"
+        },
+        "blank": {
+          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_1__": "stars",
+          "__BLANK_2__": "star_name LIKE '55 Cnc%'",
+          "__BLANK_3__": "star_id"
+        }
+      },
+      "hint": "LIKE compares star_name against the text pattern 55 Cnc%.",
+      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '55 Cnc%' ORDER BY star_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "star_id",
+          "star_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "4a7d7f780ce3386d894ff0880fb8a7ed15c26244e36599c8edf8eda067784433",
+        "unorderedRowHash": "4a7d7f780ce3386d894ff0880fb8a7ed15c26244e36599c8edf8eda067784433"
       }
     }
   ]

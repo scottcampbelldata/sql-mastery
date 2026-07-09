@@ -5,7 +5,259 @@ import type { Exercise } from '../../generator/types';
 export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   "rv-case-canonicalize": [
     {
-      "id": "rv-case-canonicalize-ytmd2e",
+      "id": "rv-case-canonicalize-12kbn1c",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "Canonicalize payment method casing and synonyms for payments attached to city 4. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 4",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "f4ecb6d21be6a8a7bdd59d94ba8e0b0851aad86088e8a1ea175cdf4d6a67b3cd",
+        "unorderedRowHash": "f4ecb6d21be6a8a7bdd59d94ba8e0b0851aad86088e8a1ea175cdf4d6a67b3cd"
+      }
+    },
+    {
+      "id": "rv-case-canonicalize-137a6ew",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "Canonicalize payment method casing and synonyms for payments attached to city 8. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 8",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "ebd83c0077a6de66f02320f1a94305387fa04662a16c39f27d1fb07ddc732556",
+        "unorderedRowHash": "ebd83c0077a6de66f02320f1a94305387fa04662a16c39f27d1fb07ddc732556"
+      }
+    },
+    {
+      "id": "rv-case-canonicalize-1494sm8",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "Canonicalize payment method casing and synonyms for payments attached to city 2. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 2",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "35a56e89ac216ebec9adb0d34de6d6f02f925ec17bbea2651ffeaca39406881c",
+        "unorderedRowHash": "35a56e89ac216ebec9adb0d34de6d6f02f925ec17bbea2651ffeaca39406881c"
+      }
+    },
+    {
+      "id": "rv-case-canonicalize-15ldt3y",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "For city 3, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 3",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "11cebd734697d963d3c8c65fdff464c7b05009863493afb0c5efa7ffd650e3be",
+        "unorderedRowHash": "11cebd734697d963d3c8c65fdff464c7b05009863493afb0c5efa7ffd650e3be"
+      }
+    },
+    {
+      "id": "rv-case-canonicalize-1p80zqy",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "For city 5, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 5",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "a6133d3ffb46c950593c08f413ede674d6c1be60a225987ad3329bfb1f98a407",
+        "unorderedRowHash": "a6133d3ffb46c950593c08f413ede674d6c1be60a225987ad3329bfb1f98a407"
+      }
+    },
+    {
+      "id": "rv-case-canonicalize-1un13k8",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "Canonicalize payment method casing and synonyms for payments attached to city 6. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 6",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "bcd9e936ce04cca1c57cccd4976f2b45a39bc6e9d7508c66a234fe2ffae3a074",
+        "unorderedRowHash": "bcd9e936ce04cca1c57cccd4976f2b45a39bc6e9d7508c66a234fe2ffae3a074"
+      }
+    },
+    {
+      "id": "rv-case-canonicalize-3icyfy",
       "skill": "rv-case-canonicalize",
       "database": "rove",
       "task": "For city 7, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
@@ -45,11 +297,219 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "8e0bff70bc6185a6678cd95ef3ba0d170757e3b88048a4547d392658024ad567",
         "unorderedRowHash": "8e0bff70bc6185a6678cd95ef3ba0d170757e3b88048a4547d392658024ad567"
       }
+    },
+    {
+      "id": "rv-case-canonicalize-8liv82",
+      "skill": "rv-case-canonicalize",
+      "database": "rove",
+      "task": "For city 1, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
+          "__BLANK_2__": "o.city_id = 1",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
+      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "payment_id",
+          "order_id",
+          "canonical_method"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "ec53cb50244839c4cd3fb8e9348e1219132779eb8e922dad29f61f1dadb48050",
+        "unorderedRowHash": "8a1ebfada882bdfbf339a4968b08725dd094633f8eeadbba8237851146f7e6db"
+      }
     }
   ],
   "rv-clean-layer-capstone": [
     {
-      "id": "rv-clean-layer-capstone-2v5ucb",
+      "id": "rv-clean-layer-capstone-llwx2r",
+      "skill": "rv-clean-layer-capstone",
+      "database": "rove",
+      "task": "Build a valid-customer clean layer and report city_id, order_count, and delivered_orders. Return columns: city_id, order_count, delivered_orders. Order by: city_id.",
+      "starterSql": {
+        "full": "SELECT\n  canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "city_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders",
+          "__BLANK_1__": "(\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon",
+          "__BLANK_2__": "canon.city_id",
+          "__BLANK_3__": "city_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The clean layer filters customers before the city rollup.",
+      "expectedSql": "SELECT\n  canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY city_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "order_count",
+          "delivered_orders"
+        ],
+        "rowCount": 16,
+        "orderedRowHash": "b030162c2a3afdfe8d00149bb7504f27cd6f184c34dcae99de218d7ecc7918a6",
+        "unorderedRowHash": "1d58cafb84fdb3d66b9900813b8f35c0f0ff192ae44a98c879301e29e9df999a"
+      }
+    },
+    {
+      "id": "rv-clean-layer-capstone-s58lmj",
+      "skill": "rv-clean-layer-capstone",
+      "database": "rove",
+      "task": "Build a clean active-merchant order layer and report category, order_count, and gross_cents. Return columns: category, order_count, gross_cents. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "category",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
+          "__BLANK_1__": "(\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon",
+          "__BLANK_2__": "canon.category",
+          "__BLANK_3__": "category",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Join active merchants and valid customers before grouping normalized category.",
+      "expectedSql": "SELECT\n  canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "order_count",
+          "gross_cents"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "d829000b8ed35dd8aa4551436e51573a80465817c98dbf9d7c9d3df077f71137",
+        "unorderedRowHash": "d829000b8ed35dd8aa4551436e51573a80465817c98dbf9d7c9d3df077f71137"
+      }
+    },
+    {
+      "id": "rv-clean-layer-capstone-1vfkff9",
+      "skill": "rv-clean-layer-capstone",
+      "database": "rove",
+      "task": "Build a valid-customer payment layer, deduplicate by order, and report method, payment_count, and amount_cents. Return columns: method, payment_count, amount_cents. Order by: method.",
+      "starterSql": {
+        "full": "SELECT\n  canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "method"
+        },
+        "half": {
+          "__BLANK_0__": "canon.method",
+          "__BLANK_1__": "method",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents",
+          "__BLANK_1__": "(\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon",
+          "__BLANK_2__": "canon.payment_id = canon.chosen_payment_id",
+          "__BLANK_3__": "canon.method",
+          "__BLANK_4__": "method",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter to valid customers and rn = 1 before grouping payment methods.",
+      "expectedSql": "SELECT\n  canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY method LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "method",
+          "payment_count",
+          "amount_cents"
+        ],
+        "rowCount": 12,
+        "orderedRowHash": "2a97c63db5c556bf42fc09b77aa72094db8ac271eae000228d6059c03f65331c",
+        "unorderedRowHash": "2a97c63db5c556bf42fc09b77aa72094db8ac271eae000228d6059c03f65331c"
+      }
+    },
+    {
+      "id": "rv-clean-layer-capstone-redfsa",
+      "skill": "rv-clean-layer-capstone",
+      "database": "rove",
+      "task": "Build a clean layer with valid customers and deduped payments, then report status, order_count, and gross_cents. Return columns: status, order_count, gross_cents. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "status",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
+          "__BLANK_1__": "(\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon",
+          "__BLANK_2__": "canon.status",
+          "__BLANK_3__": "status",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Stack valid customers, one payment per order, and canonical status before grouping.",
+      "expectedSql": "SELECT\n  canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "order_count",
+          "gross_cents"
+        ],
+        "rowCount": 16,
+        "orderedRowHash": "89f4512823b7da55cc36ec824b70a878134fbd12d76a86c40c136ab19752610e",
+        "unorderedRowHash": "89f4512823b7da55cc36ec824b70a878134fbd12d76a86c40c136ab19752610e"
+      }
+    },
+    {
+      "id": "rv-clean-layer-capstone-1a220ch",
       "skill": "rv-clean-layer-capstone",
       "database": "rove",
       "task": "Stack clean-layer subqueries and report merchant_id, order_count, gross_cents, delivered_orders. Return columns: merchant_id, order_count, gross_cents, delivered_orders. Order by: merchant_id.",
@@ -93,62 +553,222 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "rv-dedup-rownumber": [
     {
-      "id": "rv-dedup-rownumber-1f6z5ey",
+      "id": "rv-dedup-rownumber-1dquyna",
       "skill": "rv-dedup-rownumber",
       "database": "rove",
-      "task": "Deduplicate customers in city 2 with ROW_NUMBER over master_customer_id and keep rn = 1. Return columns: master_customer_id, customer_id, full_name. Order by: customer_id.",
+      "task": "Use ROW_NUMBER to keep one active courier row per cleaned phone number in city 5. Return columns: courier_id, phone_digits. Order by: courier_id.",
       "starterSql": {
-        "full": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id, deduped.full_name AS full_name FROM (\n  SELECT\n    c.master_customer_id,\n    c.customer_id,\n    c.full_name,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\n) deduped\nWHERE deduped.rn = 1 ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id, deduped.full_name AS full_name FROM (\n  SELECT\n    c.master_customer_id,\n    c.customer_id,\n    c.full_name,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 2 AND c.is_deleted = false\n) deduped\nWHERE deduped.rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT\n  ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "2",
-          "__BLANK_1__": "customer_id"
+          "__BLANK_0__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits",
+          "__BLANK_1__": "(\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked",
+          "__BLANK_2__": "rn = 1",
+          "__BLANK_3__": "courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Clean the phone number before partitioning, keep rn = 1, and return the stable chosen courier_id.",
+      "expectedSql": "SELECT\n  ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "phone_digits"
+        ],
+        "rowCount": 159,
+        "orderedRowHash": "eb73b779e1422728d62b98941ccdc64aaa90bd78137a7333d247f61fd086dc6a",
+        "unorderedRowHash": "427678d4fbf29b79d8ef168bd57e4e58c2568ae923752fbdbe8577bffbbd3572"
+      }
+    },
+    {
+      "id": "rv-dedup-rownumber-1wknx4x",
+      "skill": "rv-dedup-rownumber",
+      "database": "rove",
+      "task": "Use ROW_NUMBER to keep one order_placed event per customer and session in city 15. Return columns: event_id, customer_id, session_id, event_type. Order by: event_id.",
+      "starterSql": {
+        "full": "SELECT\n  ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "event_id"
+        },
+        "half": {
+          "__BLANK_0__": "event_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type",
+          "__BLANK_1__": "(\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked",
+          "__BLANK_2__": "rn = 1",
+          "__BLANK_3__": "event_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Partition by the natural duplicate key, keep rn = 1, and return the stable chosen event_id.",
+      "expectedSql": "SELECT\n  ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE rn = 1 ORDER BY event_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_id",
+          "customer_id",
+          "session_id",
+          "event_type"
+        ],
+        "rowCount": 183,
+        "orderedRowHash": "2da4e68dd96d0ef7d62f568413379c3231108c1ce28c7b85a3a01a80b2575975",
+        "unorderedRowHash": "ca5a42ddffbed118a4b4b075212625fd0a1d61fa67c9719140720cdfd3866609"
+      }
+    },
+    {
+      "id": "rv-dedup-rownumber-dz6wyp",
+      "skill": "rv-dedup-rownumber",
+      "database": "rove",
+      "task": "Use ROW_NUMBER to keep one customer row per cleaned email in city 15. Return columns: customer_id, email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  ranked.customer_id AS customer_id, ranked.email AS email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  ranked.customer_id AS customer_id, ranked.email AS email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "customer_id"
         },
         "half": {
           "__BLANK_0__": "customer_id",
           "__BLANK_1__": "200"
         },
         "blank": {
-          "__BLANK_0__": "deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id, deduped.full_name AS full_name",
-          "__BLANK_1__": "(\n  SELECT\n    c.master_customer_id,\n    c.customer_id,\n    c.full_name,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 2 AND c.is_deleted = false\n) deduped",
-          "__BLANK_2__": "deduped.rn = 1",
+          "__BLANK_0__": "ranked.customer_id AS customer_id, ranked.email AS email",
+          "__BLANK_1__": "(\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked",
+          "__BLANK_2__": "rn = 1",
           "__BLANK_3__": "customer_id",
           "__BLANK_4__": "200"
         }
       },
-      "hint": "Use ROW_NUMBER() OVER (PARTITION BY master_customer_id), then keep rn = 1.",
-      "expectedSql": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id, deduped.full_name AS full_name FROM (\n  SELECT\n    c.master_customer_id,\n    c.customer_id,\n    c.full_name,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 2 AND c.is_deleted = false\n) deduped\nWHERE deduped.rn = 1 ORDER BY customer_id LIMIT 200",
+      "hint": "Normalize email inside the partition expression, keep rn = 1, and return the stable chosen customer_id.",
+      "expectedSql": "SELECT\n  ranked.customer_id AS customer_id, ranked.email AS email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "email"
+        ],
+        "rowCount": 95,
+        "orderedRowHash": "73c51c4dbd96677b9f619c3170ce97e2d89f3cf19ca81b280fe92f87e957feb4",
+        "unorderedRowHash": "73c51c4dbd96677b9f619c3170ce97e2d89f3cf19ca81b280fe92f87e957feb4"
+      }
+    },
+    {
+      "id": "rv-dedup-rownumber-lzw7fe",
+      "skill": "rv-dedup-rownumber",
+      "database": "rove",
+      "task": "Deduplicate customers in city 15 with ROW_NUMBER over master_customer_id and keep rn = 1. Return columns: master_customer_id, customer_id. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id",
+          "__BLANK_1__": "(\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped",
+          "__BLANK_2__": "rn = 1",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use ROW_NUMBER() OVER (PARTITION BY master_customer_id), keep rn = 1, and return the stable chosen customer_id.",
+      "expectedSql": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE rn = 1 ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
         "columns": [
           "master_customer_id",
-          "customer_id",
-          "full_name"
+          "customer_id"
         ],
-        "rowCount": 200,
-        "orderedRowHash": "2352cfa0a1c5e25d1bd0aeafa0c6ffdc19f319030d147d8934647774ecd96d95",
-        "unorderedRowHash": "2352cfa0a1c5e25d1bd0aeafa0c6ffdc19f319030d147d8934647774ecd96d95"
+        "rowCount": 92,
+        "orderedRowHash": "77343264976593829e6304beed04bae8a08f4031b50d7b4ea14158e9bf922bf4",
+        "unorderedRowHash": "77343264976593829e6304beed04bae8a08f4031b50d7b4ea14158e9bf922bf4"
+      }
+    },
+    {
+      "id": "rv-dedup-rownumber-pw4ddr",
+      "skill": "rv-dedup-rownumber",
+      "database": "rove",
+      "task": "Keep one representative payment_id per order in order_id range 259100-259199. Return columns: order_id, payment_id. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "ranked.order_id AS order_id, ranked.payment_id AS payment_id",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked",
+          "__BLANK_2__": "rn = 1",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Partition by order_id, number each retry group, keep rn = 1, and return the stable chosen payment_id.",
+      "expectedSql": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id"
+        ],
+        "rowCount": 97,
+        "orderedRowHash": "eaac5d2dfc990cc4c52e8905a8c56cf5ff7b90587a49f0d24b677043c6e609d8",
+        "unorderedRowHash": "eaac5d2dfc990cc4c52e8905a8c56cf5ff7b90587a49f0d24b677043c6e609d8"
       }
     }
   ],
   "rv-funnel-conversion": [
     {
-      "id": "rv-funnel-conversion-lwa0km",
+      "id": "rv-funnel-conversion-19ctc8z",
       "skill": "rv-funnel-conversion",
       "database": "rove",
-      "task": "For city 10, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "task": "For city 3, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
       "starterSql": {
         "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
-        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 10\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "10",
+          "__BLANK_0__": "3",
           "__BLANK_1__": "event_type"
         },
         "half": {
@@ -158,13 +778,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
-          "__BLANK_2__": "e.city_id = 10\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_2__": "e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
           "__BLANK_4__": "event_type"
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 10\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -173,20 +793,307 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "reached_customers"
         ],
         "rowCount": 5,
-        "orderedRowHash": "1aec4d550d6982b30577688b9cbba2f0ce5616b8602c2013beb0de4e6ba60f20",
-        "unorderedRowHash": "1aec4d550d6982b30577688b9cbba2f0ce5616b8602c2013beb0de4e6ba60f20"
+        "orderedRowHash": "07b50eb4cd17e490f789cd95177f70b7a0a8743ac3da89657905d18428318ffa",
+        "unorderedRowHash": "07b50eb4cd17e490f789cd95177f70b7a0a8743ac3da89657905d18428318ffa"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-19nqe4n",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "Measure funnel drop-off in city 6: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "62519ef24bee5139f409f4bb849220a51e152fc491550ec0162148a84b1db4db",
+        "unorderedRowHash": "62519ef24bee5139f409f4bb849220a51e152fc491550ec0162148a84b1db4db"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-1trunpj",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "Measure funnel drop-off in city 4: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "68e99cc8b210928533e1f04a2c871c6a5779ecb60042ecddd45bbf228e601b1b",
+        "unorderedRowHash": "68e99cc8b210928533e1f04a2c871c6a5779ecb60042ecddd45bbf228e601b1b"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-4qel8z",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "For city 5, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "c1cdf752b55b08d5d248c43d0aaa428cbdc0908e9861c0ad167bcf9c188cb99b",
+        "unorderedRowHash": "c1cdf752b55b08d5d248c43d0aaa428cbdc0908e9861c0ad167bcf9c188cb99b"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-9amx63",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "For city 7, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "1f9725254d430fa4e0ea9da131e431e7688b6db4f93cf5110e2139634531168b",
+        "unorderedRowHash": "1f9725254d430fa4e0ea9da131e431e7688b6db4f93cf5110e2139634531168b"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-mfrzsb",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "For city 1, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "6a1e0db60b0a0d9d83129262b9c17c689b6c73f82589a26f65ea3369e11ead6c",
+        "unorderedRowHash": "6a1e0db60b0a0d9d83129262b9c17c689b6c73f82589a26f65ea3369e11ead6c"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-z7gcdj",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "Measure funnel drop-off in city 2: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "d6ddc3cd31d9ce04547bd83330030a6d1dcc2915465ecdad758a2269b834a9f1",
+        "unorderedRowHash": "d6ddc3cd31d9ce04547bd83330030a6d1dcc2915465ecdad758a2269b834a9f1"
+      }
+    },
+    {
+      "id": "rv-funnel-conversion-zngakn",
+      "skill": "rv-funnel-conversion",
+      "database": "rove",
+      "task": "Measure funnel drop-off in city 8: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
+          "__BLANK_3__": "e.event_type",
+          "__BLANK_4__": "event_type"
+        }
+      },
+      "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "reached_customers"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "681e1c9c939d4c95336a8813ce41f85fc235336c66b850124f163fa56a0f126d",
+        "unorderedRowHash": "681e1c9c939d4c95336a8813ce41f85fc235336c66b850124f163fa56a0f126d"
       }
     }
   ],
   "rv-lag-lead-deltas": [
     {
-      "id": "rv-lag-lead-deltas-mkrdbr",
+      "id": "rv-lag-lead-deltas-15thg4l",
       "skill": "rv-lag-lead-deltas",
       "database": "rove",
-      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "task": "Compute an order amount delta for city 1 using LAG within the bounded date range. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
-        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -202,13 +1109,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
-          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
           "__BLANK_4__": "100"
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-06T22:33:53.000Z'::timestamp\n  AND o.placed_at < '2020-01-06T22:33:53.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -220,14 +1127,811 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "amount_delta_cents"
         ],
         "rowCount": 100,
-        "orderedRowHash": "315d285d4ab87ed18e025015d7fc40d36c6ab127a7e1a48ee1cab372efe52371",
-        "unorderedRowHash": "2f04dbd4b49a63255ce58b04b3de13f0355b14c09ead8c95f339ca5a8bc84d31"
+        "orderedRowHash": "3fba0b85cc40897622f3b7f3ef4641f482b1260849aa9dbde2bfb2f2e9571fc3",
+        "unorderedRowHash": "a470f081fcfcd111808f4d2986b4ce13bb94a0fd315fdad76fbb6875616c71b4"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-1l7l0pr",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "b9baa57ec091b568195255b77c2c3d552b3e604d42d50222a96e3a88b1a26d12",
+        "unorderedRowHash": "ab0670d3b184b8aab20b2b9164d9be4ae0677a1d74e0f2576debab0d311fd628"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-1tame48",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "6ead3b6430d33e5933968c2ddde1900c13f297b1734fa91837da9ba48650f577",
+        "unorderedRowHash": "f2dfe4b90dedcc9f85ac33b38cf78560c830e252418ae3bdf12d207f4af0628f"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-1u771ky",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "Compute an order amount delta for city 1 using LAG within the bounded date range. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "3beeaace1a7c54d84d1a0ded170b690667c7337958ceafdf21061252c1c924de",
+        "unorderedRowHash": "79f77c6798c94bd13ab110f95b55ac0cdc477ca5091984de4d3b18e07adc9082"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-1xslhmi",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "1b95262868de38412966171ac032974a0e309b580707ea53e8218a17f37e6ec0",
+        "unorderedRowHash": "92eca9d75063c37d27a3a0500270cc8d8a981976c83b0f1d9b2bf7fcbfac3f5a"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-hwg9tr",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "Compute an order amount delta for city 1 using LAG within the bounded date range. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "bd90b9b6db9e88dfb677e1f435e14b9961331762cab549697c39df6970d91d90",
+        "unorderedRowHash": "1597aa321cdd1137085c8c66843bc7bca94d911bda305db85fd731053b5781a2"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-o5k8g",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "34b621a6c5ffc4dd2863494ce15e873e1f450c76c3c548f58f536e0d7f8324ad",
+        "unorderedRowHash": "5a313730c60b2d0a1a274d55101f956ac5f0f11820cff13fe7cc38d641e2f08a"
+      }
+    },
+    {
+      "id": "rv-lag-lead-deltas-q5nwmn",
+      "skill": "rv-lag-lead-deltas",
+      "database": "rove",
+      "task": "Compute an order amount delta for city 1 using LAG within the bounded date range. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "amount_delta_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "b9baa57ec091b568195255b77c2c3d552b3e604d42d50222a96e3a88b1a26d12",
+        "unorderedRowHash": "ab0670d3b184b8aab20b2b9164d9be4ae0677a1d74e0f2576debab0d311fd628"
       }
     }
   ],
   "rv-lifecycle-latency": [
     {
-      "id": "rv-lifecycle-latency-19xehru",
+      "id": "rv-lifecycle-latency-118xekd",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "For city 1, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "79dc038858b153dc4b34413494434e7951ed91c166786891f7a8e699debdbabd",
+        "unorderedRowHash": "1d9b066c234509b835520ef1eb459dba42b06b90717e0fc9beaf6a3dda1bf15e"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-15z5uah",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "For city 7, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 7 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "14c41637c814322ad9770e542165b39528f42bc5316467302060595398ed59f4",
+        "unorderedRowHash": "6aefe7939549c1795f96b03ce8ad715fc51381f6042de95c2d3bcf3d1007fbc1"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-166bxp5",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 4. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 4 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "3b091cade296c931f2f022091a897422368101c52b69ae325ca632f3ae308e25",
+        "unorderedRowHash": "61557af3d98469189daf2e703be266bd192e2ad35e15938303e8ef61e3bc5548"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-166oikt",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 6. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 6 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "ba35e78f666556d4eaa2e3568abf2409fbf1155b8a2d6a5303cff8d349d29f29",
+        "unorderedRowHash": "fdce4acf26e91bba20c07323496fb244d41ef6f82db0fb3c2f8aba0fd9a3599f"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-18tt52x",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "For city 3, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 3 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "db1821096d40d49eaa90d5942f2587988ed77cc95d24d1bac3589b9f3187e188",
+        "unorderedRowHash": "689e2976f9b26297c4c83bef5fad9b6800ced3edbc65fb932cc99a364eb0c36c"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-1bjzpmh",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Report status, avg_approve_to_active_seconds, and activated_couriers for couriers with activation timestamps. Return columns: status, avg_approve_to_active_seconds, activated_couriers. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "c.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL",
+          "__BLANK_3__": "c.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter out NULL lifecycle endpoints before subtracting timestamps.",
+      "expectedSql": "SELECT\n  c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_approve_to_active_seconds",
+          "activated_couriers"
+        ],
+        "rowCount": 26,
+        "orderedRowHash": "a80bd0a2e8757d939f6563bb1a028de719fb443bbd4c478f4b05823cca804fe1",
+        "unorderedRowHash": "a175c25885b52dd19f2a44fdbd204eca8fe2415993ff735ea8fa59fce979138f"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-1kqyos9",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 8. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 8 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "d4267c26aeb5c5e4ff4242075b4998d3e23521c2b0e1cd3dcc1649049c7f302d",
+        "unorderedRowHash": "bb43b9c8428eadca18c002433f0f3a853ab58dc53fd3f83c8b8d90117ad9d78a"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-1oldhmt",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 2. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), __BLANK_0__) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_1__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "2",
+          "__BLANK_2__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 2 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "f2005c4bbc91e0694162b5c5d8c63306b5f8f31a0ad26f06e1be0fcd9f8cb10f",
+        "unorderedRowHash": "f18a02fec1bb06d1164724961384214a89ba072db1b46d9261bb8ebf48f66a43"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-ccb07t",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Report home_city_id, avg_apply_to_approve_seconds, and approved_couriers for approved couriers. Return columns: home_city_id, avg_apply_to_approve_seconds, approved_couriers. Order by: home_city_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "home_city_id"
+        },
+        "half": {
+          "__BLANK_0__": "c.home_city_id",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.approved_at IS NOT NULL",
+          "__BLANK_3__": "c.home_city_id",
+          "__BLANK_4__": "home_city_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Subtract applied_at from approved_at and extract epoch seconds before averaging.",
+      "expectedSql": "SELECT\n  c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY home_city_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "home_city_id",
+          "avg_apply_to_approve_seconds",
+          "approved_couriers"
+        ],
+        "rowCount": 15,
+        "orderedRowHash": "b4d2a763c50c723ce09c60e7bf9b9599fd237038432465fbe99a9bfa158caa75",
+        "unorderedRowHash": "0b485f370edf72ca98189946dd4a6f9ac3e1bf6eaa54b08582d79540c422e8fc"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-z5ha9x",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "For city 5, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "o.status",
+          "__BLANK_1__": "status",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 5 AND o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.status",
+          "__BLANK_4__": "status",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
+      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "avg_place_to_deliver_seconds",
+          "delivered_orders"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "9695fd961233153748d4fef930085ca0dce582e013ef283a49f975eac59b6246",
+        "unorderedRowHash": "6245fcdfdd07e39750939e41a3298fe9112bd4b09c2e7974c9b2336103a83029"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-1uxj9e3",
+      "skill": "rv-lifecycle-latency",
+      "database": "rove",
+      "task": "Report priority plus avg_first_response_seconds and avg_resolution_seconds for valid support tickets. Return columns: priority, avg_first_response_seconds, avg_resolution_seconds. Order by: priority.",
+      "starterSql": {
+        "full": "SELECT\n  t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "priority"
+        },
+        "half": {
+          "__BLANK_0__": "t.priority",
+          "__BLANK_1__": "priority",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds",
+          "__BLANK_1__": "support_tickets t",
+          "__BLANK_2__": "t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false",
+          "__BLANK_3__": "t.priority",
+          "__BLANK_4__": "priority",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Timestamp subtraction works for support lifecycles too; filter NULL endpoints first.",
+      "expectedSql": "SELECT\n  t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY priority LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "priority",
+          "avg_first_response_seconds",
+          "avg_resolution_seconds"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "f4bf5c6568e1ea187aa8b50acbe116f105523c5e801a516272be64235d883a8c",
+        "unorderedRowHash": "f4bf5c6568e1ea187aa8b50acbe116f105523c5e801a516272be64235d883a8c"
+      }
+    },
+    {
+      "id": "rv-lifecycle-latency-q41tpx",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
       "task": "Report vehicle_type plus average apply-to-approve and approve-to-active seconds. Return columns: vehicle_type, avg_apply_to_approve_seconds, avg_approve_to_active_seconds. Order by: vehicle_type.",
@@ -272,10 +1976,297 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "rv-money-text-cast": [
     {
-      "id": "rv-money-text-cast-1ffv1i0",
+      "id": "rv-money-text-cast-1clpaaz",
       "skill": "rv-money-text-cast",
       "database": "rove",
-      "task": "Strip currency symbols from order_total_legacy in city 8 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "task": "For city 4, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8e8e1bc3350e51f1d0e65104263783d188db8882331c1492a270183239a83a7b",
+        "unorderedRowHash": "8e8e1bc3350e51f1d0e65104263783d188db8882331c1492a270183239a83a7b"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-1ej1k8b",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "For city 2, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "e44d1ccc4ce23d94c157563d0bb8d2368a1ca6cd4f2fa4a93932b32f62dbaf43",
+        "unorderedRowHash": "e44d1ccc4ce23d94c157563d0bb8d2368a1ca6cd4f2fa4a93932b32f62dbaf43"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-1lvn2iz",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "Strip currency symbols from order_total_legacy in city 3 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "0dc1cbce03ba32db4f00d6face56228c531a7ec1217adf751ed388bfd3b5e4c8",
+        "unorderedRowHash": "0dc1cbce03ba32db4f00d6face56228c531a7ec1217adf751ed388bfd3b5e4c8"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-1ngxc2z",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "Strip currency symbols from order_total_legacy in city 5 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "5fab77d261fd9e949cc9d74c8d0c5c3fcc39e51d153a76c633a90a0bde9f0263",
+        "unorderedRowHash": "5fab77d261fd9e949cc9d74c8d0c5c3fcc39e51d153a76c633a90a0bde9f0263"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-cz8yi3",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "Strip currency symbols from order_total_legacy in city 1 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "1bb8cebe5b4c797ffd43e3ca90c1ee1fb534f3c75fd5df52fb9987bf87a2ad6e",
+        "unorderedRowHash": "085b9b3b199b8ccea31cd645252b3828f40d14068d307da00fcc6f77b4586cf7"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-gs8omj",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "For city 6, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "c64a6df3ae11caf93731d729dc37ec882ab80323ed6eb47a3686058cc8f26889",
+        "unorderedRowHash": "c64a6df3ae11caf93731d729dc37ec882ab80323ed6eb47a3686058cc8f26889"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-qug7qj",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "Strip currency symbols from order_total_legacy in city 7 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "legacy_dollars"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "617e7730ee38400453a2cbdba9248c164aabc5b8d82b5ea42b09db9aa9c402a7",
+        "unorderedRowHash": "617e7730ee38400453a2cbdba9248c164aabc5b8d82b5ea42b09db9aa9c402a7"
+      }
+    },
+    {
+      "id": "rv-money-text-cast-sh06gr",
+      "skill": "rv-money-text-cast",
+      "database": "rove",
+      "task": "For city 8, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -315,13 +2306,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "rv-moving-average-frame": [
     {
-      "id": "rv-moving-average-frame-13pnvoe",
+      "id": "rv-moving-average-frame-198dig4",
       "skill": "rv-moving-average-frame",
       "database": "rove",
       "task": "Compute a framed moving average over a gap-free date spine for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
-        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T20:21:56.000Z'::date, '2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-02T20:21:56.000Z'::date AND ('2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T20:21:56.000Z'::date, '2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T20:21:56.000Z'::date AND ('2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -336,12 +2327,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         },
         "blank": {
           "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
-          "__BLANK_1__": "generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_1__": "generate_series('2020-01-02T20:21:56.000Z'::date, '2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T20:21:56.000Z'::date AND ('2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-02-07T01:05:36.000Z'::date, '2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-02-07T01:05:36.000Z'::date AND ('2020-02-07T01:05:36.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T20:21:56.000Z'::date, '2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T20:21:56.000Z'::date AND ('2020-01-02T20:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -353,14 +2344,315 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "trailing_7day_avg_cents"
         ],
         "rowCount": 30,
-        "orderedRowHash": "57c100a0b1b23c2a51f017904d870bbf4de9ea44be1ca6190d454e007f4ff666",
-        "unorderedRowHash": "57c100a0b1b23c2a51f017904d870bbf4de9ea44be1ca6190d454e007f4ff666"
+        "orderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd",
+        "unorderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-19yprbp",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "Compute a framed moving average over a gap-free date spine for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T11:56:31.000Z'::date, '2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-02T11:56:31.000Z'::date AND ('2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T11:56:31.000Z'::date, '2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T11:56:31.000Z'::date AND ('2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-02T11:56:31.000Z'::date, '2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T11:56:31.000Z'::date AND ('2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T11:56:31.000Z'::date, '2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T11:56:31.000Z'::date AND ('2020-01-02T11:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd",
+        "unorderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-19zz4ru",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "Compute a framed moving average over a gap-free date spine for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T16:12:07.000Z'::date, '2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-01T16:12:07.000Z'::date AND ('2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T16:12:07.000Z'::date, '2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T16:12:07.000Z'::date AND ('2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-01T16:12:07.000Z'::date, '2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T16:12:07.000Z'::date AND ('2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T16:12:07.000Z'::date, '2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T16:12:07.000Z'::date AND ('2020-01-01T16:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "4081df997edf80253026f0700170ea6f27a84aee500d0cc0a7991d0bc4694c81",
+        "unorderedRowHash": "4081df997edf80253026f0700170ea6f27a84aee500d0cc0a7991d0bc4694c81"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-1i0b3yk",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "Compute a framed moving average over a gap-free date spine for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T21:17:04.000Z'::date, '2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-01T21:17:04.000Z'::date AND ('2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T21:17:04.000Z'::date, '2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:17:04.000Z'::date AND ('2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-01T21:17:04.000Z'::date, '2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:17:04.000Z'::date AND ('2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T21:17:04.000Z'::date, '2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:17:04.000Z'::date AND ('2020-01-01T21:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "4081df997edf80253026f0700170ea6f27a84aee500d0cc0a7991d0bc4694c81",
+        "unorderedRowHash": "4081df997edf80253026f0700170ea6f27a84aee500d0cc0a7991d0bc4694c81"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-1kbwj79",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "For city 1, build a dense 30-day spine and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T01:48:22.000Z'::date, '2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-02T01:48:22.000Z'::date AND ('2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T01:48:22.000Z'::date, '2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:48:22.000Z'::date AND ('2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-02T01:48:22.000Z'::date, '2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:48:22.000Z'::date AND ('2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T01:48:22.000Z'::date, '2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:48:22.000Z'::date AND ('2020-01-02T01:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd",
+        "unorderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-1kdhpqn",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "For city 1, build a dense 30-day spine and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T17:39:14.000Z'::date, '2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-02T17:39:14.000Z'::date AND ('2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T17:39:14.000Z'::date, '2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T17:39:14.000Z'::date AND ('2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-02T17:39:14.000Z'::date, '2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T17:39:14.000Z'::date AND ('2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T17:39:14.000Z'::date, '2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T17:39:14.000Z'::date AND ('2020-01-02T17:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd",
+        "unorderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-8yxzgt",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "For city 1, build a dense 30-day spine and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T21:16:38.000Z'::date, '2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-02T21:16:38.000Z'::date AND ('2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T21:16:38.000Z'::date, '2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T21:16:38.000Z'::date AND ('2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-02T21:16:38.000Z'::date, '2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T21:16:38.000Z'::date AND ('2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T21:16:38.000Z'::date, '2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T21:16:38.000Z'::date AND ('2020-01-02T21:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd",
+        "unorderedRowHash": "fe5746bae6e341f463a82949b704a24136fdb05799fc3f9d1dac546989ec0fdd"
+      }
+    },
+    {
+      "id": "rv-moving-average-frame-fg5z2e",
+      "skill": "rv-moving-average-frame",
+      "database": "rove",
+      "task": "For city 1, build a dense 30-day spine and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
+      "starterSql": {
+        "full": "SELECT\n  __BLANK_0__::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T20:55:27.000Z'::date, '2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = __BLANK_1__\n    AND o.placed_at::date BETWEEN '2020-01-01T20:55:27.000Z'::date AND ('2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_2__, __BLANK_3__",
+        "half": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T20:55:27.000Z'::date, '2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T20:55:27.000Z'::date AND ('2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "placed_at"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, placed_at"
+        },
+        "blank": {
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_1__": "generate_series('2020-01-01T20:55:27.000Z'::date, '2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T20:55:27.000Z'::date AND ('2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
+          "__BLANK_2__": "city_id, placed_at"
+        }
+      },
+      "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T20:55:27.000Z'::date, '2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T20:55:27.000Z'::date AND ('2020-01-01T20:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "orderMatters": true,
+      "rowCeiling": 30,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "placed_at",
+          "order_day",
+          "gross_cents",
+          "trailing_7day_avg_cents"
+        ],
+        "rowCount": 30,
+        "orderedRowHash": "4081df997edf80253026f0700170ea6f27a84aee500d0cc0a7991d0bc4694c81",
+        "unorderedRowHash": "4081df997edf80253026f0700170ea6f27a84aee500d0cc0a7991d0bc4694c81"
       }
     }
   ],
   "rv-ntile-bucketing": [
     {
-      "id": "rv-ntile-bucketing-1iv7dyh",
+      "id": "rv-ntile-bucketing-14vn080",
       "skill": "rv-ntile-bucketing",
       "database": "rove",
       "task": "For city 3, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
@@ -403,14 +2695,330 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "75ca8c9af7fa62a9484c5aceafcf0f6aa18fc0360c8531abc9ff52acfe40e38b",
         "unorderedRowHash": "75ca8c9af7fa62a9484c5aceafcf0f6aa18fc0360c8531abc9ff52acfe40e38b"
       }
+    },
+    {
+      "id": "rv-ntile-bucketing-1k53m3i",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "Assign each bounded city 8 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 8 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 8",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 8 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "e4d2e291d46955f58b752da0f05ccd9585191a588a5eade77637017590a6d6d7",
+        "unorderedRowHash": "e4d2e291d46955f58b752da0f05ccd9585191a588a5eade77637017590a6d6d7"
+      }
+    },
+    {
+      "id": "rv-ntile-bucketing-1la3emu",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "Assign each bounded city 4 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(__BLANK_0__) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_1__ ORDER BY __BLANK_2__, __BLANK_3__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 4 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "4",
+          "__BLANK_2__": "city_id",
+          "__BLANK_3__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 4",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 4 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "ab66f5a63db0caae180b3c195b2476c084ba315cf65972373b6b2ec5714a448d",
+        "unorderedRowHash": "ab66f5a63db0caae180b3c195b2476c084ba315cf65972373b6b2ec5714a448d"
+      }
+    },
+    {
+      "id": "rv-ntile-bucketing-1qsy4hm",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "Assign each bounded city 6 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 6 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 6",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 6 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "d08ba1a81bf98e3f22f2f753c35c25bdb15d1e73731a5cfc81fceca548f5a0ba",
+        "unorderedRowHash": "d08ba1a81bf98e3f22f2f753c35c25bdb15d1e73731a5cfc81fceca548f5a0ba"
+      }
+    },
+    {
+      "id": "rv-ntile-bucketing-1rktl48",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "For city 7, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 7 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 7",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 7 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "7bcc3f7e04a57054aef77af4abca880005368ea9eeba9243566907fd5d16777a",
+        "unorderedRowHash": "7bcc3f7e04a57054aef77af4abca880005368ea9eeba9243566907fd5d16777a"
+      }
+    },
+    {
+      "id": "rv-ntile-bucketing-1w4isfs",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "For city 1, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 1 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "a50305a7eaa1bac23974b5b323ff4319877c1ab25381bdb2c6eeb92a32050311",
+        "unorderedRowHash": "fecc18edaea851aa7308902a7f79924a2c7ded0f17e22acf1a7791cdbee3b923"
+      }
+    },
+    {
+      "id": "rv-ntile-bucketing-6v4j8g",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "For city 5, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 5 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 5",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 5 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "6c8c63a65315da669b94954f36a5cfce68c114543e0e8b1e96ee33d56330d684",
+        "unorderedRowHash": "6c8c63a65315da669b94954f36a5cfce68c114543e0e8b1e96ee33d56330d684"
+      }
+    },
+    {
+      "id": "rv-ntile-bucketing-nz6usq",
+      "skill": "rv-ntile-bucketing",
+      "database": "rove",
+      "task": "Assign each bounded city 2 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 2 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 2",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 2 ORDER BY city_id, order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "merchant_id",
+          "amount_cents",
+          "aov_quartile"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "efd4bba2ef7bb2f7b00d48bce892bf934341d8ac013762f1ad37c102cb5abdc6",
+        "unorderedRowHash": "efd4bba2ef7bb2f7b00d48bce892bf934341d8ac013762f1ad37c102cb5abdc6"
+      }
     }
   ],
   "rv-null-coalesce-nullif": [
     {
-      "id": "rv-null-coalesce-nullif-h3gq2k",
+      "id": "rv-null-coalesce-nullif-107lxmj",
       "skill": "rv-null-coalesce-nullif",
       "database": "rove",
-      "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 8. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "task": "For city 8, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 8 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -447,14 +3055,349 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "fffda9ecfb6612968243d295e7bcbc5a66fbf39621646036d480719e7b9faafa",
         "unorderedRowHash": "fffda9ecfb6612968243d295e7bcbc5a66fbf39621646036d480719e7b9faafa"
       }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-14jgfn9",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 3. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 3",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "97c0e9980fbb16a30cab13cdea3c8f67a16fc6aa31c1a48c584e9aaa128f8e5f",
+        "unorderedRowHash": "97c0e9980fbb16a30cab13cdea3c8f67a16fc6aa31c1a48c584e9aaa128f8e5f"
+      }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-1bjevol",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 7. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 7 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 7",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "46dce62ba3feb531ecf07d0b734a5190478a3d7cb85db0d44e28bf974a9135c4",
+        "unorderedRowHash": "46dce62ba3feb531ecf07d0b734a5190478a3d7cb85db0d44e28bf974a9135c4"
+      }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-1ga1flf",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "For city 4, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 4 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 4",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8e4a27ce20ff5f882029c65631baf7f92568698a652ceefa71179e08b72a2203",
+        "unorderedRowHash": "8e4a27ce20ff5f882029c65631baf7f92568698a652ceefa71179e08b72a2203"
+      }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-1r6j4yn",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "For city 6, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 6 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 6",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8ef5aa4eca944ba2bc6bff40a74ab367e8d4adfdfcf3fa2b2d6efa4088f54a3b",
+        "unorderedRowHash": "8ef5aa4eca944ba2bc6bff40a74ab367e8d4adfdfcf3fa2b2d6efa4088f54a3b"
+      }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-72pp3x",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 5. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 5 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 5",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "00847918f03049d57964901eaeaac6dd5aebdfb9d41f77330783b2dcc8219a19",
+        "unorderedRowHash": "00847918f03049d57964901eaeaac6dd5aebdfb9d41f77330783b2dcc8219a19"
+      }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-eyclr1",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 1. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "dfe1fcd2c19def6d95a3099f3eae1200269c4a3835bdf6dbddb1ec5fb5a4033b",
+        "unorderedRowHash": "2c7ea701c860952a931e684bd50939822c48daa801d889b88a499ee567819e01"
+      }
+    },
+    {
+      "id": "rv-null-coalesce-nullif-vltc67",
+      "skill": "rv-null-coalesce-nullif",
+      "database": "rove",
+      "task": "For city 2, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 2 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 2",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "tip_cents_filled",
+          "legacy_total_or_null"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "7d8ed269e42c6ac90166c582c9a9bfcd30a44f59186120bcb0c681200c24ff33",
+        "unorderedRowHash": "7d8ed269e42c6ac90166c582c9a9bfcd30a44f59186120bcb0c681200c24ff33"
+      }
     }
   ],
   "rv-orphan-anti-join": [
     {
-      "id": "rv-orphan-anti-join-1wla3ra",
+      "id": "rv-orphan-anti-join-11r13ro",
       "skill": "rv-orphan-anti-join",
       "database": "rove",
-      "task": "Find orphaned orders in city 2 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id.",
+      "task": "Find orphaned orders in city 7 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 7\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 7\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 7\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "40798eea47976ad2a7a850096578824a1ca9c9577cdf398981b90cae00c41157",
+        "unorderedRowHash": "40798eea47976ad2a7a850096578824a1ca9c9577cdf398981b90cae00c41157"
+      }
+    },
+    {
+      "id": "rv-orphan-anti-join-1nh9hfy",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "For city 2, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 2\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -490,11 +3433,258 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "6752fc2f100599007cc9ed13caad4a532c8612a94cbb3a3db996cecde208e685",
         "unorderedRowHash": "6752fc2f100599007cc9ed13caad4a532c8612a94cbb3a3db996cecde208e685"
       }
+    },
+    {
+      "id": "rv-orphan-anti-join-1oays9y",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "For city 6, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 164,
+        "orderedRowHash": "8445e8a595596e8ac225858397a6f659e354c175bafc5f0c107b6bc24f952c1a",
+        "unorderedRowHash": "8445e8a595596e8ac225858397a6f659e354c175bafc5f0c107b6bc24f952c1a"
+      }
+    },
+    {
+      "id": "rv-orphan-anti-join-1rvgkcg",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "Find orphaned orders in city 5 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 5\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 5\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 5\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "3774b4c188ccdb25f2b0b14cf65b86235f349f0a01f6a4294daacbb1610c4c6e",
+        "unorderedRowHash": "3774b4c188ccdb25f2b0b14cf65b86235f349f0a01f6a4294daacbb1610c4c6e"
+      }
+    },
+    {
+      "id": "rv-orphan-anti-join-1s6f8wm",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "For city 4, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "411ac50723a6a1374077956621e88572e4a0b5a113613107f70720bb4ac3289b",
+        "unorderedRowHash": "c1895d18e4b2d989d03af7a302bb0b9d166e60b23c598663131df227901285c2"
+      }
+    },
+    {
+      "id": "rv-orphan-anti-join-1x6fm4g",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "Find orphaned orders in city 1 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT __BLANK_1__ FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 1\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 1\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 195,
+        "orderedRowHash": "ca0d00c234c084d435c121552cbefbc7d3f844f98a671af5d6689a1a7a110cd7",
+        "unorderedRowHash": "1f27e6483172c423b6831a6fd85bbc29a492616870f385d3905c75ed6da12a63"
+      }
+    },
+    {
+      "id": "rv-orphan-anti-join-3wh07w",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "Find orphaned orders in city 3 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 3\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 3\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 3\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 162,
+        "orderedRowHash": "6004c07c08fa75edde71a402fd8cd21e67ab8355b321affb931156b67fd700f4",
+        "unorderedRowHash": "6004c07c08fa75edde71a402fd8cd21e67ab8355b321affb931156b67fd700f4"
+      }
+    },
+    {
+      "id": "rv-orphan-anti-join-5u2de6",
+      "skill": "rv-orphan-anti-join",
+      "database": "rove",
+      "task": "For city 8, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "customer_id"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "c9d1e5e1e0dae1da5ce6812a8d2f50608d11443a17cf6c9b3808c1c21d633eb5",
+        "unorderedRowHash": "c9d1e5e1e0dae1da5ce6812a8d2f50608d11443a17cf6c9b3808c1c21d633eb5"
+      }
     }
   ],
   "rv-payment-dedup": [
     {
-      "id": "rv-payment-dedup-yr7eps",
+      "id": "rv-payment-dedup-1ottapf",
       "skill": "rv-payment-dedup",
       "database": "rove",
       "task": "Keep one payment per order and return order_id, payment_id, amount_cents. Return columns: order_id, payment_id, amount_cents. Order by: payment_id.",
@@ -533,11 +3723,482 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "94c57a34ac3ac889d1c11cc02c76ac541e4d99fc767b89a561518fabec18721e",
         "unorderedRowHash": "127d18be2b039c45f45ff17be8dca6ee8cbcee76f4b532c50616614c2521a094"
       }
+    },
+    {
+      "id": "rv-payment-dedup-g90r0t",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "Keep the earliest payment attempt per order and return order_id, payment_id, and status. Return columns: order_id, payment_id, status. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked",
+          "__BLANK_2__": "ranked.payment_id = ranked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Partition by order_id and keep rn = 1 for a deterministic retry representative.",
+      "expectedSql": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "status"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "39c836cb2795c05dca788f6994e4217267328dea29883e2ef7935f5d52f71632",
+        "unorderedRowHash": "6f2517d0772a07226f29e1a6d03a7cca688b75b79add3082d340773f5ee2b91e"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-w78r9l",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "Deduplicate payments by order_id, then report method, deduped_payments, and deduped_amount_cents. Return columns: method, deduped_payments, deduped_amount_cents. Order by: method.",
+      "starterSql": {
+        "full": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.method ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "method"
+        },
+        "half": {
+          "__BLANK_0__": "deduped.method",
+          "__BLANK_1__": "method",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents",
+          "__BLANK_1__": "(\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped",
+          "__BLANK_2__": "deduped.payment_id = deduped.chosen_payment_id",
+          "__BLANK_3__": "deduped.method",
+          "__BLANK_4__": "method",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Choose the representative payment before counting payment methods.",
+      "expectedSql": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.method ORDER BY method LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "method",
+          "deduped_payments",
+          "deduped_amount_cents"
+        ],
+        "rowCount": 12,
+        "orderedRowHash": "71dd569636a9de8762307248c14ea9a3884c1a76a30ddb68eeb143c2c63dbf81",
+        "unorderedRowHash": "71dd569636a9de8762307248c14ea9a3884c1a76a30ddb68eeb143c2c63dbf81"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-190kw36",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "For city 1, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "346e0363135b117862f1ad40a1045f005f85ba3a81ba45e95e01083b924dce10",
+        "unorderedRowHash": "e8fc2de887775945e5c8c65e6ef877babdfe5de487ad08cdcedc99a2d0a617d2"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-1cizpfe",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "Deduplicate payment retry rows inside city 2 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "bda311dd9e81e2af39e38af5690e9ac375a4bf08a0f2e3eadc488480a8454e27",
+        "unorderedRowHash": "bda311dd9e81e2af39e38af5690e9ac375a4bf08a0f2e3eadc488480a8454e27"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-1uikg6",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "Deduplicate payment retry rows inside city 8 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "5fe5b1801dc707d461d3570f092dfeb7eeb75b8c63a699b515debc3dd2500876",
+        "unorderedRowHash": "5fe5b1801dc707d461d3570f092dfeb7eeb75b8c63a699b515debc3dd2500876"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-1ykjaie",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "For city 7, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8b850b1b3540d00dc4a3b6a9a21baee566946f41ecb58449a169d9d5b0c7e2b6",
+        "unorderedRowHash": "8b850b1b3540d00dc4a3b6a9a21baee566946f41ecb58449a169d9d5b0c7e2b6"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-4dgjky",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "For city 5, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8aa5e1b03d165618f5fac798af29b39649300784aeddb36a0b0bb67e7ad08163",
+        "unorderedRowHash": "8aa5e1b03d165618f5fac798af29b39649300784aeddb36a0b0bb67e7ad08163"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-byt01a",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "For city 3, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "53f3e35fc116193b805548da39138f6a1847238947f4736abd5d26f56843762f",
+        "unorderedRowHash": "53f3e35fc116193b805548da39138f6a1847238947f4736abd5d26f56843762f"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-ch0dki",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "After deduplicating paid payment retries, report processor, paid_order_count, and paid_amount_cents. Return columns: processor, paid_order_count, paid_amount_cents. Order by: processor.",
+      "starterSql": {
+        "full": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.processor ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "processor"
+        },
+        "half": {
+          "__BLANK_0__": "deduped.processor",
+          "__BLANK_1__": "processor",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents",
+          "__BLANK_1__": "(\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped",
+          "__BLANK_2__": "deduped.payment_id = deduped.chosen_payment_id",
+          "__BLANK_3__": "deduped.processor",
+          "__BLANK_4__": "processor",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Deduplicate inside the subquery before grouping by processor.",
+      "expectedSql": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.processor ORDER BY processor LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "processor",
+          "paid_order_count",
+          "paid_amount_cents"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "529027da016a88ac70459123536d1601d1bb8c57985335ebcc48d4262e5b3a71",
+        "unorderedRowHash": "529027da016a88ac70459123536d1601d1bb8c57985335ebcc48d4262e5b3a71"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-gw0126",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "Deduplicate payment retry rows inside city 4 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "1beaa83363866cce143c9fcddee85056db29186669a1983856b27331f0b748cb",
+        "unorderedRowHash": "1beaa83363866cce143c9fcddee85056db29186669a1983856b27331f0b748cb"
+      }
+    },
+    {
+      "id": "rv-payment-dedup-kvhlju",
+      "skill": "rv-payment-dedup",
+      "database": "rove",
+      "task": "Deduplicate payment retry rows inside city 6 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "starterSql": {
+        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "payment_id"
+        },
+        "half": {
+          "__BLANK_0__": "payment_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked",
+          "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
+          "__BLANK_3__": "payment_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
+      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "payment_id",
+          "amount_cents",
+          "currency"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "bd4ee2f18f0bdc3afe7ac9d22c2e1dcdacdd76beebc2bfe6561e07a79bc42342",
+        "unorderedRowHash": "bd4ee2f18f0bdc3afe7ac9d22c2e1dcdacdd76beebc2bfe6561e07a79bc42342"
+      }
     }
   ],
   "rv-profile-dirty-data": [
     {
-      "id": "rv-profile-dirty-data-1itub1a",
+      "id": "rv-profile-dirty-data-175yy2z",
       "skill": "rv-profile-dirty-data",
       "database": "rove",
       "task": "For each city, report city_id, table_name, total_rows, null_tips, and blank_totals for orders. Return columns: city_id, table_name, total_rows, null_tips, blank_totals. Order by: city_id.",
@@ -577,11 +4238,442 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "a23629a9e94e165667ba26db2f9e694b3f031fb05d806ac152f4c397b77a6933",
         "unorderedRowHash": "2f8f215c8f6b6d2d75820a82fee3d6ce7827fc4d205cc3bf65e6f501fc2ae0e3"
       }
+    },
+    {
+      "id": "rv-profile-dirty-data-7cfn8l",
+      "skill": "rv-profile-dirty-data",
+      "database": "rove",
+      "task": "Profile merchants by category with total_rows, nonpositive_prep_minutes, and inactive_merchants. Return columns: category, total_rows, nonpositive_prep_minutes, inactive_merchants. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY m.category ORDER BY __BLANK_0__",
+        "half": "SELECT\n  m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "m.category",
+          "__BLANK_1__": "category"
+        },
+        "blank": {
+          "__BLANK_0__": "m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants",
+          "__BLANK_1__": "merchants m",
+          "__BLANK_2__": "m.category",
+          "__BLANK_3__": "category"
+        }
+      },
+      "hint": "Use conditional counts to profile operational fields before ranking merchants.",
+      "expectedSql": "SELECT\n  m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY m.category ORDER BY category",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "total_rows",
+          "nonpositive_prep_minutes",
+          "inactive_merchants"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "519de6769c88f72ba1d204ed0855d2ab8e37324183e1a2ea05328ce56f6391d3",
+        "unorderedRowHash": "519de6769c88f72ba1d204ed0855d2ab8e37324183e1a2ea05328ce56f6391d3"
+      }
+    },
+    {
+      "id": "rv-profile-dirty-data-u7uje3",
+      "skill": "rv-profile-dirty-data",
+      "database": "rove",
+      "task": "Profile event_log by event_type with total_rows, null_order_ids, and null_customer_ids. Return columns: event_type, total_rows, null_order_ids, null_customer_ids. Order by: event_type.",
+      "starterSql": {
+        "full": "SELECT\n  e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY e.event_type ORDER BY __BLANK_0__",
+        "half": "SELECT\n  e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "event_type"
+        },
+        "half": {
+          "__BLANK_0__": "e.event_type",
+          "__BLANK_1__": "event_type"
+        },
+        "blank": {
+          "__BLANK_0__": "e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids",
+          "__BLANK_1__": "event_log e",
+          "__BLANK_2__": "e.event_type",
+          "__BLANK_3__": "event_type"
+        }
+      },
+      "hint": "Event profiles often separate optional references from true defects.",
+      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY e.event_type ORDER BY event_type",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "event_type",
+          "total_rows",
+          "null_order_ids",
+          "null_customer_ids"
+        ],
+        "rowCount": 7,
+        "orderedRowHash": "88a537e0b2c5f98165ac7a61901decff87ad8cd55d69f1b34024bdaffeffe1fd",
+        "unorderedRowHash": "88a537e0b2c5f98165ac7a61901decff87ad8cd55d69f1b34024bdaffeffe1fd"
+      }
+    },
+    {
+      "id": "rv-profile-dirty-data-gh0frf",
+      "skill": "rv-profile-dirty-data",
+      "database": "rove",
+      "task": "Profile promo_redemption by promo_id with total_rows, nonpositive_discounts, and null_redeemed_at. Return columns: promo_id, total_rows, nonpositive_discounts, null_redeemed_at. Order by: promo_id.",
+      "starterSql": {
+        "full": "SELECT\n  pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "promo_id"
+        },
+        "half": {
+          "__BLANK_0__": "promo_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at",
+          "__BLANK_1__": "promo_redemption pr",
+          "__BLANK_2__": "pr.promo_id",
+          "__BLANK_3__": "promo_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Profile redemption defects with FILTER counts before trusting discount analysis.",
+      "expectedSql": "SELECT\n  pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY promo_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "promo_id",
+          "total_rows",
+          "nonpositive_discounts",
+          "null_redeemed_at"
+        ],
+        "rowCount": 39,
+        "orderedRowHash": "bd5166f93fb6c697ab3ea9573fc9ee915d0bdb8df96812822001a6f7f989196e",
+        "unorderedRowHash": "05cc220a944b68d9884f21f85e174ae46933893d3f8c49843511f04de4de241d"
+      }
+    },
+    {
+      "id": "rv-profile-dirty-data-1xgfejz",
+      "skill": "rv-profile-dirty-data",
+      "database": "rove",
+      "task": "Profile orders by status with total_rows, null_accepted_at, null_delivered_at, and blank_promo_codes. Return columns: status, total_rows, null_accepted_at, null_delivered_at, blank_promo_codes. Order by: status.",
+      "starterSql": {
+        "full": "SELECT\n  o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT\n  o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "status"
+        },
+        "half": {
+          "__BLANK_0__": "status",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.status",
+          "__BLANK_3__": "status",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "A status-level profile shows whether missing timestamps are expected or suspicious.",
+      "expectedSql": "SELECT\n  o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "status",
+          "total_rows",
+          "null_accepted_at",
+          "null_delivered_at",
+          "blank_promo_codes"
+        ],
+        "rowCount": 32,
+        "orderedRowHash": "0ddcfea7a08ca78f407097fdb584b9c664e8126e58e8e0db6c5c18c550d90f3c",
+        "unorderedRowHash": "b21a77463ea76ee02b4b8ddb9ae15aa259d5b76830344b9dbdeae74e524a7b86"
+      }
     }
   ],
   "rv-rank-leaderboard": [
     {
-      "id": "rv-rank-leaderboard-1d1t2yd",
+      "id": "rv-rank-leaderboard-1f7tjc9",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "For city 6, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 6 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 54,
+        "orderedRowHash": "107a87cb5c2dabcd885a1a90d0cce845d00fdbd91f78a3afaeb53e352e855788",
+        "unorderedRowHash": "107a87cb5c2dabcd885a1a90d0cce845d00fdbd91f78a3afaeb53e352e855788"
+      }
+    },
+    {
+      "id": "rv-rank-leaderboard-1ffsjex",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "For city 2, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 2 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 73,
+        "orderedRowHash": "138893b60816c73b20db4aa13c74ac3674139f87eb2b14647aa9b09bab0cdfda",
+        "unorderedRowHash": "138893b60816c73b20db4aa13c74ac3674139f87eb2b14647aa9b09bab0cdfda"
+      }
+    },
+    {
+      "id": "rv-rank-leaderboard-1o6n8eh",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "For city 8, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 8 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "ce8b3dbb0aa1bd6ae636959fc515df22e28ac0fbfad985b05fe2c8e92954f896",
+        "unorderedRowHash": "ce8b3dbb0aa1bd6ae636959fc515df22e28ac0fbfad985b05fe2c8e92954f896"
+      }
+    },
+    {
+      "id": "rv-rank-leaderboard-1sv6nmh",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "Build a courier leaderboard for city 5 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 5 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 160,
+        "orderedRowHash": "d24353492b6c91ad2ddd39e5d6a3e2b540a30391f9373a1b195eb425ed944226",
+        "unorderedRowHash": "fc1da34fc8237a9089bdb4aa23ff6efe9881631a7e3071e6a38a547973bd9f31"
+      }
+    },
+    {
+      "id": "rv-rank-leaderboard-5h2uwh",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "Build a courier leaderboard for city 7 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 7 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 92,
+        "orderedRowHash": "f358060989e04c28156588220cb63646c27b14871e37e9f6beed140750cda47b",
+        "unorderedRowHash": "f358060989e04c28156588220cb63646c27b14871e37e9f6beed140750cda47b"
+      }
+    },
+    {
+      "id": "rv-rank-leaderboard-hj9e4p",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "For city 4, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 4 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 60,
+        "orderedRowHash": "aecff83407c84f0ee8eb34a7080a156fbfcc39aca0dcfe5ab402f9951368fa72",
+        "unorderedRowHash": "aecff83407c84f0ee8eb34a7080a156fbfcc39aca0dcfe5ab402f9951368fa72"
+      }
+    },
+    {
+      "id": "rv-rank-leaderboard-o1f7j5",
       "skill": "rv-rank-leaderboard",
       "database": "rove",
       "task": "Build a courier leaderboard for city 3 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
@@ -623,22 +4715,66 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "13a86529219a7addaf7cb17e8d68a1e3717da3321d987762aa4e253e01733c87",
         "unorderedRowHash": "13a86529219a7addaf7cb17e8d68a1e3717da3321d987762aa4e253e01733c87"
       }
+    },
+    {
+      "id": "rv-rank-leaderboard-u3bjjd",
+      "skill": "rv-rank-leaderboard",
+      "database": "rove",
+      "task": "Build a courier leaderboard for city 1 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = __BLANK_0__ AND c.status = 'active' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "home_city_id",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "home_city_id, courier_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_1__": "couriers c",
+          "__BLANK_2__": "c.home_city_id = 1 AND c.status = 'active'",
+          "__BLANK_3__": "home_city_id, courier_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
+      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "home_city_id",
+          "lifetime_deliveries",
+          "delivery_rank"
+        ],
+        "rowCount": 60,
+        "orderedRowHash": "6d40358941c320695f322641bec0c31083bbe9a70501d92f31f171d51372ed3b",
+        "unorderedRowHash": "a94260fc0bd0fa8ef7c9acb5029542e4e109f068ed05e4666703317c980d5b63"
+      }
     }
   ],
   "rv-rating-outlier-clean": [
     {
-      "id": "rv-rating-outlier-clean-1ea9att",
+      "id": "rv-rating-outlier-clean-1798vxa",
       "skill": "rv-rating-outlier-clean",
       "database": "rove",
-      "task": "Clean rating outliers in city 10, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "task": "For city 8, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
       "starterSql": {
         "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 10 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "10",
+          "__BLANK_0__": "8",
           "__BLANK_1__": "courier_id"
         },
         "half": {
@@ -649,14 +4785,236 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
-          "__BLANK_2__": "o.city_id = 10 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_2__": "o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
           "__BLANK_4__": "courier_id",
           "__BLANK_5__": "200"
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 10 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "cc643767e494fc004bc538612df4b3bf29030fed8d6f691e4593b5754d86f27a",
+        "unorderedRowHash": "cc643767e494fc004bc538612df4b3bf29030fed8d6f691e4593b5754d86f27a"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-1c80gxi",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "For city 6, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 105,
+        "orderedRowHash": "00713f5f0672e8c59303bf765b1908961e8c4a017c6cf421c1d55db040422d49",
+        "unorderedRowHash": "00713f5f0672e8c59303bf765b1908961e8c4a017c6cf421c1d55db040422d49"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-1wumm2u",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "Clean rating outliers in city 5, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND __BLANK_1__ AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 5 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "5",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 5 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 5 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "206f27edd7459845d9ca1d3f370cd872135c5fd96613bb226ae331bd6fae26dc",
+        "unorderedRowHash": "d314cc7b28fbac9a8e62180d6169def1b6a48cf7460f83aae95fbcc1c2395ac0"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-49q4u",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "For city 2, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), __BLANK_0__) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_1__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "2",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 139,
+        "orderedRowHash": "75e256cd4adc8c2d115f178c38ef84cb9dbe1dd55305f880b535c73095930a8d",
+        "unorderedRowHash": "75e256cd4adc8c2d115f178c38ef84cb9dbe1dd55305f880b535c73095930a8d"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-i1csee",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "Clean rating outliers in city 7, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 7 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 7 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 7 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 175,
+        "orderedRowHash": "b5f3285a786cda137f9b88652c8f063ec5a19ff3de3ce7cf7cdba719d9be1971",
+        "unorderedRowHash": "b5f3285a786cda137f9b88652c8f063ec5a19ff3de3ce7cf7cdba719d9be1971"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-m8w552",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "For city 4, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -666,14 +5024,230 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "rating_count"
         ],
         "rowCount": 134,
-        "orderedRowHash": "4e8f67fc54cb8711a2d1afb6e3faa852d8cf83ed1b964ab34ae1e966a5da76ae",
-        "unorderedRowHash": "4e8f67fc54cb8711a2d1afb6e3faa852d8cf83ed1b964ab34ae1e966a5da76ae"
+        "orderedRowHash": "8bbb4f67060292cc4c0755482c5af3a3531a913a5ce37a81e7bb1766c1573517",
+        "unorderedRowHash": "8bbb4f67060292cc4c0755482c5af3a3531a913a5ce37a81e7bb1766c1573517"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-tzlwji",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "Clean rating outliers in city 1, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN __BLANK_1__ AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 1 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "1",
+          "__BLANK_2__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 1 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 1 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 119,
+        "orderedRowHash": "7eeeaefcc55b72945e1d45580db6b4cd2425b0c092a4bcc6b25f8dd6c1037aed",
+        "unorderedRowHash": "935ad84a696453df9b31268660d96ed1bd799f89715e5b6fa1ecc86659f5950d"
+      }
+    },
+    {
+      "id": "rv-rating-outlier-clean-v35slq",
+      "skill": "rv-rating-outlier-clean",
+      "database": "rove",
+      "task": "Clean rating outliers in city 3, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "starterSql": {
+        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 3 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "courier_id"
+        },
+        "half": {
+          "__BLANK_0__": "r.courier_id",
+          "__BLANK_1__": "courier_id",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
+          "__BLANK_2__": "o.city_id = 3 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
+          "__BLANK_3__": "r.courier_id",
+          "__BLANK_4__": "courier_id",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
+      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 3 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "courier_id",
+          "avg_stars",
+          "rating_count"
+        ],
+        "rowCount": 93,
+        "orderedRowHash": "5612333c8b1ccb5765f828214c259fcbdfd24acd4d778eb5ab93b7a17a00a372",
+        "unorderedRowHash": "5612333c8b1ccb5765f828214c259fcbdfd24acd4d778eb5ab93b7a17a00a372"
       }
     }
   ],
   "rv-recursive-cte": [
     {
-      "id": "rv-recursive-cte-1bbcwgg",
+      "id": "rv-recursive-cte-10fv9t2",
+      "skill": "rv-recursive-cte",
+      "database": "rove",
+      "task": "Walk cleaned categories and return category_id, name, depth, and path_ids. Return columns: category_id, name, depth, path_ids. Order by: category_id.",
+      "starterSql": {
+        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, __BLANK_2__::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_3__, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_4__",
+        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "category_id",
+          "__BLANK_1__": "category_id",
+          "__BLANK_2__": "category_id",
+          "__BLANK_3__": "category_id",
+          "__BLANK_4__": "category_id"
+        },
+        "half": {
+          "__BLANK_0__": "category_id"
+        },
+        "blank": {
+          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids",
+          "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk",
+          "__BLANK_2__": "category_id"
+        }
+      },
+      "hint": "Carry a text path_ids value through each recursive child step.",
+      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY category_id",
+      "orderMatters": true,
+      "rowCeiling": 60,
+      "fingerprint": {
+        "columns": [
+          "category_id",
+          "name",
+          "depth",
+          "path_ids"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "47834cf6bcc8fe9cd0f470aee2e7d40e5ffb19214c64761140955a0c8c7910c8",
+        "unorderedRowHash": "ed34ec7382109d9d629c04cca4a6f5f1c5c21fcfaf5db2a3b2584b246d960731"
+      }
+    },
+    {
+      "id": "rv-recursive-cte-1oh87f5",
+      "skill": "rv-recursive-cte",
+      "database": "rove",
+      "task": "Walk cleaned category roots and return category_id, name, depth, and path. Return columns: category_id, name, depth, path. Order by: category_id.",
+      "starterSql": {
+        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_3__",
+        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "category_id",
+          "__BLANK_1__": "category_id",
+          "__BLANK_2__": "category_id",
+          "__BLANK_3__": "category_id"
+        },
+        "half": {
+          "__BLANK_0__": "category_id"
+        },
+        "blank": {
+          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path",
+          "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk",
+          "__BLANK_2__": "category_id"
+        }
+      },
+      "hint": "Concatenate the parent path with each child name during the recursive step.",
+      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY category_id",
+      "orderMatters": true,
+      "rowCeiling": 60,
+      "fingerprint": {
+        "columns": [
+          "category_id",
+          "name",
+          "depth",
+          "path"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "463ba2fbf8ad4291c196f08b98b8ce24e7faa964c82c475f8b8a245c9a3edf10",
+        "unorderedRowHash": "644bdb6b98eaaf1f047b733bd39bc2790b52b0eefec704b787a5046078ffb02d"
+      }
+    },
+    {
+      "id": "rv-recursive-cte-8xp99j",
+      "skill": "rv-recursive-cte",
+      "database": "rove",
+      "task": "Clean dangling category parents, then walk all roots and return category_id, name, parent_category_id, and depth. Return columns: category_id, name, parent_category_id, depth. Order by: category_id.",
+      "starterSql": {
+        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_3__",
+        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "category_id",
+          "__BLANK_1__": "category_id",
+          "__BLANK_2__": "category_id",
+          "__BLANK_3__": "category_id"
+        },
+        "half": {
+          "__BLANK_0__": "category_id"
+        },
+        "blank": {
+          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth",
+          "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk",
+          "__BLANK_2__": "category_id"
+        }
+      },
+      "hint": "The cleaned CTE nulls dangling parents before the recursive tree walk.",
+      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY category_id",
+      "orderMatters": true,
+      "rowCeiling": 60,
+      "fingerprint": {
+        "columns": [
+          "category_id",
+          "name",
+          "parent_category_id",
+          "depth"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "c9246eca859f55f7b21c880e0aab88c8009a5a1f6bbaa52b36c17f3cac9534c2",
+        "unorderedRowHash": "75c2902c12db921001348542b8eb26cec6be92c9b9fdce90abba016fceecda55"
+      }
+    },
+    {
+      "id": "rv-recursive-cte-169gz2p",
       "skill": "rv-recursive-cte",
       "database": "rove",
       "task": "Walk the category tree from its cleaned root and return category_id, name, depth, and path. Return columns: category_id, name, depth, path. Order by: category_id.",
@@ -713,22 +5287,63 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "a9eddd8c8805f4ec38211e65529b351459789a28de54920aa36661939bea21cc",
         "unorderedRowHash": "08d544a8623970b760c065e6c3f7eee2679cfcc3238f50259e8053f83cbeda10"
       }
+    },
+    {
+      "id": "rv-recursive-cte-loqaah",
+      "skill": "rv-recursive-cte",
+      "database": "rove",
+      "task": "Walk cleaned categories and return category_id, name, depth, and is_leaf. Return columns: category_id, name, depth, is_leaf. Order by: category_id.",
+      "starterSql": {
+        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_2__",
+        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "category_id",
+          "__BLANK_1__": "category_id",
+          "__BLANK_2__": "category_id"
+        },
+        "half": {
+          "__BLANK_0__": "category_id"
+        },
+        "blank": {
+          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf",
+          "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk",
+          "__BLANK_2__": "category_id"
+        }
+      },
+      "hint": "After the recursive walk, NOT EXISTS can identify categories without cleaned children.",
+      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY category_id",
+      "orderMatters": true,
+      "rowCeiling": 60,
+      "fingerprint": {
+        "columns": [
+          "category_id",
+          "name",
+          "depth",
+          "is_leaf"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "f464c3ed4ea4ce8c3a300384481d2a0db49d29b4d8c61439a543d96ee20895a9",
+        "unorderedRowHash": "caf8c7bd27f212dd3d59de9fa1f138826009cdd2dd6e0881a2c48a2633196d01"
+      }
     }
   ],
   "rv-regex-clean-contacts": [
     {
-      "id": "rv-regex-clean-contacts-b3pp2r",
+      "id": "rv-regex-clean-contacts-1bwns96",
       "skill": "rv-regex-clean-contacts",
       "database": "rove",
-      "task": "For signup city 15, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "task": "Regex-clean contacts in city 2: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 15 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "15",
+          "__BLANK_0__": "2",
           "__BLANK_1__": "customer_id"
         },
         "half": {
@@ -738,13 +5353,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
-          "__BLANK_2__": "c.signup_city_id = 15 AND c.phone IS NOT NULL",
+          "__BLANK_2__": "c.signup_city_id = 2 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
           "__BLANK_4__": "200"
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 15 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -753,15 +5368,309 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "phone_digits",
           "clean_email"
         ],
-        "rowCount": 96,
-        "orderedRowHash": "78ad9be47749e7ce061bd34ba87c83241d0732a0aa117927de1aaf24ecac1bf5",
-        "unorderedRowHash": "78ad9be47749e7ce061bd34ba87c83241d0732a0aa117927de1aaf24ecac1bf5"
+        "rowCount": 200,
+        "orderedRowHash": "1de893380074cd20d7f0010dc1a1c6d0b236e0d6390e83d1d627fbbc1b217d8a",
+        "unorderedRowHash": "1de893380074cd20d7f0010dc1a1c6d0b236e0d6390e83d1d627fbbc1b217d8a"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-1bxub5e",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "For signup city 7, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 7 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "0c37ff3b73a909ce1c0d31d2cf2575f2a83a45d7d6142bbc719dd156776c8993",
+        "unorderedRowHash": "0c37ff3b73a909ce1c0d31d2cf2575f2a83a45d7d6142bbc719dd156776c8993"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-1ws0sji",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "Regex-clean contacts in city 8: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 8 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "a3f6efee31a04b1abc96dd5e51a4574f67258e6636cc05feb4f0c17af46a470e",
+        "unorderedRowHash": "a3f6efee31a04b1abc96dd5e51a4574f67258e6636cc05feb4f0c17af46a470e"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-9n6gau",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "For signup city 5, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 5 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "0b4a390b8c21745470503cfd0a024a0935502108cc736631a68e53914d33f3b1",
+        "unorderedRowHash": "0b4a390b8c21745470503cfd0a024a0935502108cc736631a68e53914d33f3b1"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-lzwg6m",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "Regex-clean contacts in city 4: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 4 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "115ea27755f5239f8a6ad35eae923b3812b5db2eea5d15902704555e26d8ff62",
+        "unorderedRowHash": "115ea27755f5239f8a6ad35eae923b3812b5db2eea5d15902704555e26d8ff62"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-nira6u",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "For signup city 1, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 1 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "604580c0d8011d6b9d9676542125c141f5a66082389f3e6552fc450fdab0a98d",
+        "unorderedRowHash": "670317aa7885a511c7d8d4e8296fff7fbf6c0c36be1feb5efa6b49fa5fe54d42"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-vp8phm",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "For signup city 3, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 3 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8555078c58cb71c7bc97a1bbf0d3d5ed64d12649e56d7c12508149e0d5e4b845",
+        "unorderedRowHash": "8555078c58cb71c7bc97a1bbf0d3d5ed64d12649e56d7c12508149e0d5e4b845"
+      }
+    },
+    {
+      "id": "rv-regex-clean-contacts-vq601u",
+      "skill": "rv-regex-clean-contacts",
+      "database": "rove",
+      "task": "Regex-clean contacts in city 6: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 6 AND c.phone IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "phone_digits",
+          "clean_email"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "07ff20162c8cda28e1bc29d92cd048c449fb5988acaab6662c238bd5857ef40b",
+        "unorderedRowHash": "07ff20162c8cda28e1bc29d92cd048c449fb5988acaab6662c238bd5857ef40b"
       }
     }
   ],
   "rv-retention-cohort": [
     {
-      "id": "rv-retention-cohort-1vgvwhq",
+      "id": "rv-retention-cohort-1jva185",
       "skill": "rv-retention-cohort",
       "database": "rove",
       "task": "Build a retention cohort rollup for city 5: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
@@ -802,17 +5711,318 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "fe07f0c6897f5f420bb6b545037070ed7736db1581fcff37a69fcabee9fe46f2",
         "unorderedRowHash": "fe07f0c6897f5f420bb6b545037070ed7736db1581fcff37a69fcabee9fe46f2"
       }
+    },
+    {
+      "id": "rv-retention-cohort-3gi8yt",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "For signup city 8, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 8 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 8 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 8 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "462d244ccfe49271137dfb1cc3251c93569c5572a8f0e2126ad43ec5fca5aa4c",
+        "unorderedRowHash": "462d244ccfe49271137dfb1cc3251c93569c5572a8f0e2126ad43ec5fca5aa4c"
+      }
+    },
+    {
+      "id": "rv-retention-cohort-548i7p",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "For signup city 6, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 6 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 6 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 6 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "a97dae1bc2e25357112aa079fc20c57383c5a98260e6a195e677fb0518a28f7c",
+        "unorderedRowHash": "a97dae1bc2e25357112aa079fc20c57383c5a98260e6a195e677fb0518a28f7c"
+      }
+    },
+    {
+      "id": "rv-retention-cohort-9aoml1",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "For signup city 2, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 2 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 2 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 2 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "8a12ffed85a2fb00a724dd78ad70f5fcc4c095671c0cc178f5e7d3c0a4a7583b",
+        "unorderedRowHash": "8a12ffed85a2fb00a724dd78ad70f5fcc4c095671c0cc178f5e7d3c0a4a7583b"
+      }
+    },
+    {
+      "id": "rv-retention-cohort-d00klh",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "Build a retention cohort rollup for city 1: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 1 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 1 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 1 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "d9ca6b705fee5c1f4a55c076cdd91319fe960e6fb216b6768372e3bec46df512",
+        "unorderedRowHash": "d9ca6b705fee5c1f4a55c076cdd91319fe960e6fb216b6768372e3bec46df512"
+      }
+    },
+    {
+      "id": "rv-retention-cohort-jrgpad",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "For signup city 4, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 4 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 4 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 4 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "509aed1723809300aed5c53e260ef5fe33727d7de88aac56871d28e45d3785e8",
+        "unorderedRowHash": "509aed1723809300aed5c53e260ef5fe33727d7de88aac56871d28e45d3785e8"
+      }
+    },
+    {
+      "id": "rv-retention-cohort-koq3al",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "Build a retention cohort rollup for city 7: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 7 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 7 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 7 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "11fca8754edd241a2fe49f1adc9676a731b36e0eea996d26683ee99eec578b96",
+        "unorderedRowHash": "11fca8754edd241a2fe49f1adc9676a731b36e0eea996d26683ee99eec578b96"
+      }
+    },
+    {
+      "id": "rv-retention-cohort-xlk5kt",
+      "skill": "rv-retention-cohort",
+      "database": "rove",
+      "task": "Build a retention cohort rollup for city 3: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "starterSql": {
+        "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 3 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "signup_ts"
+        },
+        "half": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_1__": "signup_ts",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers",
+          "__BLANK_1__": "customers c\nJOIN orders o ON o.customer_id = c.customer_id",
+          "__BLANK_2__": "c.signup_city_id = 3 AND c.is_deleted = false",
+          "__BLANK_3__": "date_trunc('month', c.signup_ts)",
+          "__BLANK_4__": "signup_ts",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "date_trunc('month', signup_ts) is the cohort month; date_trunc('month', placed_at) is the activity month.",
+      "expectedSql": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 3 AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY signup_ts LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 150,
+      "fingerprint": {
+        "columns": [
+          "signup_ts",
+          "active_customers"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "b8db589667b61667c7c152e2196397139eb170ba16b30b41fd40604dc20d9d5b",
+        "unorderedRowHash": "b8db589667b61667c7c152e2196397139eb170ba16b30b41fd40604dc20d9d5b"
+      }
     }
   ],
   "rv-running-total": [
     {
-      "id": "rv-running-total-vdwqk",
+      "id": "rv-running-total-13ilzx7",
       "skill": "rv-running-total",
       "database": "rove",
-      "task": "Add a city-level running_gross_cents window value to the bounded order rows for city 1. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
-        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -828,13 +6038,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
-          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
           "__BLANK_4__": "100"
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-02-01T14:21:46.000Z'::timestamp\n  AND o.placed_at < '2020-02-01T14:21:46.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T20:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T20:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -846,14 +6056,419 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "running_gross_cents"
         ],
         "rowCount": 100,
-        "orderedRowHash": "040dadace931b19b7c8bf6260141997e5fab50d840d43aeb542017aadab6aee4",
-        "unorderedRowHash": "9a45dbee363451372bb4256997917560ff06023750a0ae5a9b582450de11cdff"
+        "orderedRowHash": "0d128922263174ce1bec6df9ceaeaebd6a1571cd676058218ab45b4d897f65f7",
+        "unorderedRowHash": "cc4863dbad778f5a94b9178a1c4324b0ab59142f12ca1f76e676b8b8746c437c"
+      }
+    },
+    {
+      "id": "rv-running-total-148svol",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "Add a city-level running_gross_cents window value to the bounded order rows for city 1. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "1f1642f1b34361438b927c738ed9e5b5aa8f3f6bce2351efe4d3f882f2713ec9",
+        "unorderedRowHash": "3f87d46132ace3abbf553e36d12b80c435b05074b1b14451bb10c72cbccd76dd"
+      }
+    },
+    {
+      "id": "rv-running-total-1nbckzw",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T17:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T17:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "db1c8843d412eb69bfe5f1d2ac48c94517699d98e153a2caebe91e8b50f56f3f",
+        "unorderedRowHash": "c4119013016e8af689795b53ce0f01a25e5cd16a3264e52f85626a5a6298c3f8"
+      }
+    },
+    {
+      "id": "rv-running-total-1wawpn1",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "Add a city-level running_gross_cents window value to the bounded order rows for city 1. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T20:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T20:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "5aab70daa4f9750d2c0f9a29d5ad7f51c198c3f08a87547a2d7b1e4ec79db5d3",
+        "unorderedRowHash": "7d4d80bd9ae76c7c063c92a9d4a0247bd65daf585d0d98fefe7ee18ff11e51ad"
+      }
+    },
+    {
+      "id": "rv-running-total-1wurpre",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "Add a city-level running_gross_cents window value to the bounded order rows for city 1. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T11:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T11:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "dbf2b98e3faf233252c598bab75ed434829697f271734a569f513a702acbd9ad",
+        "unorderedRowHash": "dd248b786efefe52f9d2fa743096275f858d3919d94fa804d4e4571106a1e045"
+      }
+    },
+    {
+      "id": "rv-running-total-9bnl3i",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "063104e5eea44da919f709f82737719b17eb8562da6e49464c886516b8525424",
+        "unorderedRowHash": "bea4c2b0d32b7b448b7d35d19d9b6b2e4915f4bc90ab1edcae17ffad0fc596df"
+      }
+    },
+    {
+      "id": "rv-running-total-eibp8v",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "Add a city-level running_gross_cents window value to the bounded order rows for city 1. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T16:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T16:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "07bbeeb55f989540dcab68a1131ff078a6e396266ef0dc6ed796168919491639",
+        "unorderedRowHash": "b2a2878e7229011b13a9a5c364b9569be18cbbb9799b5a49fabf560319239c43"
+      }
+    },
+    {
+      "id": "rv-running-total-wz0l1a",
+      "skill": "rv-running-total",
+      "database": "rove",
+      "task": "For city 1 over a 30-day window, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 100",
+        "half": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, order_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_1__": "orders o",
+          "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days'",
+          "__BLANK_3__": "city_id, order_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T21:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T21:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "city_id",
+          "placed_at",
+          "amount_cents",
+          "running_gross_cents"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "d3de5f681a03d42a4b46459715ee354ff46f43a9fa5276748a5732ffbf98f81e",
+        "unorderedRowHash": "da8cc28354b9315d7f3bd93e3ce085e2ab26304d475e20d300c67e8ac3964db1"
       }
     }
   ],
   "rv-sessionization": [
     {
-      "id": "rv-sessionization-1x1n91o",
+      "id": "rv-sessionization-151ua38",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "Sessionize events in city 5; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "88715fdb42d5bd980242188ca5e58f037ea82bf4ef5a03096b1218896372d51c",
+        "unorderedRowHash": "88715fdb42d5bd980242188ca5e58f037ea82bf4ef5a03096b1218896372d51c"
+      }
+    },
+    {
+      "id": "rv-sessionization-18szndk",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "For city 4, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "9a22f94eb7e246b0dd56e837ea506622216ebd2b24fbb0c6d1be7ff81db05344",
+        "unorderedRowHash": "9a22f94eb7e246b0dd56e837ea506622216ebd2b24fbb0c6d1be7ff81db05344"
+      }
+    },
+    {
+      "id": "rv-sessionization-1ox8ylg",
       "skill": "rv-sessionization",
       "database": "rove",
       "task": "Sessionize events in city 1; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
@@ -897,14 +6512,454 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "66cd73f982217df9aa6d58444dd4918a9b0c646d0ccaa526f901c8ae4e09a65f",
         "unorderedRowHash": "66cd73f982217df9aa6d58444dd4918a9b0c646d0ccaa526f901c8ae4e09a65f"
       }
+    },
+    {
+      "id": "rv-sessionization-1v9ling",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "Sessionize events in city 3; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "27dd04ca1db47125143066195536fd1ddecef0f634216cbc2c31dc8ddff015f2",
+        "unorderedRowHash": "27dd04ca1db47125143066195536fd1ddecef0f634216cbc2c31dc8ddff015f2"
+      }
+    },
+    {
+      "id": "rv-sessionization-1v9ozs0",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "For city 8, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "3a3b49fc49c8b4adb6248f594cb5e332938011b6bbad8a6af060732b47294a22",
+        "unorderedRowHash": "3a3b49fc49c8b4adb6248f594cb5e332938011b6bbad8a6af060732b47294a22"
+      }
+    },
+    {
+      "id": "rv-sessionization-1w0qax8",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "Sessionize events in city 7; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "5c79682c1ee24984ac71667e9909561da8cd7a36836718279a05ea170e081698",
+        "unorderedRowHash": "5c79682c1ee24984ac71667e9909561da8cd7a36836718279a05ea170e081698"
+      }
+    },
+    {
+      "id": "rv-sessionization-5vzqsg",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "For city 6, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "9e2fef087f50f92a61054c41ba787a2d458ac947181f710d2816abda19d8c4d8",
+        "unorderedRowHash": "9e2fef087f50f92a61054c41ba787a2d458ac947181f710d2816abda19d8c4d8"
+      }
+    },
+    {
+      "id": "rv-sessionization-ens9c8",
+      "skill": "rv-sessionization",
+      "database": "rove",
+      "task": "For city 2, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "starterSql": {
+        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
+        "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "session_id"
+        },
+        "half": {
+          "__BLANK_0__": "session_id",
+          "__BLANK_1__": "100"
+        },
+        "blank": {
+          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned",
+          "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
+          "__BLANK_3__": "session_id",
+          "__BLANK_4__": "100"
+        }
+      },
+      "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
+      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "orderMatters": true,
+      "rowCeiling": 100,
+      "fingerprint": {
+        "columns": [
+          "session_id",
+          "customer_id",
+          "session_seq",
+          "session_start",
+          "session_end",
+          "event_count"
+        ],
+        "rowCount": 100,
+        "orderedRowHash": "31ce881b5e4844c40c9af7e3c4713550f7e3c42c1d19f6ec2e8aa81dd59f04a5",
+        "unorderedRowHash": "31ce881b5e4844c40c9af7e3c4713550f7e3c42c1d19f6ec2e8aa81dd59f04a5"
+      }
     }
   ],
   "rv-soft-delete-valid": [
     {
-      "id": "rv-soft-delete-valid-nlo1r0",
+      "id": "rv-soft-delete-valid-118cbwr",
       "skill": "rv-soft-delete-valid",
       "database": "rove",
-      "task": "For city 2, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "task": "Report non-deleted support ticket counts by category for city 8. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 8 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 8 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 8 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "5a53c387b2a85ee7af1ca45170862592143f2d8c08ee2d3ea95099a13f339e1e",
+        "unorderedRowHash": "f9af84f339c08e709923ec40526eb1555f1a84a4262063917ba43defeb58a08b"
+      }
+    },
+    {
+      "id": "rv-soft-delete-valid-12cmmz3",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "For city 5, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 5 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 5 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 5 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "99c8bfb03ebcd26d99089558fe1bac3996c4144d9e57527f5a2004b9afed9248",
+        "unorderedRowHash": "b469f2ebb4aa5e7dd75ac14859aa89517ca3852dbf0f12c6493599a5c4c029d9"
+      }
+    },
+    {
+      "id": "rv-soft-delete-valid-131v69r",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "For city 3, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 3 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 3 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 3 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 146,
+        "orderedRowHash": "53088f22ed3206c7a63bacf413dc66835cb5b49265112433fdb0ede690a530b8",
+        "unorderedRowHash": "4e8e380d461b7b0de4c8838f76cf36230f8f7923d93a2db3fdd1ef474d724f2f"
+      }
+    },
+    {
+      "id": "rv-soft-delete-valid-151ze2f",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "For city 7, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 7 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 7 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 7 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 198,
+        "orderedRowHash": "6c07afe52f72a4bc0d1e621ee22f41d9fab9252e9a0b92a6e414036490cb1ff8",
+        "unorderedRowHash": "61ab8a97bbed58248d5e2bfb736b69fe86a981b75bba7f66631e3bddce7f9f3d"
+      }
+    },
+    {
+      "id": "rv-soft-delete-valid-1n1n4r",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "Report non-deleted support ticket counts by category for city 4. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 4 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 4 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 4 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 174,
+        "orderedRowHash": "5f0e8dbf1e0ea4b58e0baf50639fedd12132c85a7137950f7a6b28f1733beeb9",
+        "unorderedRowHash": "aba8a49fd398bc9d52ea2bae95d550b75c3bb4b5737dcd1d896dc4ff5c5e4ce3"
+      }
+    },
+    {
+      "id": "rv-soft-delete-valid-a078uz",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "Report non-deleted support ticket counts by category for city 2. Return columns: category, valid_tickets. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 2 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -942,14 +6997,346 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "17e762a3a54098f921af84ec1e876461f499a88fd55a0110b9e11ea5c875c068",
         "unorderedRowHash": "4fa2eed697399a526016385ef4b3d5bdc9b04d6ca2766ba01bbb078f3cf859d2"
       }
+    },
+    {
+      "id": "rv-soft-delete-valid-ifof0n",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "For city 1, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 1 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 1 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 1 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 168,
+        "orderedRowHash": "78473822e9610c67516aad30bb51930ce42cf55a179eeb2d0848628476601e0c",
+        "unorderedRowHash": "725f818e0b732b480f24631613f0e6c69a18de468dfb92b71b5852fa3ed020c1"
+      }
+    },
+    {
+      "id": "rv-soft-delete-valid-lia8t7",
+      "skill": "rv-soft-delete-valid",
+      "database": "rove",
+      "task": "Report non-deleted support ticket counts by category for city 6. Return columns: category, valid_tickets. Order by: category.",
+      "starterSql": {
+        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 6 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "category"
+        },
+        "half": {
+          "__BLANK_0__": "t.category",
+          "__BLANK_1__": "category",
+          "__BLANK_2__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
+          "__BLANK_2__": "o.city_id = 6 AND t.is_deleted = false",
+          "__BLANK_3__": "t.category",
+          "__BLANK_4__": "category",
+          "__BLANK_5__": "200"
+        }
+      },
+      "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
+      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 6 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "category",
+          "valid_tickets"
+        ],
+        "rowCount": 160,
+        "orderedRowHash": "ff582d7fcfe235073f47a85fb7f65fc1b798a5ac7ec7dd7dbfc632968bd492a2",
+        "unorderedRowHash": "eaf6157e1d6984a8d6b6dd62d1ec39d47935a79e5f980b820a6513120c0cd80f"
+      }
     }
   ],
   "rv-text-normalize": [
     {
-      "id": "rv-text-normalize-19g55jz",
+      "id": "rv-text-normalize-163ssmk",
       "skill": "rv-text-normalize",
       "database": "rove",
-      "task": "For signup city 2, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "task": "Normalize customer names in signup city 8 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 8 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "bc2c85960baf0da18ec0e01f66381157880b4a386cc3496fabf52f2abfa5febd",
+        "unorderedRowHash": "bc2c85960baf0da18ec0e01f66381157880b4a386cc3496fabf52f2abfa5febd"
+      }
+    },
+    {
+      "id": "rv-text-normalize-16mol6e",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "For signup city 1, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 1 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "720f0e0412550960a00539a1d8de36f1136c032652003a8870e7f6f991a1bea9",
+        "unorderedRowHash": "6c58d0fdbbb7ce69462dc570795e7712eb5e9a93fca366ddae1a1a2de47deb9b"
+      }
+    },
+    {
+      "id": "rv-text-normalize-1itr466",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "For signup city 7, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 7 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "c77d0ba3b61bb2b479979e2afdb92b54ae05ba9d0fe19dc6522fb43de7fc3432",
+        "unorderedRowHash": "c77d0ba3b61bb2b479979e2afdb92b54ae05ba9d0fe19dc6522fb43de7fc3432"
+      }
+    },
+    {
+      "id": "rv-text-normalize-1k2mczy",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "For signup city 5, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 5 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "59f8c130753162accd48cfed58a998dc5086fa4b5d35fb2fb8fe89740fc3f0e3",
+        "unorderedRowHash": "59f8c130753162accd48cfed58a998dc5086fa4b5d35fb2fb8fe89740fc3f0e3"
+      }
+    },
+    {
+      "id": "rv-text-normalize-6za06o",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "Normalize customer names in signup city 6 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 6 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "e879df6e36c2dd68a4e44290f6f82db2f1e13ad571f11021f645e84841d54530",
+        "unorderedRowHash": "e879df6e36c2dd68a4e44290f6f82db2f1e13ad571f11021f645e84841d54530"
+      }
+    },
+    {
+      "id": "rv-text-normalize-fs4uty",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "For signup city 3, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 3 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "4c95a82bb7e1317cbffa5f16ac59d351faba4f8d1c2043b1b0f2a3f7aa500eef",
+        "unorderedRowHash": "4c95a82bb7e1317cbffa5f16ac59d351faba4f8d1c2043b1b0f2a3f7aa500eef"
+      }
+    },
+    {
+      "id": "rv-text-normalize-lujjwo",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "Normalize customer names in signup city 2 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 2 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -985,11 +7372,93 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "7aacb18305e1ce086d1f7fed86cd9666a271392129704f0cb88ede162de87816",
         "unorderedRowHash": "7aacb18305e1ce086d1f7fed86cd9666a271392129704f0cb88ede162de87816"
       }
+    },
+    {
+      "id": "rv-text-normalize-or4q0s",
+      "skill": "rv-text-normalize",
+      "database": "rove",
+      "task": "Normalize customer names in signup city 4 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "customer_id"
+        },
+        "half": {
+          "__BLANK_0__": "customer_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_1__": "customers c",
+          "__BLANK_2__": "c.signup_city_id = 4 AND c.full_name IS NOT NULL",
+          "__BLANK_3__": "customer_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
+      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "customer_id",
+          "clean_name"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "30d4d7dee9b4492c83ad1f073b034ae5a10f13cbeae64b82fdf0bf794abf43dd",
+        "unorderedRowHash": "30d4d7dee9b4492c83ad1f073b034ae5a10f13cbeae64b82fdf0bf794abf43dd"
+      }
     }
   ],
   "rv-timezone-city-join": [
     {
-      "id": "rv-timezone-city-join-9sgjc9",
+      "id": "rv-timezone-city-join-1kg8d0p",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Convert courier applied_at timestamps through the joined city timezone. Return columns: home_city_id, iana_timezone, first_application_utc, courier_count. Order by: home_city_id.",
+      "starterSql": {
+        "full": "SELECT\n  c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY c.home_city_id, ci.timezone ORDER BY __BLANK_0__",
+        "half": "SELECT\n  c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "home_city_id"
+        },
+        "half": {
+          "__BLANK_0__": "c.home_city_id, ci.timezone",
+          "__BLANK_1__": "home_city_id"
+        },
+        "blank": {
+          "__BLANK_0__": "c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count",
+          "__BLANK_1__": "couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id",
+          "__BLANK_2__": "c.home_city_id, ci.timezone",
+          "__BLANK_3__": "home_city_id"
+        }
+      },
+      "hint": "home_city_id determines which IANA timezone should convert applied_at.",
+      "expectedSql": "SELECT\n  c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY c.home_city_id, ci.timezone ORDER BY home_city_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "home_city_id",
+          "iana_timezone",
+          "first_application_utc",
+          "courier_count"
+        ],
+        "rowCount": 16,
+        "orderedRowHash": "2a5b1725f978023bcc032d7e9e80b0a4510d9ac0fc8f54837fe8f6b8833a87e1",
+        "unorderedRowHash": "4bef86e15d05ea05767e4912e92de93d910f4a0be99f4d78b99d23d5f1c3f900"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1sfwlsp",
       "skill": "rv-timezone-city-join",
       "database": "rove",
       "task": "Join city timezone data for every city and convert placed_at with AT TIME ZONE. Return columns: city_id, city_name, iana_timezone, earliest_utc_instant, orders_placed. Order by: city_id.",
@@ -1029,11 +7498,481 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "cec8a1b7789b2bbacf2c1d0a4ad322f446510ad8e4b33fe3fd772fcf505ab044",
         "unorderedRowHash": "7f0efda387a8a95d9ea763650803ccb860f42c89ae5a06d3941e9f9c2dc387df"
       }
+    },
+    {
+      "id": "rv-timezone-city-join-mtfkeq",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Join event_log to cities and convert event_ts with the city IANA timezone. Return columns: city_id, city_name, first_event_utc, event_count. Order by: city_id.",
+      "starterSql": {
+        "full": "SELECT\n  e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY e.city_id, ci.name ORDER BY __BLANK_0__",
+        "half": "SELECT\n  e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "city_id"
+        },
+        "half": {
+          "__BLANK_0__": "e.city_id, ci.name",
+          "__BLANK_1__": "city_id"
+        },
+        "blank": {
+          "__BLANK_0__": "e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count",
+          "__BLANK_1__": "event_log e\nJOIN cities ci ON ci.city_id = e.city_id",
+          "__BLANK_2__": "e.city_id, ci.name",
+          "__BLANK_3__": "city_id"
+        }
+      },
+      "hint": "The event timestamp is local to the city, so join to cities before converting.",
+      "expectedSql": "SELECT\n  e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY e.city_id, ci.name ORDER BY city_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "city_name",
+          "first_event_utc",
+          "event_count"
+        ],
+        "rowCount": 16,
+        "orderedRowHash": "66c7bbbaa46a49d01af3f5b6847328823db14ad5c902134c495364ac7ee3f034",
+        "unorderedRowHash": "4ae2d597c85a968a658612a0fad9badc10760a3c2ff227d485fa538b60b20a57"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-14mt1lj",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Join city timezone data to convert each order placed_at in city 5. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 5",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "411fc27429161e20ff6688b3517e34139bc96ee163cd055c657b5d87fca0c0cc",
+        "unorderedRowHash": "411fc27429161e20ff6688b3517e34139bc96ee163cd055c657b5d87fca0c0cc"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1bl05ff",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "For city 8, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 8",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "d9978661e118f8008f3cf388099d7d9dcbafe25c1ab93907c6599691d6d3bfcb",
+        "unorderedRowHash": "d9978661e118f8008f3cf388099d7d9dcbafe25c1ab93907c6599691d6d3bfcb"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1fkoyq3",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "For city 4, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 4",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "e605044ad6da951cb018800e937022202ee8decabf57230e4390cf39b0e42cb1",
+        "unorderedRowHash": "e605044ad6da951cb018800e937022202ee8decabf57230e4390cf39b0e42cb1"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1i0kyt3",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Join city timezone data to convert each order placed_at in city 3. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 3",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "150c6a0d7c895b74bceacf5a400e241cc33b65372ce37ee13a9951243fe558e9",
+        "unorderedRowHash": "150c6a0d7c895b74bceacf5a400e241cc33b65372ce37ee13a9951243fe558e9"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1kzjtg3",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "For city 2, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 2",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "33a4d3588ae9af442c83bb75f5db5c0119a64f761963e6b77305773ac227e553",
+        "unorderedRowHash": "33a4d3588ae9af442c83bb75f5db5c0119a64f761963e6b77305773ac227e553"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1o4i7rz",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Join city timezone data to convert each order placed_at in city 1. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 1",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "4d62f68bc784d27015a96e99ef5f5983f7d04a4bc5b163cc7a5d170bed394406",
+        "unorderedRowHash": "6e668a821e5c3e917c8308485028dd841eb3cc75f12c4c7759c523457962fcb5"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-1sv1q0v",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Join orders to cities and convert delivered_at to each city timezone before finding the latest delivery instant. Return columns: city_id, iana_timezone, latest_delivery_utc, delivered_orders. Order by: city_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY o.city_id, ci.timezone ORDER BY __BLANK_0__",
+        "half": "SELECT\n  o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "city_id"
+        },
+        "half": {
+          "__BLANK_0__": "o.city_id, ci.timezone",
+          "__BLANK_1__": "city_id"
+        },
+        "blank": {
+          "__BLANK_0__": "o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.delivered_at IS NOT NULL",
+          "__BLANK_3__": "o.city_id, ci.timezone",
+          "__BLANK_4__": "city_id"
+        }
+      },
+      "hint": "Use cities.timezone with AT TIME ZONE instead of the denormalized offset column.",
+      "expectedSql": "SELECT\n  o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY o.city_id, ci.timezone ORDER BY city_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "iana_timezone",
+          "latest_delivery_utc",
+          "delivered_orders"
+        ],
+        "rowCount": 15,
+        "orderedRowHash": "415b08a0d74e8426fe20a7c63ec47e0ed906d36569d93ae277d7871908803f1c",
+        "unorderedRowHash": "9332667f1575a8fb8527a17018e7da516d0ac319e1c7c1d70ad25fe07db31fe5"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-h736xb",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "Join city timezone data to convert each order placed_at in city 7. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 7",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "6607437cb898ca32e58c3d5bb906e519bfa57436dbde6c982bf2d198214c4e81",
+        "unorderedRowHash": "6607437cb898ca32e58c3d5bb906e519bfa57436dbde6c982bf2d198214c4e81"
+      }
+    },
+    {
+      "id": "rv-timezone-city-join-u25jv7",
+      "skill": "rv-timezone-city-join",
+      "database": "rove",
+      "task": "For city 6, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "starterSql": {
+        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "order_id"
+        },
+        "half": {
+          "__BLANK_0__": "order_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
+          "__BLANK_2__": "o.city_id = 6",
+          "__BLANK_3__": "order_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
+      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "order_id",
+          "local_placed_at",
+          "placed_utc",
+          "iana_timezone"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "1efdc596a0b7a6d2fd54183e9a7d5a74d051eef65e6e370b9f5a8b6fc489745f",
+        "unorderedRowHash": "1efdc596a0b7a6d2fd54183e9a7d5a74d051eef65e6e370b9f5a8b6fc489745f"
+      }
     }
   ],
   "rv-topn-per-group": [
     {
-      "id": "rv-topn-per-group-5b7a0f",
+      "id": "rv-topn-per-group-129alye",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "For city 7, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "8d9165fddd773b3c4308ae73275692d36276c1b889cd8090d4841352169b83ad",
+        "unorderedRowHash": "8d9165fddd773b3c4308ae73275692d36276c1b889cd8090d4841352169b83ad"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-19v12ke",
       "skill": "rv-topn-per-group",
       "database": "rove",
       "task": "For city 3, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
@@ -1074,6 +8013,264 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "rowCount": 3,
         "orderedRowHash": "37a904467b307dd03eb126a3995504712bd6a4e8ddd53d518ebd1b7b8dc69055",
         "unorderedRowHash": "37a904467b307dd03eb126a3995504712bd6a4e8ddd53d518ebd1b7b8dc69055"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-1p5x026",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "For city 1, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "a495639c9151ab84511b34e1e84592bebc9382e7995a90f93a25fb433c5cd763",
+        "unorderedRowHash": "a495639c9151ab84511b34e1e84592bebc9382e7995a90f93a25fb433c5cd763"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-1tl6rt2",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "For city 5, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "5",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "2a978ee950a26c98095f06c0843a18ad7680a1b607395c2cbe5f90307548f56a",
+        "unorderedRowHash": "2a978ee950a26c98095f06c0843a18ad7680a1b607395c2cbe5f90307548f56a"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-i3kgzm",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 4. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "91318b032770640891f191f53e103a9c0db76b886f5430e52e581692d6c925eb",
+        "unorderedRowHash": "91318b032770640891f191f53e103a9c0db76b886f5430e52e581692d6c925eb"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-j8l4yq",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 6. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "2211701daeed8475b1af7ac079fcb73e5925af59d3f6633083196a38d9f4523c",
+        "unorderedRowHash": "2211701daeed8475b1af7ac079fcb73e5925af59d3f6633083196a38d9f4523c"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-sc7qrm",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 8. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "41aa9a020f6345c4fc7f988f5bc393405c11fb8d331f61f2149629277138218d",
+        "unorderedRowHash": "41aa9a020f6345c4fc7f988f5bc393405c11fb8d331f61f2149629277138218d"
+      }
+    },
+    {
+      "id": "rv-topn-per-group-x4g436",
+      "skill": "rv-topn-per-group",
+      "database": "rove",
+      "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 2. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "starterSql": {
+        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
+        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "city_id",
+          "__BLANK_2__": "merchant_id"
+        },
+        "half": {
+          "__BLANK_0__": "city_id, merchant_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3",
+          "__BLANK_2__": "top3.rn <= 3",
+          "__BLANK_3__": "city_id, merchant_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
+      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "city_id",
+          "merchant_id",
+          "order_count"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "7969c9e72d27f4e5e087a7c90d781e29015c92b5e33105b6cb4aa960e4f47bc5",
+        "unorderedRowHash": "7969c9e72d27f4e5e087a7c90d781e29015c92b5e33105b6cb4aa960e4f47bc5"
       }
     }
   ]
