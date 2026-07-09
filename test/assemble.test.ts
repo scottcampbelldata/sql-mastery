@@ -74,3 +74,14 @@ test('assembleExercise task contract includes aliases after FROM inside expressi
   const ex = assembleExercise(latencyTemplate, { ...binding, slots: { groupCols: 'avg_seconds' }, literals: {} }, catalog);
   assert.ok(ex.task.includes('avg_seconds'));
 });
+
+test('assembleExercise ids differ when the emitted SQL differs under the same binding', () => {
+  const first = assembleExercise(template, binding, catalog);
+  const second = assembleExercise({
+    ...template,
+    sqlShape: 'SELECT order_id FROM orders WHERE {flt}',
+  }, binding, catalog);
+
+  assert.notEqual(first.expectedSql, second.expectedSql);
+  assert.notEqual(first.id, second.id);
+});

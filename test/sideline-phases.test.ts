@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { flattenLearningPath } from '../src/learning-path';
 import { APERTURE_PHASES } from '../src/generator/templates/aperture/index';
 import { sidelinePhases } from '../src/phases/sideline/index';
+import { MIN_EXERCISES_PER_SKILL } from '../src/generator/diversity';
 
 const SIDELINE_PHASE_IDS = ['sideline-joins', 'sideline-subqueries', 'sideline-windows'];
 
@@ -35,13 +36,13 @@ test('sideline band totals 21 concepts with contiguous LOCAL order per phase', (
   assert.equal(skills.size, 21);
 });
 
-test('every sideline concept carries a teach block and >=1 fingerprinted exercise', () => {
+test('every sideline concept carries a teach block and enough fingerprinted exercises', () => {
   const exercises = sidelinePhases.flatMap((p) => p.concepts.flatMap((c) => c.exercises));
-  assert.equal(exercises.length, 24);
+  assert.ok(exercises.length >= 21 * MIN_EXERCISES_PER_SKILL);
   for (const p of sidelinePhases) {
     for (const c of p.concepts) {
       assert.ok(c.teach && typeof c.teach.plain === 'string' && c.teach.plain.length > 0);
-      assert.ok(c.exercises.length >= 1, `${c.skill} has no exercises`);
+      assert.ok(c.exercises.length >= MIN_EXERCISES_PER_SKILL, `${c.skill} has only ${c.exercises.length} exercises`);
       for (const ex of c.exercises) {
         assert.equal(ex.database, 'sideline');
         assert.equal(ex.skill, c.skill);

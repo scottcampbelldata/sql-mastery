@@ -5,46 +5,7 @@ import type { Exercise } from '../../generator/types';
 export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   "sl-anti-join": [
     {
-      "id": "sl-anti-join-5w5sqp",
-      "skill": "sl-anti-join",
-      "database": "sideline",
-      "task": "Which sponsors have zero team deals? Return sponsor_id, sponsor_name using an anti-join, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
-      "starterSql": {
-        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE ts.sponsor_id IS NULL ORDER BY __BLANK_0__",
-        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
-        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
-      },
-      "blankMap": {
-        "full": {
-          "__BLANK_0__": "sponsor_id"
-        },
-        "half": {
-          "__BLANK_0__": "ts.sponsor_id IS NULL",
-          "__BLANK_1__": "sponsor_id"
-        },
-        "blank": {
-          "__BLANK_0__": "s.sponsor_id AS sponsor_id, s.name AS sponsor_name",
-          "__BLANK_1__": "sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id",
-          "__BLANK_2__": "ts.sponsor_id IS NULL",
-          "__BLANK_3__": "sponsor_id"
-        }
-      },
-      "hint": "LEFT JOIN team_sponsor on sponsor_id and keep NULL matches. The manifest reserves sponsor 30 as team-less.",
-      "expectedSql": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE ts.sponsor_id IS NULL ORDER BY sponsor_id",
-      "orderMatters": true,
-      "rowCeiling": 200,
-      "fingerprint": {
-        "columns": [
-          "sponsor_id",
-          "sponsor_name"
-        ],
-        "rowCount": 1,
-        "orderedRowHash": "991a4e443892021c66414f0a775037e6aaf9a991b3257c1910a39c727a310195",
-        "unorderedRowHash": "991a4e443892021c66414f0a775037e6aaf9a991b3257c1910a39c727a310195"
-      }
-    },
-    {
-      "id": "sl-anti-join-bfhzmq",
+      "id": "sl-anti-join-kx7lcw",
       "skill": "sl-anti-join",
       "database": "sideline",
       "task": "Which teams have zero matches? Return team_id, team_name using an anti-join, ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
@@ -83,7 +44,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "sl-anti-join-bfhzmq",
+      "id": "sl-anti-join-l15luo",
       "skill": "sl-anti-join",
       "database": "sideline",
       "task": "Find sponsorless teams by anti-joining team to team_sponsor; return team_id, team_name ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
@@ -122,7 +83,86 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       }
     },
     {
-      "id": "sl-anti-join-bfhzmq",
+      "id": "sl-anti-join-zboe5l",
+      "skill": "sl-anti-join",
+      "database": "sideline",
+      "task": "Which sponsors have zero team deals? Return sponsor_id, sponsor_name using an anti-join, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
+      "starterSql": {
+        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE ts.sponsor_id IS NULL ORDER BY __BLANK_0__",
+        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "sponsor_id"
+        },
+        "half": {
+          "__BLANK_0__": "ts.sponsor_id IS NULL",
+          "__BLANK_1__": "sponsor_id"
+        },
+        "blank": {
+          "__BLANK_0__": "s.sponsor_id AS sponsor_id, s.name AS sponsor_name",
+          "__BLANK_1__": "sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id",
+          "__BLANK_2__": "ts.sponsor_id IS NULL",
+          "__BLANK_3__": "sponsor_id"
+        }
+      },
+      "hint": "LEFT JOIN team_sponsor on sponsor_id and keep NULL matches. The manifest reserves sponsor 30 as team-less.",
+      "expectedSql": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE ts.sponsor_id IS NULL ORDER BY sponsor_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "sponsor_id",
+          "sponsor_name"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "991a4e443892021c66414f0a775037e6aaf9a991b3257c1910a39c727a310195",
+        "unorderedRowHash": "991a4e443892021c66414f0a775037e6aaf9a991b3257c1910a39c727a310195"
+      }
+    },
+    {
+      "id": "sl-anti-join-rrdmfd",
+      "skill": "sl-anti-join",
+      "database": "sideline",
+      "task": "Anti-join tournament to region to find international tournaments; return tournament_id, tournament_name ordered by tournament_id. Return columns: tournament_id, tournament_name. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t LEFT JOIN region r ON r.region_id = t.region_id WHERE r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t LEFT JOIN region r ON r.region_id = t.region_id WHERE r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.tournament_id AS tournament_id, t.name AS tournament_name",
+          "__BLANK_1__": "tournament t LEFT JOIN region r ON r.region_id = t.region_id",
+          "__BLANK_2__": "r.region_id IS NULL",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "A NULL tournament.region_id cannot match region, so the left join exposes international tournaments.",
+      "expectedSql": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t LEFT JOIN region r ON r.region_id = t.region_id WHERE r.region_id IS NULL ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tournament_name"
+        ],
+        "rowCount": 8,
+        "orderedRowHash": "9d251359da1c3b3f372758bcec3ad15c7fe11adb9c946457a583c6fcd9ea9999",
+        "unorderedRowHash": "2e1f873fa084feed981ebe5469ea4f282278bab75f012ef5bcd0220ee18f2611"
+      }
+    },
+    {
+      "id": "sl-anti-join-4ufzj8",
       "skill": "sl-anti-join",
       "database": "sideline",
       "task": "Find player-less teams via NOT EXISTS against player; return team_id, team_name ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
@@ -163,7 +203,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "sl-case-expression": [
     {
-      "id": "sl-case-expression-1k89ftc",
+      "id": "sl-case-expression-1qmupg2",
       "skill": "sl-case-expression",
       "database": "sideline",
       "task": "Use CASE to bucket elo_rating into tier for every team and return team_id, team_name, tier, ordered by team_id. Return columns: team_id, team_name, tier. Order by: team_id.",
@@ -200,11 +240,219 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "0c1f81b150e5907577209d96df3fe5b4824eead903ee460ef91f3f019b7efa91",
         "unorderedRowHash": "1919c173cc5804c0874dd9285befeca32bd79d49989526d6e4e0355f4a8a5dd1"
       }
+    },
+    {
+      "id": "sl-case-expression-1613nqf",
+      "skill": "sl-case-expression",
+      "database": "sideline",
+      "task": "Use CASE on prize_pool_usd to bucket tournaments as tournament_id, name, prize_band, ordered by tournament_id. Return columns: tournament_id, name, prize_band. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tournament_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The CASE expression turns numeric prize thresholds into a readable band.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "prize_band"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "e5269213198fcd6810e06de2b991bf9d777970e406cd0f817351a4d7907481c5",
+        "unorderedRowHash": "c85311115ccbc23c89eacadcefc13fcfd9d8aa9c3c4e32f22c6e34df9c4872d2"
+      }
+    },
+    {
+      "id": "sl-case-expression-172oly4",
+      "skill": "sl-case-expression",
+      "database": "sideline",
+      "task": "Use CASE on total_earnings_usd to bucket every player as player_id, handle, earnings_band, ordered by player_id. Return columns: player_id, handle, earnings_band. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "player_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "CASE evaluates earnings thresholds from highest to lowest and falls through to the ELSE label.",
+      "expectedSql": "SELECT player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "earnings_band"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "746a4af6cf7fa7df47d0c10ec0aa35541855a58ab0dffcf75533ce2953e21c26",
+        "unorderedRowHash": "b52eb2e38ca9befb93f0a5d570bdc846d0584351c1f1898273e744725b1d5bda"
+      }
+    },
+    {
+      "id": "sl-case-expression-59epdt",
+      "skill": "sl-case-expression",
+      "database": "sideline",
+      "task": "Use CASE on contract_end to return team_id, sponsor_id, contract_start, contract_status, ordered by team_id, sponsor_id, contract_start. Return columns: team_id, sponsor_id, contract_start, contract_status. Order by: team_id, sponsor_id, contract_start.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY __BLANK_1__, sponsor_id, contract_start LIMIT 200",
+        "half": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id, sponsor_id, contract_start",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status",
+          "__BLANK_1__": "team_sponsor",
+          "__BLANK_2__": "team_id, sponsor_id, contract_start",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "A NULL contract_end marks an active contract; non-NULL dates mark ended contracts.",
+      "expectedSql": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY team_id, sponsor_id, contract_start LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "sponsor_id",
+          "contract_start",
+          "contract_status"
+        ],
+        "rowCount": 120,
+        "orderedRowHash": "0fc6d1fffaf26b036c5323407f4b5a83ead3c3769c81bba4e7855fb1e1ad60d1",
+        "unorderedRowHash": "21d0555fe991bed591bd43c0cc564ac63d9616112361f781b5119c00376725fc"
+      }
+    },
+    {
+      "id": "sl-case-expression-x3yy3k",
+      "skill": "sl-case-expression",
+      "database": "sideline",
+      "task": "Use CASE on best_of to return match_id, stage, format_label for every match, ordered by match_id. Return columns: match_id, stage, format_label. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "match_id"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label",
+          "__BLANK_1__": "match",
+          "__BLANK_2__": "match_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "CASE can map exact values such as best_of 1, 3, and 5 into labels.",
+      "expectedSql": "SELECT match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY match_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "stage",
+          "format_label"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "21a9487e59ab4621786e343a7563656d2629179724fa9259b703ef6b00d2e5c4",
+        "unorderedRowHash": "2a5b7c9d9c345305be00d3b8df66d3cbda16e573da83a68c2d705338891e7fad"
+      }
     }
   ],
   "sl-cte": [
     {
-      "id": "sl-cte-8yh97r",
+      "id": "sl-cte-812tas",
+      "skill": "sl-cte",
+      "database": "sideline",
+      "task": "Using a CTE that sums prize pools per tier, return tier and total_prize. Order by tier. Return columns: tier, total_prize. Order by: tier.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT __BLANK_1__ AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY __BLANK_2__) SELECT __BLANK_3__ AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY __BLANK_4__ LIMIT 200",
+        "half": "SELECT tier AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tier",
+          "__BLANK_1__": "tier",
+          "__BLANK_2__": "tier",
+          "__BLANK_3__": "tier",
+          "__BLANK_4__": "tier"
+        },
+        "half": {
+          "__BLANK_0__": "tier",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tier AS tier, total_prize AS total_prize",
+          "__BLANK_1__": "(WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier",
+          "__BLANK_2__": "tier",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The WITH clause names the tier aggregate for the outer query.",
+      "expectedSql": "SELECT tier AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY tier LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tier",
+          "total_prize"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "49938404f0a99bc9fcad131836e9e35469b16afbf15eebe6e1e439c8a3c78435",
+        "unorderedRowHash": "49938404f0a99bc9fcad131836e9e35469b16afbf15eebe6e1e439c8a3c78435"
+      }
+    },
+    {
+      "id": "sl-cte-iooqfx",
       "skill": "sl-cte",
       "database": "sideline",
       "task": "Using a CTE that counts wins per team, return team_id, team_name, wins for teams with at least one win. Order by team_id. Return columns: team_id, team_name, wins. Order by: team_id.",
@@ -241,11 +489,140 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "b9840f3009124720bb8f12c4e3abc506dab4519cb2d9f9f4359adb02916ae807",
         "unorderedRowHash": "7dff2152c31ea68c88d833bcd8d8bc2d87828044863295d9c4fb0a470d81cdec"
       }
+    },
+    {
+      "id": "sl-cte-k9cye",
+      "skill": "sl-cte",
+      "database": "sideline",
+      "task": "Using a CTE that counts players per role, return role and player_count. Order by role. Return columns: role, player_count. Order by: role.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT __BLANK_1__ AS role, count(*) AS player_count FROM player GROUP BY __BLANK_2__) SELECT __BLANK_3__ AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY __BLANK_4__ LIMIT 200",
+        "half": "SELECT role AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "role",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "role",
+          "__BLANK_4__": "role"
+        },
+        "half": {
+          "__BLANK_0__": "role",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "role AS role, player_count AS player_count",
+          "__BLANK_1__": "(WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "A CTE can name an aggregate result before the outer SELECT reads it.",
+      "expectedSql": "SELECT role AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY role LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "role",
+          "player_count"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "3104a2c0b22aa0fd946c7ab31076bc6968ceef60856ff1842ac70a74816c277b",
+        "unorderedRowHash": "3104a2c0b22aa0fd946c7ab31076bc6968ceef60856ff1842ac70a74816c277b"
+      }
+    },
+    {
+      "id": "sl-cte-41a0yl",
+      "skill": "sl-cte",
+      "database": "sideline",
+      "task": "Using a CTE that counts sponsors per team, return team_id, team_name, sponsor_count. Order by team_id. Return columns: team_id, team_name, sponsor_count. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT __BLANK_1__, count(*) AS sponsor_count FROM team_sponsor GROUP BY __BLANK_2__) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY __BLANK_3__ LIMIT 200",
+        "half": "SELECT team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "team_id",
+          "__BLANK_3__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count",
+          "__BLANK_1__": "(WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts",
+          "__BLANK_2__": "team_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The CTE creates one count row per sponsored team before the final join.",
+      "expectedSql": "SELECT team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "sponsor_count"
+        ],
+        "rowCount": 33,
+        "orderedRowHash": "a2fd0a77b0072702561653e903a826910281d7368f2cd409b0e4322aeedb0e66",
+        "unorderedRowHash": "cd29aa7aa36b28ef05204b9ad78956df8971c27b716365b84df640bc0c333dde"
+      }
+    },
+    {
+      "id": "sl-cte-1bxfbre",
+      "skill": "sl-cte",
+      "database": "sideline",
+      "task": "Using a CTE that counts current roster stints, return team_id, team_name, current_players. Order by team_id. Return columns: team_id, team_name, current_players. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT __BLANK_1__, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY __BLANK_2__) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY __BLANK_3__ LIMIT 200",
+        "half": "SELECT team_id AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "team_id",
+          "__BLANK_3__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "team_id AS team_id, team_name AS team_name, current_players AS current_players",
+          "__BLANK_1__": "(WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts",
+          "__BLANK_2__": "team_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "Filter open roster_change rows inside the CTE, then join the summary to team.",
+      "expectedSql": "SELECT team_id AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "current_players"
+        ],
+        "rowCount": 39,
+        "orderedRowHash": "5f0484540c389b846c01f11753ae79fb97665dbcee065e6bfac0b1705f5cd19a",
+        "unorderedRowHash": "9024cefbf2d179f25c98c1ff064ca276eeef70a94ba7ec19f003845d07b478ee"
+      }
     }
   ],
   "sl-date-functions": [
     {
-      "id": "sl-date-functions-m3iroe",
+      "id": "sl-date-functions-15b0hzd",
       "skill": "sl-date-functions",
       "database": "sideline",
       "task": "For tier S tournaments, compute length_days as end_date minus start_date. Return tournament_id, name, length_days. Order by tournament_id. Return columns: tournament_id, name, length_days. Order by: tournament_id.",
@@ -284,11 +661,597 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "95aa86aea3e0511ea32aa21e42dc085d673a0eaf9b24c6310fdd481f4ae57d95",
         "unorderedRowHash": "c626979c2b44606dc213b46a841d00d88ece5567697972866759a29fba493b14"
       }
+    },
+    {
+      "id": "sl-date-functions-1dk9088",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Compute contract_days for each sponsor contract using contract_end or 2025-12-31 when open. Return team_id, sponsor_id, contract_start, contract_days. Order by team_id, sponsor_id, contract_start. Return columns: team_id, sponsor_id, contract_start, contract_days. Order by: team_id, sponsor_id, contract_start.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, (COALESCE(contract_end, DATE '2025-12-31') - contract_start) AS contract_days FROM team_sponsor ORDER BY __BLANK_1__, sponsor_id, contract_start LIMIT 200",
+        "half": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, (COALESCE(contract_end, DATE '2025-12-31') - contract_start) AS contract_days FROM team_sponsor ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id, sponsor_id, contract_start",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, (COALESCE(contract_end, DATE '2025-12-31') - contract_start) AS contract_days",
+          "__BLANK_1__": "team_sponsor",
+          "__BLANK_2__": "team_id, sponsor_id, contract_start",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "COALESCE supplies a stand-in end date before subtracting dates.",
+      "expectedSql": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, (COALESCE(contract_end, DATE '2025-12-31') - contract_start) AS contract_days FROM team_sponsor ORDER BY team_id, sponsor_id, contract_start LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "sponsor_id",
+          "contract_start",
+          "contract_days"
+        ],
+        "rowCount": 120,
+        "orderedRowHash": "ec58455393d00add89e52f83e0506bd94e1ee3a2193fb8d066e13b5dab9fd80f",
+        "unorderedRowHash": "769a8f3e823376c8b64ceafdd6774ef6d838cc1b13fadcfdfd0d9abf3b58f867"
+      }
+    },
+    {
+      "id": "sl-date-functions-1mq6i57",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Subtract start_date from end_date for tier B tournaments and return tournament_id, name, length_days, ordered by tournament_id. Return columns: tournament_id, name, length_days. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'B' ORDER BY __BLANK_1__",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tier = 'B'",
+          "__BLANK_1__": "tournament_id"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier = 'B'",
+          "__BLANK_3__": "tournament_id"
+        }
+      },
+      "hint": "In Postgres, date minus date returns the integer number of days between them.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'B' ORDER BY tournament_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "length_days"
+        ],
+        "rowCount": 11,
+        "orderedRowHash": "ed4812852c4c3e06ea51c5d31cf5ee3b06a406937dfad9a94c5ef34020ce3a47",
+        "unorderedRowHash": "f5b29e5c1d5e48645770cbb7a5beececcecb49ffeff827c03d136436413a11fe"
+      }
+    },
+    {
+      "id": "sl-date-functions-1stwly5",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For tier A tournaments, compute length_days as end_date minus start_date. Return tournament_id, name, length_days. Order by tournament_id. Return columns: tournament_id, name, length_days. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'A' ORDER BY __BLANK_1__",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tier = 'A'",
+          "__BLANK_1__": "tournament_id"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier = 'A'",
+          "__BLANK_3__": "tournament_id"
+        }
+      },
+      "hint": "In Postgres, date minus date returns the integer number of days between them.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'A' ORDER BY tournament_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "length_days"
+        ],
+        "rowCount": 11,
+        "orderedRowHash": "b2e0134a4c77c219b96655fe01ce6bc9f634de54f75e163d669b6dd5559b29b7",
+        "unorderedRowHash": "6831248f7049d6c20d55f7054181f45b54d2315ef29e897c59ebd3bfd5fe5ac0"
+      }
+    },
+    {
+      "id": "sl-date-functions-11tdr9y",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For tournaments hosted in Canada, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Canada' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Canada' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'Canada'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Canada' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "e5f704a04ca1053e83b4fee968d42e6633e7e49d1e0aa925df41615436752002",
+        "unorderedRowHash": "e5f704a04ca1053e83b4fee968d42e6633e7e49d1e0aa925df41615436752002"
+      }
+    },
+    {
+      "id": "sl-date-functions-16pb714",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Use date_trunc month on start_date for host_country Japan and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Japan' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Japan' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'Japan'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Japan' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "24e68404cdc14a1ab3255811711dbe689f94ddf0997ae78cc9fe5a3d7f157a54",
+        "unorderedRowHash": "6780957a19ce2c9d3383e4394bd73b58421889e7864318a04d84ce6dbe7deaa6"
+      }
+    },
+    {
+      "id": "sl-date-functions-1j85dzm",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Use date_trunc month on start_date for host_country Spain and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Spain' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Spain' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'Spain'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Spain' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "77009db1de5e667ed31047df4378a2b4c61f858bde242c4595835cc72f5b5b68",
+        "unorderedRowHash": "77009db1de5e667ed31047df4378a2b4c61f858bde242c4595835cc72f5b5b68"
+      }
+    },
+    {
+      "id": "sl-date-functions-1xnp6k",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For tournaments hosted in Indonesia, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Indonesia' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Indonesia' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'Indonesia'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Indonesia' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "9505aa5cf00dce03c51c72cb451a1a50b260d1ef88544cb16fed6e6e422bf115",
+        "unorderedRowHash": "9505aa5cf00dce03c51c72cb451a1a50b260d1ef88544cb16fed6e6e422bf115"
+      }
+    },
+    {
+      "id": "sl-date-functions-88rm3o",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For tournaments hosted in Australia, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Australia' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Australia' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'Australia'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Australia' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "fbaa981cb665a63f1ef2ab9bdbca8fe4b1688aa897575f9e3dffcc31301f71b1",
+        "unorderedRowHash": "fbaa981cb665a63f1ef2ab9bdbca8fe4b1688aa897575f9e3dffcc31301f71b1"
+      }
+    },
+    {
+      "id": "sl-date-functions-9l058y",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Use date_trunc month on start_date for host_country China and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'China' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'China' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'China'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'China' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 4,
+        "orderedRowHash": "bf5c3739141703cd7ea732aa3c77e7279433ee4132c71b6195e69561e73992f8",
+        "unorderedRowHash": "07aa40f52110043466745abe4de27a18574cf792bfd8ff706f66f00a201a4ccd"
+      }
+    },
+    {
+      "id": "sl-date-functions-aj1g3w",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For players with both dates, compute days_to_sign as signed_date minus birth_date. Return player_id, handle, days_to_sign. Order by player_id. Return columns: player_id, handle, days_to_sign. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, (signed_date - birth_date) AS days_to_sign FROM player WHERE signed_date IS NOT NULL AND birth_date IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, handle AS handle, (signed_date - birth_date) AS days_to_sign FROM player WHERE signed_date IS NOT NULL AND birth_date IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, handle AS handle, (signed_date - birth_date) AS days_to_sign",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "signed_date IS NOT NULL AND birth_date IS NOT NULL",
+          "__BLANK_3__": "player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Date subtraction returns an integer day count.",
+      "expectedSql": "SELECT player_id AS player_id, handle AS handle, (signed_date - birth_date) AS days_to_sign FROM player WHERE signed_date IS NOT NULL AND birth_date IS NOT NULL ORDER BY player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "days_to_sign"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "a3ef4aba93978f2784e1e21802b70ba18d1ae737f698b57dc99803e884abd3b7",
+        "unorderedRowHash": "86b6c6064946856b6ac181ed45da7fb0089fec16c94092893ba681d42277782a"
+      }
+    },
+    {
+      "id": "sl-date-functions-c5rmz6",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For tournaments hosted in South Korea, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'South Korea' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'South Korea' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'South Korea'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'South Korea' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "30d11738dc5e6c0b8131e5720d957adffbeebf24447c20d96deff15f8e616a95",
+        "unorderedRowHash": "09ff6f49b8c23d4829a194c57e0cb5ad3f5213e8d9cf0c8487c77d26f7e55d68"
+      }
+    },
+    {
+      "id": "sl-date-functions-odekou",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Use date_trunc month on start_date for host_country Brazil and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Brazil' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Brazil' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "host_country = 'Brazil'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "date_trunc can snap each date to the first instant of its month, then the cast returns a date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Brazil' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_month"
+        ],
+        "rowCount": 2,
+        "orderedRowHash": "32649ae5b95f162f7995f449a2af40ce219b8de3b4d345750844b11436fbf750",
+        "unorderedRowHash": "2839901fa47f16facc87f19c01bd6d8a968c20d7516190eae3b48fd83a729e6e"
+      }
+    },
+    {
+      "id": "sl-date-functions-1xmj12n",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "Use EXTRACT(YEAR FROM start_date) for tier B tournaments and return tournament_id, name, start_year ordered by tournament_id. Return columns: tournament_id, name, start_year. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'B' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier = 'B'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "EXTRACT pulls one date part from each tournament start_date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'B' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_year"
+        ],
+        "rowCount": 11,
+        "orderedRowHash": "2442148ced437e084c9f2c62b485abe0913d8c1c365b221ca23d86fa3f89900a",
+        "unorderedRowHash": "5a4a11aab2d70fcae906be87a8e287063fffdf02972cbeb063e10a22a69e5df9"
+      }
+    },
+    {
+      "id": "sl-date-functions-7dmivb",
+      "skill": "sl-date-functions",
+      "database": "sideline",
+      "task": "For tier A tournaments, extract start_year from start_date. Return tournament_id, name, start_year. Order by tournament_id. Return columns: tournament_id, name, start_year. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'A' ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier = 'A'",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "EXTRACT pulls one date part from each tournament start_date.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'A' ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "start_year"
+        ],
+        "rowCount": 11,
+        "orderedRowHash": "90cca9d70bc16a629be40df412bd48f11d3df87bdc82e95c92fe9e380b8972dc",
+        "unorderedRowHash": "f00c838ed41661c12f85a9c70f14f1912b1618740aa2a2e6c8942c02b6990915"
+      }
     }
   ],
   "sl-join-aggregate": [
     {
-      "id": "sl-join-aggregate-6d5edg",
+      "id": "sl-join-aggregate-rwqppo",
       "skill": "sl-join-aggregate",
       "database": "sideline",
       "task": "For each winning team, return team_id, team_name, match_count, and bo5_count. Order by team_id. Return columns: team_id, team_name, match_count, bo5_count. Order by: team_id.",
@@ -327,11 +1290,341 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "bb522277548a4835c696a48f9f50c717d2352ffc3b28e6f39a4ba0edbbf29dae",
         "unorderedRowHash": "1e39bc79adf43e2fddad3be224f43441ac333fc895854f3808064a1fd426d5d8"
       }
+    },
+    {
+      "id": "sl-join-aggregate-1yz215q",
+      "skill": "sl-join-aggregate",
+      "database": "sideline",
+      "task": "For rostered players, return role, player_count, and avg_earnings after joining player to team. Order by role. Return columns: role, player_count, avg_earnings. Order by: role.",
+      "starterSql": {
+        "full": "SELECT p.role AS role, count(p.player_id) AS player_count, ROUND(avg(p.total_earnings_usd), 2) AS avg_earnings FROM player p JOIN team t ON t.team_id = p.team_id GROUP BY p.role ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT p.role AS role, count(p.player_id) AS player_count, ROUND(avg(p.total_earnings_usd), 2) AS avg_earnings FROM player p JOIN team t ON t.team_id = p.team_id GROUP BY p.role ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "role"
+        },
+        "half": {
+          "__BLANK_0__": "role",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.role AS role, count(p.player_id) AS player_count, ROUND(avg(p.total_earnings_usd), 2) AS avg_earnings",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "p.role",
+          "__BLANK_3__": "role",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The join filters to rostered players before the role-level aggregate.",
+      "expectedSql": "SELECT p.role AS role, count(p.player_id) AS player_count, ROUND(avg(p.total_earnings_usd), 2) AS avg_earnings FROM player p JOIN team t ON t.team_id = p.team_id GROUP BY p.role ORDER BY role LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "role",
+          "player_count",
+          "avg_earnings"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "ce234561d4e96a70b4395da061d5fb2390ebfe33afb7b9c3095295f760d9bdd7",
+        "unorderedRowHash": "ce234561d4e96a70b4395da061d5fb2390ebfe33afb7b9c3095295f760d9bdd7"
+      }
+    },
+    {
+      "id": "sl-join-aggregate-gxm3tr",
+      "skill": "sl-join-aggregate",
+      "database": "sideline",
+      "task": "For each team, return team_id, team_name, sponsor_count, and sponsor_value from a left join to team_sponsor. Order by team_id. Return columns: team_id, team_name, sponsor_count, sponsor_value. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, count(ts.sponsor_id) AS sponsor_count, sum(ts.annual_value_usd) AS sponsor_value FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id GROUP BY t.team_id, t.name ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, count(ts.sponsor_id) AS sponsor_count, sum(ts.annual_value_usd) AS sponsor_value FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id GROUP BY t.team_id, t.name ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, count(ts.sponsor_id) AS sponsor_count, sum(ts.annual_value_usd) AS sponsor_value",
+          "__BLANK_1__": "team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id",
+          "__BLANK_2__": "t.team_id, t.name",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The left join lets teams with no sponsor still form a group.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name, count(ts.sponsor_id) AS sponsor_count, sum(ts.annual_value_usd) AS sponsor_value FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id GROUP BY t.team_id, t.name ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "sponsor_count",
+          "sponsor_value"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "3351ac69e3476ade7dfe28184c0eda92aa1b1e5a523874a51ed8a1b7b2b56af7",
+        "unorderedRowHash": "908bda744c02cf497e264934ea0c0ed8d5d081cd8ad4ba67e1bb1869364554b6"
+      }
+    },
+    {
+      "id": "sl-join-aggregate-1ls552d",
+      "skill": "sl-join-aggregate",
+      "database": "sideline",
+      "task": "For each tournament with maps, return tournament_id, tournament_name, map_count, and avg_duration. Order by tournament_id. Return columns: tournament_id, tournament_name, map_count, avg_duration. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, count(mr.map_result_id) AS map_count, ROUND(avg(mr.duration_minutes), 2) AS avg_duration FROM tournament t JOIN match m ON m.tournament_id = t.tournament_id JOIN map_result mr ON mr.match_id = m.match_id GROUP BY t.tournament_id, t.name ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, count(mr.map_result_id) AS map_count, ROUND(avg(mr.duration_minutes), 2) AS avg_duration FROM tournament t JOIN match m ON m.tournament_id = t.tournament_id JOIN map_result mr ON mr.match_id = m.match_id GROUP BY t.tournament_id, t.name ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.tournament_id AS tournament_id, t.name AS tournament_name, count(mr.map_result_id) AS map_count, ROUND(avg(mr.duration_minutes), 2) AS avg_duration",
+          "__BLANK_1__": "tournament t JOIN match m ON m.tournament_id = t.tournament_id JOIN map_result mr ON mr.match_id = m.match_id",
+          "__BLANK_2__": "t.tournament_id, t.name",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Aggregate after joining down to map_result so each map contributes to the tournament summary.",
+      "expectedSql": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, count(mr.map_result_id) AS map_count, ROUND(avg(mr.duration_minutes), 2) AS avg_duration FROM tournament t JOIN match m ON m.tournament_id = t.tournament_id JOIN map_result mr ON mr.match_id = m.match_id GROUP BY t.tournament_id, t.name ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tournament_name",
+          "map_count",
+          "avg_duration"
+        ],
+        "rowCount": 22,
+        "orderedRowHash": "87892c33dab92023ac1b87fa7b0c29296e2f0bc9da6729701e97375d4606a663",
+        "unorderedRowHash": "ea7d77397e6cd62df780b82a6de6b5378a9fb393bfd9b8faed501108a3886659"
+      }
+    },
+    {
+      "id": "sl-join-aggregate-5fn2qs",
+      "skill": "sl-join-aggregate",
+      "database": "sideline",
+      "task": "For each region with matches, return region_id, region_name, and match_count. Order by region_id. Return columns: region_id, region_name, match_count. Order by: region_id.",
+      "starterSql": {
+        "full": "SELECT r.region_id AS region_id, r.name AS region_name, count(m.match_id) AS match_count FROM region r JOIN tournament t ON t.region_id = r.region_id JOIN match m ON m.tournament_id = t.tournament_id GROUP BY r.region_id, r.name ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT r.region_id AS region_id, r.name AS region_name, count(m.match_id) AS match_count FROM region r JOIN tournament t ON t.region_id = r.region_id JOIN match m ON m.tournament_id = t.tournament_id GROUP BY r.region_id, r.name ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "region_id"
+        },
+        "half": {
+          "__BLANK_0__": "region_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.region_id AS region_id, r.name AS region_name, count(m.match_id) AS match_count",
+          "__BLANK_1__": "region r JOIN tournament t ON t.region_id = r.region_id JOIN match m ON m.tournament_id = t.tournament_id",
+          "__BLANK_2__": "r.region_id, r.name",
+          "__BLANK_3__": "region_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Join through tournament to connect matches back to regions before grouping.",
+      "expectedSql": "SELECT r.region_id AS region_id, r.name AS region_name, count(m.match_id) AS match_count FROM region r JOIN tournament t ON t.region_id = r.region_id JOIN match m ON m.tournament_id = t.tournament_id GROUP BY r.region_id, r.name ORDER BY region_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "region_id",
+          "region_name",
+          "match_count"
+        ],
+        "rowCount": 8,
+        "orderedRowHash": "29dbeec89aa42689dddd99c675b7159ab4cc5a42d71baac7332e8c2e48760993",
+        "unorderedRowHash": "29dbeec89aa42689dddd99c675b7159ab4cc5a42d71baac7332e8c2e48760993"
+      }
     }
   ],
   "sl-join-inner": [
     {
-      "id": "sl-join-inner-jzx6tp",
+      "id": "sl-join-inner-14lmy94",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "For region 2, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "2",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 2",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 2",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 2 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 41,
+        "orderedRowHash": "6eb79ed9ca4b10bfc71816af3be6c57b22d50b042bbb28acd1876f8927f11351",
+        "unorderedRowHash": "9da07f4dc0430d916c453ad7bf921bdeb34f0f1de8bba69d53e8c1a920b4b7f6"
+      }
+    },
+    {
+      "id": "sl-join-inner-1ds8tyk",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "For region 8, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "8",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 8",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 8",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 8 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 19,
+        "orderedRowHash": "4afd6978a85bca377f727cc1cb66d3c947c8a39aa8fe2250e29f849a425ddce7",
+        "unorderedRowHash": "bb7154f296d181f6a4144d5a27d1d0618d4f3d3158b0e6ca36d662e0121e3e33"
+      }
+    },
+    {
+      "id": "sl-join-inner-1jixt94",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "For region 6, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "6",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 6",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 6",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 6 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 23,
+        "orderedRowHash": "d95527525c29806fd9e507d7ab21b18d588b57ef4e8c6c3f840e39ea0a28e43a",
+        "unorderedRowHash": "daab009ab711a7105b2b200606269b048376ec789d71ce5b5d67da72f484a387"
+      }
+    },
+    {
+      "id": "sl-join-inner-1kudi38",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "For region 4, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "4",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 4",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 4",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 4 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 35,
+        "orderedRowHash": "7e9321dc0199f5b96e9a771f153088eae7e05908b1e21e13395e2b23316da19d",
+        "unorderedRowHash": "483b7e5f30316110d2564d3b0a558407dfb7f5a26060fad973a0df429ab60751"
+      }
+    },
+    {
+      "id": "sl-join-inner-5opb16",
       "skill": "sl-join-inner",
       "database": "sideline",
       "task": "Join player to team and return player_id, handle, team_name for teams in region 5, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
@@ -370,11 +1663,134 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "db23ab6dc82cf80ddb809b211a06d5621f7e4a645324268bbf50aac22e528d25",
         "unorderedRowHash": "371ef4bb1f460a0b0b8147a368ff3dfee8cd8967ccf01aa4c4288be461a60f64"
       }
+    },
+    {
+      "id": "sl-join-inner-odkluq",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 1, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "1",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 1",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 1",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 1 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "3f1f9eb7fc83127467bc7b0b35109ca0f22493268dba0cc587001547ad54ed47",
+        "unorderedRowHash": "5ab6c2b9ac508e614f9903e9dda262c604a531eea52ad773079c5df3410f2dec"
+      }
+    },
+    {
+      "id": "sl-join-inner-pfrw5m",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 3, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "3",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 3",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 3",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 3 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 38,
+        "orderedRowHash": "5cb50986023683240ddc966a115e75f9ad4042e8f0a25c50409ef2b5824bac61",
+        "unorderedRowHash": "a84bd5e5aa3ffed0d760d179d71ad921e150c3d9f817f35536013509d8c1ba4d"
+      }
+    },
+    {
+      "id": "sl-join-inner-qgltfm",
+      "skill": "sl-join-inner",
+      "database": "sideline",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 7, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "7",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "t.region_id = 7",
+          "__BLANK_1__": "player_id"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle, t.name AS team_name",
+          "__BLANK_1__": "player p JOIN team t ON t.team_id = p.team_id",
+          "__BLANK_2__": "t.region_id = 7",
+          "__BLANK_3__": "player_id"
+        }
+      },
+      "hint": "Inner JOIN player to team on team_id; free agents drop out because their team_id is NULL.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = 7 ORDER BY player_id",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "team_name"
+        ],
+        "rowCount": 17,
+        "orderedRowHash": "9576ed6ba03952445292377cc24eef382fb23d50a6eeb9f5510c171e26bbc4f5",
+        "unorderedRowHash": "6e6947396b3d17763588b926a80cd12006e23f06ef120cdb983f0b054c367ad6"
+      }
     }
   ],
   "sl-join-left": [
     {
-      "id": "sl-join-left-1gjn84v",
+      "id": "sl-join-left-1ocqhbz",
       "skill": "sl-join-left",
       "database": "sideline",
       "task": "List every team sponsor row as team_id, team_name, sponsor_id, contract_start, and annual_value_usd, keeping sponsorless teams. Order by team_id, sponsor_id, contract_start. Return columns: team_id, team_name, sponsor_id, contract_start, annual_value_usd. Order by: team_id, sponsor_id, contract_start.",
@@ -412,17 +1828,224 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "a94d3dc9b3e8ee42efc21b67863eb0534a41f3fd5c8595e97d612b6f5c58e588",
         "unorderedRowHash": "c33020ed065845d04d766383669d2e5cd311207ae5eff032c2cc3f6cf313924c"
       }
+    },
+    {
+      "id": "sl-join-left-a3p5hc",
+      "skill": "sl-join-left",
+      "database": "sideline",
+      "task": "List teams with active sponsor deals when present as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by team_id, sponsor_id, contract_start. Return columns: team_id, team_name, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY __BLANK_0__, sponsor_id, contract_start LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id, sponsor_id, contract_start",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start",
+          "__BLANK_1__": "team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL",
+          "__BLANK_2__": "team_id, sponsor_id, contract_start",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "Put contract_end IS NULL inside the ON clause so teams without active sponsors are still kept.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY team_id, sponsor_id, contract_start LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "sponsor_id",
+          "contract_start"
+        ],
+        "rowCount": 84,
+        "orderedRowHash": "9ae7ad20deeb90e1a9b26231738403525e82e9a4398e65509fee50f7c6a90a75",
+        "unorderedRowHash": "ac120704192c3ecc71dc508e9ac0948e54ef86224dc0de8c0ba0cea66b84c8c5"
+      }
+    },
+    {
+      "id": "sl-join-left-jqcppo",
+      "skill": "sl-join-left",
+      "database": "sideline",
+      "task": "List teams with rostered players when present as team_id, team_name, player_id, handle, keeping teams without players. Order by team_id, player_id. Return columns: team_id, team_name, player_id, handle. Order by: team_id, player_id.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY __BLANK_0__, player_id LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle",
+          "__BLANK_1__": "team t LEFT JOIN player p ON p.team_id = t.team_id",
+          "__BLANK_2__": "team_id, player_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The team table is preserved, so teams with no players keep NULL player columns.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY team_id, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "player_id",
+          "handle"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "327e2ad4153dda6831826e2246317c71826ce397941ec23836bdf429bdd860d2",
+        "unorderedRowHash": "48c459908ffe48ac08ba44d603b1b395f0318635afc91ac99218dabd04571d5c"
+      }
+    },
+    {
+      "id": "sl-join-left-ma0yk2",
+      "skill": "sl-join-left",
+      "database": "sideline",
+      "task": "List sponsors with team deals when present as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by sponsor_id, team_id, contract_start. Return columns: sponsor_id, sponsor_name, team_id, contract_start. Order by: sponsor_id, team_id, contract_start.",
+      "starterSql": {
+        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY __BLANK_0__, team_id, contract_start LIMIT 200",
+        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "sponsor_id"
+        },
+        "half": {
+          "__BLANK_0__": "sponsor_id, team_id, contract_start",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start",
+          "__BLANK_1__": "sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id",
+          "__BLANK_2__": "sponsor_id, team_id, contract_start",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "Sponsors stay in the result even when no team_sponsor row exists.",
+      "expectedSql": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY sponsor_id, team_id, contract_start LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "sponsor_id",
+          "sponsor_name",
+          "team_id",
+          "contract_start"
+        ],
+        "rowCount": 121,
+        "orderedRowHash": "799cfa83823a60221590ba5c50b37d56bfb37038ec6b204a2e6733efa6111a9c",
+        "unorderedRowHash": "de3a2e8e4e2bce94d885e489d87d669e9e472c77500b4e80a1c9927c3a01919e"
+      }
+    },
+    {
+      "id": "sl-join-left-x0vvhc",
+      "skill": "sl-join-left",
+      "database": "sideline",
+      "task": "List regions with hosted tournaments when present as region_id, region_name, tournament_id, tournament_name. Order by region_id, tournament_id. Return columns: region_id, region_name, tournament_id, tournament_name. Order by: region_id, tournament_id.",
+      "starterSql": {
+        "full": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY __BLANK_0__, tournament_id LIMIT 200",
+        "half": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "region_id"
+        },
+        "half": {
+          "__BLANK_0__": "region_id, tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name",
+          "__BLANK_1__": "region r LEFT JOIN tournament t ON t.region_id = r.region_id",
+          "__BLANK_2__": "region_id, tournament_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "A LEFT JOIN from region keeps every region even if the tournament side is missing.",
+      "expectedSql": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY region_id, tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "region_id",
+          "region_name",
+          "tournament_id",
+          "tournament_name"
+        ],
+        "rowCount": 16,
+        "orderedRowHash": "c4a3a5a668326fa3e5c0bdf600c86ff0dc5a63ad3b37934b9f0d64659dc423bf",
+        "unorderedRowHash": "948c8c0d6b0fa9ff09f59a3a26b95ee88086b61e2860ea25b3d1c6ff4b402fbe"
+      }
     }
   ],
   "sl-join-multi": [
     {
-      "id": "sl-join-multi-18osocr",
+      "id": "sl-join-multi-1619qj7",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "For tier B tournaments, list the first 3 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "task": "For tier A tournaments, join match to tournament and winner team, returning the first 3 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Return columns: match_id, stage, tournament_name, winner_name. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name",
+          "__BLANK_1__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id",
+          "__BLANK_2__": "t.tier = 'A'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "Follow match.tournament_id to tournament, then match.winner_team_id to team.",
+      "expectedSql": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY match_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "stage",
+          "tournament_name",
+          "winner_name"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "221dd0af91220e363cda9da415255db869aaf1d46c18c43e26cf75e3f4030dc0",
+        "unorderedRowHash": "221dd0af91220e363cda9da415255db869aaf1d46c18c43e26cf75e3f4030dc0"
+      }
+    },
+    {
+      "id": "sl-join-multi-19yoabi",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "For tier A tournaments, list the first 3 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -437,13 +2060,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name",
           "__BLANK_1__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id",
-          "__BLANK_2__": "t.tier = 'B'",
+          "__BLANK_2__": "t.tier = 'A'",
           "__BLANK_3__": "map_result_id",
           "__BLANK_4__": "3"
         }
       },
       "hint": "Add one JOIN at a time: map_result to match, then match to tournament; LIMIT keeps the slice small.",
-      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY map_result_id LIMIT 3",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY map_result_id LIMIT 3",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -454,14 +2077,312 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "tournament_name"
         ],
         "rowCount": 3,
-        "orderedRowHash": "3a3ebc7cd24f806081897e0d225a3624e8e3ac60bb2fbdbdcf2b54a59a22846b",
-        "unorderedRowHash": "3a3ebc7cd24f806081897e0d225a3624e8e3ac60bb2fbdbdcf2b54a59a22846b"
+        "orderedRowHash": "b7da225d57f0de1ab917960a1393161046856095bbd202b6f893e1ecfa853890",
+        "unorderedRowHash": "b7da225d57f0de1ab917960a1393161046856095bbd202b6f893e1ecfa853890"
+      }
+    },
+    {
+      "id": "sl-join-multi-1y3030g",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "Join map_result to match and both team aliases, returning the first 10 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Return columns: map_result_id, map_name, team_a_name, team_b_name. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name",
+          "__BLANK_1__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id",
+          "__BLANK_2__": "map_result_id",
+          "__BLANK_3__": "10"
+        }
+      },
+      "hint": "Use two team aliases so team_a_id and team_b_id can both be named in one result.",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY map_result_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "team_a_name",
+          "team_b_name"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "f0ab548c15364f69cf7a841a2b3ca4c9fa84d8218eb9016380dd2692b9f1a237",
+        "unorderedRowHash": "c4d4047af13142b77ee4567f24e9cbea2cea0d349b6440d121571d3efd714847"
+      }
+    },
+    {
+      "id": "sl-join-multi-7xmhgl",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "Chain match to tournament to team and return 5 match_id, stage, tournament_name, winner_name rows for tier B, ordered by match_id. Return columns: match_id, stage, tournament_name, winner_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name",
+          "__BLANK_1__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id",
+          "__BLANK_2__": "t.tier = 'B'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Follow match.tournament_id to tournament, then match.winner_team_id to team.",
+      "expectedSql": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY match_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "stage",
+          "tournament_name",
+          "winner_name"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "02e930db8ac722732b257c7e116864d6e43e46380905347381a10ca46b9695a2",
+        "unorderedRowHash": "02e930db8ac722732b257c7e116864d6e43e46380905347381a10ca46b9695a2"
+      }
+    },
+    {
+      "id": "sl-join-multi-bjvang",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "Join map_result to match and both team aliases, returning the first 3 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Return columns: map_result_id, map_name, team_a_name, team_b_name. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name",
+          "__BLANK_1__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id",
+          "__BLANK_2__": "map_result_id",
+          "__BLANK_3__": "3"
+        }
+      },
+      "hint": "Use two team aliases so team_a_id and team_b_id can both be named in one result.",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY map_result_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "team_a_name",
+          "team_b_name"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "b052e48f0ca5bdcd2dbf33275c3d5f6745c61a05f8ceb3c104bf26376d3c70c9",
+        "unorderedRowHash": "b052e48f0ca5bdcd2dbf33275c3d5f6745c61a05f8ceb3c104bf26376d3c70c9"
+      }
+    },
+    {
+      "id": "sl-join-multi-rd2320",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "Chain map_result to match to tournament and return 5 map_result_id, map_name, stage, tournament_name rows for tier B, ordered by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name",
+          "__BLANK_1__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id",
+          "__BLANK_2__": "t.tier = 'B'",
+          "__BLANK_3__": "map_result_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Add one JOIN at a time: map_result to match, then match to tournament; LIMIT keeps the slice small.",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY map_result_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "stage",
+          "tournament_name"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "507677ed4801b6f3299a3d2a8e5aa9f62332c9090b91f79d5cd4ea1266a06f2d",
+        "unorderedRowHash": "507677ed4801b6f3299a3d2a8e5aa9f62332c9090b91f79d5cd4ea1266a06f2d"
+      }
+    },
+    {
+      "id": "sl-join-multi-szos16",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "For tier S tournaments, list the first 10 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name",
+          "__BLANK_1__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id",
+          "__BLANK_2__": "t.tier = 'S'",
+          "__BLANK_3__": "map_result_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Add one JOIN at a time: map_result to match, then match to tournament; LIMIT keeps the slice small.",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY map_result_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "stage",
+          "tournament_name"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "016fea0ac6fa8c6d8edfbef5eb2ad0576ef19b023446b98474f8e08e3461cea5",
+        "unorderedRowHash": "016fea0ac6fa8c6d8edfbef5eb2ad0576ef19b023446b98474f8e08e3461cea5"
+      }
+    },
+    {
+      "id": "sl-join-multi-wkr18g",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "Chain map_result to match to two team aliases and return 5 map_result_id, map_name, team_a_name, team_b_name rows ordered by map_result_id. Return columns: map_result_id, map_name, team_a_name, team_b_name. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name",
+          "__BLANK_1__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id",
+          "__BLANK_2__": "map_result_id",
+          "__BLANK_3__": "5"
+        }
+      },
+      "hint": "Use two team aliases so team_a_id and team_b_id can both be named in one result.",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY map_result_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "team_a_name",
+          "team_b_name"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "18e0ecea975d65a0b32596307616929f4dfa55915719ab2b9901351c737b5ac5",
+        "unorderedRowHash": "18e0ecea975d65a0b32596307616929f4dfa55915719ab2b9901351c737b5ac5"
+      }
+    },
+    {
+      "id": "sl-join-multi-xgof9n",
+      "skill": "sl-join-multi",
+      "database": "sideline",
+      "task": "For tier S tournaments, join match to tournament and winner team, returning the first 10 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Return columns: match_id, stage, tournament_name, winner_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name",
+          "__BLANK_1__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id",
+          "__BLANK_2__": "t.tier = 'S'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Follow match.tournament_id to tournament, then match.winner_team_id to team.",
+      "expectedSql": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY match_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "stage",
+          "tournament_name",
+          "winner_name"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "509a162623b852a88f87b9ef3dac3124decd9b2e3e42f6138115c310b9acc5ea",
+        "unorderedRowHash": "509a162623b852a88f87b9ef3dac3124decd9b2e3e42f6138115c310b9acc5ea"
       }
     }
   ],
   "sl-join-right-full": [
     {
-      "id": "sl-join-right-full-f61mfu",
+      "id": "sl-join-right-full-okqoqy",
       "skill": "sl-join-right-full",
       "database": "sideline",
       "task": "Show the outer edge of team versus team_sponsor: rows where one side is NULL. Return team_id, team_name, sponsor_id, ordered by team_id. Return columns: team_id, team_name, sponsor_id. Order by: team_id.",
@@ -499,11 +2420,478 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "d8bc37bd9de4639146d7173a04c21f96e725b479371c5c06c4c95260959fb1e6",
         "unorderedRowHash": "924d0f663c7c64a651ce3507a82d19095b92551dbe1f784baf50f76744b4daf3"
       }
+    },
+    {
+      "id": "sl-join-right-full-132p6ue",
+      "skill": "sl-join-right-full",
+      "database": "sideline",
+      "task": "Show the outer edge of sponsor versus team_sponsor as sponsor_id, sponsor_name, team_id, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name, team_id. Order by: sponsor_id.",
+      "starterSql": {
+        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id FROM sponsor s FULL OUTER JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE s.sponsor_id IS NULL OR ts.team_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id FROM sponsor s FULL OUTER JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE s.sponsor_id IS NULL OR ts.team_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "sponsor_id"
+        },
+        "half": {
+          "__BLANK_0__": "sponsor_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id",
+          "__BLANK_1__": "sponsor s FULL OUTER JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id",
+          "__BLANK_2__": "s.sponsor_id IS NULL OR ts.team_id IS NULL",
+          "__BLANK_3__": "sponsor_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The unmatched filter keeps rows where either side of the full join is missing.",
+      "expectedSql": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id FROM sponsor s FULL OUTER JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE s.sponsor_id IS NULL OR ts.team_id IS NULL ORDER BY sponsor_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "sponsor_id",
+          "sponsor_name",
+          "team_id"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "6c342f6faf65af7ed954d4638a1875fc0d785fdb4044a3d125aa7582ded1030c",
+        "unorderedRowHash": "6c342f6faf65af7ed954d4638a1875fc0d785fdb4044a3d125aa7582ded1030c"
+      }
+    },
+    {
+      "id": "sl-join-right-full-ow0cew",
+      "skill": "sl-join-right-full",
+      "database": "sideline",
+      "task": "Show teams without players and free agents from a full join of team and player, ordered by team_id, player_id. Return columns: team_id, team_name, player_id, handle. Order by: team_id, player_id.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t FULL OUTER JOIN player p ON p.team_id = t.team_id WHERE t.team_id IS NULL OR p.player_id IS NULL ORDER BY __BLANK_0__, player_id LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t FULL OUTER JOIN player p ON p.team_id = t.team_id WHERE t.team_id IS NULL OR p.player_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle",
+          "__BLANK_1__": "team t FULL OUTER JOIN player p ON p.team_id = t.team_id",
+          "__BLANK_2__": "t.team_id IS NULL OR p.player_id IS NULL",
+          "__BLANK_3__": "team_id, player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "A player with NULL team_id appears on the player-only side of the full outer join.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t FULL OUTER JOIN player p ON p.team_id = t.team_id WHERE t.team_id IS NULL OR p.player_id IS NULL ORDER BY team_id, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "player_id",
+          "handle"
+        ],
+        "rowCount": 36,
+        "orderedRowHash": "e450181a595c144aa390bae5457cff08d727b51f6ca81402bbeb8b66f065f7cd",
+        "unorderedRowHash": "aa2dd2ebe804e31e33d87666da4161bdc6b7b3c0209a3322c44f10851b71853c"
+      }
+    },
+    {
+      "id": "sl-join-right-full-s9bfh0",
+      "skill": "sl-join-right-full",
+      "database": "sideline",
+      "task": "Show tournaments without a region and regions without tournaments from a full outer join, ordered by tournament_id. Return columns: tournament_id, tournament_name, region_id, region_name. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, r.region_id AS region_id, r.name AS region_name FROM tournament t FULL OUTER JOIN region r ON r.region_id = t.region_id WHERE t.tournament_id IS NULL OR r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, r.region_id AS region_id, r.name AS region_name FROM tournament t FULL OUTER JOIN region r ON r.region_id = t.region_id WHERE t.tournament_id IS NULL OR r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.tournament_id AS tournament_id, t.name AS tournament_name, r.region_id AS region_id, r.name AS region_name",
+          "__BLANK_1__": "tournament t FULL OUTER JOIN region r ON r.region_id = t.region_id",
+          "__BLANK_2__": "t.tournament_id IS NULL OR r.region_id IS NULL",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "International tournaments have no region match, so they survive the unmatched filter.",
+      "expectedSql": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, r.region_id AS region_id, r.name AS region_name FROM tournament t FULL OUTER JOIN region r ON r.region_id = t.region_id WHERE t.tournament_id IS NULL OR r.region_id IS NULL ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tournament_name",
+          "region_id",
+          "region_name"
+        ],
+        "rowCount": 8,
+        "orderedRowHash": "b8442c2ed855931998c7bcf2a6319bae90cd7449ae0ffccf2ecac4c58cabff11",
+        "unorderedRowHash": "69b8b6beb3f0e5614212082264c64d256dc36c6deb2a3d2b3a917665d7207aa9"
+      }
+    },
+    {
+      "id": "sl-join-right-full-u96p4d",
+      "skill": "sl-join-right-full",
+      "database": "sideline",
+      "task": "Show teams that never appear as match team_a using a full outer join; return team_id, team_name, match_id ordered by team_id. Return columns: team_id, team_name, match_id. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, m.match_id AS match_id FROM team t FULL OUTER JOIN match m ON m.team_a_id = t.team_id WHERE t.team_id IS NULL OR m.match_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, m.match_id AS match_id FROM team t FULL OUTER JOIN match m ON m.team_a_id = t.team_id WHERE t.team_id IS NULL OR m.match_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, m.match_id AS match_id",
+          "__BLANK_1__": "team t FULL OUTER JOIN match m ON m.team_a_id = t.team_id",
+          "__BLANK_2__": "t.team_id IS NULL OR m.match_id IS NULL",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "A FULL OUTER JOIN requires a hashable equality condition, so match team_a_id to team_id.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name, m.match_id AS match_id FROM team t FULL OUTER JOIN match m ON m.team_a_id = t.team_id WHERE t.team_id IS NULL OR m.match_id IS NULL ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "match_id"
+        ],
+        "rowCount": 1,
+        "orderedRowHash": "b4c45ba3732b64c5d5fae74371ae3b03acf681721fd75a4f7af9fc1afc9830e4",
+        "unorderedRowHash": "b4c45ba3732b64c5d5fae74371ae3b03acf681721fd75a4f7af9fc1afc9830e4"
+      }
     }
   ],
   "sl-scd-asof": [
     {
-      "id": "sl-scd-asof-ka4hrr",
+      "id": "sl-scd-asof-16gvrpz",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "As of 2025-01-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "The active stint has from_date on or before the as-of date and either an open to_date or a later to_date.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY roster_change_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
+        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+      }
+    },
+    {
+      "id": "sl-scd-asof-18hhwoy",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "List the first 10 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.to_date IS NULL",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "For current as-of rows, to_date IS NULL marks the open stint.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY roster_change_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
+        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+      }
+    },
+    {
+      "id": "sl-scd-asof-18s0x9",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "As of 2024-07-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "The as-of date must be on or after from_date and before to_date unless the stint is open.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY roster_change_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
+        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+      }
+    },
+    {
+      "id": "sl-scd-asof-1agjbfj",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "As of 2024-07-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "The as-of date must be on or after from_date and before to_date unless the stint is open.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY roster_change_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
+        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+      }
+    },
+    {
+      "id": "sl-scd-asof-1c6yn",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "List the first 3 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "Closed history rows have a non-NULL to_date at or before the cutoff.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY roster_change_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "to_date"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "e5b9957a0867b640137f2f328043ff996d843528250c2476b8f97227acb47c6d",
+        "unorderedRowHash": "e5b9957a0867b640137f2f328043ff996d843528250c2476b8f97227acb47c6d"
+      }
+    },
+    {
+      "id": "sl-scd-asof-1exdt92",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "List the first 3 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.to_date IS NULL",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "For current as-of rows, to_date IS NULL marks the open stint.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY roster_change_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
+        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+      }
+    },
+    {
+      "id": "sl-scd-asof-1mg9y2b",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Use to_date to find closed historical stints by 2024-12-31 and return 5 rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Closed history rows have a non-NULL to_date at or before the cutoff.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY roster_change_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "to_date"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "03a3af6b0255ae600a0718bac4d3e98af026a47ef28e286b23e5aec5b69660e5",
+        "unorderedRowHash": "245ee72d3e02e48747baa994244cf77c167593e7e1ad7e3c22957edac009eea6"
+      }
+    },
+    {
+      "id": "sl-scd-asof-1vhf35x",
       "skill": "sl-scd-asof",
       "database": "sideline",
       "task": "As of 2025-01-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
@@ -544,11 +2932,312 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
         "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
       }
+    },
+    {
+      "id": "sl-scd-asof-gaa7z9",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Do an as-of lookup on roster_change for 2025-01-01 and return 5 roster_change_id, player_id, team_id, from_date rows, ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "The active stint has from_date on or before the as-of date and either an open to_date or a later to_date.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY roster_change_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
+        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+      }
+    },
+    {
+      "id": "sl-scd-asof-iqg8u5",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Do an as-of lookup on roster_change for 2024-07-01 and return 5 roster_change_id, player_id, team_id, from_date rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "The as-of date must be on or after from_date and before to_date unless the stint is open.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY roster_change_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
+        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+      }
+    },
+    {
+      "id": "sl-scd-asof-spoprl",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "List the first 10 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Closed history rows have a non-NULL to_date at or before the cutoff.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY roster_change_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "to_date"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "8cc26922f6cdebce7b9581f188f3a67d1dce2b7ff544dbaff41fac89a8f19876",
+        "unorderedRowHash": "d71a85ccd7828de3a17fc36002bba10914f054e7bb3c09c03cbf4d213d727c09"
+      }
+    },
+    {
+      "id": "sl-scd-asof-up1nxa",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Use open-ended roster_change rows and return 5 roster_change_id, player_id, team_id, from_date rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
+          "__BLANK_1__": "roster_change rc",
+          "__BLANK_2__": "rc.to_date IS NULL",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "For current as-of rows, to_date IS NULL marks the open stint.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY roster_change_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "from_date"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
+        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+      }
+    },
+    {
+      "id": "sl-scd-asof-1if2snq",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Find roster stints active on each player signed_date and return 10 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date",
+          "__BLANK_1__": "roster_change rc JOIN player p ON p.player_id = rc.player_id",
+          "__BLANK_2__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Treat signed_date as the lookup date and test it against from_date and to_date.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY roster_change_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "signed_date"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
+        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+      }
+    },
+    {
+      "id": "sl-scd-asof-gg3ka2",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Find roster stints active on each player signed_date and return 3 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date",
+          "__BLANK_1__": "roster_change rc JOIN player p ON p.player_id = rc.player_id",
+          "__BLANK_2__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "Treat signed_date as the lookup date and test it against from_date and to_date.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY roster_change_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "signed_date"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
+        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+      }
+    },
+    {
+      "id": "sl-scd-asof-i9kpm",
+      "skill": "sl-scd-asof",
+      "database": "sideline",
+      "task": "Join roster_change to player and use signed_date as the as-of date, returning 5 rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
+      "starterSql": {
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "roster_change_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date",
+          "__BLANK_1__": "roster_change rc JOIN player p ON p.player_id = rc.player_id",
+          "__BLANK_2__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')",
+          "__BLANK_3__": "roster_change_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Treat signed_date as the lookup date and test it against from_date and to_date.",
+      "expectedSql": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY roster_change_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "roster_change_id",
+          "player_id",
+          "team_id",
+          "signed_date"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
+        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+      }
     }
   ],
   "sl-self-join-compare": [
     {
-      "id": "sl-self-join-compare-1vjg74u",
+      "id": "sl-self-join-compare-s144yi",
       "skill": "sl-self-join-compare",
       "database": "sideline",
       "task": "Self-join team on region_id and elo_rating and return team_id, team_a_name, team_b_name for each pair, ordered by team_id. Return columns: team_id, team_a_name, team_b_name. Order by: team_id.",
@@ -584,11 +3273,431 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "092ce28bbdffbee9876973ce1de179d8ee7aa28d46e056b6cd74c35b4ab2e976",
         "unorderedRowHash": "092ce28bbdffbee9876973ce1de179d8ee7aa28d46e056b6cd74c35b4ab2e976"
       }
+    },
+    {
+      "id": "sl-self-join-compare-1gf7sqc",
+      "skill": "sl-self-join-compare",
+      "database": "sideline",
+      "task": "Self-join player to the next same-country same-role peer and return player_id, handle, peer_player_id, peer_handle ordered by player_id. Return columns: player_id, handle, peer_player_id, peer_handle. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle",
+          "__BLANK_1__": "player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id",
+          "__BLANK_2__": "b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id)",
+          "__BLANK_3__": "player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "Use a self-join for candidate peers and a correlated min() to keep only the next one.",
+      "expectedSql": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "peer_player_id",
+          "peer_handle"
+        ],
+        "rowCount": 187,
+        "orderedRowHash": "79bc48d08f6d620e5783f2313af27c3c56afddcd92e59c9cba4433ef89daf14e",
+        "unorderedRowHash": "a1c54ee234bb49249de0d37070c5876f5941f1d4e322330697984dff2aef7f32"
+      }
+    },
+    {
+      "id": "sl-self-join-compare-1plrzh3",
+      "skill": "sl-self-join-compare",
+      "database": "sideline",
+      "task": "Self-join team to the next same-region peer and return team_id, team_name, peer_team_id, peer_team_name ordered by team_id. Return columns: team_id, team_name, peer_team_id, peer_team_name. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name",
+          "__BLANK_1__": "team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id",
+          "__BLANK_2__": "b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id)",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The correlated min() picks one peer per left team, keeping team_id unique.",
+      "expectedSql": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "peer_team_id",
+          "peer_team_name"
+        ],
+        "rowCount": 32,
+        "orderedRowHash": "5791d3a6e706cd5d2cc4e0d5254112dc592393a1d041d01161f215d70c9f15f4",
+        "unorderedRowHash": "5ebd45baff17f5787815f78dac803709a82ff88201557dae7aefca18d2ea2f31"
+      }
+    },
+    {
+      "id": "sl-self-join-compare-3rmzue",
+      "skill": "sl-self-join-compare",
+      "database": "sideline",
+      "task": "Self-join sponsor to the next headquarters-country peer and return sponsor_id, sponsor_name, peer_sponsor_id, peer_sponsor_name ordered by sponsor_id. Return columns: sponsor_id, sponsor_name, peer_sponsor_id, peer_sponsor_name. Order by: sponsor_id.",
+      "starterSql": {
+        "full": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "sponsor_id"
+        },
+        "half": {
+          "__BLANK_0__": "sponsor_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name",
+          "__BLANK_1__": "sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id",
+          "__BLANK_2__": "b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id)",
+          "__BLANK_3__": "sponsor_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The self-join compares sponsors within one headquarters country.",
+      "expectedSql": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY sponsor_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "sponsor_id",
+          "sponsor_name",
+          "peer_sponsor_id",
+          "peer_sponsor_name"
+        ],
+        "rowCount": 21,
+        "orderedRowHash": "d21e172d47855302890624382ead9212d1970f89daee20bf83de3a2cfe0f29a8",
+        "unorderedRowHash": "d87c1f2739bb788d4a55648083ac52c03ee7d7621d88423dafbcb8243801a1e4"
+      }
+    },
+    {
+      "id": "sl-self-join-compare-p21w0h",
+      "skill": "sl-self-join-compare",
+      "database": "sideline",
+      "task": "Self-join tournament to the next same-tier peer and return tournament_id, tournament_name, peer_tournament_id, peer_tournament_name ordered by tournament_id. Return columns: tournament_id, tournament_name, peer_tournament_id, peer_tournament_name. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name",
+          "__BLANK_1__": "tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id",
+          "__BLANK_2__": "b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id)",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The self-join pairs tournaments inside the same tier and the min() narrows each left row to one peer.",
+      "expectedSql": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tournament_name",
+          "peer_tournament_id",
+          "peer_tournament_name"
+        ],
+        "rowCount": 21,
+        "orderedRowHash": "cc5811b44c60773d7979a1f487188a446ba7d1de5e72adcb2874b97659d33af5",
+        "unorderedRowHash": "aa31205e253e2416c34af03fc4dc62eee130e500bc301441d4fee3c8587762ea"
+      }
     }
   ],
   "sl-self-join-match": [
     {
-      "id": "sl-self-join-match-12ej3o7",
+      "id": "sl-self-join-match-11rfprz",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "Show 10 Group matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Group'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY match_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "261b51efd954319a5b7016646aaea6205f7a8b4a6a2c6d28a7f38d1b8ad19708",
+        "unorderedRowHash": "a9b7ce0d2acf45ef33d5bb1412c26aba31fcf06c7a60661c3b2db503f8d8cb33"
+      }
+    },
+    {
+      "id": "sl-self-join-match-19o2ipl",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "Show 5 Semifinal matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Semifinal'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY match_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "2118f17293c84071be99babcf271b0bda05dab0350c8e06e5b696723312245da",
+        "unorderedRowHash": "830cbc15b0c7b0b40d14ee8ff4127b4fef86adcd0649127148964cf746e85512"
+      }
+    },
+    {
+      "id": "sl-self-join-match-4a53tl",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "For Grand Final matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Grand Final'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY match_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "4348ebbbcc3682d91f3be731aeb94fb9d8d2996e9f0f99e7330a99384b452c9a",
+        "unorderedRowHash": "4348ebbbcc3682d91f3be731aeb94fb9d8d2996e9f0f99e7330a99384b452c9a"
+      }
+    },
+    {
+      "id": "sl-self-join-match-9tru77",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "For Quarterfinal matches, list the first 3 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Quarterfinal'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY match_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "ccc19235d69b69c5db342a637c9136ca278473bc443332d5727b6a55dc764ace",
+        "unorderedRowHash": "ccc19235d69b69c5db342a637c9136ca278473bc443332d5727b6a55dc764ace"
+      }
+    },
+    {
+      "id": "sl-self-join-match-hd6wf5",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "Show 3 Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "3"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "3"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Final'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "3"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY match_id LIMIT 3",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 3,
+        "orderedRowHash": "048e8d4d6263809e9fd7076a31588afee8db4290efbf21496fc65fb613cc59b0",
+        "unorderedRowHash": "62a74d555b139cdd331e408b56459efb778ec383164a3df51875bf58d9f3e661"
+      }
+    },
+    {
+      "id": "sl-self-join-match-l9fph9",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "For Group matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "5"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Group'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "5"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY match_id LIMIT 5",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 5,
+        "orderedRowHash": "e76e24041e7c0e39b0bfdf6fbab7625b860acf26885b60fa339b894572724d42",
+        "unorderedRowHash": "c7f7a27f2b5b0c61151b9972904acd0d27d98569d9198546dc889eeaf7fb8077"
+      }
+    },
+    {
+      "id": "sl-self-join-match-uoq1ih",
       "skill": "sl-self-join-match",
       "database": "sideline",
       "task": "Show 3 Grand Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
@@ -628,11 +3737,53 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "f540963ab249613a902201823f87b6853c459faeb2e4e5bff1f778173cdc2b78",
         "unorderedRowHash": "f540963ab249613a902201823f87b6853c459faeb2e4e5bff1f778173cdc2b78"
       }
+    },
+    {
+      "id": "sl-self-join-match-zlv17f",
+      "skill": "sl-self-join-match",
+      "database": "sideline",
+      "task": "For Final matches, list the first 10 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "10"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "10"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
+          "__BLANK_1__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_2__": "m.stage = 'Final'",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "10"
+        }
+      },
+      "hint": "Join match to team twice with aliases. One join is on winner_team_id; the other uses CASE to choose the non-winning team id.",
+      "expectedSql": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY match_id LIMIT 10",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "winner_name",
+          "loser_name"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "156ec938da2457621157a4abdf18820563011085bc6083776f0b432b9c895238",
+        "unorderedRowHash": "32ad86dff18c899ab541a4eb5c09a923940579318d905980d48df72d232ed4f9"
+      }
     }
   ],
   "sl-semi-join": [
     {
-      "id": "sl-semi-join-flu8sg",
+      "id": "sl-semi-join-1rgsv2k",
       "skill": "sl-semi-join",
       "database": "sideline",
       "task": "Use EXISTS against team_sponsor to return sponsored teams as team_id, team_name, ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
@@ -669,11 +3820,330 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "530f4232b99d248ba474992bfbd7cc5ac6c090645c77981c255b4ae3272c6bfd",
         "unorderedRowHash": "d6bbc68b073e2e955d74020ec1519ab3bead2cddeb569a5815ebdd8ad4fbfbf2"
       }
+    },
+    {
+      "id": "sl-semi-join-1gvzk7z",
+      "skill": "sl-semi-join",
+      "database": "sideline",
+      "task": "Use EXISTS against team_sponsor to return active or historical sponsors once, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
+      "starterSql": {
+        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.sponsor_id = s.sponsor_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.sponsor_id = s.sponsor_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "sponsor_id"
+        },
+        "half": {
+          "__BLANK_0__": "sponsor_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "s.sponsor_id AS sponsor_id, s.name AS sponsor_name",
+          "__BLANK_1__": "sponsor s",
+          "__BLANK_2__": "EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.sponsor_id = s.sponsor_id)",
+          "__BLANK_3__": "sponsor_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The semi-join tests for membership without duplicating sponsors by deal count.",
+      "expectedSql": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.sponsor_id = s.sponsor_id) ORDER BY sponsor_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "sponsor_id",
+          "sponsor_name"
+        ],
+        "rowCount": 29,
+        "orderedRowHash": "055fa4f3ce04614bda437098935bdde7ac0ac21b55e8d05ce93d43031be34831",
+        "unorderedRowHash": "a4f95a92d78d0b0cfd8fa6bee037678ed922eb8c0408255cd90b61201eb77429"
+      }
+    },
+    {
+      "id": "sl-semi-join-1qq3fom",
+      "skill": "sl-semi-join",
+      "database": "sideline",
+      "task": "Use EXISTS against match to return tournaments with match activity as tournament_id, tournament_name, ordered by tournament_id. Return columns: tournament_id, tournament_name. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t WHERE EXISTS (SELECT 1 FROM match m WHERE m.tournament_id = t.tournament_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t WHERE EXISTS (SELECT 1 FROM match m WHERE m.tournament_id = t.tournament_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.tournament_id AS tournament_id, t.name AS tournament_name",
+          "__BLANK_1__": "tournament t",
+          "__BLANK_2__": "EXISTS (SELECT 1 FROM match m WHERE m.tournament_id = t.tournament_id)",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The EXISTS subquery checks whether any match points back to the tournament.",
+      "expectedSql": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t WHERE EXISTS (SELECT 1 FROM match m WHERE m.tournament_id = t.tournament_id) ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tournament_name"
+        ],
+        "rowCount": 22,
+        "orderedRowHash": "6048e1fac48926d0598238eba98cf5a72df5b3278f19ad361def5e9016a3ef8b",
+        "unorderedRowHash": "dbb4ca03cb90171434cea226e3eefc4c543f5035c84dfe548d82e6de489c3516"
+      }
+    },
+    {
+      "id": "sl-semi-join-vut0e0",
+      "skill": "sl-semi-join",
+      "database": "sideline",
+      "task": "Use EXISTS against player to return teams with rostered players as team_id, team_name, ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name",
+          "__BLANK_1__": "team t",
+          "__BLANK_2__": "EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id)",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "EXISTS keeps each team once even if many players match.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id) ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name"
+        ],
+        "rowCount": 39,
+        "orderedRowHash": "bf283763dbe13456dfc02ddb63e3a4dbe3c7a3e1ab0969d88a4ffe4ed60b5dd3",
+        "unorderedRowHash": "475f5ce788e93b73856cc024e48f3e577a00feda42257d4f9c71e10443a9e569"
+      }
+    },
+    {
+      "id": "sl-semi-join-vyp7lr",
+      "skill": "sl-semi-join",
+      "database": "sideline",
+      "task": "Use EXISTS against roster_change to return players with roster history as player_id, handle, ordered by player_id. Return columns: player_id, handle. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE EXISTS (SELECT 1 FROM roster_change rc WHERE rc.player_id = p.player_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE EXISTS (SELECT 1 FROM roster_change rc WHERE rc.player_id = p.player_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "p.player_id AS player_id, p.handle AS handle",
+          "__BLANK_1__": "player p",
+          "__BLANK_2__": "EXISTS (SELECT 1 FROM roster_change rc WHERE rc.player_id = p.player_id)",
+          "__BLANK_3__": "player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "EXISTS is a yes/no roster-history test for each player.",
+      "expectedSql": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE EXISTS (SELECT 1 FROM roster_change rc WHERE rc.player_id = p.player_id) ORDER BY player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "a13f2c228604854b70f453010af38c21152ac038c13c44e9506597f1e108b2cd",
+        "unorderedRowHash": "158cc77bc38c272184100f22e022dfd09c91f6ca8fe3e67ded2b82672e27acbd"
+      }
     }
   ],
   "sl-set-ops": [
     {
-      "id": "sl-set-ops-1y3hpwj",
+      "id": "sl-set-ops-12p0j6u",
+      "skill": "sl-set-ops",
+      "database": "sideline",
+      "task": "UNION match team_a_id and team_b_id into one team_id column and return distinct values ordered by team_id. Return columns: team_id. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT team_id AS team_id",
+          "__BLANK_1__": "(SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams",
+          "__BLANK_2__": "team_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "UNION deduplicates teams appearing on either side of the match.",
+      "expectedSql": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id"
+        ],
+        "rowCount": 39,
+        "orderedRowHash": "654541f32a2b52663971ba43af944aad3a33f8e95f958e2767292b6057008d21",
+        "unorderedRowHash": "d32dba952493c0a823a13b33e97241e9dad50039e9272e6aab2d74a692b70dba"
+      }
+    },
+    {
+      "id": "sl-set-ops-1rqwcxx",
+      "skill": "sl-set-ops",
+      "database": "sideline",
+      "task": "Use EXCEPT to subtract winner_team_id values from team_id values and return team_id ordered by team_id. Return columns: team_id. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS team_id FROM (SELECT __BLANK_1__ AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT team_id AS team_id",
+          "__BLANK_1__": "(SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams",
+          "__BLANK_2__": "team_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "EXCEPT returns values from the first SELECT that are absent from the second.",
+      "expectedSql": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "f5c280aeed96f9cbb4f30e31816adbee8e95507708ae6bb159b5ff160cc80203",
+        "unorderedRowHash": "6b3fade32811da87471bb94b08940c36894b402efa46fd345ab766230c71dc17"
+      }
+    },
+    {
+      "id": "sl-set-ops-1w4d6oi",
+      "skill": "sl-set-ops",
+      "database": "sideline",
+      "task": "INTERSECT player country with tournament host_country and return distinct country values ordered by country. Return columns: country. Order by: country.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS country FROM (SELECT __BLANK_1__ AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT DISTINCT country AS country FROM (SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "country",
+          "__BLANK_1__": "country",
+          "__BLANK_2__": "country"
+        },
+        "half": {
+          "__BLANK_0__": "country",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT country AS country",
+          "__BLANK_1__": "(SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries",
+          "__BLANK_2__": "country",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "INTERSECT keeps only values present in both same-shaped SELECTs.",
+      "expectedSql": "SELECT DISTINCT country AS country FROM (SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY country LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "country"
+        ],
+        "rowCount": 9,
+        "orderedRowHash": "9dea8a142752e4a9784191fd4ce1047dfc1d3bd69a7be1ae8525718f3a5760ea",
+        "unorderedRowHash": "9dea8a142752e4a9784191fd4ce1047dfc1d3bd69a7be1ae8525718f3a5760ea"
+      }
+    },
+    {
+      "id": "sl-set-ops-lmmbtq",
+      "skill": "sl-set-ops",
+      "database": "sideline",
+      "task": "UNION player role with roster_change change_reason into role and return distinct values ordered by role. Return columns: role. Order by: role.",
+      "starterSql": {
+        "full": "SELECT DISTINCT __BLANK_0__ AS role FROM (SELECT __BLANK_1__ AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY __BLANK_2__ LIMIT 200",
+        "half": "SELECT DISTINCT role AS role FROM (SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "role",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "role"
+        },
+        "half": {
+          "__BLANK_0__": "role",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "DISTINCT role AS role",
+          "__BLANK_1__": "(SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "Both sides of the UNION expose one text column named role.",
+      "expectedSql": "SELECT DISTINCT role AS role FROM (SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY role LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "role"
+        ],
+        "rowCount": 13,
+        "orderedRowHash": "ea34f1cee48f1d5d108d1332a56048d13c9ceb1dcbe7a347079934805bb449b7",
+        "unorderedRowHash": "ea34f1cee48f1d5d108d1332a56048d13c9ceb1dcbe7a347079934805bb449b7"
+      }
+    },
+    {
+      "id": "sl-set-ops-sxq06e",
       "skill": "sl-set-ops",
       "database": "sideline",
       "task": "UNION tournament host_country with player country into one country column and return the distinct non-NULL values ordered by country. Return columns: country. Order by: country.",
@@ -716,7 +4186,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
   ],
   "sl-subquery-correlated": [
     {
-      "id": "sl-subquery-correlated-16gr93z",
+      "id": "sl-subquery-correlated-lllys",
       "skill": "sl-subquery-correlated",
       "database": "sideline",
       "task": "List rostered players who earn more than their own team average. Return player_id and handle. Order by player_id. Return columns: player_id, handle. Order by: player_id.",
@@ -753,11 +4223,175 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "e26aee178b3a20252a49146aab3fe4ebf261d56bc96e0e7f798ddeb54f42efbf",
         "unorderedRowHash": "4e53ee4f342bee567499686f9647155d96757f0ddfb6abc614fc49b62cba1aee"
       }
+    },
+    {
+      "id": "sl-subquery-correlated-1okswsg",
+      "skill": "sl-subquery-correlated",
+      "database": "sideline",
+      "task": "List map results whose duration_minutes is above the average for that same map_name. Return map_result_id, map_name, duration_minutes. Order by map_result_id. Return columns: map_result_id, map_name, duration_minutes. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, mr.duration_minutes AS duration_minutes FROM map_result mr WHERE mr.duration_minutes > (SELECT avg(mr2.duration_minutes) FROM map_result mr2 WHERE mr2.map_name = mr.map_name) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, mr.duration_minutes AS duration_minutes FROM map_result mr WHERE mr.duration_minutes > (SELECT avg(mr2.duration_minutes) FROM map_result mr2 WHERE mr2.map_name = mr.map_name) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, mr.duration_minutes AS duration_minutes",
+          "__BLANK_1__": "map_result mr",
+          "__BLANK_2__": "mr.duration_minutes > (SELECT avg(mr2.duration_minutes) FROM map_result mr2 WHERE mr2.map_name = mr.map_name)",
+          "__BLANK_3__": "map_result_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The inner query filters to the current outer map_name before averaging.",
+      "expectedSql": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, mr.duration_minutes AS duration_minutes FROM map_result mr WHERE mr.duration_minutes > (SELECT avg(mr2.duration_minutes) FROM map_result mr2 WHERE mr2.map_name = mr.map_name) ORDER BY map_result_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "duration_minutes"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "d18ccbb3eb47c42284d7f80419536019eba1e420a2ee49c9aebebd2365e35ed1",
+        "unorderedRowHash": "f1a6f91b9fa01fc744988991fd97898d3097d57f92976eb9b676d467afb40e0c"
+      }
+    },
+    {
+      "id": "sl-subquery-correlated-1qibsn7",
+      "skill": "sl-subquery-correlated",
+      "database": "sideline",
+      "task": "List tournaments whose prize_pool_usd is above their own tier average. Return tournament_id, name, prize_pool_usd. Order by tournament_id. Return columns: tournament_id, name, prize_pool_usd. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT t.tournament_id AS tournament_id, t.name AS name, t.prize_pool_usd AS prize_pool_usd FROM tournament t WHERE t.prize_pool_usd > (SELECT avg(t2.prize_pool_usd) FROM tournament t2 WHERE t2.tier = t.tier) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.tournament_id AS tournament_id, t.name AS name, t.prize_pool_usd AS prize_pool_usd FROM tournament t WHERE t.prize_pool_usd > (SELECT avg(t2.prize_pool_usd) FROM tournament t2 WHERE t2.tier = t.tier) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.tournament_id AS tournament_id, t.name AS name, t.prize_pool_usd AS prize_pool_usd",
+          "__BLANK_1__": "tournament t",
+          "__BLANK_2__": "t.prize_pool_usd > (SELECT avg(t2.prize_pool_usd) FROM tournament t2 WHERE t2.tier = t.tier)",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The subquery recomputes the average prize pool for the outer tournament tier.",
+      "expectedSql": "SELECT t.tournament_id AS tournament_id, t.name AS name, t.prize_pool_usd AS prize_pool_usd FROM tournament t WHERE t.prize_pool_usd > (SELECT avg(t2.prize_pool_usd) FROM tournament t2 WHERE t2.tier = t.tier) ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "prize_pool_usd"
+        ],
+        "rowCount": 10,
+        "orderedRowHash": "0bf01c2734be74b637ee2f71473d2e44b9627ae50f1244738676da845a8afb8a",
+        "unorderedRowHash": "1449fb77c404e5df5e03ccd8062cf3830e8d35be61d7f28e2ec2aa575407c14a"
+      }
+    },
+    {
+      "id": "sl-subquery-correlated-6gkrke",
+      "skill": "sl-subquery-correlated",
+      "database": "sideline",
+      "task": "List matches whose best_of is above the average for their own stage. Return match_id, stage, best_of. Order by match_id. Return columns: match_id, stage, best_of. Order by: match_id.",
+      "starterSql": {
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, m.best_of AS best_of FROM match m WHERE m.best_of > (SELECT avg(m2.best_of) FROM match m2 WHERE m2.stage = m.stage) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, m.best_of AS best_of FROM match m WHERE m.best_of > (SELECT avg(m2.best_of) FROM match m2 WHERE m2.stage = m.stage) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id"
+        },
+        "half": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, m.best_of AS best_of",
+          "__BLANK_1__": "match m",
+          "__BLANK_2__": "m.best_of > (SELECT avg(m2.best_of) FROM match m2 WHERE m2.stage = m.stage)",
+          "__BLANK_3__": "match_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The inner average is tied to the outer match stage.",
+      "expectedSql": "SELECT m.match_id AS match_id, m.stage AS stage, m.best_of AS best_of FROM match m WHERE m.best_of > (SELECT avg(m2.best_of) FROM match m2 WHERE m2.stage = m.stage) ORDER BY match_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "stage",
+          "best_of"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "a89fb0b690e9eb7558994ce1e0c8c9a8857d9a79135f8e4e42a793192a72c9c9",
+        "unorderedRowHash": "f5d05a84509f6b74f36a55227fdff2be5ae44a69d7bab1dfc27243a19f113374"
+      }
+    },
+    {
+      "id": "sl-subquery-correlated-zqyvqj",
+      "skill": "sl-subquery-correlated",
+      "database": "sideline",
+      "task": "List teams whose elo_rating is above their own region average. Return team_id, team_name, elo_rating. Order by team_id. Return columns: team_id, team_name, elo_rating. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, t.elo_rating AS elo_rating FROM team t WHERE t.elo_rating > (SELECT avg(t2.elo_rating) FROM team t2 WHERE t2.region_id = t.region_id) ORDER BY __BLANK_0__ LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, t.elo_rating AS elo_rating FROM team t WHERE t.elo_rating > (SELECT avg(t2.elo_rating) FROM team t2 WHERE t2.region_id = t.region_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, t.elo_rating AS elo_rating",
+          "__BLANK_1__": "team t",
+          "__BLANK_2__": "t.elo_rating > (SELECT avg(t2.elo_rating) FROM team t2 WHERE t2.region_id = t.region_id)",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The inner average references the outer team region_id.",
+      "expectedSql": "SELECT t.team_id AS team_id, t.name AS team_name, t.elo_rating AS elo_rating FROM team t WHERE t.elo_rating > (SELECT avg(t2.elo_rating) FROM team t2 WHERE t2.region_id = t.region_id) ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "elo_rating"
+        ],
+        "rowCount": 20,
+        "orderedRowHash": "b4ff048a8e1969db7bf321c5b3c5c24b70935e983c2aa94cdba8522838d069b5",
+        "unorderedRowHash": "0c9a5100f8ab319c0f5248974bd1b71c683d21e26477765a87a50218d7c51262"
+      }
     }
   ],
   "sl-subquery-in": [
     {
-      "id": "sl-subquery-in-1sgfn9z",
+      "id": "sl-subquery-in-11c4e2g",
       "skill": "sl-subquery-in",
       "database": "sideline",
       "task": "List teams in regions that host at least one tier A tournament. Return team_id and team_name. Order by team_id. Return columns: team_id, team_name. Order by: team_id.",
@@ -795,11 +4429,181 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "7b1dc756bba73ef00b566d5630df090ec282aecabcbc9390d7a1e50ff3d74895",
         "unorderedRowHash": "aefe94785ba0fde6be897f9dfab5c758ea6b22de36b5538406a22697a22b7e99"
       }
+    },
+    {
+      "id": "sl-subquery-in-1vzwisf",
+      "skill": "sl-subquery-in",
+      "database": "sideline",
+      "task": "List players whose team_id appears among match winners. Return player_id and handle. Order by player_id. Return columns: player_id, handle. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, handle AS handle FROM player WHERE team_id IN (SELECT winner_team_id FROM match) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, handle AS handle FROM player WHERE team_id IN (SELECT winner_team_id FROM match) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, handle AS handle",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "team_id IN (SELECT winner_team_id FROM match)",
+          "__BLANK_3__": "player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The subquery builds the set of teams that have won at least one match.",
+      "expectedSql": "SELECT player_id AS player_id, handle AS handle FROM player WHERE team_id IN (SELECT winner_team_id FROM match) ORDER BY player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "532a3aaba488ca78dd439bf6f9987f2ef4a76bb6b57f600640c0411f58a16ec3",
+        "unorderedRowHash": "078a1acb82c9b6f07478c1d8ed9edb18374d8f00038a7af0cb41dbb7f362a80c"
+      }
+    },
+    {
+      "id": "sl-subquery-in-afrah8",
+      "skill": "sl-subquery-in",
+      "database": "sideline",
+      "task": "List sponsors with at least one active contract. Return sponsor_id and sponsor_name. Order by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS sponsor_id, name AS sponsor_name FROM sponsor WHERE __BLANK_1__ IN (SELECT __BLANK_2__ FROM team_sponsor WHERE contract_end IS NULL) ORDER BY __BLANK_3__ LIMIT 200",
+        "half": "SELECT sponsor_id AS sponsor_id, name AS sponsor_name FROM sponsor WHERE sponsor_id IN (SELECT sponsor_id FROM team_sponsor WHERE contract_end IS NULL) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "sponsor_id",
+          "__BLANK_1__": "sponsor_id",
+          "__BLANK_2__": "sponsor_id",
+          "__BLANK_3__": "sponsor_id"
+        },
+        "half": {
+          "__BLANK_0__": "sponsor_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "sponsor_id AS sponsor_id, name AS sponsor_name",
+          "__BLANK_1__": "sponsor",
+          "__BLANK_2__": "sponsor_id IN (SELECT sponsor_id FROM team_sponsor WHERE contract_end IS NULL)",
+          "__BLANK_3__": "sponsor_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The subquery keeps sponsor ids from open contracts only.",
+      "expectedSql": "SELECT sponsor_id AS sponsor_id, name AS sponsor_name FROM sponsor WHERE sponsor_id IN (SELECT sponsor_id FROM team_sponsor WHERE contract_end IS NULL) ORDER BY sponsor_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "sponsor_id",
+          "sponsor_name"
+        ],
+        "rowCount": 27,
+        "orderedRowHash": "d4d1c61fa277ca83d8338f27ee67bc06a3abe9b0c70247403f9869602fd23729",
+        "unorderedRowHash": "d94effe02932bd84ddf0d5db33932c012ccd09c2537ad50dc719f59224a59d3b"
+      }
+    },
+    {
+      "id": "sl-subquery-in-jlwxo6",
+      "skill": "sl-subquery-in",
+      "database": "sideline",
+      "task": "List tournaments that include at least one best_of 5 match. Return tournament_id and name. Order by tournament_id. Return columns: tournament_id, name. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name FROM tournament WHERE __BLANK_1__ IN (SELECT __BLANK_2__ FROM match WHERE best_of = 5) ORDER BY __BLANK_3__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name FROM tournament WHERE tournament_id IN (SELECT tournament_id FROM match WHERE best_of = 5) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id",
+          "__BLANK_2__": "tournament_id",
+          "__BLANK_3__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tournament_id IN (SELECT tournament_id FROM match WHERE best_of = 5)",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The match subquery supplies tournament ids that had a best-of-5 match.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name FROM tournament WHERE tournament_id IN (SELECT tournament_id FROM match WHERE best_of = 5) ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name"
+        ],
+        "rowCount": 22,
+        "orderedRowHash": "6048e1fac48926d0598238eba98cf5a72df5b3278f19ad361def5e9016a3ef8b",
+        "unorderedRowHash": "dbb4ca03cb90171434cea226e3eefc4c543f5035c84dfe548d82e6de489c3516"
+      }
+    },
+    {
+      "id": "sl-subquery-in-z4w46s",
+      "skill": "sl-subquery-in",
+      "database": "sideline",
+      "task": "List regions that have at least one elite-Elo team. Return region_id and region_name. Order by region_id. Return columns: region_id, region_name. Order by: region_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS region_id, name AS region_name FROM region WHERE __BLANK_1__ IN (SELECT __BLANK_2__ FROM team WHERE elo_rating >= 1800) ORDER BY __BLANK_3__ LIMIT 200",
+        "half": "SELECT region_id AS region_id, name AS region_name FROM region WHERE region_id IN (SELECT region_id FROM team WHERE elo_rating >= 1800) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "region_id",
+          "__BLANK_1__": "region_id",
+          "__BLANK_2__": "region_id",
+          "__BLANK_3__": "region_id"
+        },
+        "half": {
+          "__BLANK_0__": "region_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "region_id AS region_id, name AS region_name",
+          "__BLANK_1__": "region",
+          "__BLANK_2__": "region_id IN (SELECT region_id FROM team WHERE elo_rating >= 1800)",
+          "__BLANK_3__": "region_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The inner query creates the set of regions with at least one high-Elo team.",
+      "expectedSql": "SELECT region_id AS region_id, name AS region_name FROM region WHERE region_id IN (SELECT region_id FROM team WHERE elo_rating >= 1800) ORDER BY region_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "region_id",
+          "region_name"
+        ],
+        "rowCount": 6,
+        "orderedRowHash": "84e7fd590b5958b42827cb75a3506669036bca087ec28681ec35ac16d562fe9c",
+        "unorderedRowHash": "84e7fd590b5958b42827cb75a3506669036bca087ec28681ec35ac16d562fe9c"
+      }
     }
   ],
   "sl-subquery-scalar": [
     {
-      "id": "sl-subquery-scalar-nsdjb0",
+      "id": "sl-subquery-scalar-tfcqjz",
       "skill": "sl-subquery-scalar",
       "database": "sideline",
       "task": "Compare each team to the scalar average Elo subquery and return team_id, team_name, elo_rating for the above-average teams, ordered by team_id. Return columns: team_id, team_name, elo_rating. Order by: team_id.",
@@ -838,11 +4642,269 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "39aea2e6ed0ea3c87337e1f85ba6369742c6ab1b9199d4b9e2e948260b5785c0",
         "unorderedRowHash": "ec0c847a991a02204898e181ae213baa1fded43c74afc39a24641e8a05b25004"
       }
+    },
+    {
+      "id": "sl-subquery-scalar-10kis8",
+      "skill": "sl-subquery-scalar",
+      "database": "sideline",
+      "task": "Use a scalar average duration subquery and return map_result_id, map_name, duration_minutes for longer maps, ordered by map_result_id. Return columns: map_result_id, map_name, duration_minutes. Order by: map_result_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes FROM map_result WHERE duration_minutes > (SELECT avg(duration_minutes) FROM map_result) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes FROM map_result WHERE duration_minutes > (SELECT avg(duration_minutes) FROM map_result) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "map_result_id"
+        },
+        "half": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes",
+          "__BLANK_1__": "map_result",
+          "__BLANK_2__": "duration_minutes > (SELECT avg(duration_minutes) FROM map_result)",
+          "__BLANK_3__": "map_result_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The inner AVG returns one duration threshold for all outer map rows.",
+      "expectedSql": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes FROM map_result WHERE duration_minutes > (SELECT avg(duration_minutes) FROM map_result) ORDER BY map_result_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "duration_minutes"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "0e16f25ac10bd2aab6f903d6c31ee7a027c54e2f0a2d1bdd74e3c9ca611cae0a",
+        "unorderedRowHash": "9f58000840635df09e636e8091a4eb317636d49028d734fcb622d980c9d8dd1e"
+      }
+    },
+    {
+      "id": "sl-subquery-scalar-1mdh9pu",
+      "skill": "sl-subquery-scalar",
+      "database": "sideline",
+      "task": "Compare each tournament to the scalar average prize_pool_usd subquery and return tournament_id, name, prize_pool_usd, ordered by tournament_id. Return columns: tournament_id, name, prize_pool_usd. Order by: tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, prize_pool_usd AS prize_pool_usd FROM tournament WHERE prize_pool_usd > (SELECT avg(prize_pool_usd) FROM tournament) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, name AS name, prize_pool_usd AS prize_pool_usd FROM tournament WHERE prize_pool_usd > (SELECT avg(prize_pool_usd) FROM tournament) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, prize_pool_usd AS prize_pool_usd",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "prize_pool_usd > (SELECT avg(prize_pool_usd) FROM tournament)",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "A scalar aggregate subquery can be used like a single numeric value.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, name AS name, prize_pool_usd AS prize_pool_usd FROM tournament WHERE prize_pool_usd > (SELECT avg(prize_pool_usd) FROM tournament) ORDER BY tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "name",
+          "prize_pool_usd"
+        ],
+        "rowCount": 8,
+        "orderedRowHash": "6b501f862e71107cac2882dca4398c2192573aa4150973e95d4f72b9ace4993d",
+        "unorderedRowHash": "ca113b6c7e6f5ea157162dde4c33ee4af6221ca9fa6751dcfe2a62354c0cd05b"
+      }
+    },
+    {
+      "id": "sl-subquery-scalar-1n8rmbb",
+      "skill": "sl-subquery-scalar",
+      "database": "sideline",
+      "task": "Compare founded_date to a scalar min tournament start_date subquery and return team_id, team_name, founded_date ordered by team_id. Return columns: team_id, team_name, founded_date. Order by: team_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, founded_date AS founded_date FROM team WHERE founded_date < (SELECT min(start_date) FROM tournament) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT team_id AS team_id, name AS team_name, founded_date AS founded_date FROM team WHERE founded_date < (SELECT min(start_date) FROM tournament) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "team_id AS team_id, name AS team_name, founded_date AS founded_date",
+          "__BLANK_1__": "team",
+          "__BLANK_2__": "founded_date < (SELECT min(start_date) FROM tournament)",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The min(start_date) subquery returns one date for every team to compare against.",
+      "expectedSql": "SELECT team_id AS team_id, name AS team_name, founded_date AS founded_date FROM team WHERE founded_date < (SELECT min(start_date) FROM tournament) ORDER BY team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "team_name",
+          "founded_date"
+        ],
+        "rowCount": 34,
+        "orderedRowHash": "b4adcbae83c72a82c14df9083339b9d622569fd394e8c9e7ba8916424b6a513e",
+        "unorderedRowHash": "012c493656e97dd7eb0a490060cffa645f238e397edb1b0746067c52180df216"
+      }
+    },
+    {
+      "id": "sl-subquery-scalar-n9w55g",
+      "skill": "sl-subquery-scalar",
+      "database": "sideline",
+      "task": "Compare each player to a scalar average earnings subquery and return player_id, handle, total_earnings_usd, ordered by player_id. Return columns: player_id, handle, total_earnings_usd. Order by: player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, total_earnings_usd AS total_earnings_usd FROM player WHERE total_earnings_usd > (SELECT avg(total_earnings_usd) FROM player) ORDER BY __BLANK_1__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, handle AS handle, total_earnings_usd AS total_earnings_usd FROM player WHERE total_earnings_usd > (SELECT avg(total_earnings_usd) FROM player) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, handle AS handle, total_earnings_usd AS total_earnings_usd",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "total_earnings_usd > (SELECT avg(total_earnings_usd) FROM player)",
+          "__BLANK_3__": "player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The subquery returns one average earnings value for the outer WHERE comparison.",
+      "expectedSql": "SELECT player_id AS player_id, handle AS handle, total_earnings_usd AS total_earnings_usd FROM player WHERE total_earnings_usd > (SELECT avg(total_earnings_usd) FROM player) ORDER BY player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "handle",
+          "total_earnings_usd"
+        ],
+        "rowCount": 134,
+        "orderedRowHash": "62c06e38d69aa526eee8ec8845f21ca4ca8e078547e70f5eb1df3927c7784d58",
+        "unorderedRowHash": "779facf37f6692ac7620deda7a31315e4b8267ef666dc9c381aa0b88a373301c"
+      }
     }
   ],
   "sl-window-frame-basic": [
     {
-      "id": "sl-window-frame-basic-xaq678",
+      "id": "sl-window-frame-basic-1hp364",
+      "skill": "sl-window-frame-basic",
+      "database": "sideline",
+      "task": "Use AVG(duration_minutes) over a one-row preceding frame and return map_result_id, map_name, duration_minutes, framed_duration ordered by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, framed_duration. Order by: map_name, map_result_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "map_name",
+          "__BLANK_2__": "map_name",
+          "__BLANK_3__": "map_name",
+          "__BLANK_4__": "map_result_id"
+        },
+        "half": {
+          "__BLANK_0__": "map_name, map_result_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration",
+          "__BLANK_1__": "map_result",
+          "__BLANK_2__": "map_name, map_result_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The frame changes which neighboring map rows feed the AVG.",
+      "expectedSql": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "duration_minutes",
+          "framed_duration"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "e3542b41229f786767459cdff5834c822bd1a115a08a9d598b2c6172ae159c27",
+        "unorderedRowHash": "fdbbf3c7dc8663f487d722f39d4e8f174b93069e3a97c3314e128714aebc4338"
+      }
+    },
+    {
+      "id": "sl-window-frame-basic-1ilzjsk",
+      "skill": "sl-window-frame-basic",
+      "database": "sideline",
+      "task": "Use COUNT(*) over a centered ROWS frame and return match_id, tournament_id, best_of, nearby_matches ordered by tournament_id and match_id. Return columns: match_id, tournament_id, best_of, nearby_matches. Order by: tournament_id, match_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS match_id, __BLANK_1__ AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "tournament_id",
+          "__BLANK_2__": "tournament_id",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "match_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id, match_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches",
+          "__BLANK_1__": "match",
+          "__BLANK_2__": "tournament_id, match_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "A centered frame can count the current row plus immediate neighbors.",
+      "expectedSql": "SELECT match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY tournament_id, match_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "tournament_id",
+          "best_of",
+          "nearby_matches"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "6114c281df184652afb3ab578e8cb456f5d67fc890322aad4a7cacc8199ee6e8",
+        "unorderedRowHash": "e2b7711e0c642335a06b12765942c5dd1f8491d4670805f49b306c41b003f59c"
+      }
+    },
+    {
+      "id": "sl-window-frame-basic-5a7afu",
       "skill": "sl-window-frame-basic",
       "database": "sideline",
       "task": "Use AVG(prize_pool_usd) over a ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING frame and return tournament_id, region_id, start_date, prize_pool_usd, smoothed_prize, ordered by region_id and tournament_id. Return columns: tournament_id, region_id, start_date, prize_pool_usd, smoothed_prize. Order by: region_id, tournament_id.",
@@ -887,11 +4949,191 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "420da25df71e4dcf9f350e0443cd26689cbcd0612364b0285d9acd084f5f0e48",
         "unorderedRowHash": "3e1405d4e268c16eb7843d07f6fe6da6b7af814b4f425ba91814051713655388"
       }
+    },
+    {
+      "id": "sl-window-frame-basic-fb5feg",
+      "skill": "sl-window-frame-basic",
+      "database": "sideline",
+      "task": "Use AVG(total_earnings_usd) over a forward ROWS frame and return player_id, role, total_earnings_usd, forward_avg_earnings ordered by role and player_id. Return columns: player_id, role, total_earnings_usd, forward_avg_earnings. Order by: role, player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "role",
+          "__BLANK_4__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "role, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "role, player_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The frame can look forward from the current row inside the role partition.",
+      "expectedSql": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY role, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "role",
+          "total_earnings_usd",
+          "forward_avg_earnings"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "8bbfe70258540ec67507de7ffe4114e1acb231d5304d858e597c50d7bfe7f1f7",
+        "unorderedRowHash": "284255b43859c5da85b5cabd0fe5db4d0470fcd6ab98feb688a99355eacfd357"
+      }
+    },
+    {
+      "id": "sl-window-frame-basic-moqd4c",
+      "skill": "sl-window-frame-basic",
+      "database": "sideline",
+      "task": "Use SUM(prize_pool_usd) over a 2 preceding frame and return tournament_id, tier, prize_pool_usd, framed_prize ordered by tier and tournament_id. Return columns: tournament_id, tier, prize_pool_usd, framed_prize. Order by: tier, tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tier",
+          "__BLANK_2__": "tier",
+          "__BLANK_3__": "tier",
+          "__BLANK_4__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tier, tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier, tournament_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The ROWS frame limits the SUM to nearby rows in the same tier partition.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY tier, tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tier",
+          "prize_pool_usd",
+          "framed_prize"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "2ec0df025096f9bd5ce2d64fcd8407e0560d0c97c0d6f82cabc5abe919832e3c",
+        "unorderedRowHash": "be650079714144e0667b5e33dba940f3a0d028d99056978b46d1cc387215fef9"
+      }
     }
   ],
   "sl-window-lag-lead": [
     {
-      "id": "sl-window-lag-lead-9umq43",
+      "id": "sl-window-lag-lead-1q2co49",
+      "skill": "sl-window-lag-lead",
+      "database": "sideline",
+      "task": "For each map_name partition, show next_duration from LEAD(duration_minutes). Return map_result_id, map_name, duration_minutes, next_duration. Order by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, next_duration. Order by: map_name, map_result_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY __BLANK_2__) AS next_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "map_name",
+          "__BLANK_2__": "map_name",
+          "__BLANK_3__": "map_name",
+          "__BLANK_4__": "map_result_id"
+        },
+        "half": {
+          "__BLANK_0__": "map_name, map_result_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration",
+          "__BLANK_1__": "map_result",
+          "__BLANK_2__": "map_name, map_result_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "LEAD peeks forward without joining map_result to itself.",
+      "expectedSql": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "duration_minutes",
+          "next_duration"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "9eed2f79dc628222b594a660b6a45e80f389dce23523f4d9f6399e93d45a4499",
+        "unorderedRowHash": "6924d813324dede8312da1d31312a20ed5a9f06b8e894859aa18785db8919114"
+      }
+    },
+    {
+      "id": "sl-window-lag-lead-a5q3f",
+      "skill": "sl-window-lag-lead",
+      "database": "sideline",
+      "task": "For each tournament partition, show each match with prev_match_at from LAG(match_datetime). Return match_id, tournament_id, match_datetime, prev_match_at. Order by tournament_id and match_id. Return columns: match_id, tournament_id, match_datetime, prev_match_at. Order by: tournament_id, match_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS match_id, __BLANK_1__ AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY __BLANK_2__) AS prev_match_at FROM match ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "match_id",
+          "__BLANK_1__": "tournament_id",
+          "__BLANK_2__": "tournament_id",
+          "__BLANK_3__": "tournament_id",
+          "__BLANK_4__": "match_id"
+        },
+        "half": {
+          "__BLANK_0__": "tournament_id, match_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at",
+          "__BLANK_1__": "match",
+          "__BLANK_2__": "tournament_id, match_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "LAG can look back within each tournament partition.",
+      "expectedSql": "SELECT match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at FROM match ORDER BY tournament_id, match_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "match_id",
+          "tournament_id",
+          "match_datetime",
+          "prev_match_at"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "d0c576bba5236ff5724b2719f15363b4874558b6fc5c65c021fff375a8c6386a",
+        "unorderedRowHash": "7d32f2660ddfd054a98951e6a64f09f730a4a866fb64b12729bd988d9786f338"
+      }
+    },
+    {
+      "id": "sl-window-lag-lead-fiqy3f",
       "skill": "sl-window-lag-lead",
       "database": "sideline",
       "task": "For each region partition, show each tournament with prev_start from LAG(start_date). Return tournament_id, region_id, name, start_date, prev_start. Order by region_id and tournament_id. Return columns: tournament_id, region_id, name, start_date, prev_start. Order by: region_id, tournament_id.",
@@ -936,11 +5178,104 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "c61e44e788c0740eb55311d902d864f1d65518b03c42f627f1a270cdc8140ec1",
         "unorderedRowHash": "3e9ad90b2d687fe608af87204c12df87cc926835796a30e5dcb516274d9cbf49"
       }
+    },
+    {
+      "id": "sl-window-lag-lead-nddjmk",
+      "skill": "sl-window-lag-lead",
+      "database": "sideline",
+      "task": "For each role partition, show prev_earnings from LAG(total_earnings_usd). Return player_id, role, total_earnings_usd, prev_earnings. Order by role and player_id. Return columns: player_id, role, total_earnings_usd, prev_earnings. Order by: role, player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY __BLANK_2__) AS prev_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "role",
+          "__BLANK_4__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "role, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "role, player_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "LAG reads the previous row in the same role partition.",
+      "expectedSql": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings FROM player ORDER BY role, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "role",
+          "total_earnings_usd",
+          "prev_earnings"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "ceee309056eddd6a8fa3f93684b215edcc576f4bf929b8602aa3bbf9fff86940",
+        "unorderedRowHash": "1cd0fae2ed21caa71410f88b9e065bbd34546b429bea1001706f7291c0bcd34e"
+      }
+    },
+    {
+      "id": "sl-window-lag-lead-jfwfuq",
+      "skill": "sl-window-lag-lead",
+      "database": "sideline",
+      "task": "For each region partition, show each tournament with next_start from LEAD(start_date). Return tournament_id, region_id, name, start_date, next_start. Order by region_id and tournament_id. Return columns: tournament_id, region_id, name, start_date, next_start. Order by: region_id, tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY __BLANK_2__) AS next_start FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start FROM tournament WHERE region_id IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "region_id",
+          "__BLANK_2__": "region_id",
+          "__BLANK_3__": "region_id",
+          "__BLANK_4__": "region_id",
+          "__BLANK_5__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "region_id, tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "region_id IS NOT NULL",
+          "__BLANK_3__": "region_id, tournament_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "LEAD reads the following row in the same partition.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start FROM tournament WHERE region_id IS NOT NULL ORDER BY region_id, tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "region_id",
+          "name",
+          "start_date",
+          "next_start"
+        ],
+        "rowCount": 16,
+        "orderedRowHash": "5e2eddd3b54196de7cbfa8bc957af0996345ba7a0a3081c97f4cd2f64f786fd6",
+        "unorderedRowHash": "6e6ba0eb021fcb8ee755220ed4359aadf09f0c82828b636448fbc473bf4ed125"
+      }
     }
   ],
   "sl-window-rank": [
     {
-      "id": "sl-window-rank-3v9cju",
+      "id": "sl-window-rank-tfrah5",
       "skill": "sl-window-rank",
       "database": "sideline",
       "task": "Use RANK() with PARTITION BY region_id and return team_id, team_name, region_id, elo_rating, region_rank, ordered by region_id and team_id. Return columns: team_id, team_name, region_id, elo_rating, region_rank. Order by: region_id, team_id.",
@@ -982,11 +5317,191 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "orderedRowHash": "c1bca748e67ddec0397b0eb08cf56b6b01d10affd1ead9596e19548b30cd3469",
         "unorderedRowHash": "72bfbcee76e31c847486185cb16ac306ce7d55d5e92dfa95fc4cb5262dbe8fb3"
       }
+    },
+    {
+      "id": "sl-window-rank-1q0din6",
+      "skill": "sl-window-rank",
+      "database": "sideline",
+      "task": "Use DENSE_RANK() with PARTITION BY tier and return tournament_id, tier, prize_pool_usd, tier_rank ordered by tier and tournament_id. Return columns: tournament_id, tier, prize_pool_usd, tier_rank. Order by: tier, tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY __BLANK_2__) AS tier_rank FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tier",
+          "__BLANK_2__": "tier",
+          "__BLANK_3__": "tier",
+          "__BLANK_4__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tier, tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier, tournament_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "DENSE_RANK emits a rank value per row without collapsing the partition.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank FROM tournament ORDER BY tier, tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tier",
+          "prize_pool_usd",
+          "tier_rank"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "f60496ae3aa115bd39528501cd131aecd3f86bc1b62649d167b46ca8674e2626",
+        "unorderedRowHash": "7073e15f557f5e7fdb0647a164debb93349672dc65b0883c448789068a0df2ba"
+      }
+    },
+    {
+      "id": "sl-window-rank-1qap2z7",
+      "skill": "sl-window-rank",
+      "database": "sideline",
+      "task": "Use RANK() with PARTITION BY map_name and return map_result_id, map_name, duration_minutes, map_rank ordered by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, map_rank. Order by: map_name, map_result_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY __BLANK_2__) AS map_rank FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "map_name",
+          "__BLANK_2__": "map_name",
+          "__BLANK_3__": "map_name",
+          "__BLANK_4__": "map_result_id"
+        },
+        "half": {
+          "__BLANK_0__": "map_name, map_result_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank",
+          "__BLANK_1__": "map_result",
+          "__BLANK_2__": "map_name, map_result_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "PARTITION BY map_name restarts the rank for each map pool entry.",
+      "expectedSql": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "duration_minutes",
+          "map_rank"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "b412a673bc67db9a7f5ce520bac8eb6968d29d4d002e30e3b2b36565f2beb0af",
+        "unorderedRowHash": "6f1a3090e8a24a657159fb34d9530acd3da8bf3f693f5491c8f7171d2f8b1e11"
+      }
+    },
+    {
+      "id": "sl-window-rank-f3rtws",
+      "skill": "sl-window-rank",
+      "database": "sideline",
+      "task": "Use ROW_NUMBER() with PARTITION BY role and return player_id, role, total_earnings_usd, role_row ordered by role and player_id. Return columns: player_id, role, total_earnings_usd, role_row. Order by: role, player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY __BLANK_2__) AS role_row FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "role",
+          "__BLANK_4__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "role, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "role, player_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "ROW_NUMBER assigns a per-row sequence within the role partition.",
+      "expectedSql": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row FROM player ORDER BY role, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "role",
+          "total_earnings_usd",
+          "role_row"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "410bf0c50ec8e4de7a153a15dfd50b7b7f7dbf14a0d13042c40ebbe25dbe0b54",
+        "unorderedRowHash": "adbe08fb236f107bf465fa88039be63e8c6bb67003f0cfd4dc180345d94ac94c"
+      }
+    },
+    {
+      "id": "sl-window-rank-ue63dn",
+      "skill": "sl-window-rank",
+      "database": "sideline",
+      "task": "Use NTILE(4) with PARTITION BY region_id and return team_id, region_id, elo_rating, elo_quartile ordered by region_id and team_id. Return columns: team_id, region_id, elo_rating, elo_quartile. Order by: region_id, team_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS team_id, __BLANK_1__ AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY __BLANK_2__) AS elo_quartile FROM team ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile FROM team ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "team_id",
+          "__BLANK_1__": "region_id",
+          "__BLANK_2__": "region_id",
+          "__BLANK_3__": "region_id",
+          "__BLANK_4__": "team_id"
+        },
+        "half": {
+          "__BLANK_0__": "region_id, team_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile",
+          "__BLANK_1__": "team",
+          "__BLANK_2__": "region_id, team_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "NTILE divides rows in each partition into numbered buckets.",
+      "expectedSql": "SELECT team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile FROM team ORDER BY region_id, team_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "team_id",
+          "region_id",
+          "elo_rating",
+          "elo_quartile"
+        ],
+        "rowCount": 40,
+        "orderedRowHash": "6d057f6b4530a45b937421d8745096d1afc9ef3c8bcd158dd95f1ebd588b5743",
+        "unorderedRowHash": "b940b2805f5cd50153b0f0285a871b75bf2da0209817568a2194aaa9b396a6ac"
+      }
     }
   ],
   "sl-window-running": [
     {
-      "id": "sl-window-running-1sl5ail",
+      "id": "sl-window-running-13eek05",
       "skill": "sl-window-running",
       "database": "sideline",
       "task": "For each region partition, calculate running_prize with a windowed SUM. Return tournament_id, region_id, name, prize_pool_usd, running_prize. Order by region_id and tournament_id. Return columns: tournament_id, region_id, name, prize_pool_usd, running_prize. Order by: region_id, tournament_id.",
@@ -1030,6 +5545,191 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         "rowCount": 16,
         "orderedRowHash": "8abe1ebe3925c3ae99ef4df7c3eeaa12a5c167f0e8ce6f5c1b60f05990c6e017",
         "unorderedRowHash": "6ba4a65c351ae3f28f045fb8e8f7de7bae817e2a7d4981eff7413ca3afb2f2ea"
+      }
+    },
+    {
+      "id": "sl-window-running-1dt58uc",
+      "skill": "sl-window-running",
+      "database": "sideline",
+      "task": "For each map_name partition, calculate map_avg_duration with a windowed AVG. Return map_result_id, map_name, duration_minutes, map_avg_duration. Order by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, map_avg_duration. Order by: map_name, map_result_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY __BLANK_2__), 2) AS map_avg_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name), 2) AS map_avg_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "map_result_id",
+          "__BLANK_1__": "map_name",
+          "__BLANK_2__": "map_name",
+          "__BLANK_3__": "map_name",
+          "__BLANK_4__": "map_result_id"
+        },
+        "half": {
+          "__BLANK_0__": "map_name, map_result_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name), 2) AS map_avg_duration",
+          "__BLANK_1__": "map_result",
+          "__BLANK_2__": "map_name, map_result_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The windowed AVG annotates each map row with its map-name average.",
+      "expectedSql": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name), 2) AS map_avg_duration FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "map_result_id",
+          "map_name",
+          "duration_minutes",
+          "map_avg_duration"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "270943b9b9072388dbc46ec70d2c576c6a81f1b2d74093e76de2045759bfe73d",
+        "unorderedRowHash": "748f27ee92d694642a7e4d64c5d7194e86d1ce92c67d54720d3a88524a515e43"
+      }
+    },
+    {
+      "id": "sl-window-running-hl4nri",
+      "skill": "sl-window-running",
+      "database": "sideline",
+      "task": "For each role partition, calculate role_earnings with a windowed SUM. Return player_id, role, handle, total_earnings_usd, role_earnings. Order by role and player_id. Return columns: player_id, role, handle, total_earnings_usd, role_earnings. Order by: role, player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, handle AS handle, total_earnings_usd AS total_earnings_usd, SUM(total_earnings_usd) OVER (PARTITION BY __BLANK_2__) AS role_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, role AS role, handle AS handle, total_earnings_usd AS total_earnings_usd, SUM(total_earnings_usd) OVER (PARTITION BY role) AS role_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "role",
+          "__BLANK_3__": "role",
+          "__BLANK_4__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "role, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, role AS role, handle AS handle, total_earnings_usd AS total_earnings_usd, SUM(total_earnings_usd) OVER (PARTITION BY role) AS role_earnings",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "role, player_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "The windowed SUM adds a role total to every player row.",
+      "expectedSql": "SELECT player_id AS player_id, role AS role, handle AS handle, total_earnings_usd AS total_earnings_usd, SUM(total_earnings_usd) OVER (PARTITION BY role) AS role_earnings FROM player ORDER BY role, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "role",
+          "handle",
+          "total_earnings_usd",
+          "role_earnings"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "3b59afb41e85a681c57f0b7840ff926db9f2b0fff9cbf858c8d44a55dc1a8a06",
+        "unorderedRowHash": "4a9a5a01c76c502a08f126d1d725540448aba68ed8186d76b751b40562474afd"
+      }
+    },
+    {
+      "id": "sl-window-running-ypmodl",
+      "skill": "sl-window-running",
+      "database": "sideline",
+      "task": "For each tier partition, calculate tier_tournament_count with a windowed COUNT. Return tournament_id, tier, name, prize_pool_usd, tier_tournament_count. Order by tier and tournament_id. Return columns: tournament_id, tier, name, prize_pool_usd, tier_tournament_count. Order by: tier, tournament_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, name AS name, prize_pool_usd AS prize_pool_usd, COUNT(*) OVER (PARTITION BY __BLANK_2__) AS tier_tournament_count FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
+        "half": "SELECT tournament_id AS tournament_id, tier AS tier, name AS name, prize_pool_usd AS prize_pool_usd, COUNT(*) OVER (PARTITION BY tier) AS tier_tournament_count FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "tournament_id",
+          "__BLANK_1__": "tier",
+          "__BLANK_2__": "tier",
+          "__BLANK_3__": "tier",
+          "__BLANK_4__": "tournament_id"
+        },
+        "half": {
+          "__BLANK_0__": "tier, tournament_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, name AS name, prize_pool_usd AS prize_pool_usd, COUNT(*) OVER (PARTITION BY tier) AS tier_tournament_count",
+          "__BLANK_1__": "tournament",
+          "__BLANK_2__": "tier, tournament_id",
+          "__BLANK_3__": "200"
+        }
+      },
+      "hint": "A windowed COUNT keeps every tournament row while adding the partition count.",
+      "expectedSql": "SELECT tournament_id AS tournament_id, tier AS tier, name AS name, prize_pool_usd AS prize_pool_usd, COUNT(*) OVER (PARTITION BY tier) AS tier_tournament_count FROM tournament ORDER BY tier, tournament_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "tournament_id",
+          "tier",
+          "name",
+          "prize_pool_usd",
+          "tier_tournament_count"
+        ],
+        "rowCount": 24,
+        "orderedRowHash": "29e8b4d5a5033174b16561c5deb078dbb3fd052b5f0747f269662a93dc755fdd",
+        "unorderedRowHash": "ce864f9e0e7e9b7d0e27ca8d865e2ce6b63befb1f197a1b212830fc6a63922c4"
+      }
+    },
+    {
+      "id": "sl-window-running-1hvxin2",
+      "skill": "sl-window-running",
+      "database": "sideline",
+      "task": "For each team_id partition, calculate roster_size with a windowed COUNT. Return player_id, team_id, handle, roster_size. Order by team_id and player_id. Return columns: player_id, team_id, handle, roster_size. Order by: team_id, player_id.",
+      "starterSql": {
+        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS team_id, handle AS handle, COUNT(__BLANK_2__) OVER (PARTITION BY __BLANK_3__) AS roster_size FROM player WHERE __BLANK_4__ IS NOT NULL ORDER BY __BLANK_5__, __BLANK_6__ LIMIT 200",
+        "half": "SELECT player_id AS player_id, team_id AS team_id, handle AS handle, COUNT(player_id) OVER (PARTITION BY team_id) AS roster_size FROM player WHERE team_id IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
+      },
+      "blankMap": {
+        "full": {
+          "__BLANK_0__": "player_id",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "player_id",
+          "__BLANK_3__": "team_id",
+          "__BLANK_4__": "team_id",
+          "__BLANK_5__": "team_id",
+          "__BLANK_6__": "player_id"
+        },
+        "half": {
+          "__BLANK_0__": "team_id, player_id",
+          "__BLANK_1__": "200"
+        },
+        "blank": {
+          "__BLANK_0__": "player_id AS player_id, team_id AS team_id, handle AS handle, COUNT(player_id) OVER (PARTITION BY team_id) AS roster_size",
+          "__BLANK_1__": "player",
+          "__BLANK_2__": "team_id IS NOT NULL",
+          "__BLANK_3__": "team_id, player_id",
+          "__BLANK_4__": "200"
+        }
+      },
+      "hint": "The WHERE clause removes free agents before the team partition count is applied.",
+      "expectedSql": "SELECT player_id AS player_id, team_id AS team_id, handle AS handle, COUNT(player_id) OVER (PARTITION BY team_id) AS roster_size FROM player WHERE team_id IS NOT NULL ORDER BY team_id, player_id LIMIT 200",
+      "orderMatters": true,
+      "rowCeiling": 200,
+      "fingerprint": {
+        "columns": [
+          "player_id",
+          "team_id",
+          "handle",
+          "roster_size"
+        ],
+        "rowCount": 200,
+        "orderedRowHash": "810f93592f39fafeeccd31a603074d66aba503957c4ac719b76d5d0c3217a4f3",
+        "unorderedRowHash": "50b8aa49e78ca5fcc85923e70817c7a4b700bcea2ef1700d32394541c1b118df"
       }
     }
   ]

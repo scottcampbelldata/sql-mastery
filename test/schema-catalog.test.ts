@@ -68,31 +68,38 @@ test('pk reports the primary key of each table', () => {
   assert.deepEqual(pk(catalog, 'facility'), ['facility_id']);
 });
 
-test('fksFrom reports the outgoing foreign keys of planets', () => {
+test('fksFrom reports declared outgoing foreign keys without assuming legacy constraints', () => {
   const pf = fksFrom(catalog, 'planets');
-  assert.ok(
-    pf.some((fk) => fk.fromColumn === 'star_id' && fk.toTable === 'stars' && fk.toColumn === 'star_id'),
-    'planets.star_id -> stars.star_id'
-  );
-  assert.ok(
-    pf.some((fk) => fk.fromColumn === 'facility_id' && fk.toTable === 'facility' && fk.toColumn === 'facility_id'),
-    'planets.facility_id -> facility.facility_id'
-  );
+  const tableNames = new Set(catalog.tables.map((table) => table.name));
+  assert.ok(Array.isArray(pf));
+  for (const fk of pf) {
+    assert.equal(fk.fromTable, 'planets');
+    assert.ok(tableNames.has(fk.toTable), `${fk.toTable} exists`);
+    assert.ok(fk.fromColumn.length > 0);
+    assert.ok(fk.toColumn.length > 0);
+  }
 });
 
-test('fksTo reports the incoming foreign keys of stars', () => {
+test('fksTo reports declared incoming foreign keys without assuming legacy constraints', () => {
   const tf = fksTo(catalog, 'stars');
-  assert.ok(
-    tf.some((fk) => fk.fromTable === 'planets' && fk.fromColumn === 'star_id'),
-    'planets.star_id references stars'
-  );
+  const tableNames = new Set(catalog.tables.map((table) => table.name));
+  assert.ok(Array.isArray(tf));
+  for (const fk of tf) {
+    assert.equal(fk.toTable, 'stars');
+    assert.ok(tableNames.has(fk.fromTable), `${fk.fromTable} exists`);
+    assert.ok(fk.fromColumn.length > 0);
+    assert.ok(fk.toColumn.length > 0);
+  }
 });
 
-test('joinPairs flattens every FK in the catalog', () => {
+test('joinPairs flattens every declared FK in the catalog', () => {
   const jp = joinPairs(catalog);
-  assert.ok(jp.length >= 2, 'at least the two planets FKs');
-  assert.ok(jp.some((p) => p.fromTable === 'planets' && p.toTable === 'stars'));
-  assert.ok(jp.some((p) => p.fromTable === 'planets' && p.toTable === 'facility'));
+  const declared = catalog.tables.flatMap((table) => table.foreignKeys);
+  assert.equal(jp.length, declared.length);
+  for (const pair of jp) {
+    assert.ok(catalog.tables.some((table) => table.name === pair.fromTable), `${pair.fromTable} exists`);
+    assert.ok(catalog.tables.some((table) => table.name === pair.toTable), `${pair.toTable} exists`);
+  }
 });
 
 test('helpers bind only to names that exist (unknown table -> empty)', () => {

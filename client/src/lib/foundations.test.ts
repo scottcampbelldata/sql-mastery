@@ -23,11 +23,11 @@ const track = {
     { skill: 'where', conceptId: 'c5', title: 'E', order: 5 }
   ],
   concepts: [
-    { id: 'c1', order: 1, skill: 'select-all', title: 'A', exercises: [{ id: 'c1-r1', skill: 'select-all' }, { id: 'c1-r2', skill: 'select-all' }, { id: 'c1-r3', skill: 'select-all' }] },
-    { id: 'c2', order: 2, skill: 'select-columns', title: 'B', exercises: [{ id: 'c2-r1', skill: 'select-columns' }, { id: 'c2-r2', skill: 'select-columns' }, { id: 'c2-r3', skill: 'select-columns' }] },
-    { id: 'c3', order: 3, skill: 'order-limit', title: 'C', exercises: [{ id: 'c3-r1', skill: 'order-limit' }, { id: 'c3-r2', skill: 'order-limit' }, { id: 'c3-r3', skill: 'order-limit' }] },
-    { id: 'c4', order: 4, skill: 'distinct', title: 'D', exercises: [{ id: 'c4-r1', skill: 'distinct' }, { id: 'c4-r2', skill: 'distinct' }, { id: 'c4-r3', skill: 'distinct' }] },
-    { id: 'c5', order: 5, skill: 'where', title: 'E', exercises: [{ id: 'c5-r1', skill: 'where' }, { id: 'c5-r2', skill: 'where' }] }
+    { id: 'c1', order: 1, skill: 'select-all', title: 'A', exercises: [{ id: 'c1-r1', skill: 'select-all' }, { id: 'c1-r2', skill: 'select-all' }, { id: 'c1-r3', skill: 'select-all' }, { id: 'c1-r4', skill: 'select-all' }, { id: 'c1-r5', skill: 'select-all' }] },
+    { id: 'c2', order: 2, skill: 'select-columns', title: 'B', exercises: [{ id: 'c2-r1', skill: 'select-columns' }, { id: 'c2-r2', skill: 'select-columns' }, { id: 'c2-r3', skill: 'select-columns' }, { id: 'c2-r4', skill: 'select-columns' }, { id: 'c2-r5', skill: 'select-columns' }] },
+    { id: 'c3', order: 3, skill: 'order-limit', title: 'C', exercises: [{ id: 'c3-r1', skill: 'order-limit' }, { id: 'c3-r2', skill: 'order-limit' }, { id: 'c3-r3', skill: 'order-limit' }, { id: 'c3-r4', skill: 'order-limit' }, { id: 'c3-r5', skill: 'order-limit' }] },
+    { id: 'c4', order: 4, skill: 'distinct', title: 'D', exercises: [{ id: 'c4-r1', skill: 'distinct' }, { id: 'c4-r2', skill: 'distinct' }, { id: 'c4-r3', skill: 'distinct' }, { id: 'c4-r4', skill: 'distinct' }, { id: 'c4-r5', skill: 'distinct' }] },
+    { id: 'c5', order: 5, skill: 'where', title: 'E', exercises: [{ id: 'c5-r1', skill: 'where' }, { id: 'c5-r2', skill: 'where' }, { id: 'c5-r3', skill: 'where' }, { id: 'c5-r4', skill: 'where' }, { id: 'c5-r5', skill: 'where' }] }
   ],
   checkpoints: [
     { id: 'cpA', afterOrder: 4, drawFromSkills: ['select-all', 'select-columns', 'order-limit', 'distinct'], title: 'A' },

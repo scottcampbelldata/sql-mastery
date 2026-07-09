@@ -6,6 +6,7 @@ import { rovePhases } from '../src/phases/rove/index';
 import { APERTURE_PHASES } from '../src/generator/templates/aperture/index';
 import { SIDELINE_PHASES } from '../src/generator/templates/sideline/index';
 import { ROVE_SKILLS } from '../src/generator/templates/rove/index';
+import { MIN_EXERCISES_PER_SKILL } from '../src/generator/diversity';
 
 const ROVE_PHASE_IDS = ['rv-clean', 'rv-analytic', 'rv-behavioral'];
 
@@ -39,29 +40,30 @@ test('rove band totals 24 concepts with contiguous LOCAL order per phase', () =>
   assert.equal(skills.size, 24);
 });
 
-test('every rove concept carries a teach block and exactly one fingerprinted exercise', () => {
+test('every rove concept carries a teach block and enough fingerprinted exercises', () => {
   const exerciseIds = new Set<string>();
 
   for (const p of rovePhases) {
     for (const c of p.concepts) {
       assert.ok(c.teach && typeof c.teach.plain === 'string' && c.teach.plain.length > 0);
-      assert.equal(c.exercises.length, 1, `${c.skill} should have one frozen exercise`);
+      assert.ok(c.exercises.length >= MIN_EXERCISES_PER_SKILL, `${c.skill} has only ${c.exercises.length} exercises`);
 
-      const [ex] = c.exercises;
-      assert.equal(ex.database, 'rove');
-      assert.equal(ex.skill, c.skill);
-      assert.ok(!exerciseIds.has(ex.id), `duplicate exercise id ${ex.id}`);
-      exerciseIds.add(ex.id);
-      assert.ok(ex.fingerprint && Array.isArray(ex.fingerprint.columns), `${ex.id} missing fingerprint`);
-      assert.ok(ex.fingerprint.columns.length > 0, `${ex.id} missing fingerprint columns`);
-      assert.ok(ex.fingerprint.rowCount >= 1, `${ex.id} fingerprint has no rows`);
-      assert.match(ex.fingerprint.orderedRowHash, /^[a-f0-9]{64}$/);
-      assert.match(ex.fingerprint.unorderedRowHash, /^[a-f0-9]{64}$/);
-      assert.ok(ex.starterSql && typeof ex.starterSql.full === 'string');
+      for (const ex of c.exercises) {
+        assert.equal(ex.database, 'rove');
+        assert.equal(ex.skill, c.skill);
+        assert.ok(!exerciseIds.has(ex.id), `duplicate exercise id ${ex.id}`);
+        exerciseIds.add(ex.id);
+        assert.ok(ex.fingerprint && Array.isArray(ex.fingerprint.columns), `${ex.id} missing fingerprint`);
+        assert.ok(ex.fingerprint.columns.length > 0, `${ex.id} missing fingerprint columns`);
+        assert.ok(ex.fingerprint.rowCount >= 1, `${ex.id} fingerprint has no rows`);
+        assert.match(ex.fingerprint.orderedRowHash, /^[a-f0-9]{64}$/);
+        assert.match(ex.fingerprint.unorderedRowHash, /^[a-f0-9]{64}$/);
+        assert.ok(ex.starterSql && typeof ex.starterSql.full === 'string');
+      }
     }
   }
 
-  assert.equal(exerciseIds.size, 24);
+  assert.ok(exerciseIds.size >= 24 * MIN_EXERCISES_PER_SKILL);
 });
 
 test('checkpoints cp1..cp5 wired; cp5 capstone lives in rv-behavioral and draws every rove skill', () => {
@@ -89,6 +91,6 @@ test('flattenLearningPath sees 24 rove concepts + 5 checkpoints', () => {
   const flat = flattenLearningPath([...rovePhases]);
   assert.equal(flat.concepts.length, 24);
   assert.equal(flat.checkpoints.length, 5);
-  assert.equal(flat.exercises.length, 24);
+  assert.ok(flat.exercises.length >= 24 * MIN_EXERCISES_PER_SKILL);
   assert.deepEqual(flat.concepts.map((c: any) => c.order), Array.from({ length: 24 }, (_, i) => i + 1));
 });

@@ -63,10 +63,11 @@ test('APERTURE_SKILLS is exactly the 17 fixed slugs in canonical order', () => {
   assert.deepEqual(APERTURE_SKILLS, FIXED_SKILLS);
 });
 
-test('templates are 1:1 with skills and all target aperture', () => {
-  assert.equal(APERTURE_TEMPLATES.length, 17);
-  assert.deepEqual(APERTURE_TEMPLATES.map((template) => template.skill), FIXED_SKILLS);
+test('every skill has at least one template and all templates target aperture', () => {
+  const covered = new Set(APERTURE_TEMPLATES.map((template) => template.skill));
+  for (const skill of FIXED_SKILLS) assert.ok(covered.has(skill), `no template for ${skill}`);
   for (const template of APERTURE_TEMPLATES) assert.equal(template.database, 'aperture');
+  for (const template of APERTURE_TEMPLATES) assert.ok(FIXED_SKILLS.includes(template.skill), `unknown skill ${template.skill}`);
 });
 
 test('concept meta is 1:1 with skills and nonempty teach blocks', () => {

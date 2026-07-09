@@ -1,15 +1,7 @@
 import type { DraftExercise, ConceptMeta } from './types';
+import { normalizeExpectedSql } from './diversity';
 
 const MAX_PER_SKILL = 15;
-
-function skeleton(sql: string): string {
-  return sql
-    .replace(/'(?:[^']|'')*'/g, "'?'")
-    .replace(/\b\d+(?:\.\d+)?\b/g, '#')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toUpperCase();
-}
 
 function difficultyRank(sql: string): number {
   const m = sql.match(/\b(SELECT|FROM|WHERE|GROUP\s+BY|HAVING|ORDER\s+BY|LIMIT|JOIN|OVER|WITH)\b/gi);
@@ -24,7 +16,7 @@ export function curate(drafts: DraftExercise[], meta: ConceptMeta[]): DraftExerc
   const deduped: DraftExercise[] = [];
   for (const d of drafts) {
     if (!metaSkills.has(d.skill)) continue;
-    const key = `${d.skill}|${skeleton(d.expectedSql)}`;
+    const key = `${d.skill}|${normalizeExpectedSql(d.expectedSql)}`;
     if (seen.has(key)) continue;
     seen.add(key);
     deduped.push(d);

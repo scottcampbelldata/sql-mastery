@@ -248,10 +248,10 @@ export const APERTURE_TEMPLATES: Template[] = [
     primaryTable: 'stars',
     sqlShape: 'SELECT * FROM stars',
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'stars' }],
-    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'star_id' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => ['star_id', 'temperature_k', 'mass_solar', 'radius_solar', 'distance_ly'].includes(value) }],
     phrasings: [
-      'Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by star_id.',
-      'Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars, ordered by star_id.'
+      'Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by {sortKey} and then star_id.',
+      'Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars, ordered by {sortKey} with star_id as the tie-breaker.'
     ],
     hintTemplate: 'Use SELECT * when you want every column.',
     scaffoldPlan: PLAN,
@@ -264,10 +264,10 @@ export const APERTURE_TEMPLATES: Template[] = [
     primaryTable: 'planets',
     sqlShape: 'SELECT planet_id, planet_name, planet_type FROM planets',
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
-    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => ['planet_id', 'star_id', 'mass_earth', 'radius_earth', 'orbital_period_days'].includes(value) }],
     phrasings: [
-      'Show planet_id, planet_name, and planet_type from planets, ordered by planet_id.',
-      'Return planet_id with each planet_name and planet_type, ordered by planet_id.'
+      'Show planet_id, planet_name, and planet_type from planets, ordered by {sortKey} and then planet_id.',
+      'Return planet_id with each planet_name and planet_type, ordered by {sortKey} with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'Put the exact columns you need after SELECT, separated by commas.',
     scaffoldPlan: PLAN,
@@ -299,10 +299,10 @@ export const APERTURE_TEMPLATES: Template[] = [
       { name: 'topN', kind: 'limit' },
       { name: 'sortKey', kind: 'sortKey', table: 'planets' }
     ],
-    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'mass_earth' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => ['mass_earth', 'radius_earth'].includes(value) }],
     phrasings: [
-      'Show the first {topN} planet_id, planet_name, and mass_earth rows after ordering by mass_earth and then planet_id.',
-      'Return {topN} rows with planet_id, planet_name, and mass_earth from planets, ordered by mass_earth and planet_id.'
+      'Show the first {topN} planet_id, planet_name, and mass_earth rows after ordering by {sortKey} and then planet_id.',
+      'Return {topN} rows with planet_id, planet_name, and mass_earth from planets, ordered by {sortKey} with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'LIMIT {topN} keeps only the first {topN} rows of the ordered result.',
     scaffoldPlan: PLAN,
@@ -319,6 +319,22 @@ export const APERTURE_TEMPLATES: Template[] = [
     phrasings: [
       'List every distinct {sortKey} value in planets, ordered by {sortKey}.',
       'Show each unique {sortKey} from planets once, ordered by {sortKey}.'
+    ],
+    hintTemplate: 'SELECT DISTINCT keeps one row for each unique {sortKey}.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(2, 2, true)
+  },
+  {
+    skill: 'ap-distinct',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'stars',
+    sqlShape: 'SELECT DISTINCT {sortKey} FROM stars',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'stars' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string, catalog: any) => textCols(catalog, 'stars').some((column) => column.name === value) }],
+    phrasings: [
+      'List every distinct {sortKey} value in stars, ordered by {sortKey}.',
+      'Show each unique {sortKey} from stars once, ordered by {sortKey}.'
     ],
     hintTemplate: 'SELECT DISTINCT keeps one row for each unique {sortKey}.',
     scaffoldPlan: PLAN,
@@ -360,6 +376,22 @@ export const APERTURE_TEMPLATES: Template[] = [
       'Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions, ordered by planet_id.'
     ],
     hintTemplate: 'AND means both WHERE conditions must be true for the same row.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-where-boolean-logic',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, in_habitable_zone, equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
+    phrasings: [
+      'List planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k where in_habitable_zone is true or equilibrium_temp_k is NULL, ordered by planet_id.',
+      'Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows matching either the habitable-zone condition or the missing-temperature condition, ordered by planet_id.'
+    ],
+    hintTemplate: 'OR keeps a row when either condition is true.',
     scaffoldPlan: PLAN,
     gateHints: gate(1, 1, true)
   },
@@ -418,6 +450,70 @@ export const APERTURE_TEMPLATES: Template[] = [
     gateHints: gate(1, 1, true)
   },
   {
+    skill: 'ap-null-handling',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NOT NULL',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'equilibrium_temp_k' }],
+    phrasings: [
+      'List planet_id, planet_name, and equilibrium_temp_k where equilibrium_temp_k is not NULL, ordered by equilibrium_temp_k and then planet_id.',
+      'Return planet_id, planet_name, and equilibrium_temp_k for rows with present equilibrium_temp_k, ordered by equilibrium_temp_k with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'Use IS NOT NULL to keep rows where equilibrium_temp_k is present.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-null-handling',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NULL',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'semi_major_axis_au' }],
+    phrasings: [
+      'List planet_id, planet_name, and semi_major_axis_au where semi_major_axis_au is NULL, ordered by semi_major_axis_au and then planet_id.',
+      'Return planet_id, planet_name, and semi_major_axis_au for rows with missing semi_major_axis_au, ordered by semi_major_axis_au with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'Use IS NULL rather than = NULL.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-null-handling',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NOT NULL',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'semi_major_axis_au' }],
+    phrasings: [
+      'List planet_id, planet_name, and semi_major_axis_au where semi_major_axis_au is not NULL, ordered by semi_major_axis_au and then planet_id.',
+      'Return planet_id, planet_name, and semi_major_axis_au for rows with present semi_major_axis_au, ordered by semi_major_axis_au with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'IS NOT NULL checks whether the value is present.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-null-handling',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'stars',
+    sqlShape: 'SELECT star_id, star_name, radius_solar FROM stars WHERE radius_solar IS NULL',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'stars' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'radius_solar' }],
+    phrasings: [
+      'List star_id, star_name, and radius_solar where radius_solar is NULL, ordered by radius_solar and then star_id.',
+      'Return star_id, star_name, and radius_solar for rows with missing radius_solar, ordered by radius_solar with star_id as the tie-breaker.'
+    ],
+    hintTemplate: 'Use IS NULL to test for missing star radius values.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
     skill: 'ap-computed-columns',
     database: 'aperture',
     family: 'single-table',
@@ -430,6 +526,70 @@ export const APERTURE_TEMPLATES: Template[] = [
       'Show planet_id, planet_name, and orbital_years from planets, ordered by planet_id.'
     ],
     hintTemplate: 'Put orbital_period_days / 365.0 in the SELECT list and name it with AS.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-computed-columns',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, radius_earth * 6371 AS radius_km FROM planets',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'radius_earth' }],
+    phrasings: [
+      'Compute radius_km and show planet_id, planet_name, and radius_km, ordered by radius_earth and then planet_id.',
+      'Show planet_id, planet_name, and radius_km from planets, ordered by radius_earth with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'Put radius_earth * 6371 in the SELECT list and name it with AS.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-computed-columns',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'semi_major_axis_au' }],
+    phrasings: [
+      'Compute axis_km and show planet_id, planet_name, and axis_km, ordered by semi_major_axis_au and then planet_id.',
+      'Show planet_id, planet_name, and axis_km from planets, ordered by semi_major_axis_au with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'A computed column can multiply a stored value by a constant.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-computed-columns',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'equilibrium_temp_k' }],
+    phrasings: [
+      'Compute temp_c and show planet_id, planet_name, and temp_c, ordered by equilibrium_temp_k and then planet_id.',
+      'Show planet_id, planet_name, and temp_c from planets, ordered by equilibrium_temp_k with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'A computed column can subtract a constant from a stored value.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-computed-columns',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'mass_earth' }],
+    phrasings: [
+      'Compute mass_per_radius and show planet_id, planet_name, and mass_per_radius, ordered by mass_earth and then planet_id.',
+      'Show planet_id, planet_name, and mass_per_radius from planets, ordered by mass_earth with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'A computed column can divide one numeric column by another.',
     scaffoldPlan: PLAN,
     gateHints: gate(1, 1, true)
   },
@@ -450,18 +610,82 @@ export const APERTURE_TEMPLATES: Template[] = [
     gateHints: gate(1, 1, true)
   },
   {
+    skill: 'ap-column-alias',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'stars',
+    sqlShape: 'SELECT star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'stars' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'temperature_k' }],
+    phrasings: [
+      'Return star_id, star_class, and kelvin from stars, ordered by temperature_k and then star_id.',
+      'Alias spectral_type as star_class and temperature_k as kelvin, with star_id, ordered by temperature_k with star_id as the tie-breaker.'
+    ],
+    hintTemplate: 'AS gives the output column a new name.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-column-alias',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, planet_name AS name, planet_type AS type FROM planets',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
+    phrasings: [
+      'Return planet_id, name, and type from planets, ordered by planet_id.',
+      'Alias planet_name as name and planet_type as type, with planet_id, ordered by planet_id.'
+    ],
+    hintTemplate: 'AS changes the column headers in the result.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-column-alias',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'mass_earth' }],
+    phrasings: [
+      'Return planet_id, earth_masses, and earth_radii from planets, ordered by mass_earth and then planet_id.',
+      'Alias mass_earth as earth_masses and radius_earth as earth_radii, with planet_id, ordered by mass_earth with planet_id as the tie-breaker.'
+    ],
+    hintTemplate: 'The alias is the output name, not a table change.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-column-alias',
+    database: 'aperture',
+    family: 'single-table',
+    primaryTable: 'facility',
+    sqlShape: 'SELECT facility_id, name AS facility_name FROM facility',
+    slots: [{ name: 'sortKey', kind: 'sortKey', table: 'facility' }],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'facility_id' }],
+    phrasings: [
+      'Return facility_id and facility_name from facility, ordered by facility_id.',
+      'Alias name as facility_name, with facility_id, ordered by facility_id.'
+    ],
+    hintTemplate: 'Use AS to rename name as facility_name.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
     skill: 'ap-aggregate-scalar',
     database: 'aperture',
     family: 'aggregate-scalar',
     primaryTable: 'planets',
-    sqlShape: 'SELECT COUNT(*) AS planet_count, AVG(mass_earth) AS avg_mass FROM planets',
-    slots: [],
-    bindingRules: [],
+    sqlShape: 'SELECT COUNT(*) AS planet_count, AVG({metric}) AS avg_value FROM planets',
+    slots: [{ name: 'metric', kind: 'column', table: 'planets' }],
+    bindingRules: [{ slot: 'metric', predicate: (value: string) => ['mass_earth', 'radius_earth', 'orbital_period_days', 'semi_major_axis_au', 'equilibrium_temp_k'].includes(value) }],
     phrasings: [
-      'Return planet_count and avg_mass for all planets, ordered by planet_count.',
-      'Count all planets as planet_count and show avg_mass, ordered by planet_count.'
+      'Return planet_count and avg_value by averaging {metric} for all planets, ordered by planet_count.',
+      'Count all planets as planet_count and show the average {metric} as avg_value, ordered by planet_count.'
     ],
-    hintTemplate: 'With no GROUP BY, COUNT and AVG summarize the whole table into one row.',
+    hintTemplate: 'With no GROUP BY, COUNT and AVG({metric}) summarize the whole table into one row.',
     scaffoldPlan: PLAN,
     gateHints: gate(1, 1, false)
   },
@@ -472,7 +696,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     primaryTable: 'planets',
     sqlShape: 'SELECT {groupCols}, COUNT(*) AS n FROM planets GROUP BY {groupCols}',
     slots: [{ name: 'groupCols', kind: 'groupCols', table: 'planets' }],
-    bindingRules: [{ slot: 'groupCols', predicate: (value: string) => ['planet_type', 'discovery_method', 'discovery_year'].includes(value) }],
+    bindingRules: [{ slot: 'groupCols', predicate: (value: string) => ['planet_type', 'discovery_method', 'discovery_year', 'facility_id', 'in_habitable_zone'].includes(value) }],
     phrasings: [
       'Return {groupCols} and n by counting planets for each {groupCols}, ordered by {groupCols}.',
       'Count planets into n for each {groupCols} value, returning {groupCols} and n ordered by {groupCols}.'
@@ -488,7 +712,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     primaryTable: 'planets',
     sqlShape: 'SELECT {groupCols}, COUNT(*) AS n FROM planets GROUP BY {groupCols} HAVING COUNT(*) >= 1',
     slots: [{ name: 'groupCols', kind: 'groupCols', table: 'planets' }],
-    bindingRules: [{ slot: 'groupCols', predicate: (value: string) => ['planet_type', 'discovery_method'].includes(value) }],
+    bindingRules: [{ slot: 'groupCols', predicate: (value: string) => ['planet_type', 'discovery_method', 'discovery_year', 'facility_id', 'in_habitable_zone'].includes(value) }],
     phrasings: [
       'Return {groupCols} and n for groups with COUNT(*) at least 1, ordered by {groupCols}.',
       'Group planets by {groupCols}, keep groups with COUNT(*) >= 1, and return {groupCols} and n ordered by {groupCols}.'
@@ -532,6 +756,63 @@ export const APERTURE_TEMPLATES: Template[] = [
       'Return planet_id, planet_name, and star_name for joined rows matching the habitable-zone condition, ordered by planet_id.'
     ],
     hintTemplate: 'Join on planets.star_id = stars.star_id to attach each planet to its host star.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-join-intro',
+    database: 'aperture',
+    family: 'join',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = {year}',
+    slots: [
+      { name: 'year', kind: 'literal', op: '=', col: 'discovery_year', table: 'planets' },
+      { name: 'sortKey', kind: 'sortKey', table: 'planets' }
+    ],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
+    phrasings: [
+      'Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is {year}, ordered by planet_id.',
+      'Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year, ordered by planet_id.'
+    ],
+    hintTemplate: 'Join on planets.star_id = stars.star_id, then filter the planet discovery_year.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-join-intro',
+    database: 'aperture',
+    family: 'join',
+    primaryTable: 'planets',
+    sqlShape: "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = '{ptype}'",
+    slots: [
+      { name: 'ptype', kind: 'literal', op: '=', col: 'planet_type', table: 'planets' },
+      { name: 'sortKey', kind: 'sortKey', table: 'planets' }
+    ],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
+    phrasings: [
+      'Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is {ptype}, ordered by planet_id.',
+      'Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type, ordered by planet_id.'
+    ],
+    hintTemplate: 'The join attaches star_name before the WHERE filter keeps matching planet rows.',
+    scaffoldPlan: PLAN,
+    gateHints: gate(1, 1, true)
+  },
+  {
+    skill: 'ap-join-intro',
+    database: 'aperture',
+    family: 'join',
+    primaryTable: 'planets',
+    sqlShape: "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = '{method}'",
+    slots: [
+      { name: 'method', kind: 'literal', op: '=', col: 'discovery_method', table: 'planets' },
+      { name: 'sortKey', kind: 'sortKey', table: 'planets' }
+    ],
+    bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
+    phrasings: [
+      'Join planets to stars and list planet_id, planet_name, star_name, and discovery_method where discovery_method is {method}, ordered by planet_id.',
+      'Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method, ordered by planet_id.'
+    ],
+    hintTemplate: 'Keep the ON clause for the relationship, then filter planets.discovery_method.',
     scaffoldPlan: PLAN,
     gateHints: gate(1, 1, true)
   }

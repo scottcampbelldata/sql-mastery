@@ -11,18 +11,28 @@ export interface LessonStep {
   tier: ScaffoldTier;
 }
 
+function exerciseKey(exercise: Exercise): string {
+  return exercise.expectedSql?.trim() || exercise.id;
+}
+
 export function buildLessonSteps(concept: Pick<Concept, 'exercises'>, exercises = concept.exercises): LessonStep[] {
-  const available = exercises.length ? exercises.slice(0, MAX_LESSON_STEPS) : concept.exercises.slice(0, MAX_LESSON_STEPS);
+  const sourceExercises = exercises.length ? exercises : concept.exercises;
+  const seen = new Set<string>();
+  const available: Exercise[] = [];
+
+  for (const exercise of sourceExercises) {
+    const key = exerciseKey(exercise);
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+    available.push(exercise);
+    if (available.length === MAX_LESSON_STEPS) break;
+  }
+
   if (!available.length) return [];
 
-  const count = Math.min(MAX_LESSON_STEPS, Math.max(MIN_LESSON_STEPS, available.length));
-  return Array.from({ length: count }, (_, index): LessonStep => {
-    const source = available[index % available.length];
-    const repeated = index >= available.length;
+  return available.map((exercise, index): LessonStep => {
     const tier = available.length >= MIN_LESSON_STEPS ? 'full' : TIER_SEQUENCE[index];
-    const exercise = repeated
-      ? { ...source, id: `${source.id}__lesson_${index + 1}_${tier}` }
-      : source;
 
     return { id: exercise.id, exercise, tier };
   });

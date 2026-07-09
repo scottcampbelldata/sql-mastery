@@ -15,7 +15,19 @@ vi.mock('./FoundationsRep', () => ({
 vi.mock('../../state/FoundationsContext', () => ({
   useFoundations: () => ({
     track: {
-      concepts: [{ id: 'c1', order: 1, skill: 'a', title: 'A', exercises: [{ id: 'c1-r1' }] }],
+      concepts: [{
+        id: 'c1',
+        order: 1,
+        skill: 'a',
+        title: 'A',
+        exercises: [
+          { id: 'c1-r1' },
+          { id: 'c1-r2' },
+          { id: 'c1-r3' },
+          { id: 'c1-r4' },
+          { id: 'c1-r5' }
+        ]
+      }],
       checkpoints: [], skills: [], phases: [], exercises: []
     },
     phases: [],
