@@ -3,7 +3,7 @@ import type { Template, Slot, Binding } from './types';
 import type { Catalog } from './schema-catalog';
 
 export type { Binding } from './types';
-export type LiteralProbe = (sql: string) => Promise<(string | null)[][]>;
+export type LiteralProbe = (sql: string) => Promise<unknown[][]>;
 
 const BIND_SEED = 0x5f3759df;
 const LIMIT_CANDIDATES = ['3', '5', '10'];
@@ -19,6 +19,12 @@ function parseFromTable(sql: string): string {
 
 function primaryTableOf(template: Template): string {
   return template.primaryTable ?? parseFromTable(template.sqlShape);
+}
+
+function literalValue(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  if (value instanceof Date) return value.toISOString();
+  return String(value);
 }
 
 function tableColumns(catalog: Catalog, table: string): string[] {
@@ -64,7 +70,7 @@ async function drawCompoundLiterals(
 
   const row = rows[Math.floor(stream() * rows.length)];
   compound.forEach((slot, index) => {
-    const value = row[index];
+    const value = literalValue(row[index]);
     if (value !== null) out[slot.name] = value;
   });
   return out;
@@ -85,7 +91,7 @@ async function drawSingleLiterals(
     const rows = await probe(sql);
 
     if (rows.length > 0) {
-      const value = rows[Math.floor(stream() * rows.length)][0];
+      const value = literalValue(rows[Math.floor(stream() * rows.length)][0]);
       if (value !== null) out[slot.name] = value;
     }
   }

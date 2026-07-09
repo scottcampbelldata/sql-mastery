@@ -86,8 +86,43 @@ function orderByKeyIndices(sql: string, fields: { name: string }[]): { hasOrderB
   return { hasOrderBy: true, indices };
 }
 
+function findTopLevelKeyword(sql: string, keyword: string, start = 0): number {
+  let depth = 0;
+  let inString = false;
+  const lower = sql.toLowerCase();
+  const target = keyword.toLowerCase();
+
+  for (let i = 0; i < sql.length; i += 1) {
+    const ch = sql[i];
+    if (ch === "'") inString = !inString;
+    else if (!inString && ch === '(') depth += 1;
+    else if (!inString && ch === ')') depth -= 1;
+
+    if (
+      i >= start &&
+      !inString &&
+      depth === 0 &&
+      lower.slice(i, i + target.length) === target &&
+      !/[a-z0-9_]/i.test(sql[i - 1] || '') &&
+      !/[a-z0-9_]/i.test(sql[i + target.length] || '')
+    ) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
 function stripWhere(sql: string): string {
-  return sql.replace(/\bwhere\b[\s\S]*?(?=\bgroup\s+by\b|\border\s+by\b|\blimit\b|$)/i, ' ');
+  const whereIndex = findTopLevelKeyword(sql, 'where');
+  if (whereIndex < 0) return sql;
+
+  const next = ['group by', 'order by', 'limit']
+    .map((keyword) => findTopLevelKeyword(sql, keyword, whereIndex + 5))
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b)[0] ?? sql.length;
+
+  return `${sql.slice(0, whereIndex).trimEnd()} ${sql.slice(next).trimStart()}`.trim();
 }
 
 function stripDedupFilter(sql: string): string {

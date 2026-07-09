@@ -16,6 +16,89 @@ function canonicalBinding(binding: Binding): string {
   return `${slots}#${literals}`;
 }
 
+function splitTopLevel(list: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let inString = false;
+  let current = '';
+
+  for (const ch of list) {
+    if (ch === "'") inString = !inString;
+    if (!inString && ch === '(') depth += 1;
+    if (!inString && ch === ')') depth -= 1;
+    if (!inString && depth === 0 && ch === ',') {
+      parts.push(current);
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+
+  if (current.trim() !== '') parts.push(current);
+  return parts.map((part) => part.trim());
+}
+
+function topLevelSelectList(sql: string): string | null {
+  const select = sql.match(/^\s*select\s+/i);
+  if (!select) return null;
+
+  const start = select[0].length;
+  let depth = 0;
+  let inString = false;
+
+  for (let i = start; i < sql.length; i += 1) {
+    const ch = sql[i];
+    if (ch === "'") inString = !inString;
+    else if (!inString && ch === '(') depth += 1;
+    else if (!inString && ch === ')') depth -= 1;
+    else if (
+      !inString &&
+      depth === 0 &&
+      /\s/.test(sql[i - 1] || '') &&
+      sql.slice(i, i + 4).toLowerCase() === 'from' &&
+      /\s/.test(sql[i + 4] || ' ')
+    ) {
+      return sql.slice(start, i);
+    }
+  }
+
+  return null;
+}
+
+function outputAliases(sql: string): string[] {
+  const list = topLevelSelectList(sql);
+  if (!list) return [];
+  return splitTopLevel(list)
+    .map((raw) => raw.match(/\s+as\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i)?.[1])
+    .filter((alias): alias is string => !!alias);
+}
+
+function orderAliases(sql: string): string[] {
+  const match = /\border\s+by\b([\s\S]+?)(?:\blimit\b|;|$)/i.exec(sql);
+  if (!match) return [];
+  return match[1]
+    .split(',')
+    .map((term) =>
+      term
+        .trim()
+        .replace(/\s+(asc|desc)\b[\s\S]*$/i, '')
+        .split('.')
+        .pop()!
+        .replace(/["']/g, '')
+        .trim()
+    )
+    .filter(Boolean);
+}
+
+function appendAnswerContract(task: string, expectedSql: string): string {
+  const aliases = outputAliases(expectedSql);
+  const order = orderAliases(expectedSql);
+  const parts: string[] = [];
+  if (aliases.length > 0) parts.push(`Return columns: ${aliases.join(', ')}.`);
+  if (order.length > 0) parts.push(`Order by: ${order.join(', ')}.`);
+  return parts.length > 0 ? `${task} ${parts.join(' ')}` : task;
+}
+
 export function assembleExercise(
   template: Template,
   binding: Binding,
@@ -28,7 +111,7 @@ export function assembleExercise(
     id,
     skill: template.skill,
     database: template.database,
-    task: renderTask(template, binding),
+    task: appendAnswerContract(renderTask(template, binding), expectedSql),
     starterSql,
     blankMap,
     hint: renderHint(template, binding),

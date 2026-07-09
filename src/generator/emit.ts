@@ -131,6 +131,32 @@ function csv(value: string): string[] {
   return value.split(',').map((part) => part.trim()).filter((part) => part !== '');
 }
 
+function findTopLevelKeyword(sql: string, keyword: string): number {
+  let depth = 0;
+  let inString = false;
+  const lower = sql.toLowerCase();
+  const target = keyword.toLowerCase();
+
+  for (let i = 0; i < sql.length; i += 1) {
+    const ch = sql[i];
+    if (ch === "'") inString = !inString;
+    else if (!inString && ch === '(') depth += 1;
+    else if (!inString && ch === ')') depth -= 1;
+
+    if (
+      !inString &&
+      depth === 0 &&
+      lower.slice(i, i + target.length) === target &&
+      !/[a-z0-9_]/i.test(sql[i - 1] || '') &&
+      !/[a-z0-9_]/i.test(sql[i + target.length] || '')
+    ) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
 function appendPrimaryKey(keys: string[], catalog: Catalog, primaryTable: string): string[] {
   const out = keys.slice();
   for (const key of pk(catalog, primaryTable)) {
@@ -189,9 +215,9 @@ function tiebreakKeys(
 
 function appendOrderBy(sql: string, keys: string[]): string {
   const trimmed = sql.trim();
-  const limit = trimmed.match(/\s+limit\s+[\s\S]+$/i);
-  if (limit && limit.index !== undefined) {
-    return `${trimmed.slice(0, limit.index)} ORDER BY ${keys.join(', ')}${trimmed.slice(limit.index)}`;
+  const limitIndex = findTopLevelKeyword(trimmed, 'limit');
+  if (limitIndex >= 0) {
+    return `${trimmed.slice(0, limitIndex).trimEnd()} ORDER BY ${keys.join(', ')} ${trimmed.slice(limitIndex)}`;
   }
   return `${trimmed} ORDER BY ${keys.join(', ')}`;
 }

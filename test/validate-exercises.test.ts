@@ -128,6 +128,21 @@ test('g5 fails a GROUP BY that yields a single group', async () => {
   assert.equal((await g5NonDegenerate(ctx)).pass, false);
 });
 
+test('g5 ignores nested WHERE clauses when checking top-level filter impact', async () => {
+  const ex = makeExercise({
+    expectedSql:
+      'SELECT canon.brand, COUNT(*) AS n FROM (SELECT brand FROM cameras WHERE active = true) canon GROUP BY canon.brand ORDER BY brand'
+  });
+  const ctx = makeCtx(
+    ex,
+    { fields: [{ name: 'brand' }, { name: 'n' }], rows: [['a', '2'], ['b', '3']], rowCount: 2 },
+    async () => {
+      throw new Error('nested WHERE should not be stripped');
+    }
+  );
+  assert.equal((await g5NonDegenerate(ctx)).pass, true);
+});
+
 test('validateExercises bakes a real fingerprint onto passers', async () => {
   const ex = makeExercise({
     expectedSql: 'SELECT model, price FROM cameras ORDER BY price, model',

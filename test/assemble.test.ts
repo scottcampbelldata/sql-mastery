@@ -60,3 +60,17 @@ test('assembleExercise is deterministic and produces a well-shaped DraftExercise
   }
   assert.ok(!('fingerprint' in a));
 });
+
+test('assembleExercise task contract includes aliases after FROM inside expressions', () => {
+  const latencyTemplate: Template = {
+    ...template,
+    skill: 'rv-latency-demo',
+    database: 'rove',
+    family: 'grouped',
+    sqlShape: 'SELECT AVG(EXTRACT(EPOCH FROM approved_at - applied_at)) AS avg_seconds FROM orders',
+    slots: [{ name: 'groupCols', kind: 'groupCols' }],
+    phrasings: ['Report average latency.']
+  };
+  const ex = assembleExercise(latencyTemplate, { ...binding, slots: { groupCols: 'avg_seconds' }, literals: {} }, catalog);
+  assert.ok(ex.task.includes('avg_seconds'));
+});
