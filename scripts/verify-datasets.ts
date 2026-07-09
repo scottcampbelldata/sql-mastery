@@ -11,7 +11,7 @@ import { Pool, PoolClient } from 'pg';
 
 import { buildClientConfig } from '../src/db-config';
 import { containsBanned, looksLikeRealEmail, looksLikeRealPhone } from '../src/datasets/framework/text';
-import { EMAIL_TYPO_MAP, NULL_SENTINELS, SYNONYM_MAP } from '../src/datasets/rove/mess';
+import { CATEGORY_ORPHAN_COUNT, EMAIL_TYPO_MAP, NULL_SENTINELS, SYNONYM_MAP } from '../src/datasets/rove/mess';
 import manifestJson from '../datasets/manifest.json';
 
 type Row = Record<string, any>;
@@ -430,6 +430,70 @@ async function runRoveChecks(client: PoolClient): Promise<void> {
   const db = 'rove';
 
   await checkRowCountBands(client, db);
+
+  // ---- rv-recursive-cte: self-referencing category tree ----
+
+  await checkCount(
+    client,
+    db,
+    'orphaned category parent pointers present and bounded',
+    `SELECT COUNT(*) AS n FROM categories c
+     WHERE c.parent_category_id IS NOT NULL
+     AND NOT EXISTS (SELECT 1 FROM categories p WHERE p.category_id = c.parent_category_id)`,
+    (n) => n >= 1 && n <= CATEGORY_ORPHAN_COUNT,
+    `>= 1 and <= ${CATEGORY_ORPHAN_COUNT}`
+  );
+
+  await checkCount(
+    client,
+    db,
+    '0 merchants with an invalid category_id',
+    `SELECT COUNT(*) AS n FROM merchants m
+     LEFT JOIN categories c ON m.category_id = c.category_id
+     WHERE c.category_id IS NULL`,
+    (n) => n === 0,
+    '0'
+  );
+
+  await checkRows(
+    client,
+    db,
+    'category tree is cleanable: re-rooting orphans, a recursive walk reaches every category',
+    `WITH RECURSIVE seed_roots AS (
+       SELECT c.category_id
+       FROM categories c
+       WHERE c.parent_category_id IS NULL
+          OR NOT EXISTS (SELECT 1 FROM categories p WHERE p.category_id = c.parent_category_id)
+     ),
+     walk AS (
+       SELECT category_id FROM seed_roots
+       UNION
+       SELECT c.category_id
+       FROM categories c
+       JOIN walk w ON c.parent_category_id = w.category_id
+     )
+     SELECT (SELECT COUNT(*) FROM categories) AS total,
+            (SELECT COUNT(*) FROM walk) AS reached`,
+    (rows) => {
+      const total = Number(rows[0].total);
+      const reached = Number(rows[0].reached);
+      return { pass: total > 0 && reached === total, detail: `reached=${reached} of total=${total}` };
+    }
+  );
+
+  await checkCount(
+    client,
+    db,
+    'WITH RECURSIVE walk from fixed root (Restaurants, id 1) returns the bounded 14-node subtree',
+    `WITH RECURSIVE sub AS (
+       SELECT category_id FROM categories WHERE category_id = 1
+       UNION
+       SELECT c.category_id FROM categories c JOIN sub s ON c.parent_category_id = s.category_id
+     )
+     SELECT COUNT(*) AS n FROM sub`,
+    (n) => n === 14,
+    '14'
+  );
 
   await checkCount(
     client,

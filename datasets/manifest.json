@@ -17,6 +17,7 @@
   },
   "rove": {
     "cities": [16, 16],
+    "categories": [40, 40],
     "merchants": [1200, 1200],
     "promos": [45, 45],
     "customers": [46000, 48500],
