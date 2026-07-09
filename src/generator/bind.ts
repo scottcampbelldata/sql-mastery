@@ -24,7 +24,7 @@ function primaryTableOf(template: Template): string {
 function literalValue(value: unknown): string | null {
   if (value === null || value === undefined) return null;
   if (value instanceof Date) return value.toISOString();
-  return String(value);
+  return String(value).replace(/'/g, "''");
 }
 
 function tableColumns(catalog: Catalog, table: string): string[] {
