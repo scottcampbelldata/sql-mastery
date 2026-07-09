@@ -221,3 +221,75 @@ export const RATING_COMMENTS: readonly string[] = [
   'Smooth process from start to finish.',
   'Would recommend this merchant to others.',
 ];
+
+// -------------------------------------------------------------------------------------------
+// Delivery-category hierarchy (rv-recursive-cte). A fixed, self-referencing tree: 6 roots (one
+// per merchant category), a middle band, and leaf nodes merchants attach to. Max depth 3.
+// category_id is contiguous 1..40 and every parentCategoryId is strictly smaller than its own
+// id, so a single ordered INSERT lands parents before children. parent_category_id carries NO
+// database FK (see rove.sql), which is what lets the mess layer inject bounded orphaned pointers.
+// -------------------------------------------------------------------------------------------
+
+export interface RoveCategorySeed {
+  categoryId: number;
+  name: string;
+  parentCategoryId: number | null;
+}
+
+export const ROVE_CATEGORIES: readonly RoveCategorySeed[] = [
+  // Level 1 roots (parent null) -- one per merchant category.
+  { categoryId: 1, name: 'Restaurants', parentCategoryId: null },
+  { categoryId: 2, name: 'Grocery', parentCategoryId: null },
+  { categoryId: 3, name: 'Pharmacy', parentCategoryId: null },
+  { categoryId: 4, name: 'Convenience', parentCategoryId: null },
+  { categoryId: 5, name: 'Alcohol', parentCategoryId: null },
+  { categoryId: 6, name: 'Flowers', parentCategoryId: null },
+  // Level 2.
+  { categoryId: 7, name: 'Fast Food', parentCategoryId: 1 },
+  { categoryId: 8, name: 'Sit Down', parentCategoryId: 1 },
+  { categoryId: 9, name: 'Cafe', parentCategoryId: 1 },
+  { categoryId: 10, name: 'Supermarket', parentCategoryId: 2 },
+  { categoryId: 11, name: 'Specialty Grocery', parentCategoryId: 2 },
+  { categoryId: 12, name: 'Prescription', parentCategoryId: 3 },
+  { categoryId: 13, name: 'Health and Wellness', parentCategoryId: 3 },
+  { categoryId: 14, name: 'Corner Store', parentCategoryId: 4 },
+  { categoryId: 15, name: 'Snacks', parentCategoryId: 4 },
+  { categoryId: 16, name: 'Beer and Wine', parentCategoryId: 5 },
+  { categoryId: 17, name: 'Spirits', parentCategoryId: 5 },
+  { categoryId: 18, name: 'Bouquets', parentCategoryId: 6 },
+  // Level 3 leaves.
+  { categoryId: 19, name: 'Burgers', parentCategoryId: 7 },
+  { categoryId: 20, name: 'Pizza', parentCategoryId: 7 },
+  { categoryId: 21, name: 'Tacos', parentCategoryId: 7 },
+  { categoryId: 22, name: 'Italian', parentCategoryId: 8 },
+  { categoryId: 23, name: 'Asian', parentCategoryId: 8 },
+  { categoryId: 24, name: 'Steakhouse', parentCategoryId: 8 },
+  { categoryId: 25, name: 'Coffee', parentCategoryId: 9 },
+  { categoryId: 26, name: 'Bakery', parentCategoryId: 9 },
+  { categoryId: 27, name: 'Produce', parentCategoryId: 10 },
+  { categoryId: 28, name: 'Meat and Seafood', parentCategoryId: 10 },
+  { categoryId: 29, name: 'Organic', parentCategoryId: 11 },
+  { categoryId: 30, name: 'International', parentCategoryId: 11 },
+  { categoryId: 31, name: 'Vitamins', parentCategoryId: 13 },
+  { categoryId: 32, name: 'Chips', parentCategoryId: 15 },
+  { categoryId: 33, name: 'Candy', parentCategoryId: 15 },
+  { categoryId: 34, name: 'Craft Beer', parentCategoryId: 16 },
+  { categoryId: 35, name: 'Wine', parentCategoryId: 16 },
+  { categoryId: 36, name: 'Roses', parentCategoryId: 18 },
+  { categoryId: 37, name: 'Seasonal', parentCategoryId: 18 },
+  { categoryId: 38, name: 'Sandwiches', parentCategoryId: 7 },
+  { categoryId: 39, name: 'Desserts', parentCategoryId: 9 },
+  { categoryId: 40, name: 'Deli', parentCategoryId: 10 },
+];
+
+// Merchant text category -> leaf category ids under that root. Every leaf (a category with no
+// children) sits under exactly one root, so merchant text category and assigned leaf never
+// disagree. Keys match MERCHANT_CATEGORY_WEIGHTS exactly.
+export const CATEGORY_LEAVES_BY_MERCHANT_CATEGORY: Record<string, readonly number[]> = {
+  restaurant: [19, 20, 21, 22, 23, 24, 25, 26, 38, 39],
+  grocery: [27, 28, 29, 30, 40],
+  pharmacy: [12, 31],
+  convenience: [14, 32, 33],
+  alcohol: [17, 34, 35],
+  flowers: [36, 37],
+};

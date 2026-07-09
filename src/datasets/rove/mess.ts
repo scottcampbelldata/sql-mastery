@@ -605,6 +605,52 @@ function injectDuplicatePayments(payments: Row[], rng: Prng): void {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Category hierarchy: bounded orphaned parent pointers (rv-recursive-cte). ONE defect: a few
+// non-root categories have their parent_category_id repointed to a non-existent id (a "purged"
+// parent), exactly like the R09 orphaned-ref pattern on orders. Reversible by DETECTION: an
+// orphan is any non-null parent_category_id not present in categories.category_id, cleaned by
+// re-rooting (treat the missing pointer as a root) so a WITH RECURSIVE walk stays traversable.
+// The Restaurants subtree (root 1) is deliberately left pristine so the fixed-root walk lesson
+// returns the same bounded set on the seeded DB as on the clean answer key.
+// ---------------------------------------------------------------------------------------------
+
+export const CATEGORY_ORPHAN_COUNT = 3;
+
+// Well above the 40 real category ids, so a repointed parent is provably non-existent by
+// construction and can never collide with a real category_id.
+const CATEGORY_ORPHAN_PARENT_BASE = 9000;
+
+function categoryRootId(idToParent: Map<number, number | null>, id: number): number {
+  let cur = id;
+  // Injection runs over the still-clean tree (no orphans yet), so this always reaches a root.
+  for (;;) {
+    const parent = idToParent.get(cur);
+    if (parent === null || parent === undefined) return cur;
+    cur = parent;
+  }
+}
+
+function injectCategoryOrphans(categories: Row[], rng: Prng): void {
+  const idToParent = new Map<number, number | null>();
+  for (const c of categories) idToParent.set(c.category_id as number, c.parent_category_id as number | null);
+
+  const candidateIdxs: number[] = [];
+  for (let i = 0; i < categories.length; i += 1) {
+    const parent = categories[i].parent_category_id as number | null;
+    if (parent === null) continue; // never orphan a real root
+    if (categoryRootId(idToParent, categories[i].category_id as number) === 1) continue; // protect Restaurants
+    candidateIdxs.push(i);
+  }
+
+  const chosen = sampleWithout(rng, candidateIdxs, Math.min(CATEGORY_ORPHAN_COUNT, candidateIdxs.length));
+  let missingId = CATEGORY_ORPHAN_PARENT_BASE;
+  for (const idx of chosen) {
+    categories[idx].parent_category_id = missingId;
+    missingId += 1;
+  }
+}
+
+// ---------------------------------------------------------------------------------------------
 // Orchestrator.
 // ---------------------------------------------------------------------------------------------
 
@@ -629,4 +675,6 @@ export function injectMess(data: Record<string, Row[]>, rng: Prng): void {
 
   injectEventLogMess(data.event_log, rng);
   injectDuplicatePayments(data.payments, rng);
+
+  injectCategoryOrphans(data.categories, rng);
 }

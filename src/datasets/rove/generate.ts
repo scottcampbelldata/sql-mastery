@@ -9,6 +9,8 @@ import { GIVEN_NAMES, SURNAMES } from '../framework/pools';
 import type { DatasetModule, TableSpec } from '../framework/types';
 import {
   ROVE_CITIES,
+  ROVE_CATEGORIES,
+  CATEGORY_LEAVES_BY_MERCHANT_CATEGORY,
   RoveCitySeed,
   MERCHANT_CATEGORY_WEIGHTS,
   MERCHANT_NAME_PARTS,
@@ -62,8 +64,12 @@ export const TABLES: TableSpec[] = [
     ],
   },
   {
+    name: 'categories',
+    columns: ['category_id', 'name', 'parent_category_id'],
+  },
+  {
     name: 'merchants',
-    columns: ['merchant_id', 'city_id', 'name', 'category', 'price_tier', 'onboarded_on', 'avg_prep_minutes', 'is_active'],
+    columns: ['merchant_id', 'city_id', 'category_id', 'name', 'category', 'price_tier', 'onboarded_on', 'avg_prep_minutes', 'is_active'],
   },
   {
     name: 'promos',
@@ -285,6 +291,25 @@ function buildCities(): Row[] {
     population_k: c.populationK,
     is_active: true,
   }));
+}
+
+function buildCategories(): Row[] {
+  return ROVE_CATEGORIES.map((cat) => ({
+    category_id: cat.categoryId,
+    name: cat.name,
+    parent_category_id: cat.parentCategoryId,
+  }));
+}
+
+// Assigns each merchant a leaf category_id under the root that matches its text category. Uses a
+// dedicated 'merchant_categories' stream so no existing merchant field draw shifts: the rest of
+// the clean core stays byte-identical to before this task.
+function assignMerchantCategories(seed: number, merchants: MerchantsResult): void {
+  const rng = deriveStream(seed, 'merchant_categories');
+  for (const row of merchants.rows) {
+    const leaves = CATEGORY_LEAVES_BY_MERCHANT_CATEGORY[row.category as string];
+    row.category_id = pick(rng, leaves);
+  }
 }
 
 interface MerchantsResult {
@@ -1206,7 +1231,9 @@ export function generateClean(seed: number): Record<string, Row[]> {
   const cityDayDist = ROVE_CITIES.map((c) => buildCityDayDist(c));
 
   const cities = buildCities();
+  const categories = buildCategories();
   const merchants = buildMerchants(seed, cityWeights);
+  assignMerchantCategories(seed, merchants);
   const promos = buildPromos(seed);
   const customers = buildCustomers(seed, cityWeights, cityDayDist);
   const couriers = buildCouriers(seed, cityWeights, cityDayDist);
@@ -1230,6 +1257,7 @@ export function generateClean(seed: number): Record<string, Row[]> {
 
   return {
     cities,
+    categories,
     merchants: merchants.rows,
     promos: promos.rows,
     customers: customers.rows,

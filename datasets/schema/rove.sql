@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS support_tickets, ratings, promo_redemption, event_log, payments, orders, couriers, customers, promos, merchants, cities, seed_meta CASCADE;
+DROP TABLE IF EXISTS support_tickets, ratings, promo_redemption, event_log, payments, orders, couriers, customers, promos, merchants, categories, cities, seed_meta CASCADE;
 
 CREATE TABLE seed_meta (
   db text,
@@ -19,9 +19,17 @@ CREATE TABLE cities (
   population_k      integer NOT NULL,
   is_active        boolean NOT NULL DEFAULT true
 );
+CREATE TABLE categories (
+  category_id        smallint PRIMARY KEY,
+  name               text NOT NULL,
+  parent_category_id smallint                             -- self-ref hierarchy; NO FK on purpose:
+                                                          -- permits bounded orphaned pointers to
+                                                          -- purged parents (rv-recursive-cte lesson)
+);
 CREATE TABLE merchants (
   merchant_id      integer PRIMARY KEY,
   city_id          smallint NOT NULL REFERENCES cities(city_id),
+  category_id      smallint NOT NULL REFERENCES categories(category_id),  -- clean leaf-category FK (rv-recursive-cte)
   name             text NOT NULL,
   category         text NOT NULL,                    -- restaurant|grocery|pharmacy|convenience|alcohol|flowers
   price_tier       smallint NOT NULL,
