@@ -142,18 +142,29 @@ test('POST /api/check returns guided feedback', async () => {
   });
 });
 
-test('GET /api/curriculum returns the scheduled learning path', async () => {
+test('GET /api/curriculum returns the banded learning path', async () => {
   const app = createApp({
     queryService: {
       listDatabases: () => ['northwind']
     },
     curriculumService: {
-      buildCurriculum: () => ({
-        weeks: [{ id: 'week-01', sessions: ['w01-s01'] }],
-        sessions: [{ id: 'w01-s01', exerciseIds: ['p1-1'] }],
-        exercises: [{ id: 'p1-1', title: 'P1.1' }],
-        stats: { totalWeeks: 16, totalSessions: 64 }
-      })
+      buildCurriculum: (...args: unknown[]) => {
+        assert.equal(args.length, 0);
+        return {
+          product: {
+            name: 'SQL Mastery',
+            bands: [{ level: 'beginner', database: 'aperture', phaseCount: 1, conceptCount: 1 }]
+          },
+          learningPath: {
+            dataset: 'three-band',
+            phases: [{ id: 'phase-1', level: 'beginner', database: 'aperture', concepts: [] }],
+            concepts: [{ id: 'concept-1' }],
+            checkpoints: [],
+            exercises: [{ id: 'exercise-1', title: 'P1.1' }]
+          },
+          stats: { totalPhases: 1, totalConcepts: 1, totalExercises: 1, totalCheckpoints: 0 }
+        };
+      }
     }
   });
 
@@ -162,8 +173,11 @@ test('GET /api/curriculum returns the scheduled learning path', async () => {
     const body = await response.json() as any;
 
     assert.equal(response.status, 200);
-    assert.equal(body.stats.totalWeeks, 16);
-    assert.equal(body.sessions[0].id, 'w01-s01');
+    assert.equal(body.learningPath.dataset, 'three-band');
+    assert.equal(body.stats.totalPhases, 1);
+    assert.equal(body.product.bands[0].database, 'aperture');
+    assert.equal(Object.hasOwn(body, 'weeks'), false);
+    assert.equal(Object.hasOwn(body, 'sessions'), false);
   });
 });
 
