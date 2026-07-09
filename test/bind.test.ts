@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { bindTemplate } from '../src/generator/bind';
+import { emitSql } from '../src/generator/emit';
 import type { LiteralProbe } from '../src/generator/bind';
 import type { Template } from '../src/generator/types';
 import { REF_WHERE, REF_JOIN, REFERENCE_CATALOG } from './reference-templates';
@@ -76,4 +77,18 @@ test('bind serializes Date literal values as ISO strings', async () => {
   for (const bnd of bindings) {
     assert.equal(bnd.literals['createdAt'], '2021-04-05T12:34:56.000Z');
   }
+});
+
+test('bind escapes single quotes for generated expected SQL string literals', async () => {
+  const quoteProbe: LiteralProbe = async () => [["O'Brien"]];
+  const bindings = await bindTemplate(LITERAL_ONLY, REFERENCE_CATALOG, quoteProbe);
+  assert.ok(bindings.length >= 1);
+
+  const sql = emitSql(REF_JOIN, { ...bindings[0], slots: { sortKey: 'planet_id' } }, REFERENCE_CATALOG);
+  assert.equal(
+    sql,
+    "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name " +
+      "FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE stars.spectral_type = 'O''Brien' " +
+      "ORDER BY planet_id"
+  );
 });

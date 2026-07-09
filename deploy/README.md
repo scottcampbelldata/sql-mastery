@@ -109,11 +109,13 @@ backend's `SQL_MASTERY_ALLOWED_ORIGINS`, then `sudo systemctl restart sql-master
    \c aperture
    GRANT CONNECT ON DATABASE aperture TO sqlrunner;
    GRANT USAGE ON SCHEMA public TO sqlrunner;
-   GRANT SELECT ON ALL TABLES IN SCHEMA public TO sqlrunner;
-   ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO sqlrunner;
+   GRANT SELECT, REFERENCES ON ALL TABLES IN SCHEMA public TO sqlrunner;
+   ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, REFERENCES ON TABLES TO sqlrunner;
    -- repeat for sideline and rove
    ```
-   Point `PGUSER`/`PGPASSWORD` at `sqlrunner`.
+   `REFERENCES` lets the app read primary-key and foreign-key metadata through
+   `information_schema`; it does not grant write privileges. Point
+   `PGUSER`/`PGPASSWORD` at `sqlrunner`.
 2. **Keep the nginx rate/conn limits** (`sql-mastery-http.conf`) and a low
    `SQL_MASTERY_STATEMENT_TIMEOUT_MS`.
 3. **Gate it** - putting the API behind **Cloudflare Access** (policy/token) is the
