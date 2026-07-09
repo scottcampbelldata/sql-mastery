@@ -60,19 +60,22 @@ export const REF_GROUPED: Template = {
   gateHints: { minRows: 1, minDistinct: 2, rowCeiling: 200, orderMatters: false, boundedSlice: false }
 };
 
-// Reference 3: intro JOIN. No sortKey/groupCols slot: emit tiebreaks on pk-from-catalog.
+// Reference 3: intro JOIN with a projected sortKey.
 export const REF_JOIN: Template = {
   skill: 'ap-join-intro',
   database: 'aperture',
   family: 'join',
   primaryTable: 'planets',
   sqlShape:
-    "SELECT planets.planet_name, stars.star_name FROM planets " +
+    "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM planets " +
     "JOIN stars ON planets.star_id = stars.star_id WHERE stars.spectral_type = '{stype}'",
   slots: [
-    { name: 'stype', kind: 'literal', op: '=', col: 'spectral_type', table: 'stars', sampleStrategy: 'single' }
+    { name: 'stype', kind: 'literal', op: '=', col: 'spectral_type', table: 'stars', sampleStrategy: 'single' },
+    { name: 'sortKey', kind: 'sortKey', table: 'planets' }
   ],
-  bindingRules: [],
+  bindingRules: [
+    { slot: 'sortKey', predicate: (v: string) => v === 'planet_id' }
+  ],
   phrasings: [
     'Show each planet with its host star for spectral type {stype}.',
     'Join planets to their host stars, keeping only spectral type {stype}.'

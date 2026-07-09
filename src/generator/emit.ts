@@ -87,12 +87,19 @@ function deriveAlias(expr: string): string {
   return 'expr';
 }
 
+function splitDistinct(list: string): { prefix: string; body: string } {
+  const match = list.match(/^\s*distinct\s+/i);
+  if (!match) return { prefix: '', body: list };
+  return { prefix: 'DISTINCT ', body: list.slice(match[0].length) };
+}
+
 function aliasProjections(sql: string): string {
   const { pre, list, post } = splitSelect(sql);
-  if (list.trim() === '*') return sql;
+  const { prefix, body } = splitDistinct(list);
+  if (body.trim() === '*') return sql;
 
   const used = new Set<string>();
-  const out = splitTopLevel(list).map((raw) => {
+  const out = splitTopLevel(body).map((raw) => {
     const asMatch = raw.match(/\s+as\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i);
     const original = asMatch ? raw.slice(0, asMatch.index).trim() : raw.trim();
     const base = asMatch ? asMatch[1] : deriveAlias(original);
@@ -108,24 +115,59 @@ function aliasProjections(sql: string): string {
     return `${roundWrap(original)} AS ${alias}`;
   });
 
-  return `${pre}${out.join(', ')} ${post}`;
+  return `${pre}${prefix}${out.join(', ')} ${post}`;
+}
+
+function projectionAliases(sql: string): string[] {
+  const { list } = splitSelect(sql);
+  const { body } = splitDistinct(list);
+  if (body.trim() === '*') return [];
+  return splitTopLevel(body)
+    .map((raw) => raw.match(/\s+as\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i)?.[1])
+    .filter((alias): alias is string => !!alias);
 }
 
 function csv(value: string): string[] {
   return value.split(',').map((part) => part.trim()).filter((part) => part !== '');
 }
 
-function tiebreakKeys(template: Template, binding: Binding, catalog: Catalog, primaryTable: string): string[] {
+function appendPrimaryKey(keys: string[], catalog: Catalog, primaryTable: string): string[] {
+  const out = keys.slice();
+  for (const key of pk(catalog, primaryTable)) {
+    if (!out.some((existing) => existing.split('.').pop() === key)) out.push(key);
+  }
+  return out;
+}
+
+function requiredSlotKeys(template: Template, binding: Binding, slotName: string): string[] {
+  const value = binding.slots[slotName];
+  if (value === undefined) throw new Error(`emit: family ${template.family} requires a '${slotName}' slot (${template.skill})`);
+  return csv(value);
+}
+
+function tiebreakKeys(
+  template: Template,
+  binding: Binding,
+  catalog: Catalog,
+  primaryTable: string,
+  aliases: string[],
+  isDistinct: boolean
+): string[] {
   switch (template.family) {
-    case 'single-table': {
-      const value = binding.slots['sortKey'];
-      if (value === undefined) throw new Error(`emit: family single-table requires a 'sortKey' slot (${template.skill})`);
-      return csv(value);
-    }
+    case 'single-table':
+      return isDistinct
+        ? requiredSlotKeys(template, binding, 'sortKey')
+        : appendPrimaryKey(requiredSlotKeys(template, binding, 'sortKey'), catalog, primaryTable);
+    case 'join':
+      return appendPrimaryKey(requiredSlotKeys(template, binding, 'sortKey'), catalog, primaryTable);
     case 'grouped': {
-      const value = binding.slots['groupCols'];
-      if (value === undefined) throw new Error(`emit: family grouped requires a 'groupCols' slot (${template.skill})`);
-      return csv(value);
+      return requiredSlotKeys(template, binding, 'groupCols');
+    }
+    case 'aggregate-scalar': {
+      if (aliases.length === 0) {
+        throw new Error(`emit: family aggregate-scalar needs at least one projected alias (${template.skill})`);
+      }
+      return [aliases[0]];
     }
     case 'windowed': {
       const partitionCols = binding.slots['partitionCols'];
@@ -145,10 +187,26 @@ function tiebreakKeys(template: Template, binding: Binding, catalog: Catalog, pr
   }
 }
 
+function appendOrderBy(sql: string, keys: string[]): string {
+  const trimmed = sql.trim();
+  const limit = trimmed.match(/\s+limit\s+[\s\S]+$/i);
+  if (limit && limit.index !== undefined) {
+    return `${trimmed.slice(0, limit.index)} ORDER BY ${keys.join(', ')}${trimmed.slice(limit.index)}`;
+  }
+  return `${trimmed} ORDER BY ${keys.join(', ')}`;
+}
+
 export function emitSql(template: Template, binding: Binding, catalog: Catalog): string {
   const filled = substitute(template.sqlShape, binding);
   const primaryTable = template.primaryTable ?? parseFromTable(filled);
   const aliased = aliasProjections(filled);
-  const keys = tiebreakKeys(template, binding, catalog, primaryTable);
-  return `${aliased.trim()} ORDER BY ${keys.join(', ')}`;
+  const keys = tiebreakKeys(
+    template,
+    binding,
+    catalog,
+    primaryTable,
+    projectionAliases(aliased),
+    /^\s*select\s+distinct\b/i.test(filled)
+  );
+  return appendOrderBy(aliased, keys);
 }
