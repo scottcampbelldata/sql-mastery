@@ -52,6 +52,19 @@ test('emit inserts ORDER BY before LIMIT', () => {
   assert.equal(sql, 'SELECT planet_id AS planet_id, planet_name AS planet_name FROM planets ORDER BY planet_name, planet_id LIMIT 5');
 });
 
+test('emit inserts ORDER BY before only the top-level LIMIT', () => {
+  const limited: Template = {
+    ...REF_WHERE,
+    skill: 'ap-nested-limit',
+    primaryTable: 'planets',
+    sqlShape: 'SELECT planet_id FROM (SELECT planet_id FROM planets LIMIT 1) x LIMIT 5',
+    slots: [{ name: 'sortKey', kind: 'sortKey' }],
+    bindingRules: []
+  };
+  const sql = emitSql(limited, b({ sortKey: 'planet_id' }, {}), REFERENCE_CATALOG);
+  assert.equal(sql, 'SELECT planet_id AS planet_id FROM (SELECT planet_id FROM planets LIMIT 1) x ORDER BY planet_id LIMIT 5');
+});
+
 test('distinct single-table emit does not append a hidden primary-key order', () => {
   const distinct: Template = {
     ...REF_WHERE,

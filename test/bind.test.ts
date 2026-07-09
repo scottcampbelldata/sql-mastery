@@ -15,6 +15,15 @@ const LITERAL_ONLY: Template = {
   bindingRules: []
 };
 
+const DATE_LITERAL: Template = {
+  ...REF_JOIN,
+  skill: 'ap-date-literal',
+  slots: [
+    { name: 'createdAt', kind: 'literal', op: '=', col: 'created_at', table: 'orders', sampleStrategy: 'single' }
+  ],
+  bindingRules: []
+};
+
 // Fake probe: compound planets rows for the AND case, distinct stars types for the literal-only case.
 const PLANET_ROWS: (string | null)[][] = [
   ['Gas Giant', 'true'],
@@ -57,5 +66,14 @@ test('bind draws a single literal for a template with no structural slots', asyn
   for (const bnd of bindings) {
     assert.ok(['G', 'K', 'M'].includes(bnd.literals['stype']));
     assert.deepEqual(bnd.slots, {});
+  }
+});
+
+test('bind serializes Date literal values as ISO strings', async () => {
+  const dateProbe: LiteralProbe = async () => [[new Date('2021-04-05T12:34:56.000Z')]];
+  const bindings = await bindTemplate(DATE_LITERAL, REFERENCE_CATALOG, dateProbe);
+  assert.ok(bindings.length >= 1);
+  for (const bnd of bindings) {
+    assert.equal(bnd.literals['createdAt'], '2021-04-05T12:34:56.000Z');
   }
 });
