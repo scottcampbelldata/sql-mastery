@@ -3,9 +3,19 @@ import assert from 'node:assert/strict';
 
 import { bindTemplate } from '../src/generator/bind';
 import type { LiteralProbe } from '../src/generator/bind';
+import type { Template } from '../src/generator/types';
 import { REF_WHERE, REF_JOIN, REFERENCE_CATALOG } from './reference-templates';
 
-// Fake probe: compound planets rows for the AND case, distinct stars types for the join case.
+const LITERAL_ONLY: Template = {
+  ...REF_JOIN,
+  skill: 'ap-literal-only',
+  slots: [
+    { name: 'stype', kind: 'literal', op: '=', col: 'spectral_type', table: 'stars', sampleStrategy: 'single' }
+  ],
+  bindingRules: []
+};
+
+// Fake probe: compound planets rows for the AND case, distinct stars types for the literal-only case.
 const PLANET_ROWS: (string | null)[][] = [
   ['Gas Giant', 'true'],
   ['Terrestrial', 'false'],
@@ -42,10 +52,10 @@ test('bind is deterministic for a fixed seed', async () => {
 });
 
 test('bind draws a single literal for a template with no structural slots', async () => {
-  const bindings = await bindTemplate(REF_JOIN, REFERENCE_CATALOG, probe);
+  const bindings = await bindTemplate(LITERAL_ONLY, REFERENCE_CATALOG, probe);
   assert.ok(bindings.length >= 1);
   for (const bnd of bindings) {
     assert.ok(['G', 'K', 'M'].includes(bnd.literals['stype']));
-    assert.deepEqual(bnd.slots, {}); // join reference declares no structural slots
+    assert.deepEqual(bnd.slots, {});
   }
 });
