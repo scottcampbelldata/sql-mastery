@@ -121,6 +121,13 @@ const MEGABRAND_TEAM_COUNT = 10; // one energy-drink megabrand across ~10 teams
 const ENDED_SPONSOR_TEAM_COUNT = 4; // one sponsor with all contracts ended
 const ZERO_MATCH_TOURNAMENT_COUNT = 2; // edge case: 1-2 tournaments with zero matches
 
+// Guaranteed edge entities for the intermediate join/anti-join templates (Task 10).
+// Team 40 is a ghost org: present in team, but in no match, with no players, and no sponsor.
+// Sponsor 30 is reserved to have zero team_sponsor rows (team-less sponsor).
+const NEVER_PLAYED_TEAM_ID = TEAM_COUNT; // 40
+const PLAYERLESS_TEAM_ID = TEAM_COUNT; // 40 (same ghost org)
+const TEAMLESS_SPONSOR_ID = SPONSORS.length; // 30
+
 const TIER_WEIGHTS_INTERNATIONAL: readonly (readonly [string, number])[] = [
   ['S', 40],
   ['A', 60],
@@ -192,6 +199,34 @@ function buildTeams(seed: number): TeamsResult {
     elo.push(eloRating);
   }
 
+  // Deterministic intra-region Elo tie: copy the first same-region pair's rating onto the
+  // second, skipping the ghost team, so sl-self-join-compare has a guaranteed equal-rating pair.
+  for (let i = 0; i < TEAM_COUNT && !eloTied(); i += 1) {
+    for (let j = i + 1; j < TEAM_COUNT; j += 1) {
+      if (
+        rows[i].region_id === rows[j].region_id &&
+        (rows[i].team_id as number) !== NEVER_PLAYED_TEAM_ID &&
+        (rows[j].team_id as number) !== NEVER_PLAYED_TEAM_ID
+      ) {
+        rows[j].elo_rating = rows[i].elo_rating;
+        elo[j] = elo[i];
+        break;
+      }
+    }
+  }
+
+  function eloTied(): boolean {
+    const seen = new Map<number, Set<number>>();
+    for (let k = 0; k < TEAM_COUNT; k += 1) {
+      const regionId = rows[k].region_id as number;
+      if (!seen.has(regionId)) seen.set(regionId, new Set());
+      const bucket = seen.get(regionId)!;
+      if (bucket.has(elo[k])) return true;
+      bucket.add(elo[k]);
+    }
+    return false;
+  }
+
   return { rows, foundedMs, elo };
 }
 
@@ -255,11 +290,12 @@ function assignRostersAndBuildChanges(seed: number, players: Row[], teamsResult:
   const rosteredIdxsInOrder = allIdxs.slice(FREE_AGENT_COUNT);
 
   const teamSizes = new Array(TEAM_COUNT).fill(5) as number[];
-  let remainingSize = rosteredIdxsInOrder.length - TEAM_COUNT * 5;
+  teamSizes[PLAYERLESS_TEAM_ID - 1] = 0; // ghost org receives no players
+  let remainingSize = rosteredIdxsInOrder.length - (TEAM_COUNT - 1) * 5;
   let guard = 0;
   while (remainingSize > 0 && guard < 200000) {
     const t = intBetween(rng, 0, TEAM_COUNT - 1);
-    if (teamSizes[t] < 9) {
+    if (t !== PLAYERLESS_TEAM_ID - 1 && teamSizes[t] < 9) {
       teamSizes[t] += 1;
       remainingSize -= 1;
     }
@@ -575,11 +611,15 @@ function buildMatchesAndMapResults(
 
   const teamsByRegion = new Map<number, number[]>();
   for (const t of teamsResult.rows) {
+    const tid = t.team_id as number;
+    if (tid === NEVER_PLAYED_TEAM_ID) continue;
     const rid = t.region_id as number;
     if (!teamsByRegion.has(rid)) teamsByRegion.set(rid, []);
-    teamsByRegion.get(rid)!.push(t.team_id as number);
+    teamsByRegion.get(rid)!.push(tid);
   }
-  const allTeamIds = teamsResult.rows.map((t) => t.team_id as number);
+  const allTeamIds = teamsResult.rows
+    .map((t) => t.team_id as number)
+    .filter((id) => id !== NEVER_PLAYED_TEAM_ID);
 
   const matches: Row[] = [];
   const mapResults: Row[] = [];
@@ -716,14 +756,16 @@ function buildSponsorsAndTeamSponsors(seed: number, teamsResult: TeamsResult): S
 
   const allTeamIds = teamsResult.rows.map((t) => t.team_id as number);
   const shuffledTeamIds = shuffle(rng, allTeamIds);
-  const eligibleTeamIds = shuffledTeamIds.slice(SPONSORLESS_TEAM_COUNT);
+  const eligibleTeamIds = shuffledTeamIds
+    .filter((id) => id !== NEVER_PLAYED_TEAM_ID)
+    .slice(SPONSORLESS_TEAM_COUNT);
 
   const megabrandSponsorId = MEGABRAND_SPONSOR_INDEX + 1;
   const megabrandTeamIds = sampleWithout(rng, eligibleTeamIds, MEGABRAND_TEAM_COUNT);
 
   const nonMegabrandSponsorIds = sponsors
     .map((s) => s.sponsor_id as number)
-    .filter((id) => id !== megabrandSponsorId);
+    .filter((id) => id !== megabrandSponsorId && id !== TEAMLESS_SPONSOR_ID);
   const endedSponsorId = pick(rng, nonMegabrandSponsorIds);
   const remainingForEnded = eligibleTeamIds.filter((id) => !megabrandTeamIds.includes(id));
   const endedSponsorTeamIds = sampleWithout(rng, remainingForEnded, ENDED_SPONSOR_TEAM_COUNT);
@@ -771,7 +813,7 @@ function buildSponsorsAndTeamSponsors(seed: number, teamsResult: TeamsResult): S
   for (const teamId of eligibleTeamIds) {
     for (const sponsor of sponsors) {
       const sponsorId = sponsor.sponsor_id as number;
-      if (sponsorId === megabrandSponsorId || sponsorId === endedSponsorId) continue;
+      if (sponsorId === megabrandSponsorId || sponsorId === endedSponsorId || sponsorId === TEAMLESS_SPONSOR_ID) continue;
       const key = `${teamId}|${sponsorId}`;
       if (usedPairs.has(key)) continue;
       candidates.push([teamId, sponsorId]);
