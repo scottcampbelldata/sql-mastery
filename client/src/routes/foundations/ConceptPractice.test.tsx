@@ -8,7 +8,8 @@ vi.mock('../../components/AppShell', () => ({
 }));
 
 vi.mock('./FoundationsRep', () => ({
-  FoundationsRep: (props: { kind: string; tier: string }) => <div data-testid="rep" data-kind={props.kind} data-tier={props.tier} />
+  FoundationsRep: (props: { kind: string; tier: string; stepText: string }) =>
+    <div data-testid="rep" data-kind={props.kind} data-tier={props.tier}>{props.stepText}</div>
 }));
 
 vi.mock('../../state/FoundationsContext', () => ({
@@ -24,6 +25,7 @@ vi.mock('../../state/FoundationsContext', () => ({
 }));
 
 import ConceptPractice from './ConceptPractice';
+import { MIN_LESSON_STEPS } from '../../lib/lessonSteps';
 
 describe('ConceptPractice route guard', () => {
   it('redirects an unknown or locked concept id back to /learn', () => {
@@ -49,5 +51,7 @@ describe('ConceptPractice route guard', () => {
     const rep = screen.getByTestId('rep');
     expect(rep.getAttribute('data-kind')).toBe('new');   // never 'review', so the scaffold never fades
     expect(rep.getAttribute('data-tier')).toBe('full');  // focused practice always shows the full scaffold
+    expect(rep).toHaveTextContent(`Step 1 of ${MIN_LESSON_STEPS}`);
+    expect(screen.getByRole('button', { name: /next exercise/i })).toBeDisabled();
   });
 });

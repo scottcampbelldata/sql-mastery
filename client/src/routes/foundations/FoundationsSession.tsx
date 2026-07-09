@@ -1,9 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { AppShell } from '../../components/AppShell';
 import { EmptyState, Button } from '../../components/ui';
 import { useFoundations } from '../../state/FoundationsContext';
 import { buildTodaySession, advanceSession, scaffoldTier } from '../../lib/foundations';
+import { buildLessonSteps } from '../../lib/lessonSteps';
 import { FoundationsRep } from './FoundationsRep';
 import type { TodaySession } from '../../lib/foundations';
 import type { Exercise, Concept, LearningState } from '../../types';
@@ -13,6 +14,7 @@ interface Step {
   type: 'review' | 'rep';
   exercise: Exercise;
   concept: Concept;
+  tier?: ReturnType<typeof scaffoldTier>;
 }
 
 export default function FoundationsSession() {
@@ -24,12 +26,20 @@ export default function FoundationsSession() {
   const steps = useMemo<Step[]>(() => {
     if (!plan) return [];
     const s: Step[] = plan.reviews.map((r) => ({ type: 'review', exercise: r.exercise, concept: r.concept }));
-    if (plan.main.kind === 'lesson') plan.main.reps.forEach((ex) => s.push({ type: 'rep', exercise: ex, concept: (plan.main as { concept: Concept }).concept }));
+    if (plan.main.kind === 'lesson') {
+      const concept = (plan.main as { concept: Concept }).concept;
+      buildLessonSteps(concept, plan.main.reps).forEach((step) => s.push({ type: 'rep', exercise: step.exercise, concept, tier: step.tier }));
+    }
     return s;
   }, [plan]);
 
   const [index, setIndex] = useState(0);
   const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    const firstOpen = steps.findIndex((step) => !(state.skillCorrect[step.concept.skill] || []).includes(step.exercise.id));
+    setIndex(firstOpen >= 0 ? firstOpen : Math.max(0, steps.length - 1));
+  }, [steps.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading..." /></AppShell>;
   // Declarative redirects (safe during render) for the boundary cases: a checkpoint is due,
@@ -56,22 +66,27 @@ export default function FoundationsSession() {
 
   const step = steps[index];
   const isLast = index === steps.length - 1;
+  const stepDone = (state.skillCorrect[step.concept.skill] || []).includes(step.exercise.id);
   const showTeach = step.type === 'rep' && (index === 0 || steps[index - 1].type !== 'rep');
   const label = step.type === 'review'
     ? `Review | ${step.concept.title}`
     : `New | ${step.concept.title}`;
   const stepText = `Step ${index + 1} of ${steps.length}${step.type === 'review' ? ' | spaced review' : ''}`;
 
-  function next() { if (isLast) completeSession(); else setIndex((i) => i + 1); }
+  function next() {
+    if (!stepDone) return;
+    if (isLast) completeSession();
+    else setIndex((i) => i + 1);
+  }
 
   return (
     <AppShell breadcrumb={<span className="here">Learn / Foundations</span>}>
       <FoundationsRep key={step.exercise.id} exercise={step.exercise}
         label={label} kind={step.type === 'review' ? 'review' : 'new'}
-        tier={scaffoldTier(state, step.concept.skill, step.type === 'review')}
+        tier={step.tier ?? scaffoldTier(state, step.concept.skill, step.type === 'review')}
         teach={showTeach ? step.concept.teach : null} stepText={stepText} />
       <div className="session-footer">
-        <Button variant="primary" onClick={next}>{isLast ? 'Finish session' : 'Next exercise'}</Button>
+        <Button variant="primary" onClick={next} disabled={!stepDone}>{isLast ? 'Finish session' : 'Next exercise'}</Button>
       </div>
     </AppShell>
   );

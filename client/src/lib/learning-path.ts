@@ -1,5 +1,5 @@
 import { safeGet, safeSet } from './progress';
-import { isSkillStrong } from './foundations';
+import { isConceptStrong } from './foundations';
 import type { LearningState, Phase, Track } from '../types';
 
 export const LEARNING_KEY = 'sqlm:learning:v1';
@@ -43,7 +43,7 @@ export function currentPhase(phases: Phase[], state: LearningState): Phase {
 }
 
 export function phaseGraduation(phase: Phase, state: LearningState): { strong: number; total: number; checkpointsDone: boolean; complete: boolean } {
-  const strong = phase.concepts.filter((c) => isSkillStrong(state, c.skill)).length;
+  const strong = phase.concepts.filter((c) => isConceptStrong(state, c)).length;
   const total = phase.concepts.length;
   const checkpointsDone = phase.checkpoints.every((cp) => state.checkpointsPassed.includes(cp.id));
   return { strong, total, checkpointsDone, complete: strong === total && checkpointsDone };
@@ -55,7 +55,7 @@ export function phaseGraduation(phase: Phase, state: LearningState): { strong: n
 export function reconcileUnlock(track: Track, state: LearningState): number {
   let mark = state.maxUnlockedOrder;
   for (const c of track.concepts) {
-    if (isSkillStrong(state, c.skill)) mark = Math.max(mark, c.order + 1);
+    if (isConceptStrong(state, c)) mark = Math.max(mark, c.order + 1);
   }
   for (const cp of track.checkpoints) {
     if (state.checkpointsPassed.includes(cp.id)) mark = Math.max(mark, cp.afterOrder + 1);

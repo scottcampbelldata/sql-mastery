@@ -1,4 +1,5 @@
 import { safeGet, safeSet } from './progress';
+import { buildLessonSteps } from './lessonSteps';
 import type { LearningState, Track, Concept, Checkpoint, Exercise } from '../types';
 
 export const FOUNDATIONS_KEY = 'sqlm:foundations:v2';
@@ -66,6 +67,22 @@ export function skillLevel(state: LearningState, skill: string): { count: number
 }
 export function isSkillStrong(state: LearningState, skill: string): boolean { return skillLevel(state, skill).count >= STRONG_THRESHOLD; }
 
+export function conceptMasteryTarget(concept: Pick<Concept, 'exercises'>): number {
+  return buildLessonSteps(concept).length || STRONG_THRESHOLD;
+}
+
+export function conceptLevel(state: LearningState, concept: Pick<Concept, 'skill' | 'exercises'>): { count: number; target: number; tier: string } {
+  const count = (state.skillCorrect[concept.skill] || []).length;
+  const target = conceptMasteryTarget(concept);
+  const tier = count >= target ? 'strong' : count > 0 ? 'learning' : 'new';
+  return { count, target, tier };
+}
+
+export function isConceptStrong(state: LearningState, concept: Pick<Concept, 'skill' | 'exercises'>): boolean {
+  const level = conceptLevel(state, concept);
+  return level.count >= level.target;
+}
+
 export interface SkillMastery { count: number; tier: string; pct: number; sessionsSince: number; }
 
 // Visual mastery: progress toward "strong", dimmed by how long since you practiced.
@@ -79,11 +96,20 @@ export function skillMastery(state: LearningState, skill: string): SkillMastery 
   return { count, tier, pct: Math.round(base * decay * 100), sessionsSince };
 }
 
+export function conceptMastery(state: LearningState, concept: Pick<Concept, 'skill' | 'exercises'>): SkillMastery & { target: number } {
+  const { count, target, tier } = conceptLevel(state, concept);
+  const last = state.lastPracticedSession[concept.skill];
+  const sessionsSince = last === undefined ? 0 : Math.max(0, state.sessionCounter - last);
+  const base = Math.min(1, count / target);
+  const decay = Math.max(0.5, 1 - 0.15 * Math.max(0, sessionsSince - SPACING_GAP));
+  return { count, target, tier, pct: Math.round(base * decay * 100), sessionsSince };
+}
+
 // The lowest-mastery skills you have started (count > 0), weakest first.
 export function weakSpots(track: Track, state: LearningState, n = 3): { skill: string; title: string; pct: number }[] {
   return track.concepts
     .filter((c) => (state.skillCorrect[c.skill] || []).length > 0)
-    .map((c) => ({ skill: c.skill, title: c.title, pct: skillMastery(state, c.skill).pct }))
+    .map((c) => ({ skill: c.skill, title: c.title, pct: conceptMastery(state, c).pct }))
     .sort((a, b) => a.pct - b.pct)
     .slice(0, n);
 }
@@ -217,7 +243,7 @@ export function frontierConcept(track: Track, state: LearningState): Concept | n
   const ordered = [...track.concepts].sort((a, b) => a.order - b.order);
   for (const concept of ordered) {
     if (concept.order < state.maxUnlockedOrder) continue;
-    if (isSkillStrong(state, concept.skill)) continue;
+    if (isConceptStrong(state, concept)) continue;
     if (!conceptUnlocked(track, state, concept)) return null;
     return concept;
   }
@@ -233,7 +259,7 @@ export type TileState = 'done' | 'now' | 'unlocked' | 'upcoming' | 'locked';
 
 // The visual state of a concept tile on the lesson map.
 export function tileState(track: Track, state: LearningState, concept: Concept): TileState {
-  if (isSkillStrong(state, concept.skill)) return 'done';
+  if (isConceptStrong(state, concept)) return 'done';
   if (!conceptUnlocked(track, state, concept)) return 'locked';
   const front = frontierOrder(track, state);
   const ceiling = Math.max(front, state.maxUnlockedOrder);
@@ -260,7 +286,7 @@ export function conceptPracticeTarget(track: Track, state: LearningState, concep
 export function recordConceptProgress(track: Track, state: LearningState, exercise: Exercise): LearningState {
   recordCorrect(state, exercise);
   const concept = track.concepts.find((c) => c.skill === exercise.skill);
-  if (concept && isSkillStrong(state, exercise.skill as string)) {
+  if (concept && isConceptStrong(state, concept)) {
     state.maxUnlockedOrder = Math.max(state.maxUnlockedOrder, concept.order + 1);
   }
   return state;
@@ -280,7 +306,7 @@ export function resetConcept(state: LearningState, skill: string): LearningState
 export function nextConcept(track: Track, state: LearningState): Concept | null {
   const ordered = [...track.concepts].sort((a, b) => a.order - b.order);
   for (const concept of ordered) {
-    if (isSkillStrong(state, concept.skill)) continue;
+    if (isConceptStrong(state, concept)) continue;
     if (!conceptUnlocked(track, state, concept)) return null;
     return concept;
   }
@@ -292,7 +318,7 @@ export function checkpointDue(track: Track, state: LearningState): Checkpoint | 
   for (const cp of ordered) {
     if (checkpointPassed(state, cp.id)) continue;
     const conceptsBefore = track.concepts.filter((c) => c.order <= cp.afterOrder);
-    if (conceptsBefore.every((c) => isSkillStrong(state, c.skill))) return cp;
+    if (conceptsBefore.every((c) => isConceptStrong(state, c))) return cp;
   }
   return null;
 }
@@ -312,7 +338,7 @@ function resetReviews(track: Track, state: LearningState): DueReview[] {
   const ordered = [...track.concepts].sort((a, b) => a.order - b.order);
   for (const concept of ordered) {
     if (concept.order >= state.maxUnlockedOrder) continue;
-    if (isSkillStrong(state, concept.skill)) continue;
+    if (isConceptStrong(state, concept)) continue;
     if (!conceptUnlocked(track, state, concept)) continue;
     if (!concept.exercises.length) continue;
     out.push({ skill: concept.skill, concept, exercise: concept.exercises[0] });
@@ -355,8 +381,8 @@ export function recordCheckpointResult(state: LearningState, checkpoint: Checkpo
 }
 
 export function graduationStatus(track: Track, state: LearningState): { strongSkills: number; totalSkills: number; checkpointsPassed: string[]; graduated: boolean } {
-  const strongSkills = track.skills.filter((s) => isSkillStrong(state, s.skill)).length;
-  const totalSkills = track.skills.length;
+  const strongSkills = track.concepts.filter((c) => isConceptStrong(state, c)).length;
+  const totalSkills = track.concepts.length;
   const allCheckpoints = track.checkpoints.every((cp) => checkpointPassed(state, cp.id));
   return { strongSkills, totalSkills, checkpointsPassed: [...state.checkpointsPassed], graduated: strongSkills === totalSkills && allCheckpoints };
 }

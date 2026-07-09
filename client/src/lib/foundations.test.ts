@@ -7,7 +7,7 @@ import {
   STRONG_THRESHOLD, SPACING_GAP, skillMastery, weakSpots,
   scaffoldTier, recordReviewPass, levelBaseTier, TIER_RANK,
   isConceptUnlocked, frontierConcept, frontierOrder, recordConceptProgress, resetConcept,
-  tileState, conceptPracticeTarget
+  tileState, conceptPracticeTarget, conceptMasteryTarget
 } from './foundations';
 import type { Level, ScaffoldCtx } from './foundations';
 import type { Track, LearningState } from '../types';
@@ -35,7 +35,15 @@ const track = {
   ]
 } as Track;
 
-function strong(state: LearningState, skill: string, ids: string[]) { ids.forEach((id) => recordCorrect(state, { id, skill })); }
+function strong(state: LearningState, skill: string, ids: string[]) {
+  ids.forEach((id) => recordCorrect(state, { id, skill }));
+  if (ids.length < STRONG_THRESHOLD) return;
+  const concept = track.concepts.find((candidate) => candidate.skill === skill);
+  const target = concept ? conceptMasteryTarget(concept) : STRONG_THRESHOLD;
+  for (let i = ids.length; i < target; i += 1) {
+    recordCorrect(state, { id: `${skill}-lesson-${i + 1}`, skill });
+  }
+}
 
 describe('foundations engine', () => {
   beforeEach(() => localStorage.clear());
@@ -182,6 +190,9 @@ describe('foundations engine', () => {
     expect(s.maxUnlockedOrder).toBe(0);                                  // count 1, not strong
     recordConceptProgress(track, s, { id: 'c1-r2', skill: 'select-all' });
     recordConceptProgress(track, s, { id: 'c1-r3', skill: 'select-all' });
+    recordConceptProgress(track, s, { id: 'select-all-lesson-4', skill: 'select-all' });
+    expect(s.maxUnlockedOrder).toBe(0);                                  // count 4, not strong
+    recordConceptProgress(track, s, { id: 'select-all-lesson-5', skill: 'select-all' });
     expect(s.maxUnlockedOrder).toBe(2);                                  // c1 order 1 + 1
     expect(s.sessionCounter).toBe(0);                                    // never advances the clock
     expect(s.reviewsPassed).toEqual({});                                 // never touches the fade counter
@@ -189,9 +200,9 @@ describe('foundations engine', () => {
 
   it('unlock is monotonic: resetting a concept does not lower the mark or re-lock later ones', () => {
     const s = loadFoundations();
-    ['c1-r1', 'c1-r2', 'c1-r3'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'select-all' }));
-    ['c2-r1', 'c2-r2', 'c2-r3'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'select-columns' }));
-    ['c3-r1', 'c3-r2', 'c3-r3'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'order-limit' }));
+    ['c1-r1', 'c1-r2', 'c1-r3', 'select-all-lesson-4', 'select-all-lesson-5'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'select-all' }));
+    ['c2-r1', 'c2-r2', 'c2-r3', 'select-columns-lesson-4', 'select-columns-lesson-5'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'select-columns' }));
+    ['c3-r1', 'c3-r2', 'c3-r3', 'order-limit-lesson-4', 'order-limit-lesson-5'].forEach((id) => recordConceptProgress(track, s, { id, skill: 'order-limit' }));
     expect(s.maxUnlockedOrder).toBe(4);
     resetConcept(s, 'select-columns');
     expect(s.maxUnlockedOrder).toBe(4);                                  // unchanged
@@ -199,7 +210,11 @@ describe('foundations engine', () => {
 
   it('frontierConcept skips a reset concept and points at the true next lesson', () => {
     const s = loadFoundations();
-    s.skillCorrect = { 'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'], 'order-limit': ['a', 'b', 'c'] };
+    s.skillCorrect = {
+      'select-all': ['a', 'b', 'c', 'd', 'e'],
+      'select-columns': ['a', 'b', 'c', 'd', 'e'],
+      'order-limit': ['a', 'b', 'c', 'd', 'e']
+    };
     s.maxUnlockedOrder = 4;                                              // mastered c1..c3, on c4
     resetConcept(s, 'select-columns');                                  // reset c2 (order 2 < 4)
     expect(frontierConcept(track, s)!.id).toBe('c4');                   // not c2
@@ -251,7 +266,11 @@ describe('foundations engine', () => {
 
   it('tileState: a reset concept reads unlocked and a mastered one reads done', () => {
     const s = loadFoundations();
-    s.skillCorrect = { 'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'], 'order-limit': ['a', 'b', 'c'] };
+    s.skillCorrect = {
+      'select-all': ['a', 'b', 'c', 'd', 'e'],
+      'select-columns': ['a', 'b', 'c', 'd', 'e'],
+      'order-limit': ['a', 'b', 'c', 'd', 'e']
+    };
     s.maxUnlockedOrder = 4;
     resetConcept(s, 'select-columns');
     expect(tileState(track, s, track.concepts[2])).toBe('done');      // c3 still mastered
@@ -261,7 +280,11 @@ describe('foundations engine', () => {
 
   it('buildTodaySession keeps the true frontier as main and rides a reset concept in as review', () => {
     const s = loadFoundations();
-    s.skillCorrect = { 'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'], 'order-limit': ['a', 'b', 'c'] };
+    s.skillCorrect = {
+      'select-all': ['a', 'b', 'c', 'd', 'e'],
+      'select-columns': ['a', 'b', 'c', 'd', 'e'],
+      'order-limit': ['a', 'b', 'c', 'd', 'e']
+    };
     s.maxUnlockedOrder = 4;
     resetConcept(s, 'select-columns');
     const session = buildTodaySession(track, s);
@@ -307,8 +330,8 @@ describe('foundations engine', () => {
   it('buildTodaySession picks the earliest at-or-above-frontier lesson after two resets and does not re-offer a passed checkpoint', () => {
     const s = loadFoundations();
     s.skillCorrect = {
-      'select-all': ['a', 'b', 'c'], 'select-columns': ['a', 'b', 'c'],
-      'order-limit': ['a', 'b', 'c'], 'distinct': ['a', 'b', 'c']
+      'select-all': ['a', 'b', 'c', 'd', 'e'], 'select-columns': ['a', 'b', 'c', 'd', 'e'],
+      'order-limit': ['a', 'b', 'c', 'd', 'e'], 'distinct': ['a', 'b', 'c', 'd', 'e']
     };
     s.checkpointsPassed = ['cpA'];
     s.maxUnlockedOrder = 5;
