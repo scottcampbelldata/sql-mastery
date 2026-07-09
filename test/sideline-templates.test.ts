@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  SIDELINE_TEMPLATES,
   SIDELINE_SKILLS,
   SIDELINE_CONCEPT_META,
   SIDELINE_PHASES,
@@ -87,5 +88,55 @@ test('local concept.order is contiguous 1..n within each phase', () => {
       .map((concept) => concept.order)
       .sort((a, b) => a - b);
     assert.deepEqual(orders, orders.map((_, index) => index + 1), `phase ${phase.id} order not contiguous`);
+  }
+});
+
+test('every SIDELINE_SKILLS slug has at least one template', () => {
+  const covered = new Set(SIDELINE_TEMPLATES.map((template) => template.skill));
+  for (const skill of SIDELINE_SKILLS) assert.ok(covered.has(skill), `no template for ${skill}`);
+});
+
+test('every template skill is a known sideline skill and database is sideline', () => {
+  for (const template of SIDELINE_TEMPLATES) {
+    assert.ok(SIDELINE_SKILLS.includes(template.skill), `unknown skill ${template.skill}`);
+    assert.equal(template.database, 'sideline');
+  }
+});
+
+test('no sqlShape contains ORDER BY or ROUND because emit owns both', () => {
+  for (const template of SIDELINE_TEMPLATES) {
+    const upper = template.sqlShape.toUpperCase();
+    assert.ok(!upper.includes('ORDER BY'), `${template.skill} sqlShape has ORDER BY`);
+    assert.ok(!upper.includes('ROUND('), `${template.skill} sqlShape hand-writes ROUND`);
+  }
+});
+
+test('each template carries the tiebreak slot its family requires', () => {
+  for (const template of SIDELINE_TEMPLATES) {
+    const kinds = new Set(template.slots.map((slot) => slot.kind));
+    if (template.family === 'grouped') {
+      assert.ok(kinds.has('groupCols'), `${template.skill} grouped needs groupCols slot`);
+    } else if (template.family === 'windowed') {
+      assert.ok(kinds.has('partitionCols') && kinds.has('rankKey'), `${template.skill} windowed needs partitionCols + rankKey`);
+    } else {
+      assert.ok(kinds.has('sortKey'), `${template.skill} ${template.family} needs a sortKey slot`);
+    }
+  }
+});
+
+test('every template has at least two phrasings, a hint, and gateHints', () => {
+  for (const template of SIDELINE_TEMPLATES) {
+    assert.ok(template.phrasings.length >= 2, `${template.skill} needs >= 2 phrasings`);
+    assert.ok(template.hintTemplate.length > 0, `${template.skill} needs a hintTemplate`);
+    assert.equal(template.gateHints.rowCeiling, 200);
+    assert.equal(template.gateHints.boundedSlice, false);
+  }
+});
+
+test('no source text uses banned dash characters', () => {
+  const banned = /[\u2013\u2014\u2212\u2192]/;
+  for (const template of SIDELINE_TEMPLATES) {
+    const text = template.sqlShape + template.phrasings.join(' ') + template.hintTemplate;
+    assert.ok(!banned.test(text), `${template.skill} contains a banned dash/arrow`);
   }
 });
