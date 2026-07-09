@@ -102,6 +102,105 @@ function parseEstimatedRows(value: any): number | null {
   return Number.isFinite(rows) && rows >= 0 ? rows : null;
 }
 
+const READ_ONLY_STARTERS = new Set(['SELECT', 'WITH']);
+const WRITE_OR_ADMIN_KEYWORDS = new Set([
+  'ALTER', 'ANALYZE', 'BEGIN', 'CALL', 'CLUSTER', 'COMMENT', 'COMMIT', 'COPY',
+  'CREATE', 'DEALLOCATE', 'DELETE', 'DO', 'DROP', 'EXECUTE', 'GRANT', 'INSERT',
+  'LISTEN', 'LOCK', 'MERGE', 'NOTIFY', 'PREPARE', 'REFRESH', 'REINDEX', 'RESET',
+  'REVOKE', 'ROLLBACK', 'SET', 'TRUNCATE', 'UPDATE', 'VACUUM'
+]);
+const WRITE_OR_VOLATILE_FUNCTIONS = new Set(['NEXTVAL', 'SETVAL']);
+
+function sqlWordsOutsideLiterals(sql: string): string[] {
+  const words: string[] = [];
+  let i = 0;
+
+  while (i < sql.length) {
+    const ch = sql[i];
+    const next = sql[i + 1];
+
+    if (ch === '-' && next === '-') {
+      i += 2;
+      while (i < sql.length && sql[i] !== '\n') i += 1;
+      continue;
+    }
+
+    if (ch === '/' && next === '*') {
+      i += 2;
+      while (i < sql.length && !(sql[i] === '*' && sql[i + 1] === '/')) i += 1;
+      i = Math.min(sql.length, i + 2);
+      continue;
+    }
+
+    if (ch === "'") {
+      i += 1;
+      while (i < sql.length) {
+        if (sql[i] === "'") {
+          if (sql[i + 1] === "'") {
+            i += 2;
+            continue;
+          }
+          i += 1;
+          break;
+        }
+        i += 1;
+      }
+      continue;
+    }
+
+    if (ch === '"') {
+      i += 1;
+      while (i < sql.length) {
+        if (sql[i] === '"') {
+          if (sql[i + 1] === '"') {
+            i += 2;
+            continue;
+          }
+          i += 1;
+          break;
+        }
+        i += 1;
+      }
+      continue;
+    }
+
+    if (ch === '$') {
+      const tagMatch = /^\$[A-Za-z0-9_]*\$/.exec(sql.slice(i));
+      if (tagMatch) {
+        const tag = tagMatch[0];
+        const end = sql.indexOf(tag, i + tag.length);
+        i = end >= 0 ? end + tag.length : sql.length;
+        continue;
+      }
+    }
+
+    if (/[A-Za-z_]/.test(ch)) {
+      let j = i + 1;
+      while (j < sql.length && /[A-Za-z0-9_$]/.test(sql[j])) j += 1;
+      words.push(sql.slice(i, j).toUpperCase());
+      i = j;
+      continue;
+    }
+
+    i += 1;
+  }
+
+  return words;
+}
+
+function assertReadOnlySql(sql: string): void {
+  const words = sqlWordsOutsideLiterals(sql);
+  const starter = words[0];
+  if (!starter || !READ_ONLY_STARTERS.has(starter)) {
+    throw new QueryServiceError('Only read-only SELECT queries can be run from the browser.', 400, 'READ_ONLY_SQL_REQUIRED');
+  }
+
+  const unsafe = words.find((word) => WRITE_OR_ADMIN_KEYWORDS.has(word) || WRITE_OR_VOLATILE_FUNCTIONS.has(word));
+  if (unsafe) {
+    throw new QueryServiceError('Only read-only SELECT queries can be run from the browser.', 400, 'READ_ONLY_SQL_REQUIRED');
+  }
+}
+
 function groupSchemaRows(database: string, rows: any[]): any {
   const tables: any[] = [];
   const byKey = new Map<string, any>();
@@ -356,11 +455,16 @@ function createQueryService(options: any = {}): any {
       throw new QueryServiceError('SQL is too large to run from the browser.', 400, 'SQL_TOO_LARGE');
     }
 
+    assertReadOnlySql(sql);
+
     const startedAt = clock();
 
     try {
       const queryInput = input.rowMode === 'array' ? { text: sql, rowMode: 'array' } : sql;
-      const result = await getPool(database).query(queryInput);
+      const pool = getPool(database);
+      const result = typeof pool.connect === 'function'
+        ? await runReadOnlyTransaction(pool, queryInput)
+        : await pool.query(queryInput);
       const durationMs = Math.max(0, Math.round(clock() - startedAt));
       const rows = Array.isArray(result.rows) ? result.rows : [];
       const fields = Array.isArray(result.fields) ? result.fields.map((field: any) => ({ name: field.name })) : [];
@@ -378,6 +482,25 @@ function createQueryService(options: any = {}): any {
     } catch (error) {
       if (error instanceof QueryServiceError) throw error;
       throw makePgError(error);
+    }
+  }
+
+  async function runReadOnlyTransaction(pool: any, queryInput: any) {
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN READ ONLY');
+      const result = await client.query(queryInput);
+      await client.query('ROLLBACK');
+      return result;
+    } catch (error) {
+      try {
+        await client.query('ROLLBACK');
+      } catch {
+        // Preserve the original query failure.
+      }
+      throw error;
+    } finally {
+      client.release();
     }
   }
 

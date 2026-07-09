@@ -24,6 +24,27 @@ test('buildCurriculum exposes the three-band product and generated learning path
   assert.equal(path.exercises.length > 0, true);
 });
 
+test('buildCurriculum does not expose answer contracts to the browser', () => {
+  const curriculum = buildCurriculum();
+  const leakedPaths: string[] = [];
+
+  function walk(value: unknown, path: string) {
+    if (!value || typeof value !== 'object') return;
+    if (Array.isArray(value)) {
+      value.forEach((item, index) => walk(item, `${path}[${index}]`));
+      return;
+    }
+    for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
+      if (key === 'expectedSql' || key === 'fingerprint' || key === 'blankMap') leakedPaths.push(`${path}.${key}`);
+      walk(child, `${path}.${key}`);
+    }
+  }
+
+  walk(curriculum, 'curriculum');
+  assert.deepEqual(leakedPaths, []);
+  assert.match((curriculum.learningPath.exercises[0] as any).dedupeKey, /^[0-9a-f]{64}$/);
+});
+
 test('buildCurriculum reports band and path counts without retired scheduler fields', () => {
   const curriculum = buildCurriculum();
   const path = curriculum.learningPath;
@@ -44,11 +65,11 @@ test('buildCurriculum reports band and path counts without retired scheduler fie
   assert.equal(conceptCount, curriculum.stats.totalConcepts);
 
   curriculum.product.bands.forEach((band) => {
-    const bandPhases = path.phases.filter((phase) => phase.level === band.level && phase.database === band.database);
+    const bandPhases = path.phases.filter((phase: any) => phase.level === band.level && phase.database === band.database);
     assert.equal(band.phaseCount, bandPhases.length);
     assert.equal(
       band.conceptCount,
-      bandPhases.reduce((sum, phase) => sum + phase.concepts.length, 0)
+      bandPhases.reduce((sum: number, phase: any) => sum + phase.concepts.length, 0)
     );
   });
 });

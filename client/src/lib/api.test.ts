@@ -76,4 +76,21 @@ describe('api request wrapper', () => {
       setAuthToken(null);
     }
   });
+
+  it('posts exercise ids for checks without sending the model answer', async () => {
+    const calls: Array<{ url: string; options: RequestInit }> = [];
+    vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string, options: RequestInit = {}) => {
+      calls.push({ url, options });
+      return Promise.resolve(jsonResponse({ correct: true }));
+    }));
+
+    await api.check('exercise-1', 'SELECT 1');
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0].url).toBe('/api/check');
+    expect(JSON.parse(calls[0].options.body as string)).toEqual({
+      exerciseId: 'exercise-1',
+      sql: 'SELECT 1'
+    });
+  });
 });

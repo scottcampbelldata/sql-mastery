@@ -130,10 +130,29 @@ function createApp(options: any = {}) {
 
   app.post('/api/check', async (request: Request, response: Response) => {
     try {
+      const exerciseId = request.body && request.body.exerciseId;
+      if (typeof exerciseId !== 'string' || !exerciseId) {
+        return response.status(400).json({
+          error: 'An exercise id is required.',
+          code: 'MISSING_EXERCISE_ID'
+        });
+      }
+      const privateCurriculum = curriculumService.buildCurriculum({ includeAnswerContracts: true });
+      const exercises = privateCurriculum?.learningPath?.exercises || [];
+      const exercise = exercises.find((item: any) => item && item.id === exerciseId);
+      if (!exercise) {
+        return response.status(404).json({
+          error: 'Exercise could not be found.',
+          code: 'UNKNOWN_EXERCISE'
+        });
+      }
+
       const result = await queryService.checkQuery({
-        database: request.body && request.body.database,
+        database: exercise.database,
         sql: request.body && request.body.sql,
-        expectedSql: request.body && request.body.expectedSql
+        expectedSql: exercise.expectedSql,
+        fingerprint: exercise.fingerprint,
+        orderMatters: exercise.orderMatters
       });
 
       response.json(result);

@@ -12,7 +12,7 @@ export interface LessonStep {
 }
 
 function exerciseKey(exercise: Exercise): string {
-  return exercise.expectedSql?.trim() || exercise.id;
+  return exercise.dedupeKey || exercise.expectedSql?.trim() || exercise.id;
 }
 
 export function buildLessonSteps(concept: Pick<Concept, 'exercises'>, exercises = concept.exercises): LessonStep[] {

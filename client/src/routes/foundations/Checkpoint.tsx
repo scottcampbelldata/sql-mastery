@@ -35,12 +35,13 @@ export default function Checkpoint() {
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<boolean[]>([]); // booleans, per question
   const [done, setDone] = useState(false);
+  const [checkedCorrect, setCheckedCorrect] = useState<Record<string, boolean>>({});
 
   if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading..." /></AppShell>;
   if (!checkpoint) return <AppShell breadcrumb={<span className="here">Checkpoint</span>}><EmptyState title="Checkpoint not found" /></AppShell>;
 
   function answer(correct: boolean, exercise: Exercise) {
-    update((s: LearningState) => { recordAttempt(s, exercise.id); if (correct) recordCorrect(s, exercise); });
+    update((s: LearningState) => { if (!correct) recordAttempt(s, exercise.id); if (correct) recordCorrect(s, exercise); });
     const nextResults = [...results, correct];
     if (index + 1 >= questions.length) finish(nextResults);
     else { setResults(nextResults); setIndex((i) => i + 1); }
@@ -71,6 +72,7 @@ export default function Checkpoint() {
   }
 
   const q = questions[index];
+  const currentChecked = Boolean(q && checkedCorrect[q.id]);
   return (
     <AppShell breadcrumb={<span className="here">{checkpoint.title}</span>}>
       <div className="fnd-session-progress">Mixed practice | Question {index + 1} of {questions.length}</div>
@@ -79,9 +81,10 @@ export default function Checkpoint() {
           <span key={i} className={`cp-dot ${i < results.length ? (results[i] ? 'pass' : 'fail') : ''} ${i === index ? 'current' : ''}`} />
         ))}
       </div>
-      <FoundationsRep key={q.id} exercise={q} label="Mixed practice" kind="new" onCorrect={() => { /* advance handled by button */ }} />
+      <FoundationsRep key={q.id} exercise={q} label="Mixed practice" kind="new"
+        onCorrect={() => setCheckedCorrect((current) => ({ ...current, [q.id]: true }))} />
       <div style={{ marginTop: 'var(--s-4)', display: 'flex', gap: 'var(--s-2)' }}>
-        <Button variant="primary" onClick={() => answer(true, q)}>I solved it, next</Button>
+        <Button variant="primary" onClick={() => answer(true, q)} disabled={!currentChecked}>I solved it, next</Button>
         <Button variant="secondary" onClick={() => answer(false, q)}>Skip / couldn't solve</Button>
       </div>
       <p style={{ color: 'var(--ink-faint)', fontSize: 'var(--text-xs)', marginTop: 'var(--s-2)' }}>

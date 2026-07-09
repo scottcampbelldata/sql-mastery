@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { createQueryService } from '../src/query-service';
 import { SIDELINE_UNMATCHED_MANIFEST as M } from '../src/generator/templates/sideline/manifest';
 
+const dbTest = process.env.PGPASSWORD ? test : test.skip;
 const svc = createQueryService();
 
 after(async () => {
@@ -15,7 +16,7 @@ async function scalar(sql: string): Promise<number> {
   return Number(res.rows[0][0]);
 }
 
-test('every neverPlayedTeamId is in no match', async () => {
+dbTest('every neverPlayedTeamId is in no match', async () => {
   for (const id of M.neverPlayedTeamIds) {
     const n = await scalar(
       `SELECT count(*) FROM match WHERE team_a_id = ${id} OR team_b_id = ${id} OR winner_team_id = ${id}`
@@ -29,31 +30,31 @@ test('every neverPlayedTeamId is in no match', async () => {
   assert.ok(total >= 1);
 });
 
-test('every playerlessTeamId has zero players', async () => {
+dbTest('every playerlessTeamId has zero players', async () => {
   for (const id of M.playerlessTeamIds) {
     const n = await scalar(`SELECT count(*) FROM player WHERE team_id = ${id}`);
     assert.equal(n, 0, `team ${id} has ${n} players`);
   }
 });
 
-test('every teamlessSponsorId has zero team_sponsor rows', async () => {
+dbTest('every teamlessSponsorId has zero team_sponsor rows', async () => {
   for (const id of M.teamlessSponsorIds) {
     const n = await scalar(`SELECT count(*) FROM team_sponsor WHERE sponsor_id = ${id}`);
     assert.equal(n, 0, `sponsor ${id} has ${n} team_sponsor rows`);
   }
 });
 
-test('the sponsorless-team anti-join predicate returns >= 1 row', async () => {
+dbTest('the sponsorless-team anti-join predicate returns >= 1 row', async () => {
   const n = await scalar(`SELECT count(*) FROM (${M.sponsorlessTeamAntiJoin}) q`);
   assert.ok(n >= 1);
 });
 
-test('the null-region tournament predicate returns >= 1 row', async () => {
+dbTest('the null-region tournament predicate returns >= 1 row', async () => {
   const n = await scalar(`SELECT count(*) FROM (${M.nullRegionTournament}) q`);
   assert.ok(n >= 1);
 });
 
-test('the intra-region Elo tie predicate returns >= 1 pair', async () => {
+dbTest('the intra-region Elo tie predicate returns >= 1 pair', async () => {
   const n = await scalar(`SELECT count(*) FROM (${M.intraRegionEloTie}) q`);
   assert.ok(n >= 1);
 });

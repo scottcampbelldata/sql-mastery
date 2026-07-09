@@ -130,6 +130,44 @@ test('executeQuery rejects databases outside the configured list', async () => {
   );
 });
 
+test('executeQuery rejects non-read-only SQL before it reaches Postgres', async () => {
+  FakePool.queries = [];
+  const service = createQueryService({
+    Pool: FakePool,
+    env: { SQL_MASTERY_DATABASES: 'sideline' }
+  });
+
+  await assert.rejects(
+    () => service.executeQuery({ database: 'sideline', sql: 'DROP TABLE teams' }),
+    (error: any) => {
+      assert.ok(error instanceof QueryServiceError);
+      assert.equal(error.statusCode, 400);
+      assert.equal(error.code, 'READ_ONLY_SQL_REQUIRED');
+      return true;
+    }
+  );
+  assert.deepEqual(FakePool.queries, []);
+});
+
+test('executeQuery allows dangerous words inside string literals', async () => {
+  FakePool.queries = [];
+  FakePool.result = {
+    command: 'SELECT',
+    rowCount: 1,
+    fields: [{ name: 'warning' }],
+    rows: [{ warning: 'DROP TABLE teams' }]
+  };
+  const service = createQueryService({
+    Pool: FakePool,
+    env: { SQL_MASTERY_DATABASES: 'sideline' }
+  });
+
+  const result = await service.executeQuery({ database: 'sideline', sql: "SELECT 'DROP TABLE teams' AS warning" });
+
+  assert.deepEqual(FakePool.queries, ["SELECT 'DROP TABLE teams' AS warning"]);
+  assert.deepEqual(result.rows, [{ warning: 'DROP TABLE teams' }]);
+});
+
 test('executeQuery maps missing SCRAM passwords to a setup error', async () => {
   class AuthPool {
     async query() {

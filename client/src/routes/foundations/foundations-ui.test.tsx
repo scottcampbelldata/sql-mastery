@@ -86,13 +86,14 @@ describe('Foundations teach + scaffolding', () => {
 
   it('carries the server diff into feedback on a mismatch', async () => {
     const ex = { id: 'd1', database: 'aperture', task: 't', starterSql: '', expectedSql: 'SELECT 1' };
-    vi.spyOn(apiModule.api, 'check').mockResolvedValue({
+    const checkSpy = vi.spyOn(apiModule.api, 'check').mockResolvedValue({
       correct: false, feedbackType: 'mismatch', hint: 'h',
       diff: { reason: 'row-count', yourRowCount: 3, expectedRowCount: 2, orderOnly: false, extraRows: 1, missingRows: 0 }
     });
     const { result } = renderHook(() => useSqlCheck(ex as Exercise));
     act(() => result.current.setSql('SELECT 1'));
     await act(async () => { await result.current.runCheck(); });
+    expect(checkSpy).toHaveBeenCalledWith('d1', 'SELECT 1');
     expect(result.current.feedback!.diff!.reason).toBe('row-count');
     expect(result.current.feedback!.diff!.extraRows).toBe(1);
   });

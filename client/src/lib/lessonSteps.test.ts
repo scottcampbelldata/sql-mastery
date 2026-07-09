@@ -55,4 +55,23 @@ describe('lesson step builder', () => {
     expect(new Set(steps.map((step) => step.exercise.expectedSql)).size).toBe(2);
     expect(steps.every((step) => !step.id.includes('__lesson_'))).toBe(true);
   });
+
+  it('dedupes public exercises by dedupeKey when expectedSql is stripped', () => {
+    const concept = {
+      id: 'c4',
+      order: 4,
+      skill: 'ap-where',
+      title: 'Filter rows',
+      exercises: [
+        { id: 'ex-1', skill: 'ap-where', dedupeKey: 'same-answer' },
+        { id: 'ex-2', skill: 'ap-where', dedupeKey: 'same-answer' },
+        { id: 'ex-3', skill: 'ap-where', dedupeKey: 'different-answer' }
+      ]
+    } as Concept;
+
+    const steps = buildLessonSteps(concept);
+
+    expect(steps).toHaveLength(2);
+    expect(steps.map((step) => step.id)).toEqual(['ex-1', 'ex-3']);
+  });
 });
