@@ -22,7 +22,7 @@ interface UseSqlCheckReturn {
   runCheck: () => Promise<void>;
 }
 
-// Runs one graded SQL check against an exercise's expectedSql. onResult(correct, body)
+// Runs one graded SQL check against the server-owned exercise answer. onResult(correct, body)
 // lets the caller record mastery / advance. Feedback tone maps to Callout tones.
 export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: UseSqlCheckOptions = {}): UseSqlCheckReturn {
   const [sql, setSql] = useState<string>(() => (seed !== undefined ? seed : starterSqlForExercise(exercise)));
@@ -53,7 +53,7 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
     onAttempt?.();
     setFeedback({ toneClass: TONE.info, title: 'Checking...', message: 'Running your SQL against the expected answer.' });
     try {
-      const body = await api.check(exercise.database, trimmed, exercise.expectedSql);
+      const body = await api.check(exercise.id, trimmed);
       setResult(body.result || null);
       if (body.correct) {
         setFeedback({ toneClass: TONE.ok, title: body.message || 'Correct!', message: body.why || '' });

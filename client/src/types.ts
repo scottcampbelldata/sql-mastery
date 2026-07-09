@@ -16,6 +16,7 @@ export interface Exercise {
   database?: string;
   level?: Level;
   hint?: string;
+  dedupeKey?: string;
   expectedSql?: string;
   starterSql?: ExerciseStarterSql;
   blankMap?: Record<ScaffoldTier, Record<string, string>>;

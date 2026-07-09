@@ -384,7 +384,14 @@ export async function validateExercises(
 
       if (!snapshotCache.has(database)) snapshotCache.set(database, await computeSnapshot(database));
       const validationSnapshot = snapshotCache.get(database)!;
-      const servedSnapshot = readServed(database) || validationSnapshot;
+      const servedSnapshot = readServed(database);
+      if (!servedSnapshot) {
+        failures.push({
+          id: exercise.id,
+          results: [{ gate: 'G0', pass: false, message: `served snapshot is missing or unreadable for ${database}` }]
+        });
+        continue;
+      }
       const ctx: GateContext = {
         exercise,
         database,

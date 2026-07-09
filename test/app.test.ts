@@ -96,29 +96,64 @@ test('POST /api/query returns structured errors', async () => {
   });
 });
 
-test('POST /api/check returns guided feedback', async () => {
+test('POST /api/check grades a server-owned exercise by id', async () => {
+  const calls: any[] = [];
+  const fingerprint = {
+    columns: ['ok'],
+    rowCount: 1,
+    orderedRowHash: 'ordered',
+    unorderedRowHash: 'unordered'
+  };
   const app = createApp({
     queryService: {
       listDatabases: () => ['aperture'],
-      checkQuery: async ({ database, sql, expectedSql }: { database: string; sql: string; expectedSql: string }) => ({
-        correct: true,
-        feedbackType: 'success',
-        message: 'You got it right.',
-        why: 'The result matches.',
-        database,
-        sql,
-        expectedSql,
-        result: {
-          columns: ['ok'],
-          rows: [{ ok: 1 }],
-          rowCount: 1,
-          command: 'SELECT',
-          durationMs: 2
+      checkQuery: async (input: any) => {
+        calls.push(input);
+        return {
+          correct: true,
+          feedbackType: 'success',
+          message: 'You got it right.',
+          why: 'The result matches.',
+          result: {
+            columns: ['ok'],
+            rows: [{ ok: 1 }],
+            rowCount: 1,
+            command: 'SELECT',
+            durationMs: 2
+          },
+          expectedSummary: {
+            columns: ['ok'],
+            rowCount: 1
+          }
+        };
+      }
+    },
+    curriculumService: {
+      buildCurriculum: () => ({
+        product: { name: 'SQL Mastery' },
+        learningPath: {
+          dataset: 'test',
+          phases: [],
+          concepts: [{
+            id: 'concept-1',
+            exercises: [{
+              id: 'exercise-1',
+              database: 'aperture',
+              expectedSql: 'SELECT 1 AS ok',
+              fingerprint,
+              orderMatters: false
+            }]
+          }],
+          checkpoints: [],
+          exercises: [{
+            id: 'exercise-1',
+            database: 'aperture',
+            expectedSql: 'SELECT 1 AS ok',
+            fingerprint,
+            orderMatters: false
+          }]
         },
-        expectedSummary: {
-          columns: ['ok'],
-          rowCount: 1
-        }
+        stats: {}
       })
     }
   });
@@ -128,9 +163,10 @@ test('POST /api/check returns guided feedback', async () => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        database: 'aperture',
+        database: 'evil',
         sql: 'SELECT 1 AS ok',
-        expectedSql: 'SELECT 1 AS ok'
+        expectedSql: 'SELECT hacked',
+        exerciseId: 'exercise-1'
       })
     });
     const body = await response.json() as any;
@@ -139,6 +175,42 @@ test('POST /api/check returns guided feedback', async () => {
     assert.equal(body.correct, true);
     assert.equal(body.feedbackType, 'success');
     assert.deepEqual(body.result.rows, [{ ok: 1 }]);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].database, 'aperture');
+    assert.equal(calls[0].sql, 'SELECT 1 AS ok');
+    assert.equal(calls[0].expectedSql, 'SELECT 1 AS ok');
+    assert.deepEqual(calls[0].fingerprint, fingerprint);
+    assert.equal(calls[0].orderMatters, false);
+  });
+});
+
+test('POST /api/check rejects unknown exercise ids', async () => {
+  const app = createApp({
+    queryService: {
+      listDatabases: () => ['aperture'],
+      checkQuery: async () => {
+        throw new Error('checkQuery should not run for unknown exercise ids');
+      }
+    },
+    curriculumService: {
+      buildCurriculum: () => ({
+        product: { name: 'SQL Mastery' },
+        learningPath: { dataset: 'test', phases: [], concepts: [], checkpoints: [], exercises: [] },
+        stats: {}
+      })
+    }
+  });
+
+  await withServer(app, async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/api/check`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ exerciseId: 'missing', sql: 'SELECT 1' })
+    });
+    const body = await response.json() as any;
+
+    assert.equal(response.status, 404);
+    assert.equal(body.code, 'UNKNOWN_EXERCISE');
   });
 });
 

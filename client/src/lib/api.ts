@@ -47,8 +47,8 @@ export const api = {
   tablePreview: (database: string, schema: string, table: string, limit = 6): Promise<QueryResult> =>
     post<QueryResult>(apiUrl('/api/table-preview'), { database, schema, table, limit }),
   query: (database: string, sql: string): Promise<QueryResult> => post<QueryResult>(apiUrl('/api/query'), { database, sql }),
-  check: (database: string | undefined, sql: string, expectedSql: string | undefined): Promise<CheckResponse> =>
-    post<CheckResponse>(apiUrl('/api/check'), { database, sql, expectedSql }),
+  check: (exerciseId: string, sql: string): Promise<CheckResponse> =>
+    post<CheckResponse>(apiUrl('/api/check'), { exerciseId, sql }),
   auth: {
     google: (idToken: string): Promise<{ token: string; user: { sub: string; email: string; name: string } }> =>
       post(apiUrl('/api/auth/google'), { idToken })

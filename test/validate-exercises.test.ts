@@ -182,3 +182,40 @@ test('validateExercises bakes a real fingerprint onto passers', async () => {
   });
   assert.deepEqual(passed[0].fingerprint, expectedFp);
 });
+
+test('validateExercises fails when the served snapshot is missing', async () => {
+  const ex = makeExercise({
+    task: 'List model and price ordered by price then model.',
+    starterSql: {
+      full: 'SELECT model, price FROM cameras ORDER BY price, model',
+      half: 'SELECT model, price FROM cameras ORDER BY price, model',
+      blank: 'SELECT model, price FROM cameras ORDER BY price, model'
+    },
+    blankMap: { full: {}, half: {}, blank: {} }
+  });
+  const service = {
+    listDatabases: () => ['aperture', 'sideline', 'rove'],
+    async executeQuery(_i: { database: string; sql: string; rowMode?: 'array' }) {
+      return {
+        columns: ['model', 'price'],
+        fields: [{ name: 'model' }, { name: 'price' }],
+        rows: [['a', '10']],
+        rowCount: 1
+      };
+    }
+  };
+
+  const { passed, failures } = await validateExercises([ex], {
+    service: service as any,
+    computeSnapshot: async () => 'live-snapshot',
+    readServed: () => null
+  });
+
+  assert.equal(passed.length, 0);
+  assert.equal(failures.length, 1);
+  assert.deepEqual(failures[0].results, [{
+    gate: 'G0',
+    pass: false,
+    message: 'served snapshot is missing or unreadable for aperture'
+  }]);
+});
