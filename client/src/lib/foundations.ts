@@ -90,14 +90,52 @@ export function weakSpots(track: Track, state: LearningState, n = 3): { skill: s
 
 export type ScaffoldTier = 'full' | 'half' | 'blank';
 
-// How much starter to show for a step. Beginners and still-learning skills always get the
-// full fill-in-the-blank scaffold. Only a review of an already-mastered (strong) skill fades:
-// its first mastered review reveals half the blanks, later ones go blank. Tracks
-// reviewsPassed so the fade progresses across repeated reviews.
-export function scaffoldTier(state: LearningState, skill: string, isReview: boolean): ScaffoldTier {
+// Level band. beginner -> most help, advanced -> least help.
+export type Level = 'beginner' | 'intermediate' | 'advanced';
+
+// Numeric help-rank for the deterministic clamp. full = MOST help, blank = LEAST help.
+export const TIER_RANK: Record<ScaffoldTier, number> = { full: 2, half: 1, blank: 0 };
+
+// Inverse of TIER_RANK; index by rank (0..2) to recover a tier after a bump/clamp.
+const RANK_TIER: ScaffoldTier[] = ['blank', 'half', 'full'];
+
+// Band floor: the baseline scaffold each level starts from before earning reductions.
+export function levelBaseTier(level: Level): ScaffoldTier {
+  if (level === 'beginner') return 'full';
+  if (level === 'intermediate') return 'half';
+  return 'blank';
+}
+
+// Optional tapering context. Omitting it reproduces today's exact behavior.
+export interface ScaffoldCtx {
+  level: Level;
+  priorBandCapstonePassed: boolean;
+  firstExposure: boolean;
+}
+
+function lessHelpful(a: ScaffoldTier, b: ScaffoldTier): ScaffoldTier {
+  return TIER_RANK[a] <= TIER_RANK[b] ? a : b;
+}
+
+function bumpHelp(tier: ScaffoldTier): ScaffoldTier {
+  return RANK_TIER[Math.min(TIER_RANK.full, TIER_RANK[tier] + 1)];
+}
+
+function reviewFade(state: LearningState, skill: string, isReview: boolean): ScaffoldTier {
   if (!isReview || !isSkillStrong(state, skill)) return 'full';
   const passes = state.reviewsPassed[skill] || 0;
   return passes === 0 ? 'half' : 'blank';
+}
+
+// How much starter to show for a step. With no ctx, this is the original review fade.
+// With ctx, reduced help is earned by the prior-band capstone, first exposure bumps one
+// step toward more help, and later attempts are clamped to the earned level floor.
+export function scaffoldTier(state: LearningState, skill: string, isReview: boolean, ctx?: ScaffoldCtx): ScaffoldTier {
+  const fade = reviewFade(state, skill, isReview);
+  if (!ctx) return fade;
+  const floor = ctx.priorBandCapstonePassed ? levelBaseTier(ctx.level) : 'full';
+  if (ctx.firstExposure) return bumpHelp(floor);
+  return lessHelpful(fade, floor);
 }
 
 export function recordReviewPass(state: LearningState, skill: string): LearningState {
