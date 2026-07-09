@@ -10,7 +10,7 @@ function renderTile(props: Partial<React.ComponentProps<typeof ConceptTile>> = {
   const onReset = vi.fn();
   render(
     <MemoryRouter>
-      <ConceptTile concept={concept} state="now" count={0} masteryPct={0} onReset={onReset} {...props} />
+      <ConceptTile concept={concept} state="now" count={0} target={5} masteryPct={0} onReset={onReset} {...props} />
     </MemoryRouter>
   );
   return { onReset };
@@ -26,7 +26,7 @@ describe('ConceptTile', () => {
   });
 
   it('a done tile is clickable and offers a reset that confirms before firing', () => {
-    const { onReset } = renderTile({ state: 'done', count: 3 });
+    const { onReset } = renderTile({ state: 'done', count: 5, target: 5 });
     expect(screen.getByRole('link')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /reset lesson/i }));
     fireEvent.click(screen.getByRole('button', { name: /^reset$/i }));

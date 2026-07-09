@@ -7,6 +7,7 @@ interface Props {
   concept: Concept;
   state: TileState;
   count: number;
+  target: number;
   masteryPct: number;
   onReset: (skill: string) => void;
 }
@@ -16,7 +17,7 @@ const STATIC_LABEL: Record<'upcoming' | 'locked', string> = {
   locked: 'locked'
 };
 
-export function ConceptTile({ concept, state, count, masteryPct, onReset }: Props) {
+export function ConceptTile({ concept, state, count, target, masteryPct, onReset }: Props) {
   const [confirming, setConfirming] = useState(false);
   const cls = ['lh-tile', state, state === 'done' && 'ok'].filter(Boolean).join(' ');
   const bar = <div className="lh-tile-bar"><i style={{ width: `${masteryPct}%` }} /></div>;
@@ -34,10 +35,10 @@ export function ConceptTile({ concept, state, count, masteryPct, onReset }: Prop
     );
   }
 
-  const tier = state === 'done' ? 'strong' : count ? `${count}/3` : state === 'now' ? 'start here' : 'new';
+  const tier = state === 'done' ? 'strong' : count ? `${Math.min(count, target)}/${target}` : state === 'now' ? 'start here' : 'new';
   const name = state === 'now'
     ? `Start here: ${concept.title}, new lesson`
-    : `Practice ${concept.title}${state === 'done' ? ', mastered' : count ? `, ${count} of 3 correct` : ''}`;
+    : `Practice ${concept.title}${state === 'done' ? ', mastered' : count ? `, ${Math.min(count, target)} of ${target} correct` : ''}`;
 
   return (
     <div className={cls}>

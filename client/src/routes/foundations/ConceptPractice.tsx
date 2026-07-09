@@ -1,48 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { AppShell } from '../../components/AppShell';
 import { EmptyState, Button } from '../../components/ui';
 import { FoundationsRep } from './FoundationsRep';
 import { useFoundations } from '../../state/FoundationsContext';
-import { conceptPracticeTarget, checkpointDue } from '../../lib/foundations';
+import { buildTodaySession, conceptPracticeTarget } from '../../lib/foundations';
+import { buildLessonSteps } from '../../lib/lessonSteps';
 
 export default function ConceptPractice() {
   const { conceptId } = useParams();
   const { track, state } = useFoundations();
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
-  const [done, setDone] = useState(false);
+  const [locallyCorrect, setLocallyCorrect] = useState<Record<string, boolean>>({});
+
+  const concept = track ? conceptPracticeTarget(track, state, conceptId || '') : null;
+  const steps = useMemo(() => (concept ? buildLessonSteps(concept) : []), [concept]);
+  const savedCorrect = new Set(concept ? (state.skillCorrect[concept.skill] || []) : []);
+
+  useEffect(() => {
+    if (!concept || !steps.length) return;
+    const firstOpen = steps.findIndex((step) => !savedCorrect.has(step.id) && !locallyCorrect[step.id]);
+    setIndex(firstOpen >= 0 ? firstOpen : steps.length - 1);
+  }, [concept?.id, steps.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!track) return <AppShell breadcrumb={<span className="here">Learn</span>}><EmptyState title="Loading..." /></AppShell>;
-  const concept = conceptPracticeTarget(track, state, conceptId || '');
-  if (!concept) return <Navigate to="/learn" replace />;
+  if (!concept || !steps.length) return <Navigate to="/learn" replace />;
 
-  if (done) {
-    const cpDue = checkpointDue(track, state);
-    return (
-      <AppShell breadcrumb={<span className="here">Learn / {concept.title}</span>}>
-        <div className="fnd-done">
-          <h1>Concept practiced.</h1>
-          <p style={{ color: 'var(--ink-dim)' }}>
-            {cpDue ? 'A checkpoint is ready. Run your guided session to take it and bank your reviews.'
-              : 'Run your guided session to keep your spaced reviews on track.'}
-          </p>
-          <Button variant="primary" onClick={() => navigate('/learn')}>Back to Foundations</Button>
-        </div>
-      </AppShell>
-    );
+  const step = steps[Math.min(index, steps.length - 1)];
+  const stepDone = savedCorrect.has(step.id) || locallyCorrect[step.id];
+  const isLast = index === steps.length - 1;
+
+  function goAfterLesson() {
+    const session = buildTodaySession(track!, state);
+    if (session.main.kind === 'checkpoint') {
+      navigate(`/learn/checkpoint/${session.main.checkpoint.id}`);
+    } else if (session.main.kind === 'lesson') {
+      navigate(`/learn/concept/${session.main.concept.id}`);
+    } else {
+      navigate('/learn');
+    }
   }
 
-  const reps = concept.exercises;
-  const ex = reps[index];
-  const isLast = index === reps.length - 1;
+  function continueLesson() {
+    if (!stepDone) return;
+    if (isLast) goAfterLesson();
+    else setIndex((i) => i + 1);
+  }
+
   return (
     <AppShell breadcrumb={<span className="here">Learn / {concept.title}</span>}>
-      <FoundationsRep key={ex.id} exercise={ex} label={`Practice: ${concept.title}`} kind="new"
-        tier="full" teach={index === 0 ? concept.teach : null}
-        stepText={`Step ${index + 1} of ${reps.length} - focused practice`} />
+      <FoundationsRep key={step.id} exercise={step.exercise} label={`Practice: ${concept.title}`} kind="new"
+        tier={step.tier} teach={index === 0 ? concept.teach : null}
+        stepText={`Step ${index + 1} of ${steps.length} - focused practice`}
+        onCorrect={() => setLocallyCorrect((current) => ({ ...current, [step.id]: true }))} />
       <div className="session-footer">
-        <Button variant="primary" onClick={() => (isLast ? setDone(true) : setIndex((i) => i + 1))}>
+        <Button variant="primary" onClick={continueLesson} disabled={!stepDone}>
           {isLast ? 'Done' : 'Next exercise'}
         </Button>
       </div>

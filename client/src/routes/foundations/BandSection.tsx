@@ -1,5 +1,5 @@
 import { ConceptTile } from './ConceptTile';
-import { skillLevel, skillMastery, tileState } from '../../lib/foundations';
+import { conceptMastery, tileState } from '../../lib/foundations';
 import { phaseGraduation } from '../../lib/learning-path';
 import { bandTierLabel, type BandGroup } from '../../lib/bands';
 import { cx } from '../../components/ui';
@@ -67,9 +67,14 @@ export function BandSection({ group, track, state, onReset }: BandSectionProps) 
                 </div>
                 <div className="lh-grid band-grid">
                   {phase.concepts.map((concept: Concept) => (
-                    <ConceptTile key={concept.id} concept={concept} state={tileState(track, state, concept)}
-                      count={skillLevel(state, concept.skill).count} masteryPct={skillMastery(state, concept.skill).pct}
-                      onReset={onReset} />
+                    (() => {
+                      const mastery = conceptMastery(state, concept);
+                      return (
+                        <ConceptTile key={concept.id} concept={concept} state={tileState(track, state, concept)}
+                          count={mastery.count} target={mastery.target} masteryPct={mastery.pct}
+                          onReset={onReset} />
+                      );
+                    })()
                   ))}
                   {phase.checkpoints.map((checkpoint) => (
                     <CheckpointTile key={checkpoint.id} checkpoint={checkpoint}
