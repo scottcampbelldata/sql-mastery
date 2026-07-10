@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFoundations } from '../../state/FoundationsContext';
 import { frontierConcept } from '../../lib/foundations';
 import { readinessReport, type ReadinessStatus } from '../../lib/readiness';
+import { summarizeLog, getLog, clearLog } from '../../lib/learningLog';
+import { Button } from '../../components/ui';
 import './readiness.css';
 
 const STATUS_LABEL: Record<ReadinessStatus, string> = {
@@ -15,6 +17,37 @@ export function Readiness() {
   const { track, phases, state } = useFoundations();
   const report = useMemo(() => readinessReport(phases, state), [phases, state]);
   const frontier = useMemo(() => (track ? frontierConcept(track, state) : null), [track, state]);
+
+  const [logVersion, setLogVersion] = useState(0);
+  const summary = useMemo(() => summarizeLog(), [logVersion]);
+
+  const downloadLog = () => {
+    const payload = {
+      generatedAt: Date.now(),
+      summary: summary.text,
+      bySkill: summary.bySkill,
+      topMisconceptions: summary.topMisconceptions,
+      events: getLog()
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = 'sql-mastery-learning-log.json';
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+  };
+  const copySummary = () => {
+    const lines = [summary.text, '', 'By topic (hardest first):'];
+    for (const row of summary.bySkill.filter((r) => r.attempts > 0).slice(0, 10)) {
+      const misc = Object.entries(row.misconceptions).map(([k, v]) => `${k} x${v}`).join(', ');
+      lines.push(`- ${row.title}: ${row.wrong} wrong of ${row.attempts} tries, avg ${Math.round(row.avgDurationMs / 1000)}s` + (misc ? `; misconceptions: ${misc}` : ''));
+    }
+    void navigator.clipboard?.writeText(lines.join('\n'));
+  };
+  const resetLog = () => { clearLog(); setLogVersion((v) => v + 1); };
 
   if (!phases.length) return <div className="table-note">Loading your path...</div>;
 
@@ -87,6 +120,40 @@ export function Readiness() {
           ))}
         </section>
       ))}
+
+      <section className="rd-log">
+        <div className="rd-band-head">
+          <h2>Your learning log</h2>
+          <span className="rd-band-count">{summary.exercisesCompleted} done, {summary.totalAttempts} attempts</span>
+        </div>
+        <p className="rd-log-summary">{summary.text}</p>
+        {summary.bySkill.filter((row) => row.struggleScore > 0).length ? (
+          <ul className="rd-list">
+            {summary.bySkill.filter((row) => row.struggleScore > 0).slice(0, 5).map((row) => (
+              <li key={row.skill} className="rd-row">
+                <div className="rd-row-main">
+                  <div className="rd-row-top">
+                    <span className="rd-topic">{row.title}</span>
+                    <span className="rd-status">{row.wrong} wrong / {row.attempts} tries</span>
+                  </div>
+                  {Object.keys(row.misconceptions).length ? (
+                    <p className="rd-interview">Common slip: {Object.entries(row.misconceptions).map(([k, v]) => `${k} (${v}x)`).join(', ')}</p>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="rd-log-actions">
+          <Button onClick={downloadLog}>Download log (JSON)</Button>
+          <Button onClick={copySummary}>Copy summary</Button>
+          <Button onClick={resetLog}>Clear log</Button>
+        </div>
+        <p className="rd-log-note">
+          Private to this browser; nothing leaves your machine unless you export it. Paste the copied
+          summary (or the JSON) into an AI to get feedback on where you struggle most.
+        </p>
+      </section>
     </div>
   );
 }

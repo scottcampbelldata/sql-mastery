@@ -23,6 +23,7 @@
 .instr-why > summary { cursor: pointer; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); }
 .instr-why p { margin: var(--s-2) 0 0; line-height: 1.6; max-width: 70ch; }
 .instr-why .instr-interview b { color: var(--info); }
+.console-retry { color: var(--accent2); font-size: var(--text-sm); margin: var(--s-2) 0 0; }
 
 /* ===== LearnSQL-style lesson: instructions (left, narrower) + console (right, wider) ===== */
 .lesson-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-6); align-items: start; }
