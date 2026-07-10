@@ -1,4 +1,4 @@
-import type { Curriculum, CheckResponse, SchemaResponse, QueryResult, ApiError } from '../types';
+import type { Curriculum, CheckResponse, SchemaResponse, QueryResult, ApiError, PublicInterviewProblem, InterviewSolution } from '../types';
 
 // In a same-origin deployment (Express serves the built client) leave VITE_API_BASE_URL
 // unset and calls stay relative ("/api/..."). For a split deployment (Cloudflare Pages
@@ -49,6 +49,9 @@ export const api = {
   query: (database: string, sql: string): Promise<QueryResult> => post<QueryResult>(apiUrl('/api/query'), { database, sql }),
   check: (exerciseId: string, sql: string): Promise<CheckResponse> =>
     post<CheckResponse>(apiUrl('/api/check'), { exerciseId, sql }),
+  interview: (): Promise<{ problems: PublicInterviewProblem[] }> => request(apiUrl('/api/interview')),
+  interviewSolution: (id: string): Promise<InterviewSolution> =>
+    request<InterviewSolution>(apiUrl(`/api/interview/${encodeURIComponent(id)}/solution`)),
   auth: {
     google: (idToken: string): Promise<{ token: string; user: { sub: string; email: string; name: string } }> =>
       post(apiUrl('/api/auth/google'), { idToken })

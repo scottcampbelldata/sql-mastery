@@ -6,6 +6,7 @@ import { createQueryService } from './query-service';
 import { createProgressStore } from './progress-store';
 import { createUserStore } from './user-store';
 import { createAuthService } from './auth-service';
+import { publicInterview, interviewSolution, getInterviewProblem } from './interview';
 
 function createApp(options: any = {}) {
   const app = express();
@@ -67,6 +68,18 @@ function createApp(options: any = {}) {
         code: 'CURRICULUM_LOAD_FAILED'
       });
     }
+  });
+
+  app.get('/api/interview', (request: Request, response: Response) => {
+    response.json({ problems: publicInterview() });
+  });
+
+  app.get('/api/interview/:id/solution', (request: Request, response: Response) => {
+    const solution = interviewSolution(String(request.params.id));
+    if (!solution) {
+      return response.status(404).json({ error: 'Interview problem could not be found.', code: 'UNKNOWN_INTERVIEW_PROBLEM' });
+    }
+    response.json(solution);
   });
 
   app.get('/api/schema', async (request: Request, response: Response) => {
@@ -139,8 +152,8 @@ function createApp(options: any = {}) {
       }
       const privateCurriculum = curriculumService.buildCurriculum({ includeAnswerContracts: true });
       const exercises = privateCurriculum?.learningPath?.exercises || [];
-      const exercise = exercises.find((item: any) => item && item.id === exerciseId);
-      if (!exercise) {
+      const target = exercises.find((item: any) => item && item.id === exerciseId) || getInterviewProblem(exerciseId);
+      if (!target) {
         return response.status(404).json({
           error: 'Exercise could not be found.',
           code: 'UNKNOWN_EXERCISE'
@@ -148,12 +161,12 @@ function createApp(options: any = {}) {
       }
 
       const result = await queryService.checkQuery({
-        database: exercise.database,
+        database: target.database,
         sql: request.body && request.body.sql,
-        taskText: exercise.task,
-        expectedSql: exercise.expectedSql,
-        fingerprint: exercise.fingerprint,
-        orderMatters: exercise.orderMatters
+        taskText: target.task,
+        expectedSql: target.expectedSql,
+        fingerprint: target.fingerprint,
+        orderMatters: target.orderMatters
       });
 
       response.json(result);

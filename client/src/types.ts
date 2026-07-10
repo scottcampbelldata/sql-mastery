@@ -168,6 +168,22 @@ export interface CheckResponse {
   coaching?: Coaching;
 }
 
+export interface PublicInterviewProblem {
+  id: string;
+  database: string;
+  level: string;
+  pattern?: string;
+  difficulty: number;
+  scenario: string;
+  task: string;
+}
+
+export interface InterviewSolution {
+  modelAnswer: string;
+  approachNote: string;
+  pattern?: string;
+}
+
 export interface Feedback {
   tone?: string;
   toneClass?: string;

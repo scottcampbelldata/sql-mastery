@@ -11,6 +11,7 @@
     "build:server": "tsc -p tsconfig.json",
     "generate-exercises": "tsc -p tsconfig.json && node dist/scripts/generate-exercises.js",
     "validate-exercises": "tsc -p tsconfig.json && node dist/scripts/validate-exercises.js",
+    "validate-interview": "tsc -p tsconfig.json && node dist/scripts/validate-interview.js",
     "build": "tsc -p tsconfig.json && npm --prefix client run build",
     "test": "tsc -p tsconfig.json && node --test dist/test/*.test.js && npm --prefix client test",
     "test:db": "tsc -p tsconfig.json && node dist/scripts/require-db-config.js && node --test dist/test/schema-catalog.test.js dist/test/sideline-manifest.test.js && node dist/scripts/validate-exercises.js",
