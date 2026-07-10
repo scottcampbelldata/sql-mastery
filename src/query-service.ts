@@ -1,4 +1,5 @@
 import { Pool as DefaultPool } from 'pg';
+import { diagnoseMistake } from './coach';
 import {
   buildClientConfig,
   getDatabaseNames,
@@ -361,7 +362,7 @@ function isFingerprint(value: any): value is Fingerprint {
     && typeof value.unorderedRowHash === 'string';
 }
 
-function learningErrorFeedback(error: any): any {
+function learningErrorFeedback(error: any, sql?: string): any {
   const err = error as { message?: string; code?: string; detail?: string; hint?: string; position?: string; statusCode?: number };
   return {
     correct: false,
@@ -369,6 +370,7 @@ function learningErrorFeedback(error: any): any {
     message: err.message || 'Your SQL did not run.',
     code: err.code || 'QUERY_FAILED',
     hint: hintForError(error),
+    coaching: diagnoseMistake({ sql: sql || '', pgError: { code: err.code, message: err.message } }) || undefined,
     detail: err.detail,
     position: err.position
   };
@@ -677,7 +679,7 @@ function createQueryService(options: any = {}): any {
       try {
         userResult = await executeQuery({ database, sql, rowMode: 'array' });
       } catch (error) {
-        return learningErrorFeedback(error);
+        return learningErrorFeedback(error, sql);
       }
 
       const expectedSummary = {
@@ -696,6 +698,16 @@ function createQueryService(options: any = {}): any {
           yourRowCount: mismatch.diff.yourRowCount,
           expectedRowCount: mismatch.diff.expectedRowCount,
           hint: mismatch.hint,
+          coaching: diagnoseMistake({
+            sql,
+            taskText: input.taskText,
+            diff: {
+              reason: mismatch.reason,
+              orderOnly: mismatch.diff.orderOnly,
+              yourRowCount: mismatch.diff.yourRowCount,
+              expectedRowCount: mismatch.diff.expectedRowCount
+            }
+          }) || undefined,
           diff: mismatch.diff,
           result: toDisplayResult(userResult),
           expectedSummary
@@ -724,7 +736,7 @@ function createQueryService(options: any = {}): any {
     try {
       userResult = await executeQuery({ database, sql });
     } catch (error) {
-      return learningErrorFeedback(error);
+      return learningErrorFeedback(error, sql);
     }
 
     let expectedResult;

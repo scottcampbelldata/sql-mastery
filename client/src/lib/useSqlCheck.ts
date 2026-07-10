@@ -60,8 +60,8 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
       } else {
         setFeedback({
           toneClass: body.feedbackType === 'error' ? TONE.err : TONE.warn,
-          title: body.feedbackType === 'error' ? 'Your SQL did not run' : 'Not quite yet',
-          message: body.feedbackType === 'error' ? [body.message, body.hint].filter(Boolean).join(': ') : (body.hint || body.message || ''),
+          title: body.coaching ? body.coaching.label : (body.feedbackType === 'error' ? 'Your SQL did not run' : 'Not quite yet'),
+          message: body.coaching ? body.coaching.text : (body.feedbackType === 'error' ? [body.message, body.hint].filter(Boolean).join(': ') : (body.hint || body.message || '')),
           diff: body.diff || null
         });
       }

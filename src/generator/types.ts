@@ -34,6 +34,9 @@ export interface TeachBlock {
   plain: string;
   mentalModel: string;
   example: { sql: string; note: string };
+  whyWhen?: string;
+  watchOut?: string;
+  interviewNote?: string;
 }
 
 export interface Concept {

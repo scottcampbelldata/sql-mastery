@@ -18,6 +18,21 @@ export function TeachCard({ concept }: Props) {
         <pre className="sql-block">{formatSql(teach.example.sql)}</pre>
         <p>{teach.example.note}</p>
       </div>
+      {teach.whyWhen ? (
+        <div className="teach-why">
+          <span className="teach-example-label">Why and when</span>
+          <p>{teach.whyWhen}</p>
+        </div>
+      ) : null}
+      {teach.watchOut ? (
+        <div className="teach-watchout">
+          <span className="teach-example-label">Watch out</span>
+          <p>{teach.watchOut}</p>
+        </div>
+      ) : null}
+      {teach.interviewNote ? (
+        <p className="teach-interview"><span className="teach-interview-tag">In interviews</span>{teach.interviewNote}</p>
+      ) : null}
     </section>
   );
 }

@@ -65,6 +65,14 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
               <pre className="sql-block">{formatSql(teach.example.sql)}</pre>
               <p className="instr-note">{teach.example.note}</p>
             </div>
+            {teach.watchOut ? <p className="instr-watchout"><b>Watch out:</b> {teach.watchOut}</p> : null}
+            {(teach.whyWhen || teach.interviewNote) ? (
+              <details className="instr-why">
+                <summary>Why and when</summary>
+                {teach.whyWhen ? <p>{teach.whyWhen}</p> : null}
+                {teach.interviewNote ? <p className="instr-interview"><b>In interviews:</b> {teach.interviewNote}</p> : null}
+              </details>
+            ) : null}
           </div>
         ) : null}
         <div className="instr-exercise">

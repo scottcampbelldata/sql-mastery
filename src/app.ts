@@ -150,6 +150,7 @@ function createApp(options: any = {}) {
       const result = await queryService.checkQuery({
         database: exercise.database,
         sql: request.body && request.body.sql,
+        taskText: exercise.task,
         expectedSql: exercise.expectedSql,
         fingerprint: exercise.fingerprint,
         orderMatters: exercise.orderMatters

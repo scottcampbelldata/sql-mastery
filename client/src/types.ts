@@ -42,6 +42,9 @@ export interface Teach {
   plain: string;
   mentalModel: string;
   example: TeachExample;
+  whyWhen?: string;
+  watchOut?: string;
+  interviewNote?: string;
 }
 
 export interface Concept {
@@ -148,6 +151,11 @@ export interface SqlDiff {
   missingRows: number;
 }
 
+export interface Coaching {
+  label: string;
+  text: string;
+}
+
 export interface CheckResponse {
   correct: boolean;
   message?: string;
@@ -156,6 +164,7 @@ export interface CheckResponse {
   feedbackType?: string;
   result?: QueryResult | null;
   diff?: SqlDiff;
+  coaching?: Coaching;
 }
 
 export interface Feedback {
