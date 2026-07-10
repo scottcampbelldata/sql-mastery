@@ -2758,7 +2758,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "mass_solar, star_id"
         }
       },
-      "hint": "Use SELECT * when you want every column.",
+      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
       "expectedSql": "SELECT * FROM stars ORDER BY mass_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2800,7 +2800,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "star_id"
         }
       },
-      "hint": "Use SELECT * when you want every column.",
+      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
       "expectedSql": "SELECT * FROM stars ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2842,7 +2842,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "temperature_k, star_id"
         }
       },
-      "hint": "Use SELECT * when you want every column.",
+      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
       "expectedSql": "SELECT * FROM stars ORDER BY temperature_k, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2884,7 +2884,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "distance_ly, star_id"
         }
       },
-      "hint": "Use SELECT * when you want every column.",
+      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
       "expectedSql": "SELECT * FROM stars ORDER BY distance_ly, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2926,7 +2926,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "radius_solar, star_id"
         }
       },
-      "hint": "Use SELECT * when you want every column.",
+      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
       "expectedSql": "SELECT * FROM stars ORDER BY radius_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,

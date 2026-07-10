@@ -527,12 +527,17 @@ function createQueryService(options: any = {}): any {
 
   async function describeDatabase(input: any = {}) {
     const database = input.database;
+    // seed_meta is an internal seeding/provenance artifact, not curriculum data. Hide it from
+    // the learner-facing schema (autocomplete, schema browser, lesson table peek) by default,
+    // but let the snapshot guard include it — its recorded fingerprints cover the full schema.
+    const internalTableFilter = input.includeInternal ? '' : "AND t.table_name <> 'seed_meta'";
     const sql = `
       WITH base_tables AS (
         SELECT t.table_schema, t.table_name
         FROM information_schema.tables t
         WHERE t.table_type = 'BASE TABLE'
           AND t.table_schema NOT IN ('pg_catalog', 'information_schema')
+          ${internalTableFilter}
       ),
       column_types AS (
         SELECT n.nspname AS table_schema,

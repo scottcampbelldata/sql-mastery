@@ -26,7 +26,7 @@ function pickRandom<T>(arr: T[]): T | null {
 export function InterviewMode() {
   const [problems, setProblems] = useState<PublicInterviewProblem[] | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [level, setLevel] = useState('all');
+  const [level, setLevel] = useState('beginner');
   const [pattern, setPattern] = useState('all');
   const [current, setCurrent] = useState<PublicInterviewProblem | null>(null);
   const [solved, setSolved] = useState(false);
@@ -137,7 +137,9 @@ function InterviewProblemView({ problem, elapsed, solved, solution, startedAt, o
   const check = useSqlCheck(asExercise, {
     seed: '',
     onResult: (correct: boolean) => {
-      if (correct && !solved) {
+      // Only count as a timed solve when the model answer has NOT been revealed.
+      // Revealing then submitting the shown answer must not log mastery or "Solved".
+      if (correct && !solved && !solution) {
         onSolved();
         logEvent({ type: 'complete', exerciseId: problem.id, skill: problem.id, durationMs: Date.now() - startedAt });
         api.interviewSolution(problem.id).then(onReveal).catch(() => undefined);

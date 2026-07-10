@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { sql, PostgreSQL, schemaCompletionSource } from '@codemirror/lang-sql';
-import { autocompletion } from '@codemirror/autocomplete';
+import { autocompletion, closeCompletion } from '@codemirror/autocomplete';
 import { EditorView, keymap, Decoration, ViewPlugin } from '@codemirror/view';
 import { Prec, EditorSelection, RangeSetBuilder } from '@codemirror/state';
 import type { Extension, EditorState } from '@codemirror/state';
@@ -126,7 +126,10 @@ export function SqlEditor({ value, onChange, onSubmit, placeholder, minHeight = 
     Prec.highest(keymap.of([
       {
         key: 'Mod-Enter',
-        run: () => {
+        run: (view) => {
+          // Dismiss any open autocomplete popup so it doesn't linger over the
+          // editor after the query runs.
+          closeCompletion(view);
           onSubmitRef.current?.();
           return true;
         }
