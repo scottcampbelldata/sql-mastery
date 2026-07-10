@@ -59,7 +59,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'SELECT * returns every column from every row in a table.',
       mentalModel: 'Think of the table as a spreadsheet; SELECT * hands you the whole sheet.',
-      example: { sql: 'SELECT * FROM stars', note: 'The star means all columns.' }
+      example: { sql: 'SELECT * FROM stars', note: 'The star means all columns.' },
+      whyWhen: 'Use SELECT * for a quick peek at an unfamiliar table; in real reports you name the columns you need so results stay small and predictable.',
+      watchOut: 'SELECT * pulls every column and its column order can shift if the table changes, so avoid it in saved queries and reports; list the columns once you know which you want.',
+      interviewNote: 'Interviewers expect you to know SELECT * is fine for exploring but rarely what you ship, so be ready to say why you would name columns instead.'
     }
   },
   {
@@ -70,7 +73,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'List column names after SELECT to choose exactly which output columns you want.',
       mentalModel: 'You keep a few spreadsheet columns and leave the rest behind.',
-      example: { sql: 'SELECT planet_name, planet_type FROM planets', note: 'The result has those two columns in that order.' }
+      example: { sql: 'SELECT planet_name, planet_type FROM planets', note: 'The result has those two columns in that order.' },
+      whyWhen: 'This is the everyday default: pick just planet_name and planet_type instead of dragging every column along.',
+      watchOut: 'Forgetting the comma is the classic slip: SELECT planet_name planet_type reads planet_type as an alias for planet_name, not two columns, so always comma-separate your columns.',
+      interviewNote: 'Interviewers watch whether you select only the columns the question asks for; pulling extras reads as careless.'
     }
   },
   {
@@ -81,7 +87,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'ORDER BY sorts the result by one or more values.',
       mentalModel: 'The same rows are stacked into a predictable order before you read them.',
-      example: { sql: 'SELECT star_name, temperature_k FROM stars ORDER BY temperature_k', note: 'Ascending is the default sort direction.' }
+      example: { sql: 'SELECT star_name, temperature_k FROM stars ORDER BY temperature_k', note: 'Ascending is the default sort direction.' },
+      whyWhen: 'Reach for ORDER BY whenever the reader needs a meaningful sequence, like hottest stars first, instead of the arbitrary order the database happens to return.',
+      watchOut: 'ORDER BY sorts ascending by default, so add DESC for largest-first; and when the sort column has ties, add a second key like star_id so tied rows do not shuffle between runs.',
+      interviewNote: 'Interviewers commonly ask you to sort by one column and break ties with another (for example temperature_k then star_id), and check that you name that tiebreaker.'
     }
   },
   {
@@ -92,7 +101,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'LIMIT keeps only the first N rows after the query has been ordered.',
       mentalModel: 'Sort the pile first, then slice off the first few rows.',
-      example: { sql: 'SELECT planet_name, mass_earth FROM planets ORDER BY mass_earth DESC LIMIT 5', note: 'The ORDER BY defines what top means.' }
+      example: { sql: 'SELECT planet_name, mass_earth FROM planets ORDER BY mass_earth DESC LIMIT 5', note: 'The ORDER BY defines what top means.' },
+      whyWhen: 'LIMIT answers top-N questions like the five most massive planets, and keeps exploratory queries fast by returning just a small sample.',
+      watchOut: 'LIMIT with no ORDER BY returns arbitrary rows, not the top ones, so always ORDER BY (with a tiebreaker) first to define what top actually means.',
+      interviewNote: 'The classic ask is top 5 by X; interviewers check that you pair ORDER BY ... DESC with LIMIT and handle ties so the result is repeatable.'
     }
   },
   {
@@ -103,7 +115,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'DISTINCT collapses repeated result rows so each value combination appears once.',
       mentalModel: 'A repeated list becomes one copy of each unique row.',
-      example: { sql: 'SELECT DISTINCT planet_type FROM planets', note: 'One row appears for each planet type.' }
+      example: { sql: 'SELECT DISTINCT planet_type FROM planets', note: 'One row appears for each planet type.' },
+      whyWhen: 'Use DISTINCT to get the unique values in a column, like every planet_type present, or to collapse fully repeated rows.',
+      watchOut: 'DISTINCT dedupes the whole row, not just the first column, so adding another column can make the duplicates reappear because the combination is now unique.',
+      interviewNote: 'Interviewers may ask for a count of unique values, so know COUNT(DISTINCT planet_type) and that DISTINCT applies across every selected column.'
     }
   },
   {
@@ -114,7 +129,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'WHERE keeps only rows where a comparison is true.',
       mentalModel: 'Each row approaches a gate; only rows passing the test continue.',
-      example: { sql: 'SELECT star_name FROM stars WHERE temperature_k > 6000', note: 'Only hotter stars pass.' }
+      example: { sql: 'SELECT star_name FROM stars WHERE temperature_k > 6000', note: 'Only hotter stars pass.' },
+      whyWhen: 'WHERE answers the only the rows that... questions; it trims the table to the rows worth reporting on before the rest of the query runs.',
+      watchOut: "Text values need single quotes, like planet_type = 'Terrestrial'; double quotes mean a column name in Postgres and will error.",
+      interviewNote: 'Interviewers check that you filter with WHERE using =, <>, >, and < and quote text correctly, since these comparisons underpin every harder query.'
     }
   },
   {
@@ -125,7 +143,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'AND requires every condition; OR allows any listed condition.',
       mentalModel: 'AND narrows the funnel, while OR widens it.',
-      example: { sql: "SELECT planet_name FROM planets WHERE in_habitable_zone = true AND planet_type = 'Terrestrial'", note: 'Both conditions must be true.' }
+      example: { sql: "SELECT planet_name FROM planets WHERE in_habitable_zone = true AND planet_type = 'Terrestrial'", note: 'Both conditions must be true.' },
+      whyWhen: 'Combine conditions when one filter is not enough, like habitable planets that are also Terrestrial (AND), or planets of either of two types (OR).',
+      watchOut: "AND binds tighter than OR, so in_habitable_zone = true OR planet_type = 'Terrestrial' AND discovery_year = 2013 quietly groups the AND first; wrap the OR group in parentheses to get the rows you intend.",
+      interviewNote: 'A favorite trap is mixing AND and OR without parentheses; interviewers check that you group them so the query means what the question asks.'
     }
   },
   {
@@ -136,7 +157,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'BETWEEN checks a range and IN checks whether a value is in a list.',
       mentalModel: 'BETWEEN is a number-line band; IN is a checklist.',
-      example: { sql: 'SELECT planet_name FROM planets WHERE discovery_year IN (2012, 2013)', note: 'The row passes if its year is in the list.' }
+      example: { sql: 'SELECT planet_name FROM planets WHERE discovery_year IN (2012, 2013)', note: 'The row passes if its year is in the list.' },
+      whyWhen: 'BETWEEN is the clean way to ask for a numeric range like a span of discovery years, and IN replaces a stack of OR-equals for a set of values.',
+      watchOut: 'BETWEEN includes both endpoints, so discovery_year BETWEEN 2012 AND 2014 also returns 2012 and 2014; and you cannot write discovery_year = 2012 OR 2013, you must use IN (2012, 2013).',
+      interviewNote: 'Interviewers check that you know BETWEEN is inclusive of both ends and that IN is the readable replacement for many OR conditions.'
     }
   },
   {
@@ -147,7 +171,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'LIKE matches text against a pattern; percent means any run of characters.',
       mentalModel: 'A wildcard pattern is a stencil laid over a string.',
-      example: { sql: "SELECT star_name FROM stars WHERE star_name LIKE 'Kepler%'", note: 'The pattern matches names that start with Kepler.' }
+      example: { sql: "SELECT star_name FROM stars WHERE star_name LIKE 'Kepler%'", note: 'The pattern matches names that start with Kepler.' },
+      whyWhen: 'LIKE finds text by shape when you do not know the exact value, like every star_name that starts with Kepler.',
+      watchOut: "LIKE is case-sensitive in Postgres, so 'kepler%' misses 'Kepler-22'; use ILIKE for case-insensitive matching, and remember % means any run of characters while _ means exactly one.",
+      interviewNote: 'Expect to build a pattern with % and _ and to explain LIKE versus ILIKE for case; a common ask is names containing a word, written %word%.'
     }
   },
   {
@@ -158,7 +185,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'NULL means unknown, so test it with IS NULL or IS NOT NULL.',
       mentalModel: 'A blank cell cannot equal anything; you can only ask whether it is blank.',
-      example: { sql: 'SELECT planet_name FROM planets WHERE equilibrium_temp_k IS NULL', note: 'This finds rows with a missing temperature.' }
+      example: { sql: 'SELECT planet_name FROM planets WHERE equilibrium_temp_k IS NULL', note: 'This finds rows with a missing temperature.' },
+      whyWhen: 'You need NULL logic whenever a column can be empty, like planets with no recorded equilibrium_temp_k; it is the basis of every which rows have no value question.',
+      watchOut: 'Writing equilibrium_temp_k = NULL matches nothing, because any comparison with NULL is UNKNOWN rather than true; use IS NULL or IS NOT NULL instead.',
+      interviewNote: 'The classic probe is find the rows with no X (IS NULL) and knowing that = NULL silently returns zero rows; it is one of the most tested beginner filters.'
     }
   },
   {
@@ -169,7 +199,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'A SELECT list can include arithmetic expressions that create derived values.',
       mentalModel: 'It is like adding a formula column to the result.',
-      example: { sql: 'SELECT planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets', note: 'The expression is evaluated for each row.' }
+      example: { sql: 'SELECT planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets', note: 'The expression is evaluated for each row.' },
+      whyWhen: 'Compute a column when the number you need is not stored, like orbital_period_days / 365.0 for years or radius_earth * 6371 for kilometers.',
+      watchOut: 'Any arithmetic involving a NULL produces NULL, so equilibrium_temp_k - 273.15 is blank for planets with no recorded temperature; the row still appears but that computed cell is empty.',
+      interviewNote: 'Interviewers check that you can derive a value inline and give it a clear alias, and may ask for a unit conversion or a simple per-unit ratio.'
     }
   },
   {
@@ -180,7 +213,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'AS gives a result column a friendly output name.',
       mentalModel: 'The alias is a name tag on the result, not a table change.',
-      example: { sql: 'SELECT distance_ly AS light_years FROM stars', note: 'The result column is named light_years.' }
+      example: { sql: 'SELECT distance_ly AS light_years FROM stars', note: 'The result column is named light_years.' },
+      whyWhen: 'Alias a column to give the reader a clean header, especially for computed columns that would otherwise show the raw expression as their name.',
+      watchOut: 'An alias only labels the output, so WHERE cannot use it (WHERE light_years > 10 errors) because WHERE runs before the alias exists; filter on the original column, though ORDER BY, which runs later, can use the alias.',
+      interviewNote: 'Interviewers expect readable aliases like avg_mass rather than col1, and may ask why WHERE cannot reference an alias while ORDER BY can.'
     }
   },
   {
@@ -191,7 +227,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'Aggregate functions such as COUNT and AVG collapse many rows into one summary row.',
       mentalModel: 'A column of rows goes into a funnel and one summary number comes out.',
-      example: { sql: 'SELECT COUNT(*) AS planet_count, AVG(mass_earth) AS avg_mass FROM planets', note: 'Without GROUP BY, the table becomes one summary row.' }
+      example: { sql: 'SELECT COUNT(*) AS planet_count, AVG(mass_earth) AS avg_mass FROM planets', note: 'Without GROUP BY, the table becomes one summary row.' },
+      whyWhen: 'Aggregates answer how many or what is the average over a whole table in a single row; reach for them when you want a summary, not the individual rows.',
+      watchOut: 'COUNT(*) counts every row, but COUNT(mass_solar) and AVG(mass_solar) skip NULLs, so an average can quietly ignore missing values; pick the one the question actually wants.',
+      interviewNote: 'Interviewers often ask for a ratio or rate and watch that you avoid integer division (write / 2.0, not / 2) and that you know COUNT(*) versus COUNT(column).'
     }
   },
   {
@@ -202,7 +241,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'GROUP BY splits rows into buckets and aggregates each bucket separately.',
       mentalModel: 'Sort rows into jars by label, then count each jar.',
-      example: { sql: 'SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type', note: 'There is one output row per planet_type.' }
+      example: { sql: 'SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type', note: 'There is one output row per planet_type.' },
+      whyWhen: 'GROUP BY answers per-category questions, like how many planets of each planet_type; it is the workhorse behind almost every analytics breakdown.',
+      watchOut: 'Every non-aggregated column in SELECT must also appear in GROUP BY or Postgres errors, so if you select planet_type you must GROUP BY planet_type.',
+      interviewNote: 'Interviewers test grouping granularity (count per X, or a metric per X per Y); the columns you group by define exactly one output row each.'
     }
   },
   {
@@ -213,7 +255,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'HAVING filters after GROUP BY has built aggregate rows.',
       mentalModel: 'WHERE filters raw rows; HAVING filters finished buckets.',
-      example: { sql: 'SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING COUNT(*) > 2', note: 'Only groups with more than two rows remain.' }
+      example: { sql: 'SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING COUNT(*) > 2', note: 'Only groups with more than two rows remain.' },
+      whyWhen: 'HAVING filters the grouped results, like keeping only planet types with more than two planets; it is how you filter on a COUNT or an AVG.',
+      watchOut: 'Put raw-row conditions in WHERE (it runs before grouping) and aggregate conditions in HAVING (it runs after); you cannot filter on COUNT(*) in WHERE.',
+      interviewNote: 'The classic probe is WHERE versus HAVING; interviewers check that you filter rows with WHERE first, then filter groups with HAVING on the aggregate.'
     }
   },
   {
@@ -224,7 +269,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'Grouped LIMIT queries aggregate, sort the groups, then keep a bounded slice.',
       mentalModel: 'Count each bucket, arrange the bucket labels, and keep the first few.',
-      example: { sql: 'SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 3', note: 'The sorted group labels decide which rows appear first.' }
+      example: { sql: 'SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 3', note: 'The sorted group labels decide which rows appear first.' },
+      whyWhen: 'This is the top-categories pattern, like the three most common discovery_method values: group the rows, sort by the count, then keep the top few.',
+      watchOut: 'Sort by the aggregate (ORDER BY n DESC) before LIMIT, or you keep an arbitrary slice instead of the biggest groups; add a tiebreaker so the ranking is stable.',
+      interviewNote: 'A very common ask is top 3 categories by count; interviewers check that you combine GROUP BY, ORDER BY the aggregate DESC, and LIMIT correctly.'
     }
   },
   {
@@ -235,7 +283,10 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'A JOIN combines related rows from two tables using matching key columns.',
       mentalModel: 'Each planet row looks up the star row with the same star_id.',
-      example: { sql: 'SELECT planets.planet_name, stars.star_name FROM planets JOIN stars ON planets.star_id = stars.star_id', note: 'The ON clause explains how the tables match.' }
+      example: { sql: 'SELECT planets.planet_name, stars.star_name FROM planets JOIN stars ON planets.star_id = stars.star_id', note: 'The ON clause explains how the tables match.' },
+      whyWhen: 'Reach for a JOIN when the answer needs columns from two tables at once, like a planet_name from planets and its host star_name from stars, linked by star_id.',
+      watchOut: 'An INNER JOIN silently drops rows with no match, so a planet whose star_id is not in stars just disappears; use LEFT JOIN when you need every planet, and suspect a NULL or mismatched key when a count looks low.',
+      interviewNote: 'Interviewers probe INNER versus LEFT (customers who never ordered needs LEFT) and watch for fan-out, where a one-to-many join multiplies rows and inflates COUNT and SUM.'
     }
   }
 ];
