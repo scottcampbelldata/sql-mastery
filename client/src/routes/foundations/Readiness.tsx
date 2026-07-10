@@ -5,6 +5,7 @@ import { frontierConcept } from '../../lib/foundations';
 import { readinessReport, type ReadinessStatus } from '../../lib/readiness';
 import { summarizeLog, getLog, clearLog } from '../../lib/learningLog';
 import { Button } from '../../components/ui';
+import { AppShell } from '../../components/AppShell';
 import './readiness.css';
 
 const STATUS_LABEL: Record<ReadinessStatus, string> = {
@@ -49,9 +50,11 @@ export function Readiness() {
   };
   const resetLog = () => { clearLog(); setLogVersion((v) => v + 1); };
 
-  if (!phases.length) return <div className="table-note">Loading your path...</div>;
+  const crumb = <span className="here">Interview readiness</span>;
+  if (!phases.length) return <AppShell breadcrumb={crumb}><div className="table-note">Loading your path...</div></AppShell>;
 
   return (
+    <AppShell breadcrumb={crumb}>
     <div className="readiness">
       <header className="rd-head">
         <h1>Interview readiness</h1>
@@ -158,5 +161,6 @@ export function Readiness() {
         </p>
       </section>
     </div>
+    </AppShell>
   );
 }

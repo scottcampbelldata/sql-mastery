@@ -7,6 +7,7 @@ import { formatSql } from '../../lib/sqlFormat';
 import { SqlEditor } from '../../components/SqlEditor';
 import { OutputDock } from './OutputDock';
 import { Button, Callout } from '../../components/ui';
+import { AppShell } from '../../components/AppShell';
 import { DiffPanel } from '../../components/DiffPanel';
 import type { Exercise, PublicInterviewProblem, InterviewSolution } from '../../types';
 import './interview.css';
@@ -64,12 +65,14 @@ export function InterviewMode() {
     logEvent({ type: 'start', exerciseId: chosen.id, skill: chosen.id, tier: 'interview' });
   }
 
-  if (loadError) return <div className="table-note">Could not load interview problems: {loadError}</div>;
-  if (!problems) return <div className="table-note">Loading interview problems...</div>;
-  if (!problems.length) return <div className="table-note">No interview problems available yet. Check back soon.</div>;
+  const crumb = <span className="here">Interview mode</span>;
+  if (loadError) return <AppShell breadcrumb={crumb}><div className="table-note">Could not load interview problems: {loadError}</div></AppShell>;
+  if (!problems) return <AppShell breadcrumb={crumb}><div className="table-note">Loading interview problems...</div></AppShell>;
+  if (!problems.length) return <AppShell breadcrumb={crumb}><div className="table-note">No interview problems available yet. Check back soon.</div></AppShell>;
 
   if (!current) {
     return (
+      <AppShell breadcrumb={crumb}>
       <div className="iv">
         <header className="iv-head">
           <h1>Interview mode</h1>
@@ -91,10 +94,12 @@ export function InterviewMode() {
           </Button>
         </div>
       </div>
+      </AppShell>
     );
   }
 
   return (
+    <AppShell breadcrumb={crumb}>
     <InterviewProblemView
       key={current.id}
       problem={current}
@@ -107,6 +112,7 @@ export function InterviewMode() {
       onNext={startProblem}
       onExit={() => setCurrent(null)}
     />
+    </AppShell>
   );
 }
 
