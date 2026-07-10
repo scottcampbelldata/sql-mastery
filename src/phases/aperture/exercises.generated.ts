@@ -654,7 +654,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "star_name"
         ],
         "rowCount": 77,
-        "orderedRowHash": "8715d532b9ab9a23b2d7c4be349d5cf8010935b905302355c9fd508a228c3920",
+        "orderedRowHash": "a948bce1057a955dca05b2d315f5ddd1b768bde5cf98681e60a430c2ec8e494d",
         "unorderedRowHash": "a948bce1057a955dca05b2d315f5ddd1b768bde5cf98681e60a430c2ec8e494d"
       }
     },
@@ -728,7 +728,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "planet_name"
         ],
         "rowCount": 140,
-        "orderedRowHash": "44a4a4f9e76b29e5c9fee8e0af9ee20b51b79d68871493a0a0dcf9f5f673cba2",
+        "orderedRowHash": "d98d8e3b236d2f29d1234f13343f9e204ff365bfc44c318150e37b11c8435545",
         "unorderedRowHash": "d98d8e3b236d2f29d1234f13343f9e204ff365bfc44c318150e37b11c8435545"
       }
     },
@@ -4248,7 +4248,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-like-1bqnnj6",
       "skill": "ap-where-like",
       "database": "aperture",
-      "task": "List star_id and star_name where star_name LIKE AT2021ueyL%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "task": "Return star_id and star_name for stars whose star_name matches AT2021ueyL%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY __BLANK_1__",
         "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4288,7 +4288,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-like-1erz9js",
       "skill": "ap-where-like",
       "database": "aperture",
-      "task": "Return star_id and star_name for stars whose star_name matches Aldebaran%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "task": "List star_id and star_name where star_name LIKE Aldebaran%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY __BLANK_1__",
         "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4328,7 +4328,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-like-1mjn1oa",
       "skill": "ap-where-like",
       "database": "aperture",
-      "task": "Return star_id and star_name for stars whose star_name matches Arcturus%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "task": "List star_id and star_name where star_name LIKE Arcturus%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY __BLANK_1__",
         "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4408,7 +4408,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-like-naspuo",
       "skill": "ap-where-like",
       "database": "aperture",
-      "task": "List star_id and star_name where star_name LIKE Antares%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
+      "task": "Return star_id and star_name for stars whose star_name matches Antares%, ordered by star_id. Return columns: star_id, star_name. Order by: star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY __BLANK_1__",
         "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
