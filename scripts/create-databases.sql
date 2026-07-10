@@ -21,6 +21,14 @@
 --   ALTER DEFAULT PRIVILEGES FOR ROLE <seeding_role> IN SCHEMA public
 --     GRANT SELECT ON TABLES TO sqlrunner;   -- set BEFORE seeding so new tables inherit it
 --   GRANT USAGE ON SCHEMA public TO sqlrunner;
+--
+-- Production ownership convention (matches the other apps on the VPS: a dedicated
+-- app-scoped role owns the tables, never a person/superuser). The app connection role
+-- (sqlrunner) stays SELECT-only for defense in depth against learner SQL:
+--   CREATE ROLE sqlmastery_owner NOLOGIN;                    -- dedicated owner, cannot log in
+-- After each seed (tables are created as the seeding superuser), transfer ownership:
+--   REASSIGN OWNED BY <seeding_role> TO sqlmastery_owner;    -- run once per database
+-- sqlrunner's SELECT grants persist across the ownership change.
 
 \set ON_ERROR_STOP on
 
