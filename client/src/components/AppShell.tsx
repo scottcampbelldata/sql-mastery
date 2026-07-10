@@ -80,6 +80,9 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
             <NavLink to="/readiness" className={({ isActive }) => cx('nav-item', isActive && 'active')}>
               <span className="nav-ico">IR</span><span className="nav-label">Interview readiness</span>
             </NavLink>
+            <NavLink to="/interview" className={({ isActive }) => cx('nav-item', isActive && 'active')}>
+              <span className="nav-ico">IM</span><span className="nav-label">Interview mode</span>
+            </NavLink>
           </div>
           <div className="nav-group">
             <span className="nav-group-label">Explore</span>
