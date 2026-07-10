@@ -205,6 +205,49 @@ function blankSpans(sql: string, spans: Array<{ innerStart: number; innerEnd: nu
   return { text: out, map };
 }
 
+// Split a SELECT body into its top-level, comma-separated item spans (respecting parens and
+// strings), so a plain column list can get one blank per column.
+function selectItemSpans(sql: string, body: { innerStart: number; innerEnd: number }): Array<{ innerStart: number; innerEnd: number }> {
+  const text = sql.slice(body.innerStart, body.innerEnd);
+  const spans: Array<{ innerStart: number; innerEnd: number }> = [];
+  let depth = 0;
+  let inStr = false;
+  let start = 0;
+  const push = (from: number, to: number) => {
+    let s = from;
+    let e = to;
+    while (s < e && /\s/.test(text[s])) s += 1;
+    while (e > s && /\s/.test(text[e - 1])) e -= 1;
+    if (e > s) spans.push({ innerStart: body.innerStart + s, innerEnd: body.innerStart + e });
+  };
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    if (ch === "'") inStr = !inStr;
+    else if (!inStr && ch === '(') depth += 1;
+    else if (!inStr && ch === ')') depth -= 1;
+    else if (!inStr && depth === 0 && ch === ',') { push(start, i); start = i + 1; }
+  }
+  push(start, text.length);
+  return spans;
+}
+
+// A bare (optionally table-qualified, optionally aliased) column reference - as opposed to a
+// function call, window expression, or CASE. A plain list of these is what a beginner should
+// fill one blank at a time.
+function isSimpleColumn(item: string): boolean {
+  return /^[a-zA-Z_][a-zA-Z0-9_.]*(\s+as\s+[a-zA-Z_][a-zA-Z0-9_]*)?$/i.test(item.trim());
+}
+
+// The clause region(s) to blank for a focus. A plain column list in the beginner tier blanks
+// per column (SELECT ____, ____, ____); everything else blanks the whole clause as one.
+function focusSpansFor(sql: string, focus: FocusTarget, focusSpan: { innerStart: number; innerEnd: number }, which: 'full' | 'half'): Array<{ innerStart: number; innerEnd: number }> {
+  if (focus === 'projection' && which === 'full') {
+    const items = selectItemSpans(sql, focusSpan);
+    if (items.length > 1 && items.every((sp) => isSimpleColumn(sql.slice(sp.innerStart, sp.innerEnd)))) return items;
+  }
+  return [focusSpan];
+}
+
 // Blank the concept-carrying clause. 'full' blanks just that clause (most help); 'half' also
 // blanks the later-half clauses so it stays harder than full, but the concept is always
 // blanked. Returns null if the clause is not present (caller falls back to defaults).
@@ -212,10 +255,11 @@ function buildFocusTier(sql: string, focus: FocusTarget, which: 'full' | 'half')
   const all = topLevelClauseBodies(sql);
   const focusSpan = all.find((span) => span.keyword === FOCUS_CLAUSE[focus]);
   if (!focusSpan) return null;
-  if (which === 'full') return blankSpans(sql, [focusSpan]);
+  const focusSpans = focusSpansFor(sql, focus, focusSpan, which);
+  if (which === 'full') return blankSpans(sql, focusSpans);
   const later = all.slice(Math.ceil(all.length / 2));
   const byStart = new Map<number, { innerStart: number; innerEnd: number }>();
-  for (const span of [focusSpan, ...later]) byStart.set(span.innerStart, span);
+  for (const span of [...focusSpans, ...later]) byStart.set(span.innerStart, span);
   return blankSpans(sql, [...byStart.values()]);
 }
 
