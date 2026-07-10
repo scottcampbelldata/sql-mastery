@@ -95,6 +95,100 @@ export const INTERVIEW_FINGERPRINTS: Record<string, Fingerprint> = {
     "orderedRowHash": "cb691bd3c1c0b20c44ba0d3cfb26d7d33c9ac01fff09ff970d953670b5c570d2",
     "unorderedRowHash": "cb691bd3c1c0b20c44ba0d3cfb26d7d33c9ac01fff09ff970d953670b5c570d2"
   },
+  "iv-ap-warm-worlds-1": {
+    "columns": [
+      "planet_name",
+      "planet_type",
+      "equilibrium_temp_k"
+    ],
+    "rowCount": 23,
+    "orderedRowHash": "1141243e7b88ad989da9ca745ac4868ee6ad93bf43c14225da5947a7e318dd10",
+    "unorderedRowHash": "81e9a59569fd9d5c6f4e343b43477d5a1799a17cbda0a786d5c3f047bc2f398d"
+  },
+  "iv-ap-rocky-target-list-1": {
+    "columns": [
+      "planet_name",
+      "planet_type"
+    ],
+    "rowCount": 60,
+    "orderedRowHash": "fb197d94f2f6e1ebf08912f6b7367ba4ee24fabffde4b590af3b2b0ed8cb0562",
+    "unorderedRowHash": "daf89a2a34e8fb5e45d3a9c4bd4ab878eb87dc44396ee3946c35f7cf3242e884"
+  },
+  "iv-ap-henry-draper-hosts-1": {
+    "columns": [
+      "star_name",
+      "spectral_type",
+      "distance_ly"
+    ],
+    "rowCount": 16,
+    "orderedRowHash": "5ac3e9141aaf2f971c6dacd6f87eac060dd47597b96019634762ac9dda77ef2e",
+    "unorderedRowHash": "5ac3e9141aaf2f971c6dacd6f87eac060dd47597b96019634762ac9dda77ef2e"
+  },
+  "iv-ap-missing-temp-audit-1": {
+    "columns": [
+      "planet_name",
+      "discovery_method",
+      "discovery_year"
+    ],
+    "rowCount": 9,
+    "orderedRowHash": "765386287b6f65d1c479abb91b3d79aaf1a5b5049f35c4562a0dd3a0f5353680",
+    "unorderedRowHash": "765386287b6f65d1c479abb91b3d79aaf1a5b5049f35c4562a0dd3a0f5353680"
+  },
+  "iv-ap-method-picklist-1": {
+    "columns": [
+      "discovery_method"
+    ],
+    "rowCount": 5,
+    "orderedRowHash": "181d7815eb04aba3d1697309282f4238918768c5c2798e5dcafe0454e65ef42d",
+    "unorderedRowHash": "181d7815eb04aba3d1697309282f4238918768c5c2798e5dcafe0454e65ef42d"
+  },
+  "iv-ap-long-period-years-1": {
+    "columns": [
+      "planet_name",
+      "orbital_period_days",
+      "orbital_period_years"
+    ],
+    "rowCount": 8,
+    "orderedRowHash": "34f78ed8a27629a6f906d9306c886d5991f634303f25ad3596369f5997321799",
+    "unorderedRowHash": "0b343e71d99773798d5e95eb5904f856db552de57d4f713c88e6a6f02344e7da"
+  },
+  "iv-ap-temp-coverage-1": {
+    "columns": [
+      "total_planets",
+      "planets_with_temp"
+    ],
+    "rowCount": 1,
+    "orderedRowHash": "3b75760c1f9c46d991176862de8f9d478ae53a045ad740b2191ead8a80e0e406",
+    "unorderedRowHash": "3b75760c1f9c46d991176862de8f9d478ae53a045ad740b2191ead8a80e0e406"
+  },
+  "iv-ap-stellar-census-1": {
+    "columns": [
+      "spectral_type",
+      "star_count"
+    ],
+    "rowCount": 7,
+    "orderedRowHash": "e2cc9254edd09ac08e0dfb5fc75f8907e3424ea90cf2e1a064c5256abc3ca1cd",
+    "unorderedRowHash": "96fa0d99fc2e634c361426c0848129d86a1ac64f1d19f7101ffca8026cb336cb"
+  },
+  "iv-ap-multi-planet-systems-1": {
+    "columns": [
+      "star_name",
+      "planet_count"
+    ],
+    "rowCount": 28,
+    "orderedRowHash": "55f42a9cdb5c26b357ec5efd9b7a8e9de98751e0679b429832fb8c6eebc5064b",
+    "unorderedRowHash": "af037f006426af395fa93aa09640df376a18f1cde26871124ae8d2d28734dc55"
+  },
+  "iv-ap-massive-by-facility-1": {
+    "columns": [
+      "planet_name",
+      "mass_earth",
+      "facility_name"
+    ],
+    "rowCount": 10,
+    "orderedRowHash": "ea0eec50a7fea49ac0934f04f82ee147840986d34875cdf52b0457c08c6f7ddb",
+    "unorderedRowHash": "9959aa357a03df95e760435a826c8ed37ce039840a36af50ea3c418dbe6ab8e7"
+  },
   "iv-sl-kr-roster-1": {
     "columns": [
       "handle",
@@ -219,6 +313,165 @@ export const INTERVIEW_FINGERPRINTS: Record<string, Fingerprint> = {
     "rowCount": 18,
     "orderedRowHash": "45d1fada034bd0e7d0ff233ce79ecd5062b826b2feeebcba5dc3d55cf3deea4c",
     "unorderedRowHash": "4eb6add380cd080b8d0c9f14d5ed2d8f87573f1573a0d1535b93ae37c01431ef"
+  },
+  "iv-sl-grand-finals-1": {
+    "columns": [
+      "tournament_name",
+      "match_datetime",
+      "team_a",
+      "team_b",
+      "winner_name"
+    ],
+    "rowCount": 6,
+    "orderedRowHash": "2de706e4bf38dc870f0ca6336a8eaa63e8076ef260f0911bdebfcc80dd180412",
+    "unorderedRowHash": "82ddfd8143a121082de9b0952f9cb31d5c9692ce6c4fcb4d32330bfc54ca3f29"
+  },
+  "iv-sl-free-agent-roster-1": {
+    "columns": [
+      "handle",
+      "team_name",
+      "total_earnings_usd"
+    ],
+    "rowCount": 54,
+    "orderedRowHash": "501af7f9329fe4a677573868e32f0ec524c303da396fefdd906bf1488965855f",
+    "unorderedRowHash": "1a641149a70b5b683bfc2de09dfb087652c436f50a1ef8431781479c9da37e9c"
+  },
+  "iv-sl-no-match-win-1": {
+    "columns": [
+      "team_name",
+      "region_code",
+      "elo_rating"
+    ],
+    "rowCount": 6,
+    "orderedRowHash": "53d67dd1085d300782d74f19141ee2b6d1c07dac6d8f0fc8eaaa4281be8906c2",
+    "unorderedRowHash": "1741144c712562b25123b134faaa24ab58695ee3ece8669060c19eae7a14ddf1"
+  },
+  "iv-sl-empty-roster-1": {
+    "columns": [
+      "team_name",
+      "region_code",
+      "founded_date"
+    ],
+    "rowCount": 1,
+    "orderedRowHash": "7c4d1b7617254e09f844d14513b0d50bfbeef0026c073961b58582236f05d066",
+    "unorderedRowHash": "7c4d1b7617254e09f844d14513b0d50bfbeef0026c073961b58582236f05d066"
+  },
+  "iv-sl-no-roster-change-1": {
+    "columns": [
+      "handle",
+      "role",
+      "country"
+    ],
+    "rowCount": 9,
+    "orderedRowHash": "9e495e0559f57998b4a32e159658f064a7799fc5c55402f7c0aabb28df222af5",
+    "unorderedRowHash": "9e495e0559f57998b4a32e159658f064a7799fc5c55402f7c0aabb28df222af5"
+  },
+  "iv-sl-gf-winners-1": {
+    "columns": [
+      "team_name",
+      "region_code",
+      "elo_rating"
+    ],
+    "rowCount": 31,
+    "orderedRowHash": "659d66316162cdbefc11d9702cb16b1f80789976a622a4348f2d95dd1b66cf0b",
+    "unorderedRowHash": "d952ccde25406365d58beee58d9cedae793d68a079accdb2701384f2b2c77d8c"
+  },
+  "iv-sl-earnings-gap-1": {
+    "columns": [
+      "team_name",
+      "higher_earner",
+      "higher_earnings",
+      "lower_earner",
+      "lower_earnings"
+    ],
+    "rowCount": 76,
+    "orderedRowHash": "35ff6b9d818b49f67c9655ac4259ad71fbdca17c0bd41321d250e93fe48fa43f",
+    "unorderedRowHash": "35ff6b9d818b49f67c9655ac4259ad71fbdca17c0bd41321d250e93fe48fa43f"
+  },
+  "iv-sl-elo-behind-top-1": {
+    "columns": [
+      "team_name",
+      "region_code",
+      "elo_rating",
+      "league_top_elo",
+      "gap_to_top"
+    ],
+    "rowCount": 40,
+    "orderedRowHash": "4312e9038cd0d1beffd4729b7d6a439d16cc971d481e23280a9a11ce83e079e9",
+    "unorderedRowHash": "0fcc76ed1bf28f43ba3e939ef0890dcba99ff507af97316ffd10e804fa6d0484"
+  },
+  "iv-sl-tournament-load-1": {
+    "columns": [
+      "tournament_name",
+      "tier",
+      "match_count"
+    ],
+    "rowCount": 24,
+    "orderedRowHash": "2ebc818be12bc4159558c8331f5d9a48261c3df171851ef6dcf88e24c5a2c691",
+    "unorderedRowHash": "80a93c0eb7ea2a142ebcb0cad8502d7f50d4d3445a8bc7e9160c5f12edbd50c9"
+  },
+  "iv-sl-qualified-teams-1": {
+    "columns": [
+      "team_name",
+      "region_code",
+      "elo_rating"
+    ],
+    "rowCount": 31,
+    "orderedRowHash": "c0b3b5402d385340a68515f20597842ac2b7649b2e873771a7d55a2e4f09c298",
+    "unorderedRowHash": "c0b3b5402d385340a68515f20597842ac2b7649b2e873771a7d55a2e4f09c298"
+  },
+  "iv-sl-talent-no-sponsor-1": {
+    "columns": [
+      "country"
+    ],
+    "rowCount": 10,
+    "orderedRowHash": "e0dc5cf0bbe43cbef33ec134f3a59066b9cf04413dd8113e47d8df8b03e76eb6",
+    "unorderedRowHash": "e0dc5cf0bbe43cbef33ec134f3a59066b9cf04413dd8113e47d8df8b03e76eb6"
+  },
+  "iv-sl-tournament-span-1": {
+    "columns": [
+      "tournament_name",
+      "start_date",
+      "end_date",
+      "days_long",
+      "start_month"
+    ],
+    "rowCount": 24,
+    "orderedRowHash": "295cf9533276563a26da3a372801240a0eb9afbcfa8ab2aff42329bdfe014f2a",
+    "unorderedRowHash": "6e7b73df16534e749ec6a367a37d7b5ac981c3bac40e3aeb879704fdc7ecf092"
+  },
+  "iv-sl-team-top2-1": {
+    "columns": [
+      "team_name",
+      "handle",
+      "total_earnings_usd",
+      "team_rank"
+    ],
+    "rowCount": 78,
+    "orderedRowHash": "88b39ad01f60d2e0908b1ec2546856a9466f45f2509eeba62b6d0aa9356aed31",
+    "unorderedRowHash": "1d1c3430c84fd875bee714df868656dcc17292a0d7a8c48e9855f6df150cfd68"
+  },
+  "iv-sl-prize-movingavg-1": {
+    "columns": [
+      "tournament_name",
+      "start_date",
+      "prize_pool_usd",
+      "moving_avg_3"
+    ],
+    "rowCount": 24,
+    "orderedRowHash": "be67e5830b9cc2722139661f4431f06f402803c1eeb2f78a8b97dbf8a549aed8",
+    "unorderedRowHash": "409927ec829b425a57bd23682a13f2bec2ab0d0899138e33f304afa745cafd67"
+  },
+  "iv-sl-elo-quartile-1": {
+    "columns": [
+      "team_name",
+      "region_code",
+      "elo_rating",
+      "elo_tier"
+    ],
+    "rowCount": 40,
+    "orderedRowHash": "aec33876776cb000c263bfd319fff1175cb35e2f86e702f69049aa3926142b9c",
+    "unorderedRowHash": "e6031a5f3da7e98ba3bebbc7b5369442bbeceb6882d3bfe054f0e1c2647cb081"
   },
   "iv-rv-payment-dedup-1": {
     "columns": [
@@ -347,5 +600,232 @@ export const INTERVIEW_FINGERPRINTS: Record<string, Fingerprint> = {
     "rowCount": 24,
     "orderedRowHash": "b720e697943f6e781d8344e788c3ae5fe89eadeeae605d08475fd0ac6bf72d5f",
     "unorderedRowHash": "55140a7501383f560286e9691fc919815b33602e7bce2287a0e840dd290eb8be"
+  },
+  "iv-rv-promo-redemption-dedup-1": {
+    "columns": [
+      "promo_id",
+      "redemptions",
+      "unique_customers",
+      "repeat_redemptions",
+      "repeat_discount_cents"
+    ],
+    "rowCount": 10,
+    "orderedRowHash": "eb1bb99501f9514c6ea52464b42f7b44b8431553a83411443e0af62af6a2a09d",
+    "unorderedRowHash": "022f9e0461cc6fbdb01c1370a8bc5f777d88c42b577db82b6c164f12ce73cfaf"
+  },
+  "iv-rv-payment-capture-dedup-1": {
+    "columns": [
+      "method",
+      "deduped_payments",
+      "deduped_amount_cents"
+    ],
+    "rowCount": 6,
+    "orderedRowHash": "934832c1c2327f2ae94220154714beefe44a7c2efae9646be7c5b227c5dfe5a7",
+    "unorderedRowHash": "934832c1c2327f2ae94220154714beefe44a7c2efae9646be7c5b227c5dfe5a7"
+  },
+  "iv-rv-merchant-revenue-topn-1": {
+    "columns": [
+      "category",
+      "merchant_id",
+      "name",
+      "revenue_cents",
+      "rnk"
+    ],
+    "rowCount": 18,
+    "orderedRowHash": "8255384843bec95e9ee3e306f61576d0eb3a78bfb7df106c9670afab6bf24aad",
+    "unorderedRowHash": "2731bc33c724facef8f66d3aa1e0741db0103028ff9980a07ead17b3d7129c50"
+  },
+  "iv-rv-courier-vclass-topn-1": {
+    "columns": [
+      "vehicle_class",
+      "courier_id",
+      "lifetime_deliveries",
+      "rnk"
+    ],
+    "rowCount": 8,
+    "orderedRowHash": "810c16ac215e9039d1f73f349b335eefd5f88d3d9eeb21670abfd0e493421a32",
+    "unorderedRowHash": "810c16ac215e9039d1f73f349b335eefd5f88d3d9eeb21670abfd0e493421a32"
+  },
+  "iv-rv-funnel-step-conv-1": {
+    "columns": [
+      "stage_rank",
+      "stage",
+      "customers",
+      "pct_of_previous"
+    ],
+    "rowCount": 5,
+    "orderedRowHash": "88c3783fb873753943a24b6e85ace9c5ee25bff773442b659daa2e5062739be9",
+    "unorderedRowHash": "88c3783fb873753943a24b6e85ace9c5ee25bff773442b659daa2e5062739be9"
+  },
+  "iv-rv-weekly-signup-cohort-1": {
+    "columns": [
+      "cohort_week",
+      "week_offset",
+      "cohort_size",
+      "retained",
+      "retention_pct"
+    ],
+    "rowCount": 20,
+    "orderedRowHash": "cc1e4362ccbec74a7b8187ac97842c14fd34895b7cd5fc23b3cf5dd7b5999326",
+    "unorderedRowHash": "cc1e4362ccbec74a7b8187ac97842c14fd34895b7cd5fc23b3cf5dd7b5999326"
+  },
+  "iv-rv-sessionization-bounce-1": {
+    "columns": [
+      "session_day",
+      "sessions",
+      "bounce_sessions",
+      "bounce_pct",
+      "avg_events"
+    ],
+    "rowCount": 7,
+    "orderedRowHash": "78f2367425d9d11049b290987763e9d41a5bcd350ae7564403eedf4be355bf24",
+    "unorderedRowHash": "78f2367425d9d11049b290987763e9d41a5bcd350ae7564403eedf4be355bf24"
+  },
+  "iv-rv-gmv-movingavg-1": {
+    "columns": [
+      "order_date",
+      "gmv_cents",
+      "ma14_cents"
+    ],
+    "rowCount": 91,
+    "orderedRowHash": "9791b47faa7ba6364ad9e5fab9f6115634e41a1ee20ef2ca95c0d6e868e4606a",
+    "unorderedRowHash": "9791b47faa7ba6364ad9e5fab9f6115634e41a1ee20ef2ca95c0d6e868e4606a"
+  },
+  "iv-rv-spend-quartiles-1": {
+    "columns": [
+      "quartile",
+      "customers",
+      "min_spend_cents",
+      "max_spend_cents",
+      "total_spend_cents"
+    ],
+    "rowCount": 4,
+    "orderedRowHash": "924cb502e5bbcfdb9886821982c9cd5d79a42f69282805b1ca9f9bde23065485",
+    "unorderedRowHash": "924cb502e5bbcfdb9886821982c9cd5d79a42f69282805b1ca9f9bde23065485"
+  },
+  "iv-rv-amount-percentiles-1": {
+    "columns": [
+      "category",
+      "orders",
+      "median_cents",
+      "p90_cents"
+    ],
+    "rowCount": 6,
+    "orderedRowHash": "aed8d1c6e04db71e9438811bce37349b488d5533f07cd44b80e0a920a75451d1",
+    "unorderedRowHash": "aed8d1c6e04db71e9438811bce37349b488d5533f07cd44b80e0a920a75451d1"
+  },
+  "iv-rv-distance-bands-1": {
+    "columns": [
+      "distance_band",
+      "orders",
+      "pct_of_orders",
+      "avg_amount_cents"
+    ],
+    "rowCount": 5,
+    "orderedRowHash": "3c09154232de2598ec5293107ad888cb2e25e28d007a954a553ab313173632dc",
+    "unorderedRowHash": "3c09154232de2598ec5293107ad888cb2e25e28d007a954a553ab313173632dc"
+  },
+  "iv-rv-orphan-courier-1": {
+    "columns": [
+      "order_month",
+      "orphaned_orders",
+      "orphaned_amount_cents"
+    ],
+    "rowCount": 12,
+    "orderedRowHash": "d361835fd8f3ef019db5af3d3eaa8402def2bf919b19535e331f04384f7cab18",
+    "unorderedRowHash": "d361835fd8f3ef019db5af3d3eaa8402def2bf919b19535e331f04384f7cab18"
+  },
+  "iv-rv-promo-never-redeemed-1": {
+    "columns": [
+      "promo_id",
+      "code",
+      "promo_type",
+      "city_id",
+      "starts_on",
+      "ends_on"
+    ],
+    "rowCount": 6,
+    "orderedRowHash": "c6b0289f41dea7e83ac3a38a70bab3d5e82cdec2c9b9e0156e9b18cff56e6509",
+    "unorderedRowHash": "c6b0289f41dea7e83ac3a38a70bab3d5e82cdec2c9b9e0156e9b18cff56e6509"
+  },
+  "iv-rv-never-ordered-signup-1": {
+    "columns": [
+      "acquisition_channel",
+      "signups",
+      "never_ordered",
+      "never_ordered_pct"
+    ],
+    "rowCount": 5,
+    "orderedRowHash": "70f6a6c675d6d2a990d813ee1cf837b9fc5badb6a0ba988587fd80257f4714a7",
+    "unorderedRowHash": "70f6a6c675d6d2a990d813ee1cf837b9fc5badb6a0ba988587fd80257f4714a7"
+  },
+  "iv-rv-category-path-1": {
+    "columns": [
+      "category_id",
+      "name",
+      "depth",
+      "path"
+    ],
+    "rowCount": 34,
+    "orderedRowHash": "ffef5f27a9710745f3e3b4656d07bdf02055e1487dfaa28a410672e94d9a1923",
+    "unorderedRowHash": "dfeb56f31f410325a3150a808ba5c5d8b0110b62d835a8247bed23b9066e697f"
+  },
+  "iv-rv-payment-legacy-reconcile-1": {
+    "columns": [
+      "pay_date",
+      "payments",
+      "parsed",
+      "unparsed",
+      "legacy_cents",
+      "clean_cents"
+    ],
+    "rowCount": 31,
+    "orderedRowHash": "8f55ffb8243f06b8fd1f1199ad4c30e0620fdf7938a8ff54f530dac426bf60ee",
+    "unorderedRowHash": "8f55ffb8243f06b8fd1f1199ad4c30e0620fdf7938a8ff54f530dac426bf60ee"
+  },
+  "iv-rv-rating-sentinel-1": {
+    "columns": [
+      "rating_month",
+      "ratings",
+      "valid_ratings",
+      "invalid_ratings",
+      "avg_valid_stars"
+    ],
+    "rowCount": 12,
+    "orderedRowHash": "29497dcea0a92d0d366af41191815c523af3ee635670f0d708cb7a80e8e6b5e1",
+    "unorderedRowHash": "29497dcea0a92d0d366af41191815c523af3ee635670f0d708cb7a80e8e6b5e1"
+  },
+  "iv-rv-status-canon-1": {
+    "columns": [
+      "stage_rank",
+      "stage",
+      "orders",
+      "pct_of_orders"
+    ],
+    "rowCount": 5,
+    "orderedRowHash": "8f607b3a8a496eae463a8922ba849bf4520c564c5a63d237283d1d38c3416849",
+    "unorderedRowHash": "8f607b3a8a496eae463a8922ba849bf4520c564c5a63d237283d1d38c3416849"
+  },
+  "iv-rv-utc-date-rollover-1": {
+    "columns": [
+      "local_date",
+      "orders",
+      "rolled_next_utc_day",
+      "rolled_pct"
+    ],
+    "rowCount": 31,
+    "orderedRowHash": "f6a90252ab53ee7c35d37c21b75808f0650fa2ec7acebc7711d555f6080ecf38",
+    "unorderedRowHash": "f6a90252ab53ee7c35d37c21b75808f0650fa2ec7acebc7711d555f6080ecf38"
+  },
+  "iv-rv-payment-status-canon-1": {
+    "columns": [
+      "canonical_status",
+      "payments",
+      "pct_of_payments",
+      "amount_cents"
+    ],
+    "rowCount": 3,
+    "orderedRowHash": "6ce9b7ea615a4a1a6f0764f1b6e27ca20ab18b90bbd8b8b9537e17a9dc1b3018",
+    "unorderedRowHash": "6ce9b7ea615a4a1a6f0764f1b6e27ca20ab18b90bbd8b8b9537e17a9dc1b3018"
   }
 };

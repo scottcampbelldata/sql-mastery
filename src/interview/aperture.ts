@@ -224,4 +224,222 @@ ORDER BY p.planet_name;`,
     orderMatters: true,
     rowCeiling: 60,
   },
+  // Second content pass: 10 additional beginner problems (filters, DISTINCT, computed, aggregates, joins).
+  {
+    id: 'iv-ap-warm-worlds-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 1,
+    scenario:
+      'The atmospheric characterization team is choosing temperate targets for biosignature follow-up. They want the planets whose equilibrium temperature sits in the roughly liquid-water range of 250 to 350 K.',
+    task: 'Return planet_name, planet_type, and equilibrium_temp_k for planets whose equilibrium_temp_k is between 250 and 350 inclusive. Sort by equilibrium_temp_k ascending, then planet_name ascending.',
+    expectedSql:
+      'SELECT planet_name, planet_type, equilibrium_temp_k FROM planets WHERE equilibrium_temp_k BETWEEN 250 AND 350 ORDER BY equilibrium_temp_k, planet_name',
+    modelAnswer: `-- BETWEEN is inclusive on both bounds; NULL temps drop out automatically.
+SELECT planet_name,
+       planet_type,
+       equilibrium_temp_k
+FROM planets
+WHERE equilibrium_temp_k BETWEEN 250 AND 350
+ORDER BY equilibrium_temp_k, planet_name;`,
+    approachNote:
+      'BETWEEN 250 AND 350 is inclusive of both endpoints, the same as >= 250 AND <= 350. Planets with a NULL equilibrium_temp_k are excluded without any extra clause, since NULL satisfies neither bound. The planet_name tie-breaker keeps equal temperatures in a fixed order.',
+    orderMatters: true,
+    rowCeiling: 30,
+  },
+  {
+    id: 'iv-ap-rocky-target-list-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 1,
+    scenario:
+      'A small-planet working group is drawing up a rocky-worlds target list. They only care about two classes: Terrestrial and Super-Earth planets.',
+    task: "Return planet_name and planet_type for planets whose planet_type is either 'Terrestrial' or 'Super-Earth', selected with an IN list. Sort by planet_type ascending, then planet_name ascending.",
+    expectedSql:
+      "SELECT planet_name, planet_type FROM planets WHERE planet_type IN ('Terrestrial', 'Super-Earth') ORDER BY planet_type, planet_name",
+    modelAnswer: `-- IN is the compact way to match a small set of allowed values.
+SELECT planet_name,
+       planet_type
+FROM planets
+WHERE planet_type IN ('Terrestrial', 'Super-Earth')
+ORDER BY planet_type, planet_name;`,
+    approachNote:
+      "IN ('Terrestrial', 'Super-Earth') reads better than planet_type = 'Terrestrial' OR planet_type = 'Super-Earth' and returns the same rows. The common slip is mismatching the exact stored spelling (the class is 'Super-Earth', with a hyphen). planet_name breaks ties within each type.",
+    orderMatters: true,
+    rowCeiling: 70,
+  },
+  {
+    id: 'iv-ap-henry-draper-hosts-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 1,
+    scenario:
+      'An archivist is cross-matching the survey host stars against the historical Henry Draper (HD) catalogue. She needs every host whose designation begins with the HD prefix.',
+    task: "Return star_name, spectral_type, and distance_ly for stars whose star_name starts with 'HD ' (use LIKE). Sort by star_name ascending.",
+    expectedSql:
+      "SELECT star_name, spectral_type, distance_ly FROM stars WHERE star_name LIKE 'HD %' ORDER BY star_name",
+    modelAnswer: `-- % is the multi-character wildcard; anchor the prefix on the left.
+SELECT star_name,
+       spectral_type,
+       distance_ly
+FROM stars
+WHERE star_name LIKE 'HD %'
+ORDER BY star_name;`,
+    approachNote:
+      "LIKE 'HD %' matches any name beginning with 'HD ' followed by anything. Keeping the trailing space in the pattern avoids catching other catalogues that merely start with the letters HD. Using = instead of LIKE, or dropping the %, would only match that exact literal text.",
+    orderMatters: true,
+    rowCeiling: 25,
+  },
+  {
+    id: 'iv-ap-missing-temp-audit-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 1,
+    scenario:
+      'The catalog data steward is running a completeness audit. Some planets never had an equilibrium temperature recorded, and she needs that gap list so the modelling team can backfill the values.',
+    task: 'Return planet_name, discovery_method, and discovery_year for planets whose equilibrium_temp_k is missing (IS NULL). Sort by planet_name ascending.',
+    expectedSql:
+      'SELECT planet_name, discovery_method, discovery_year FROM planets WHERE equilibrium_temp_k IS NULL ORDER BY planet_name',
+    modelAnswer: `-- Missing values are tested with IS NULL, never with = NULL.
+SELECT planet_name,
+       discovery_method,
+       discovery_year
+FROM planets
+WHERE equilibrium_temp_k IS NULL
+ORDER BY planet_name;`,
+    approachNote:
+      'Use WHERE equilibrium_temp_k IS NULL to find the missing values. The classic mistake is equilibrium_temp_k = NULL, which evaluates to UNKNOWN for every row and returns nothing, because NULL is never equal to anything.',
+    orderMatters: true,
+    rowCeiling: 15,
+  },
+  {
+    id: 'iv-ap-method-picklist-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 1,
+    scenario:
+      'A front-end developer is building the discovery-method filter dropdown for the public catalog site. He needs the distinct list of methods actually used, with no duplicates.',
+    task: 'Return the distinct discovery_method values, one row per method. Sort by discovery_method ascending.',
+    expectedSql:
+      'SELECT DISTINCT discovery_method FROM planets ORDER BY discovery_method',
+    modelAnswer: `-- DISTINCT collapses the 140 planet rows down to one row per method.
+SELECT DISTINCT discovery_method
+FROM planets
+ORDER BY discovery_method;`,
+    approachNote:
+      'SELECT DISTINCT removes duplicate rows, leaving one entry per method; GROUP BY discovery_method would give the same result. Omitting DISTINCT returns one row per planet (140 of them) with heavy repetition, which is wrong for a pick-list.',
+    orderMatters: true,
+    rowCeiling: 10,
+  },
+  {
+    id: 'iv-ap-long-period-years-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 2,
+    scenario:
+      'A mission-planning analyst is reasoning about revisit cadence for the widest orbits in the catalog. For the long-period planets (an orbital period over 10,000 days) she wants the period expressed in Earth years rather than days.',
+    task: 'For planets with orbital_period_days greater than 10000, return planet_name, orbital_period_days, and a computed column orbital_period_years equal to orbital_period_days divided by 365.25, rounded to 2 decimal places. Sort by orbital_period_days descending, then planet_name ascending.',
+    expectedSql:
+      'SELECT planet_name, orbital_period_days, round(orbital_period_days / 365.25, 2) AS orbital_period_years FROM planets WHERE orbital_period_days > 10000 ORDER BY orbital_period_days DESC, planet_name',
+    modelAnswer: `-- Derive the years column with arithmetic in the SELECT list, then alias it.
+SELECT planet_name,
+       orbital_period_days,
+       round(orbital_period_days / 365.25, 2) AS orbital_period_years
+FROM planets
+WHERE orbital_period_days > 10000
+ORDER BY orbital_period_days DESC, planet_name;`,
+    approachNote:
+      'Build the derived column in the SELECT list and name it with AS. Dividing by 365.25 (not 365) accounts for leap years, and round(..., 2) trims to two decimals. orbital_period_days is a numeric column, so there is no integer-division surprise here; forgetting the alias or the rounding are the usual slips.',
+    orderMatters: true,
+    rowCeiling: 15,
+  },
+  {
+    id: 'iv-ap-temp-coverage-1',
+    database: 'aperture',
+    level: 'beginner',
+    difficulty: 2,
+    scenario:
+      'The data-quality dashboard needs a one-line coverage metric for equilibrium temperature: how many planets exist in total, and how many of them actually carry a recorded temperature.',
+    task: 'Return a single row with total_planets (the count of all planets) and planets_with_temp (the count of planets that have a non-null equilibrium_temp_k).',
+    expectedSql:
+      'SELECT count(*) AS total_planets, count(equilibrium_temp_k) AS planets_with_temp FROM planets',
+    modelAnswer: `-- count(*) counts rows; count(col) counts only the non-null values of that column.
+SELECT count(*)                  AS total_planets,
+       count(equilibrium_temp_k) AS planets_with_temp
+FROM planets;`,
+    approachNote:
+      'count(*) tallies every row, while count(equilibrium_temp_k) ignores the NULLs, so the difference between the two numbers is exactly the count of missing temperatures. Using count(*) for both columns would report the same number twice and hide the incompleteness.',
+    orderMatters: false,
+    rowCeiling: 1,
+  },
+  {
+    id: 'iv-ap-stellar-census-1',
+    database: 'aperture',
+    level: 'beginner',
+    pattern: 'group-by',
+    difficulty: 1,
+    scenario:
+      'The stellar astrophysics group wants a quick census of the host-star catalog broken down by spectral class, to see how far the sample skews toward cool stars.',
+    task: 'For each spectral_type, return spectral_type and the number of stars as star_count. Sort by star_count descending, then spectral_type ascending.',
+    expectedSql:
+      'SELECT spectral_type, count(*) AS star_count FROM stars GROUP BY spectral_type ORDER BY count(*) DESC, spectral_type',
+    modelAnswer: `-- Group the star rows by class and count each bucket.
+SELECT spectral_type,
+       count(*) AS star_count
+FROM stars
+GROUP BY spectral_type
+ORDER BY count(*) DESC, spectral_type;`,
+    approachNote:
+      'Group by the class column and count rows per group, then order by the tally with spectral_type as a tie-breaker. This aggregate runs over the stars table rather than planets; a frequent error is selecting a column that is neither grouped nor aggregated, which Postgres rejects.',
+    orderMatters: true,
+    rowCeiling: 10,
+  },
+  {
+    id: 'iv-ap-multi-planet-systems-1',
+    database: 'aperture',
+    level: 'beginner',
+    pattern: 'having',
+    difficulty: 2,
+    scenario:
+      'A researcher studying planetary system architectures wants the multi-planet systems in the catalog: host stars that have more than one confirmed planet, and how many each holds.',
+    task: 'Join planets to stars and, for each host star with more than one planet, return star_name and the planet tally as planet_count. Sort by planet_count descending, then star_name ascending.',
+    expectedSql:
+      'SELECT s.star_name, count(*) AS planet_count FROM planets p JOIN stars s ON s.star_id = p.star_id GROUP BY s.star_name HAVING count(*) > 1 ORDER BY count(*) DESC, s.star_name',
+    modelAnswer: `-- HAVING filters the grouped rows after counting; WHERE cannot see count(*).
+SELECT s.star_name,
+       count(*) AS planet_count
+FROM planets p
+JOIN stars s ON s.star_id = p.star_id
+GROUP BY s.star_name
+HAVING count(*) > 1
+ORDER BY count(*) DESC, s.star_name;`,
+    approachNote:
+      'Group the joined rows by star, then keep only groups with more than one planet using HAVING count(*) > 1 (WHERE runs before aggregation and cannot reference the count). star_name is unique, so grouping on it is safe and gives a readable label instead of the numeric star_id.',
+    orderMatters: true,
+    rowCeiling: 35,
+  },
+  {
+    id: 'iv-ap-massive-by-facility-1',
+    database: 'aperture',
+    level: 'beginner',
+    pattern: 'top-n',
+    difficulty: 2,
+    scenario:
+      'An extreme-worlds feature will spotlight the ten most massive planets in the catalog and credit the observatory that discovered each one.',
+    task: 'Join planets to facility and return planet_name, mass_earth, and the facility name as facility_name for the ten most massive planets by mass_earth. Sort by mass_earth descending, then planet_name ascending, and return only 10 rows.',
+    expectedSql:
+      'SELECT p.planet_name, p.mass_earth, f.name AS facility_name FROM planets p JOIN facility f ON f.facility_id = p.facility_id ORDER BY p.mass_earth DESC, p.planet_name LIMIT 10',
+    modelAnswer: `-- Top-N by ordering on the measure and capping with LIMIT; the join adds the credit line.
+SELECT p.planet_name,
+       p.mass_earth,
+       f.name AS facility_name
+FROM planets p
+JOIN facility f ON f.facility_id = p.facility_id
+ORDER BY p.mass_earth DESC, p.planet_name
+LIMIT 10;`,
+    approachNote:
+      'Order by mass_earth descending and LIMIT 10 for the top-N cut, joining to facility to turn facility_id into a readable name. mass_earth has no NULLs in this catalog, so no filter is needed, and the planet_name tie-breaker makes the tenth-place cut deterministic.',
+    orderMatters: true,
+    rowCeiling: 10,
+  },
 ];
