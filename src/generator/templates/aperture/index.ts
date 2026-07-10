@@ -304,8 +304,9 @@ export const APERTURE_TEMPLATES: Template[] = [
       'Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly), ordered by {sortKey} and then star_id.',
       'Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars, ordered by {sortKey} with star_id as the tie-breaker.'
     ],
-    hintTemplate: 'SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.',
+    hintTemplate: 'SELECT * returns every column, so type * where the blank is.',
     scaffoldPlan: PLAN,
+    scaffoldFocus: 'projection',
     gateHints: gate(2, 1, true)
   },
   {
@@ -322,6 +323,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     ],
     hintTemplate: 'Put the exact columns you need after SELECT, separated by commas.',
     scaffoldPlan: PLAN,
+    scaffoldFocus: 'projection',
     gateHints: gate(2, 2, true)
   },
   {
