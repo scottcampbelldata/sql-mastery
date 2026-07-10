@@ -1,11 +1,10 @@
-.iv { max-width: 900px; }
 .iv-head h1 { font-size: var(--text-2xl); margin: var(--s-1) 0 var(--s-2); }
 .iv-sub { color: var(--ink-dim); max-width: 70ch; line-height: 1.6; }
 .iv-filters { display: flex; gap: var(--s-4); align-items: flex-end; margin-top: var(--s-5); flex-wrap: wrap; }
 .iv-field { display: flex; flex-direction: column; gap: var(--s-1); font-size: var(--text-sm); color: var(--ink-dim); text-transform: capitalize; }
 .iv-field select { padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-1); color: var(--ink); font-size: var(--text-sm); text-transform: capitalize; }
 
-.iv-problem { max-width: 980px; display: flex; flex-direction: column; gap: var(--s-4); }
+.iv-problem { display: flex; flex-direction: column; gap: var(--s-4); }
 .iv-bar { display: flex; align-items: center; gap: var(--s-3); }
 .iv-level { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); background: var(--surface-2); padding: 2px 8px; border-radius: 999px; }
 .iv-pattern { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand); background: var(--brand-soft); padding: 2px 8px; border-radius: 999px; }

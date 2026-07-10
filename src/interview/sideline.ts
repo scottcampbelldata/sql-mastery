@@ -349,4 +349,402 @@ ORDER BY role, earnings_rank, handle;`,
     orderMatters: true,
     rowCeiling: 40,
   },
+  {
+    id: 'iv-sl-grand-finals-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the broadcast operations analyst. The production team is assembling a champions reel and needs every Grand Final played in the league premier S-tier tournaments, with both finalists and the winner named on a single line.',
+    task: "Join match to its tournament and to the team table three times (side A, side B, and the winner) and, for every match whose stage is 'Grand Final' in a tournament of tier 'S', return tournament_name, match_datetime, team_a (the team_a_id name), team_b (the team_b_id name), and winner_name (the winner_team_id name). Sort by match_datetime ascending, then tournament_name ascending.",
+    expectedSql:
+      "SELECT tr.name AS tournament_name, m.match_datetime, ta.name AS team_a, tb.name AS team_b, tw.name AS winner_name FROM match m JOIN tournament tr ON tr.tournament_id = m.tournament_id JOIN team ta ON ta.team_id = m.team_a_id JOIN team tb ON tb.team_id = m.team_b_id JOIN team tw ON tw.team_id = m.winner_team_id WHERE m.stage = 'Grand Final' AND tr.tier = 'S' ORDER BY m.match_datetime, tournament_name",
+    modelAnswer: `-- Join match to tournament, then to team three times: side A, side B, and the winner.
+SELECT tr.name AS tournament_name,
+       m.match_datetime,
+       ta.name AS team_a,
+       tb.name AS team_b,
+       tw.name AS winner_name
+FROM match m
+JOIN tournament tr ON tr.tournament_id = m.tournament_id
+JOIN team ta ON ta.team_id = m.team_a_id
+JOIN team tb ON tb.team_id = m.team_b_id
+JOIN team tw ON tw.team_id = m.winner_team_id
+WHERE m.stage = 'Grand Final'
+  AND tr.tier = 'S'
+ORDER BY m.match_datetime, tournament_name;`,
+    approachNote:
+      'The match table holds three separate foreign keys into team (team_a_id, team_b_id, winner_team_id), so team is joined three times under three aliases; without distinct aliases the joins collapse and the query cannot tell the sides apart. Joining tournament in lets you restrict to the S tier and label the event. The winner is always one of the two finalists, so the third join never adds or drops rows, it only resolves the winner name.',
+    orderMatters: true,
+    rowCeiling: 20,
+  },
+  {
+    id: 'iv-sl-free-agent-roster-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the league operations analyst. The competitions desk wants a complete in-game-leader directory: every IGL in the player pool shown against their current team, with the unsigned ones flagged rather than dropped so free agents stay visible to recruiters.',
+    task: "For every player whose role is 'IGL', return handle, team_name (the team name, or the literal 'Free Agent' when team_id is NULL), and total_earnings_usd. Sort by team_name ascending, then handle ascending.",
+    expectedSql:
+      "SELECT p.handle, coalesce(t.name, 'Free Agent') AS team_name, p.total_earnings_usd FROM player p LEFT JOIN team t ON t.team_id = p.team_id WHERE p.role = 'IGL' ORDER BY team_name, p.handle",
+    modelAnswer: `-- LEFT JOIN keeps the unsigned IGLs; COALESCE turns the NULL team into a 'Free Agent' label.
+SELECT p.handle,
+       coalesce(t.name, 'Free Agent') AS team_name,
+       p.total_earnings_usd
+FROM player p
+LEFT JOIN team t ON t.team_id = p.team_id
+WHERE p.role = 'IGL'
+ORDER BY team_name, p.handle;`,
+    approachNote:
+      "A free agent has team_id NULL, so an INNER JOIN to team would silently drop every unsigned IGL. The LEFT JOIN keeps them with NULL team columns, and coalesce(t.name, 'Free Agent') turns that NULL into a readable label. The common wrong turn is a plain JOIN, which loses the free agents the directory is meant to surface, or pushing a team-name filter into WHERE that reintroduces the same drop.",
+    orderMatters: true,
+    rowCeiling: 80,
+  },
+  {
+    id: 'iv-sl-no-match-win-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Anti-join',
+    difficulty: 2,
+    scenario:
+      'You are the competition analyst. For a parity report, the commissioner wants the list of teams still chasing their first match win: the orgs that have never been recorded as the winner of any match.',
+    task: 'Return team_name, region_code (the region short_code), and elo_rating for every team that is never the winner_team_id of any match. Sort by elo_rating descending, then team_name ascending.',
+    expectedSql:
+      'SELECT t.name AS team_name, r.short_code AS region_code, t.elo_rating FROM team t JOIN region r ON r.region_id = t.region_id WHERE NOT EXISTS (SELECT 1 FROM match m WHERE m.winner_team_id = t.team_id) ORDER BY t.elo_rating DESC, team_name',
+    modelAnswer: `-- NOT EXISTS keeps only teams that never appear as a match winner (the anti-join).
+SELECT t.name AS team_name,
+       r.short_code AS region_code,
+       t.elo_rating
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM match m
+  WHERE m.winner_team_id = t.team_id
+)
+ORDER BY t.elo_rating DESC, team_name;`,
+    approachNote:
+      'NOT EXISTS correlated on winner_team_id is the anti-join: keep a team only when the subquery finds no matching win. A team that played and lost every match qualifies just as much as one that never played, since both are absent from the winners. NOT IN reaches the same set here because winner_team_id is NOT NULL, but NOT EXISTS is the safer habit; the LEFT JOIN ... IS NULL rewrite works too but fans out on the many matches per team before filtering.',
+    orderMatters: true,
+    rowCeiling: 20,
+  },
+  {
+    id: 'iv-sl-empty-roster-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Anti-join',
+    difficulty: 3,
+    scenario:
+      'You are the league operations analyst. Roster audit season is here and the ops director wants the orgs holding a league slot with nobody signed to it, the teams that currently field no player at all.',
+    task: 'Return team_name, region_code (the region short_code), and founded_date for every team whose team_id does not appear as team_id anywhere in the player table. Sort by team_name ascending.',
+    expectedSql:
+      'SELECT t.name AS team_name, r.short_code AS region_code, t.founded_date FROM team t JOIN region r ON r.region_id = t.region_id WHERE t.team_id NOT IN (SELECT p.team_id FROM player p WHERE p.team_id IS NOT NULL) ORDER BY team_name',
+    modelAnswer: `-- NOT IN over player.team_id, guarded against the free-agent NULLs.
+SELECT t.name AS team_name,
+       r.short_code AS region_code,
+       t.founded_date
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+WHERE t.team_id NOT IN (
+  SELECT p.team_id
+  FROM player p
+  WHERE p.team_id IS NOT NULL
+)
+ORDER BY team_name;`,
+    approachNote:
+      'player.team_id is NULL for every free agent, and NOT IN with even one NULL in its list evaluates to UNKNOWN for every team and returns nothing at all. The WHERE p.team_id IS NOT NULL guard strips those NULLs so NOT IN behaves. NOT EXISTS or LEFT JOIN ... IS NULL avoid the trap entirely and are the usual fixes; the classic mistake is dropping the guard and reporting zero empty-roster teams when there really is one.',
+    orderMatters: true,
+    rowCeiling: 10,
+  },
+  {
+    id: 'iv-sl-no-roster-change-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Anti-join',
+    difficulty: 2,
+    scenario:
+      'You are the roster data steward. While cleaning up the transactions log, you need the players who have no roster-move history on file at all, not a single row in roster_change, so their signings can be backfilled.',
+    task: 'Return handle, role, and country for every player who has no matching row in roster_change. Sort by handle ascending.',
+    expectedSql:
+      'SELECT p.handle, p.role, p.country FROM player p LEFT JOIN roster_change rc ON rc.player_id = p.player_id WHERE rc.player_id IS NULL ORDER BY p.handle',
+    modelAnswer: `-- LEFT JOIN to the history table; the unmatched players are the ones with no move on file.
+SELECT p.handle,
+       p.role,
+       p.country
+FROM player p
+LEFT JOIN roster_change rc ON rc.player_id = p.player_id
+WHERE rc.player_id IS NULL
+ORDER BY p.handle;`,
+    approachNote:
+      'The LEFT JOIN keeps every player; rows that found no roster_change match have all rc columns NULL, so testing rc.player_id IS NULL isolates the players with no history. Test the join key (or another NOT NULL column from roster_change), never a nullable data column, or a legitimately NULL value would masquerade as a non-match. NOT EXISTS expresses the same anti-join more directly, but the LEFT JOIN ... IS NULL form is the one to recognise here.',
+    orderMatters: true,
+    rowCeiling: 20,
+  },
+  {
+    id: 'iv-sl-gf-winners-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Semi-join',
+    difficulty: 2,
+    scenario:
+      'You are the competition analyst. A champions filter on the standings page should surface only the teams that have lifted a trophy, meaning the orgs that have won at least one Grand Final.',
+    task: "Return team_name, region_code (the region short_code), and elo_rating for every team whose team_id is the winner_team_id of at least one match with stage 'Grand Final'. Sort by elo_rating descending, then team_name ascending.",
+    expectedSql:
+      "SELECT t.name AS team_name, r.short_code AS region_code, t.elo_rating FROM team t JOIN region r ON r.region_id = t.region_id WHERE t.team_id IN (SELECT m.winner_team_id FROM match m WHERE m.stage = 'Grand Final') ORDER BY t.elo_rating DESC, team_name",
+    modelAnswer: `-- IN against the set of Grand Final winners is a semi-join: each team once, however many titles.
+SELECT t.name AS team_name,
+       r.short_code AS region_code,
+       t.elo_rating
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+WHERE t.team_id IN (
+  SELECT m.winner_team_id
+  FROM match m
+  WHERE m.stage = 'Grand Final'
+)
+ORDER BY t.elo_rating DESC, team_name;`,
+    approachNote:
+      'IN (or EXISTS) is a semi-join: it returns each qualifying team exactly once no matter how many Grand Finals it won, so no DISTINCT is needed. A plain JOIN from team to the winning matches would emit one row per title and duplicate the multi-time champions. IN is safe here because winner_team_id is NOT NULL; the mirror-image NOT IN would demand a null guard, but the positive IN does not.',
+    orderMatters: true,
+    rowCeiling: 60,
+  },
+  {
+    id: 'iv-sl-earnings-gap-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Self-join',
+    difficulty: 3,
+    scenario:
+      'You are the players association analyst. To surface intra-roster pay imbalance, the union wants every teammate pairing where one player has earned at least double the other, so the widest in-house gaps are on the table.',
+    task: 'Self-join players on the same team to find pairs where one player total_earnings_usd is at least twice the other player total_earnings_usd. Return team_name, higher_earner (the higher earner handle), higher_earnings, lower_earner (the lower earner handle), and lower_earnings, with each pair listed once. Sort by team_name ascending, then higher_earner ascending, then lower_earner ascending.',
+    expectedSql:
+      'SELECT t.name AS team_name, a.handle AS higher_earner, a.total_earnings_usd AS higher_earnings, b.handle AS lower_earner, b.total_earnings_usd AS lower_earnings FROM player a JOIN player b ON a.team_id = b.team_id AND a.player_id <> b.player_id AND a.total_earnings_usd >= 2 * b.total_earnings_usd JOIN team t ON t.team_id = a.team_id ORDER BY team_name, higher_earner, lower_earner',
+    modelAnswer: `-- Self-join on the same team; the >= 2x test fixes which side is the higher earner and kills mirrors.
+SELECT t.name AS team_name,
+       a.handle AS higher_earner,
+       a.total_earnings_usd AS higher_earnings,
+       b.handle AS lower_earner,
+       b.total_earnings_usd AS lower_earnings
+FROM player a
+JOIN player b
+  ON a.team_id = b.team_id
+ AND a.player_id <> b.player_id
+ AND a.total_earnings_usd >= 2 * b.total_earnings_usd
+JOIN team t ON t.team_id = a.team_id
+ORDER BY team_name, higher_earner, lower_earner;`,
+    approachNote:
+      'Aliasing player as a and b and joining on equal team_id builds every teammate pair; the a.total_earnings_usd >= 2 * b.total_earnings_usd predicate both enforces the doubling rule and pins a as the higher earner, so no mirror row (b, a) can also pass. player_id <> b.player_id drops the self-pair. Because every rostered player here has positive earnings, the 2x test already implies a strictly outearns b; if zero-earning teammates existed you would add a.total_earnings_usd > b.total_earnings_usd to stop a 0-versus-0 pair from appearing in both directions.',
+    orderMatters: true,
+    rowCeiling: 120,
+  },
+  {
+    id: 'iv-sl-elo-behind-top-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the competition analyst. The seeding committee wants a gap-to-the-top board: every team next to the single highest Elo in the league and how far below that ceiling it sits.',
+    task: 'Return team_name, region_code (the region short_code), elo_rating, league_top_elo (the maximum elo_rating across all teams), and gap_to_top (league_top_elo minus the team elo_rating). Sort by gap_to_top ascending, then team_name ascending.',
+    expectedSql:
+      'SELECT t.name AS team_name, r.short_code AS region_code, t.elo_rating, (SELECT max(elo_rating) FROM team) AS league_top_elo, (SELECT max(elo_rating) FROM team) - t.elo_rating AS gap_to_top FROM team t JOIN region r ON r.region_id = t.region_id ORDER BY gap_to_top, team_name',
+    modelAnswer: `-- A scalar subquery returns the league-max Elo as a constant reused on every row.
+SELECT t.name AS team_name,
+       r.short_code AS region_code,
+       t.elo_rating,
+       (SELECT max(elo_rating) FROM team) AS league_top_elo,
+       (SELECT max(elo_rating) FROM team) - t.elo_rating AS gap_to_top
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+ORDER BY gap_to_top, team_name;`,
+    approachNote:
+      '(SELECT max(elo_rating) FROM team) is an uncorrelated scalar subquery: it does not reference the outer row, so it computes once and the single value is reused across every team. The top team lands at gap_to_top = 0. A cross join to a one-row max would work but reads worse; the wrong turn is a correlated max that recomputes per row for no benefit, or a GROUP BY that needlessly aggregates the outer query.',
+    orderMatters: true,
+    rowCeiling: 60,
+  },
+  {
+    id: 'iv-sl-tournament-load-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the league operations analyst. For a scheduling load review, the ops director wants each tournament next to how many matches it staged, the heaviest events first.',
+    task: 'For every tournament, return tournament_name (the tournament name), tier, and match_count, the number of match rows tied to that tournament via a correlated subquery. Sort by match_count descending, then tournament_name ascending.',
+    expectedSql:
+      'SELECT tr.name AS tournament_name, tr.tier, (SELECT count(*) FROM match m WHERE m.tournament_id = tr.tournament_id) AS match_count FROM tournament tr ORDER BY match_count DESC, tournament_name',
+    modelAnswer: `-- A correlated subquery counts the matches for each tournament row.
+SELECT tr.name AS tournament_name,
+       tr.tier,
+       (SELECT count(*)
+        FROM match m
+        WHERE m.tournament_id = tr.tournament_id) AS match_count
+FROM tournament tr
+ORDER BY match_count DESC, tournament_name;`,
+    approachNote:
+      'The subquery correlates on m.tournament_id = tr.tournament_id, so it recounts matches for each outer tournament. An equivalent JOIN ... GROUP BY tr.tournament_id is usually the tidier and faster shape and would be preferred at scale; the correlated count is shown because it is the pattern to read fluently. Either way, count(*) over the matches gives the per-tournament total; a bare count with no correlation would return the whole-league match total on every row.',
+    orderMatters: true,
+    rowCeiling: 40,
+  },
+  {
+    id: 'iv-sl-qualified-teams-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the commercial analyst. Marketing wants one combined shortlist of teams worth featuring: any elite team of Elo 1900 or higher together with any team that carries an active sponsor, merged into a single de-duplicated list.',
+    task: 'Build the union of two team sets, the teams with elo_rating of 1900 or higher and the teams with at least one active sponsorship (a team_sponsor row where contract_end IS NULL), returning team_name, region_code (the region short_code), and elo_rating, with a team that qualifies on both counts listed only once. Sort by team_name ascending.',
+    expectedSql:
+      'SELECT t.name AS team_name, r.short_code AS region_code, t.elo_rating FROM team t JOIN region r ON r.region_id = t.region_id WHERE t.elo_rating >= 1900 UNION SELECT t.name, r.short_code, t.elo_rating FROM team t JOIN region r ON r.region_id = t.region_id WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.team_id = t.team_id AND ts.contract_end IS NULL) ORDER BY team_name',
+    modelAnswer: `-- UNION merges the two qualifying sets and collapses a team that meets both to one row.
+SELECT t.name AS team_name,
+       r.short_code AS region_code,
+       t.elo_rating
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+WHERE t.elo_rating >= 1900
+UNION
+SELECT t.name,
+       r.short_code,
+       t.elo_rating
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+WHERE EXISTS (
+  SELECT 1
+  FROM team_sponsor ts
+  WHERE ts.team_id = t.team_id
+    AND ts.contract_end IS NULL
+)
+ORDER BY team_name;`,
+    approachNote:
+      'UNION concatenates the two result sets and then removes duplicate rows, so a team that is both elite and actively sponsored appears once. UNION ALL would skip that de-duplication and list such a team twice, the wrong turn for a shortlist. The single ORDER BY applies to the combined result and must reference the first branch output column names.',
+    orderMatters: true,
+    rowCeiling: 60,
+  },
+  {
+    id: 'iv-sl-talent-no-sponsor-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the commercial strategy analyst. Sponsorship sales want a whitespace map: the player home countries that no current sponsor is headquartered in, as leads for regional deals.',
+    task: 'Using a set operator, return country: every distinct player country that does not appear as any sponsor headquarters_country. Sort by country ascending.',
+    expectedSql:
+      'SELECT country FROM player EXCEPT SELECT headquarters_country FROM sponsor ORDER BY country',
+    modelAnswer: `-- EXCEPT is the set difference: player countries minus sponsor home countries, de-duplicated.
+SELECT country FROM player
+EXCEPT
+SELECT headquarters_country FROM sponsor
+ORDER BY country;`,
+    approachNote:
+      'EXCEPT returns the distinct rows from the first query that are not present in the second, which is exactly the countries with players but no sponsor base. It de-duplicates automatically, so no DISTINCT is needed. A NOT IN over sponsor countries would answer the same question but needs a NULL guard if that column were nullable; the set operator sidesteps that and states the intent plainly.',
+    orderMatters: true,
+    rowCeiling: 30,
+  },
+  {
+    id: 'iv-sl-tournament-span-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 2,
+    scenario:
+      'You are the events operations analyst. The ops director wants a run-length view of the calendar: how many days each tournament ran and the month it kicked off, longest events first.',
+    task: "For every tournament, return tournament_name (the tournament name), start_date, end_date, days_long (end_date minus start_date, in days), and start_month (start_date formatted as 'YYYY-MM'). Sort by days_long descending, then start_date ascending.",
+    expectedSql:
+      "SELECT name AS tournament_name, start_date, end_date, (end_date - start_date) AS days_long, to_char(start_date, 'YYYY-MM') AS start_month FROM tournament ORDER BY days_long DESC, start_date",
+    modelAnswer: `-- Date minus date yields an integer day count; to_char formats the start month.
+SELECT name AS tournament_name,
+       start_date,
+       end_date,
+       (end_date - start_date) AS days_long,
+       to_char(start_date, 'YYYY-MM') AS start_month
+FROM tournament
+ORDER BY days_long DESC, start_date;`,
+    approachNote:
+      "In Postgres, subtracting one date from another returns a plain integer number of days, so end_date - start_date is the run length with no casting needed. to_char(start_date, 'YYYY-MM') renders the month bucket as text. Reaching for age() or extract() here would over-complicate a simple day span, and ordering by start_date breaks the days_long ties deterministically because start_date is unique.",
+    orderMatters: true,
+    rowCeiling: 40,
+  },
+  {
+    id: 'iv-sl-team-top2-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Ranking',
+    difficulty: 3,
+    scenario:
+      'You are the talent analyst. A per-team earnings snapshot spotlights each roster two biggest earners, exactly two names per team even when the earnings are close.',
+    task: 'Within each team, rank players by total_earnings_usd descending, breaking ties by handle ascending, and return team_name, handle, total_earnings_usd, and team_rank for the top two earners on every team. Sort by team_name ascending, then team_rank ascending, then handle ascending.',
+    expectedSql:
+      'WITH ranked AS (SELECT t.name AS team_name, p.handle, p.total_earnings_usd, row_number() OVER (PARTITION BY p.team_id ORDER BY p.total_earnings_usd DESC, p.handle) AS team_rank FROM player p JOIN team t ON t.team_id = p.team_id) SELECT team_name, handle, total_earnings_usd, team_rank FROM ranked WHERE team_rank <= 2 ORDER BY team_name, team_rank, handle',
+    modelAnswer: `-- ROW_NUMBER per team gives a strict 1..n order; keep the first two.
+WITH ranked AS (
+  SELECT t.name AS team_name,
+         p.handle,
+         p.total_earnings_usd,
+         row_number() OVER (
+           PARTITION BY p.team_id
+           ORDER BY p.total_earnings_usd DESC, p.handle
+         ) AS team_rank
+  FROM player p
+  JOIN team t ON t.team_id = p.team_id
+)
+SELECT team_name,
+       handle,
+       total_earnings_usd,
+       team_rank
+FROM ranked
+WHERE team_rank <= 2
+ORDER BY team_name, team_rank, handle;`,
+    approachNote:
+      'row_number() with PARTITION BY team_id numbers each roster from 1, and the handle tie-break makes the second slot deterministic when two players earn the same, so filtering team_rank <= 2 returns exactly two per team. rank() or dense_rank() could hand out three or more names on a tie, breaking the strict top-two rule. The ranking has to live in a CTE or subquery because a window result cannot be filtered in the same WHERE.',
+    orderMatters: true,
+    rowCeiling: 120,
+  },
+  {
+    id: 'iv-sl-prize-movingavg-1',
+    database: 'sideline',
+    level: 'intermediate',
+    difficulty: 3,
+    scenario:
+      'You are the finance analyst. Walking the prize calendar in date order, the CFO wants each tournament pool smoothed by a three-event trailing average to read the trend past the spikes.',
+    task: 'Order tournaments by start_date and return tournament_name (the tournament name), start_date, prize_pool_usd, and moving_avg_3, the average prize_pool_usd over the current tournament and the two immediately before it, rounded to 2 decimals. Sort by start_date ascending.',
+    expectedSql:
+      'SELECT name AS tournament_name, start_date, prize_pool_usd, round(avg(prize_pool_usd) OVER (ORDER BY start_date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS moving_avg_3 FROM tournament ORDER BY start_date',
+    modelAnswer: `-- An explicit ROWS frame averages this event and the two before it (a trailing window).
+SELECT name AS tournament_name,
+       start_date,
+       prize_pool_usd,
+       round(avg(prize_pool_usd) OVER (
+         ORDER BY start_date
+         ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+       ), 2) AS moving_avg_3
+FROM tournament
+ORDER BY start_date;`,
+    approachNote:
+      'ROWS BETWEEN 2 PRECEDING AND CURRENT ROW is a sliding three-row frame, so avg() smooths each pool with its two predecessors; the first two rows simply average the one or two rows available. Spelling out the ROWS frame matters, since the default frame is RANGE-based and would pull in every earlier row that ties on start_date, turning the moving average into a running one. Here start_date is unique, so the order and every window are deterministic.',
+    orderMatters: true,
+    rowCeiling: 40,
+  },
+  {
+    id: 'iv-sl-elo-quartile-1',
+    database: 'sideline',
+    level: 'intermediate',
+    pattern: 'Ranking',
+    difficulty: 3,
+    scenario:
+      'You are the competition analyst. The league wants its teams split into four Elo tiers of roughly equal size, from the elite quartile down to the bottom, for a strength-of-schedule study.',
+    task: 'Split all teams into four buckets by elo_rating descending (break ties by team name ascending) using a bucketing window function, and return team_name, region_code (the region short_code), elo_rating, and elo_tier (1 for the strongest quartile through 4 for the weakest). Sort by elo_tier ascending, then elo_rating descending, then team_name ascending.',
+    expectedSql:
+      'SELECT t.name AS team_name, r.short_code AS region_code, t.elo_rating, ntile(4) OVER (ORDER BY t.elo_rating DESC, t.name) AS elo_tier FROM team t JOIN region r ON r.region_id = t.region_id ORDER BY elo_tier, t.elo_rating DESC, team_name',
+    modelAnswer: `-- NTILE(4) splits the ordered teams into four near-equal tiers.
+SELECT t.name AS team_name,
+       r.short_code AS region_code,
+       t.elo_rating,
+       ntile(4) OVER (ORDER BY t.elo_rating DESC, t.name) AS elo_tier
+FROM team t
+JOIN region r ON r.region_id = t.region_id
+ORDER BY elo_tier, t.elo_rating DESC, team_name;`,
+    approachNote:
+      'ntile(4) splits the ordered rows into four groups as equal in size as possible, assigning tier 1 to the highest Elo block. It buckets by position, not by value, so two teams on the same Elo can straddle a tier boundary; the team-name tie-break in the window ORDER BY makes which one moves up deterministic. That is the key difference from rank(), which is value-driven and would give tied teams the same number but never guarantee four balanced groups.',
+    orderMatters: true,
+    rowCeiling: 60,
+  },
 ];
