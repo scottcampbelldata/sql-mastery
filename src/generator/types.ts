@@ -135,10 +135,11 @@ export interface Template {
   phrasings: string[];
   hintTemplate: string;
   scaffoldPlan: ScaffoldPlan;
-  // When 'projection', the beginner (full) scaffold blanks the SELECT column list - the
-  // actual skill for "select every column" / "pick specific columns" - instead of the
-  // incidental ORDER BY the deterministic emitter always adds.
-  scaffoldFocus?: 'projection';
+  // Blank the clause that actually carries the concept - the SELECT list, the FROM joins,
+  // the WHERE filter, or the HAVING - in the full/half tiers, instead of the incidental
+  // ORDER BY the deterministic emitter always adds. Most concepts are mapped centrally in
+  // the scaffold module; this per-template override is for the SELECT-only beginner lessons.
+  scaffoldFocus?: 'projection' | 'from' | 'where' | 'having';
   gateHints: GateHints;
 }
 

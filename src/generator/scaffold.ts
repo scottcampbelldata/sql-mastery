@@ -74,7 +74,7 @@ function answerAtoms(binding: Binding, template: Template): Set<string> {
   return atoms;
 }
 
-function topLevelClauseBodies(sql: string): Array<{ innerStart: number; innerEnd: number }> {
+function topLevelClauseBodies(sql: string): Array<{ keyword: string; innerStart: number; innerEnd: number }> {
   const clauseRe = /\b(SELECT|FROM|WHERE|GROUP\s+BY|HAVING|ORDER\s+BY|LIMIT)\b/gi;
   const depth = new Array<number>(sql.length + 1).fill(0);
   let d = 0;
@@ -100,13 +100,13 @@ function topLevelClauseBodies(sql: string): Array<{ innerStart: number; innerEnd
     }
   }
 
-  const anchors: Array<{ kwStart: number; kwEnd: number }> = [];
+  const anchors: Array<{ keyword: string; kwStart: number; kwEnd: number }> = [];
   let m: RegExpExecArray | null;
   while ((m = clauseRe.exec(sql)) !== null) {
-    if (depth[m.index] === 0) anchors.push({ kwStart: m.index, kwEnd: m.index + m[0].length });
+    if (depth[m.index] === 0) anchors.push({ keyword: m[0].replace(/\s+/g, ' ').toLowerCase(), kwStart: m.index, kwEnd: m.index + m[0].length });
   }
 
-  const spans: Array<{ innerStart: number; innerEnd: number }> = [];
+  const spans: Array<{ keyword: string; innerStart: number; innerEnd: number }> = [];
   for (let k = 0; k < anchors.length; k += 1) {
     const bodyStart = anchors[k].kwEnd;
     const bodyEnd = k + 1 < anchors.length ? anchors[k + 1].kwStart : sql.length;
@@ -114,7 +114,7 @@ function topLevelClauseBodies(sql: string): Array<{ innerStart: number; innerEnd
     let e = bodyEnd;
     while (s < e && /\s/.test(sql[s])) s += 1;
     while (e > s && (/\s/.test(sql[e - 1]) || sql[e - 1] === ';')) e -= 1;
-    if (e > s) spans.push({ innerStart: s, innerEnd: e });
+    if (e > s) spans.push({ keyword: anchors[k].keyword, innerStart: s, innerEnd: e });
   }
   return spans;
 }
@@ -164,15 +164,59 @@ function buildClauseTier(sql: string, which: 'half' | 'blank'): { text: string; 
   return { text: out, map };
 }
 
-// Blank the SELECT column list only. For "select every column" / "pick specific columns",
-// the projection IS the skill; the ORDER BY the emitter adds is just there for determinism
-// and should be given, not made the thing the beginner fills in.
-function buildProjectionTier(sql: string): { text: string; map: Record<string, string> } {
-  const selectSpan = topLevelClauseBodies(sql)[0];
-  if (!selectSpan) return { text: sql, map: {} };
-  const map: Record<string, string> = { __BLANK_0__: sql.slice(selectSpan.innerStart, selectSpan.innerEnd) };
-  const text = sql.slice(0, selectSpan.innerStart) + '__BLANK_0__' + sql.slice(selectSpan.innerEnd);
-  return { text, map };
+type FocusTarget = 'projection' | 'from' | 'where' | 'having';
+const FOCUS_CLAUSE: Record<FocusTarget, string> = { projection: 'select', from: 'from', where: 'where', having: 'having' };
+
+// Which clause each concept's query actually teaches. Every deterministic query carries an
+// ORDER BY for grading; without this, the full/half scaffolds blanked that instead of the
+// real skill (a lesson labeled "pick specific columns" or "left join" that only makes you
+// fill in the sort). Concepts not listed keep the default slot/clause scaffolding.
+const FOCUS_BY_SKILL: Record<string, FocusTarget> = {
+  'ap-join-intro': 'from',
+  'ap-having': 'having',
+  'sl-join-left': 'from',
+  'sl-self-join-compare': 'from',
+  'sl-self-join-match': 'from',
+  'sl-join-multi': 'from',
+  'sl-cte': 'from',
+  'sl-set-ops': 'from',
+  'sl-case-expression': 'projection',
+  'sl-window-rank': 'projection',
+  'sl-window-lag-lead': 'projection',
+  'sl-window-frame-basic': 'projection',
+  'sl-scd-asof': 'where'
+};
+
+function blankSpans(sql: string, spans: Array<{ innerStart: number; innerEnd: number }>): { text: string; map: Record<string, string> } {
+  const chosen = [...spans].sort((a, b) => a.innerStart - b.innerStart);
+  const map: Record<string, string> = {};
+  let out = '';
+  let cursor = 0;
+  let counter = 0;
+  for (const sp of chosen) {
+    out += sql.slice(cursor, sp.innerStart);
+    const token = `__BLANK_${counter}__`;
+    counter += 1;
+    map[token] = sql.slice(sp.innerStart, sp.innerEnd);
+    out += token;
+    cursor = sp.innerEnd;
+  }
+  out += sql.slice(cursor);
+  return { text: out, map };
+}
+
+// Blank the concept-carrying clause. 'full' blanks just that clause (most help); 'half' also
+// blanks the later-half clauses so it stays harder than full, but the concept is always
+// blanked. Returns null if the clause is not present (caller falls back to defaults).
+function buildFocusTier(sql: string, focus: FocusTarget, which: 'full' | 'half'): { text: string; map: Record<string, string> } | null {
+  const all = topLevelClauseBodies(sql);
+  const focusSpan = all.find((span) => span.keyword === FOCUS_CLAUSE[focus]);
+  if (!focusSpan) return null;
+  if (which === 'full') return blankSpans(sql, [focusSpan]);
+  const later = all.slice(Math.ceil(all.length / 2));
+  const byStart = new Map<number, { innerStart: number; innerEnd: number }>();
+  for (const span of [focusSpan, ...later]) byStart.set(span.innerStart, span);
+  return blankSpans(sql, [...byStart.values()]);
 }
 
 export function buildScaffold(
@@ -181,10 +225,9 @@ export function buildScaffold(
   template: Template
 ): { starterSql: StarterSql; blankMap: BlankMap } {
   const atoms = answerAtoms(binding, template);
-  const full = template.scaffoldFocus === 'projection'
-    ? buildProjectionTier(expectedSql)
-    : buildFullTier(expectedSql, atoms);
-  const half = buildClauseTier(expectedSql, 'half');
+  const focus = template.scaffoldFocus ?? FOCUS_BY_SKILL[template.skill];
+  const full = (focus && buildFocusTier(expectedSql, focus, 'full')) || buildFullTier(expectedSql, atoms);
+  const half = (focus && buildFocusTier(expectedSql, focus, 'half')) || buildClauseTier(expectedSql, 'half');
   const blank = buildClauseTier(expectedSql, 'blank');
   return {
     starterSql: { full: full.text, half: half.text, blank: blank.text },
