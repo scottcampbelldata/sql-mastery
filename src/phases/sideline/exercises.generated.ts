@@ -208,17 +208,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use CASE to bucket elo_rating into tier for every team and return team_id, team_name, tier. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier FROM team ORDER BY __BLANK_1__",
-        "half": "SELECT team_id AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier FROM team ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__ FROM team ORDER BY team_id",
+        "half": "SELECT __BLANK_0__ FROM team ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id"
+          "__BLANK_0__": "team_id AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier"
         },
         "half": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team_id AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier",
+          "__BLANK_1__": "team_id"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier",
@@ -247,18 +247,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use CASE on prize_pool_usd to bucket tournaments as tournament_id, name, prize_band. Order by: tournament_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM tournament ORDER BY tournament_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM tournament ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band"
         },
         "half": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band",
+          "__BLANK_1__": "tournament_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band",
@@ -288,18 +288,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use CASE on total_earnings_usd to bucket every player as player_id, handle, earnings_band. Order by: player_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM player ORDER BY player_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM player ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "player_id",
-          "__BLANK_1__": "player_id"
+          "__BLANK_0__": "player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band"
         },
         "half": {
-          "__BLANK_0__": "player_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band",
+          "__BLANK_1__": "player_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band",
@@ -329,18 +329,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use CASE on contract_end to return team_id, sponsor_id, contract_start, contract_status. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY __BLANK_1__, sponsor_id, contract_start LIMIT 200",
-        "half": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM team_sponsor ORDER BY team_id, sponsor_id, contract_start LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM team_sponsor ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id"
+          "__BLANK_0__": "team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status"
         },
         "half": {
-          "__BLANK_0__": "team_id, sponsor_id, contract_start",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status",
+          "__BLANK_1__": "team_id, sponsor_id, contract_start",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status",
@@ -371,18 +371,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use CASE on best_of to return match_id, stage, format_label for every match. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM match ORDER BY match_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM match ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "match_id"
+          "__BLANK_0__": "match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label",
@@ -414,21 +414,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Using a CTE that sums prize pools per tier, return tier and total_prize. Order by tier. Order by: tier.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT __BLANK_1__ AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY __BLANK_2__) SELECT __BLANK_3__ AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY __BLANK_4__ LIMIT 200",
-        "half": "SELECT tier AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT tier AS tier, total_prize AS total_prize FROM __BLANK_0__ ORDER BY tier LIMIT 200",
+        "half": "SELECT tier AS tier, total_prize AS total_prize FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tier",
-          "__BLANK_1__": "tier",
-          "__BLANK_2__": "tier",
-          "__BLANK_3__": "tier",
-          "__BLANK_4__": "tier"
+          "__BLANK_0__": "(WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier"
         },
         "half": {
-          "__BLANK_0__": "tier",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier",
+          "__BLANK_1__": "tier",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "tier AS tier, total_prize AS total_prize",
@@ -457,17 +454,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Using a CTE that counts wins per team, return team_id, team_name, wins for teams with at least one win. Order by team_id. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, wins AS wins FROM (WITH team_wins AS (SELECT winner_team_id AS team_id, count(*) AS wins FROM match GROUP BY winner_team_id) SELECT t.team_id AS team_id, t.name AS team_name, tw.wins AS wins FROM team t JOIN team_wins tw ON tw.team_id = t.team_id) wins_by_team ORDER BY __BLANK_1__",
-        "half": "SELECT team_id AS team_id, team_name AS team_name, wins AS wins FROM (WITH team_wins AS (SELECT winner_team_id AS team_id, count(*) AS wins FROM match GROUP BY winner_team_id) SELECT t.team_id AS team_id, t.name AS team_name, tw.wins AS wins FROM team t JOIN team_wins tw ON tw.team_id = t.team_id) wins_by_team ORDER BY __BLANK_0__",
+        "full": "SELECT team_id AS team_id, team_name AS team_name, wins AS wins FROM __BLANK_0__ ORDER BY team_id",
+        "half": "SELECT team_id AS team_id, team_name AS team_name, wins AS wins FROM __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id"
+          "__BLANK_0__": "(WITH team_wins AS (SELECT winner_team_id AS team_id, count(*) AS wins FROM match GROUP BY winner_team_id) SELECT t.team_id AS team_id, t.name AS team_name, tw.wins AS wins FROM team t JOIN team_wins tw ON tw.team_id = t.team_id) wins_by_team"
         },
         "half": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "(WITH team_wins AS (SELECT winner_team_id AS team_id, count(*) AS wins FROM match GROUP BY winner_team_id) SELECT t.team_id AS team_id, t.name AS team_name, tw.wins AS wins FROM team t JOIN team_wins tw ON tw.team_id = t.team_id) wins_by_team",
+          "__BLANK_1__": "team_id"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, team_name AS team_name, wins AS wins",
@@ -496,21 +493,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Using a CTE that counts players per role, return role and player_count. Order by role. Order by: role.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT __BLANK_1__ AS role, count(*) AS player_count FROM player GROUP BY __BLANK_2__) SELECT __BLANK_3__ AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY __BLANK_4__ LIMIT 200",
-        "half": "SELECT role AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT role AS role, player_count AS player_count FROM __BLANK_0__ ORDER BY role LIMIT 200",
+        "half": "SELECT role AS role, player_count AS player_count FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "role",
-          "__BLANK_1__": "role",
-          "__BLANK_2__": "role",
-          "__BLANK_3__": "role",
-          "__BLANK_4__": "role"
+          "__BLANK_0__": "(WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary"
         },
         "half": {
-          "__BLANK_0__": "role",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "role AS role, player_count AS player_count",
@@ -539,20 +533,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Using a CTE that counts sponsors per team, return team_id, team_name, sponsor_count. Order by team_id. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT __BLANK_1__, count(*) AS sponsor_count FROM team_sponsor GROUP BY __BLANK_2__) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY __BLANK_3__ LIMIT 200",
-        "half": "SELECT team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM __BLANK_0__ ORDER BY team_id LIMIT 200",
+        "half": "SELECT team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id",
-          "__BLANK_2__": "team_id",
-          "__BLANK_3__": "team_id"
+          "__BLANK_0__": "(WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts"
         },
         "half": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count",
@@ -582,20 +574,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Using a CTE that counts current roster stints, return team_id, team_name, current_players. Order by team_id. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT __BLANK_1__, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY __BLANK_2__) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY __BLANK_3__ LIMIT 200",
-        "half": "SELECT team_id AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT team_id AS team_id, team_name AS team_name, current_players AS current_players FROM __BLANK_0__ ORDER BY team_id LIMIT 200",
+        "half": "SELECT team_id AS team_id, team_name AS team_name, current_players AS current_players FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id",
-          "__BLANK_2__": "team_id",
-          "__BLANK_3__": "team_id"
+          "__BLANK_0__": "(WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts"
         },
         "half": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, team_name AS team_name, current_players AS current_players",
@@ -1795,16 +1785,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List every team sponsor row as team_id, team_name, sponsor_id, contract_start, and annual_value_usd, keeping sponsorless teams. Order by team_id, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
-        "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id ORDER BY __BLANK_0__, sponsor_id, contract_start",
-        "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id ORDER BY __BLANK_0__",
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd FROM __BLANK_0__ ORDER BY team_id, sponsor_id, contract_start",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd FROM __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id"
         },
         "half": {
-          "__BLANK_0__": "team_id, sponsor_id, contract_start"
+          "__BLANK_0__": "team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id",
+          "__BLANK_1__": "team_id, sponsor_id, contract_start"
         },
         "blank": {
           "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd",
@@ -1835,17 +1826,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List teams with active sponsor deals when present as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by team_id, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
-        "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY __BLANK_0__, sponsor_id, contract_start LIMIT 200",
-        "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY team_id, sponsor_id, contract_start LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL"
         },
         "half": {
-          "__BLANK_0__": "team_id, sponsor_id, contract_start",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL",
+          "__BLANK_1__": "team_id, sponsor_id, contract_start",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start",
@@ -1876,17 +1868,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List teams with rostered players when present as team_id, team_name, player_id, handle, keeping teams without players. Order by team_id, player_id. Order by: team_id, player_id.",
       "starterSql": {
-        "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY __BLANK_0__, player_id LIMIT 200",
-        "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM __BLANK_0__ ORDER BY team_id, player_id LIMIT 200",
+        "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team t LEFT JOIN player p ON p.team_id = t.team_id"
         },
         "half": {
-          "__BLANK_0__": "team_id, player_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "team t LEFT JOIN player p ON p.team_id = t.team_id",
+          "__BLANK_1__": "team_id, player_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle",
@@ -1917,17 +1910,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List sponsors with team deals when present as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by sponsor_id, team_id, contract_start. Order by: sponsor_id, team_id, contract_start.",
       "starterSql": {
-        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY __BLANK_0__, team_id, contract_start LIMIT 200",
-        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY sponsor_id, team_id, contract_start LIMIT 200",
+        "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "sponsor_id"
+          "__BLANK_0__": "sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id"
         },
         "half": {
-          "__BLANK_0__": "sponsor_id, team_id, contract_start",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id",
+          "__BLANK_1__": "sponsor_id, team_id, contract_start",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start",
@@ -1958,17 +1952,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List regions with hosted tournaments when present as region_id, region_name, tournament_id, tournament_name. Order by region_id, tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
-        "full": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY __BLANK_0__, tournament_id LIMIT 200",
-        "half": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM __BLANK_0__ ORDER BY region_id, tournament_id LIMIT 200",
+        "half": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "region_id"
+          "__BLANK_0__": "region r LEFT JOIN tournament t ON t.region_id = r.region_id"
         },
         "half": {
-          "__BLANK_0__": "region_id, tournament_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "region r LEFT JOIN tournament t ON t.region_id = r.region_id",
+          "__BLANK_1__": "region_id, tournament_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name",
@@ -2001,18 +1996,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For tier A tournaments, join match to tournament and winner team, returning the first 3 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM __BLANK_0__ WHERE t.tier = 'A' ORDER BY match_id LIMIT 3",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM __BLANK_0__ WHERE t.tier = 'A' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name",
@@ -2044,18 +2039,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For tier A tournaments, list the first 3 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM __BLANK_0__ WHERE t.tier = 'A' ORDER BY map_result_id LIMIT 3",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM __BLANK_0__ WHERE t.tier = 'A' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id"
         },
         "half": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id",
+          "__BLANK_1__": "map_result_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name",
@@ -2087,18 +2082,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Join map_result to match and both team aliases, returning the first 10 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY map_result_id LIMIT 10",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id"
         },
         "half": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id",
+          "__BLANK_1__": "map_result_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name",
@@ -2129,18 +2124,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Chain match to tournament to team and return 5 match_id, stage, tournament_name, winner_name rows for tier B. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM __BLANK_0__ WHERE t.tier = 'B' ORDER BY match_id LIMIT 5",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM __BLANK_0__ WHERE t.tier = 'B' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name",
@@ -2172,18 +2167,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Join map_result to match and both team aliases, returning the first 3 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY map_result_id LIMIT 3",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id"
         },
         "half": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id",
+          "__BLANK_1__": "map_result_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name",
@@ -2214,18 +2209,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Chain map_result to match to tournament and return 5 map_result_id, map_name, stage, tournament_name rows for tier B. Order by: map_result_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM __BLANK_0__ WHERE t.tier = 'B' ORDER BY map_result_id LIMIT 5",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM __BLANK_0__ WHERE t.tier = 'B' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id"
         },
         "half": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id",
+          "__BLANK_1__": "map_result_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name",
@@ -2257,18 +2252,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For tier S tournaments, list the first 10 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM __BLANK_0__ WHERE t.tier = 'S' ORDER BY map_result_id LIMIT 10",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM __BLANK_0__ WHERE t.tier = 'S' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id"
         },
         "half": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id",
+          "__BLANK_1__": "map_result_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name",
@@ -2300,18 +2295,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Chain map_result to match to two team aliases and return 5 map_result_id, map_name, team_a_name, team_b_name rows. Order by: map_result_id.",
       "starterSql": {
-        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY map_result_id LIMIT 5",
+        "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id"
         },
         "half": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id",
+          "__BLANK_1__": "map_result_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name",
@@ -2342,18 +2337,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For tier S tournaments, join match to tournament and winner team, returning the first 10 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM __BLANK_0__ WHERE t.tier = 'S' ORDER BY match_id LIMIT 10",
+        "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM __BLANK_0__ WHERE t.tier = 'S' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name",
@@ -2595,18 +2590,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "As of 2025-01-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 10",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2638,18 +2633,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List the first 10 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 10",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.to_date IS NULL"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.to_date IS NULL",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2681,18 +2676,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "As of 2024-07-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 3",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2724,18 +2719,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "As of 2024-07-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 10",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2767,18 +2762,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List the first 3 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 3",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date",
@@ -2810,18 +2805,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List the first 3 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 3",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.to_date IS NULL"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.to_date IS NULL",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2853,18 +2848,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use to_date to find closed historical stints by 2024-12-31 and return 5 rows. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 5",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date",
@@ -2896,18 +2891,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "As of 2025-01-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 3",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2939,18 +2934,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Do an as-of lookup on roster_change for 2025-01-01 and return 5 roster_change_id, player_id, team_id, from_date rows. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 5",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -2982,18 +2977,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Do an as-of lookup on roster_change for 2024-07-01 and return 5 roster_change_id, player_id, team_id, from_date rows. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 5",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -3025,18 +3020,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "List the first 10 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 10",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31'",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date",
@@ -3068,18 +3063,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use open-ended roster_change rows and return 5 roster_change_id, player_id, team_id, from_date rows. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 5",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.to_date IS NULL"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "rc.to_date IS NULL",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date",
@@ -3111,18 +3106,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Find roster stints active on each player signed_date and return 10 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 10",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date",
@@ -3154,18 +3149,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Find roster stints active on each player signed_date and return 3 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 3",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date",
@@ -3197,18 +3192,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Join roster_change to player and use signed_date as the as-of date, returning 5 rows. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
       "starterSql": {
-        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE __BLANK_0__ ORDER BY roster_change_id LIMIT 5",
+        "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')"
         },
         "half": {
-          "__BLANK_0__": "roster_change_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01')",
+          "__BLANK_1__": "roster_change_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date",
@@ -3242,16 +3237,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Self-join team on region_id and elo_rating and return team_id, team_a_name, team_b_name for each pair. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name FROM team a JOIN team b ON a.region_id = b.region_id AND a.elo_rating = b.elo_rating AND a.team_id < b.team_id ORDER BY __BLANK_0__",
-        "half": "SELECT a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name FROM team a JOIN team b ON a.region_id = b.region_id AND a.elo_rating = b.elo_rating AND a.team_id < b.team_id ORDER BY __BLANK_0__",
+        "full": "SELECT a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY team_id",
+        "half": "SELECT a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name FROM __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team a JOIN team b ON a.region_id = b.region_id AND a.elo_rating = b.elo_rating AND a.team_id < b.team_id"
         },
         "half": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team a JOIN team b ON a.region_id = b.region_id AND a.elo_rating = b.elo_rating AND a.team_id < b.team_id",
+          "__BLANK_1__": "team_id"
         },
         "blank": {
           "__BLANK_0__": "a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name",
@@ -3280,17 +3276,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Self-join player to the next same-country same-role peer and return player_id, handle, peer_player_id, peer_handle. Order by: player_id.",
       "starterSql": {
-        "full": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_0__ LIMIT 200",
-        "half": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM __BLANK_0__ WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY player_id LIMIT 200",
+        "half": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM __BLANK_0__ WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "player_id"
+          "__BLANK_0__": "player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id"
         },
         "half": {
-          "__BLANK_0__": "player_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id",
+          "__BLANK_1__": "player_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle",
@@ -3322,17 +3319,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Self-join team to the next same-region peer and return team_id, team_name, peer_team_id, peer_team_name. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_0__ LIMIT 200",
-        "half": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM __BLANK_0__ WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY team_id LIMIT 200",
+        "half": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM __BLANK_0__ WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id"
+          "__BLANK_0__": "team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id"
         },
         "half": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name",
@@ -3364,17 +3362,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Self-join sponsor to the next headquarters-country peer and return sponsor_id, sponsor_name, peer_sponsor_id, peer_sponsor_name. Order by: sponsor_id.",
       "starterSql": {
-        "full": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_0__ LIMIT 200",
-        "half": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM __BLANK_0__ WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY sponsor_id LIMIT 200",
+        "half": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM __BLANK_0__ WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "sponsor_id"
+          "__BLANK_0__": "sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id"
         },
         "half": {
-          "__BLANK_0__": "sponsor_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id",
+          "__BLANK_1__": "sponsor_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name",
@@ -3406,17 +3405,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Self-join tournament to the next same-tier peer and return tournament_id, tournament_name, peer_tournament_id, peer_tournament_name. Order by: tournament_id.",
       "starterSql": {
-        "full": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_0__ LIMIT 200",
-        "half": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM __BLANK_0__ WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY tournament_id LIMIT 200",
+        "half": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM __BLANK_0__ WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id"
+          "__BLANK_0__": "tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id"
         },
         "half": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id",
+          "__BLANK_1__": "tournament_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name",
@@ -3450,18 +3450,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Show 10 Group matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Group' ORDER BY match_id LIMIT 10",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Group' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3492,18 +3492,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Show 5 Semifinal matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Semifinal' ORDER BY match_id LIMIT 5",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3534,18 +3534,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For Grand Final matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Grand Final' ORDER BY match_id LIMIT 5",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3576,18 +3576,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For Quarterfinal matches, list the first 3 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Quarterfinal' ORDER BY match_id LIMIT 3",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3618,18 +3618,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Show 3 Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Final' ORDER BY match_id LIMIT 3",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Final' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3660,18 +3660,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For Group matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Group' ORDER BY match_id LIMIT 5",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Group' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "5"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "5"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3702,18 +3702,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Show 3 Grand Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Grand Final' ORDER BY match_id LIMIT 3",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "3"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "3"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3744,18 +3744,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For Final matches, list the first 10 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
-        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
-        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Final' ORDER BY match_id LIMIT 10",
+        "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM __BLANK_0__\nWHERE m.stage = 'Final' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END"
         },
         "half": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "10"
+          "__BLANK_0__": "match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END",
+          "__BLANK_1__": "match_id",
+          "__BLANK_2__": "10"
         },
         "blank": {
           "__BLANK_0__": "m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name",
@@ -3989,18 +3989,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "UNION match team_a_id and team_b_id into one team_id column and return distinct values. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY __BLANK_1__ LIMIT 200",
-        "half": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT DISTINCT team_id AS team_id FROM __BLANK_0__ ORDER BY team_id LIMIT 200",
+        "half": "SELECT DISTINCT team_id AS team_id FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id"
+          "__BLANK_0__": "(SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams"
         },
         "half": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "DISTINCT team_id AS team_id",
@@ -4028,19 +4028,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use EXCEPT to subtract winner_team_id values from team_id values and return team_id. Order by: team_id.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS team_id FROM (SELECT __BLANK_1__ AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY __BLANK_2__ LIMIT 200",
-        "half": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT DISTINCT team_id AS team_id FROM __BLANK_0__ ORDER BY team_id LIMIT 200",
+        "half": "SELECT DISTINCT team_id AS team_id FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "team_id",
-          "__BLANK_2__": "team_id"
+          "__BLANK_0__": "(SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams"
         },
         "half": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams",
+          "__BLANK_1__": "team_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "DISTINCT team_id AS team_id",
@@ -4068,19 +4067,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "INTERSECT player country with tournament host_country and return distinct country values. Order by: country.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS country FROM (SELECT __BLANK_1__ AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY __BLANK_2__ LIMIT 200",
-        "half": "SELECT DISTINCT country AS country FROM (SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT DISTINCT country AS country FROM __BLANK_0__ ORDER BY country LIMIT 200",
+        "half": "SELECT DISTINCT country AS country FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "country",
-          "__BLANK_1__": "country",
-          "__BLANK_2__": "country"
+          "__BLANK_0__": "(SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries"
         },
         "half": {
-          "__BLANK_0__": "country",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries",
+          "__BLANK_1__": "country",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "DISTINCT country AS country",
@@ -4108,19 +4106,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "UNION player role with roster_change change_reason into role and return distinct values. Order by: role.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS role FROM (SELECT __BLANK_1__ AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY __BLANK_2__ LIMIT 200",
-        "half": "SELECT DISTINCT role AS role FROM (SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT DISTINCT role AS role FROM __BLANK_0__ ORDER BY role LIMIT 200",
+        "half": "SELECT DISTINCT role AS role FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "role",
-          "__BLANK_1__": "role",
-          "__BLANK_2__": "role"
+          "__BLANK_0__": "(SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values"
         },
         "half": {
-          "__BLANK_0__": "role",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "(SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values",
+          "__BLANK_1__": "role",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "DISTINCT role AS role",
@@ -4148,20 +4145,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "UNION tournament host_country with player country into one country column and return the distinct non-NULL values. Order by: country.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS country FROM (SELECT host_country AS country FROM tournament UNION SELECT __BLANK_1__ AS country FROM player) countries WHERE __BLANK_2__ IS NOT NULL ORDER BY __BLANK_3__",
-        "half": "SELECT DISTINCT country AS country FROM (SELECT host_country AS country FROM tournament UNION SELECT country AS country FROM player) countries WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT DISTINCT country AS country FROM __BLANK_0__ WHERE country IS NOT NULL ORDER BY country",
+        "half": "SELECT DISTINCT country AS country FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "country",
-          "__BLANK_1__": "country",
-          "__BLANK_2__": "country",
-          "__BLANK_3__": "country"
+          "__BLANK_0__": "(SELECT host_country AS country FROM tournament UNION SELECT country AS country FROM player) countries"
         },
         "half": {
-          "__BLANK_0__": "country IS NOT NULL",
-          "__BLANK_1__": "country"
+          "__BLANK_0__": "(SELECT host_country AS country FROM tournament UNION SELECT country AS country FROM player) countries",
+          "__BLANK_1__": "country IS NOT NULL",
+          "__BLANK_2__": "country"
         },
         "blank": {
           "__BLANK_0__": "DISTINCT country AS country",
@@ -4819,21 +4814,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use AVG(duration_minutes) over a one-row preceding frame and return map_result_id, map_name, duration_minutes, framed_duration. Order by: map_name, map_result_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM map_result ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "map_name",
-          "__BLANK_2__": "map_name",
-          "__BLANK_3__": "map_name",
-          "__BLANK_4__": "map_result_id"
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration"
         },
         "half": {
-          "__BLANK_0__": "map_name, map_result_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration",
+          "__BLANK_1__": "map_name, map_result_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration",
@@ -4864,21 +4856,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use COUNT(*) over a centered ROWS frame and return match_id, tournament_id, best_of, nearby_matches. Order by: tournament_id, match_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS match_id, __BLANK_1__ AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM match ORDER BY tournament_id, match_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM match ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "tournament_id",
-          "__BLANK_2__": "tournament_id",
-          "__BLANK_3__": "tournament_id",
-          "__BLANK_4__": "match_id"
+          "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches"
         },
         "half": {
-          "__BLANK_0__": "tournament_id, match_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches",
+          "__BLANK_1__": "tournament_id, match_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches",
@@ -4909,22 +4898,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use AVG(prize_pool_usd) over a ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING frame and return tournament_id, region_id, start_date, prize_pool_usd, smoothed_prize. Order by: region_id, tournament_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__",
-        "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY region_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM tournament WHERE region_id IS NOT NULL ORDER BY region_id, tournament_id",
+        "half": "SELECT __BLANK_0__ FROM tournament WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "region_id",
-          "__BLANK_2__": "region_id",
-          "__BLANK_3__": "region_id",
-          "__BLANK_4__": "region_id",
-          "__BLANK_5__": "tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY region_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize"
         },
         "half": {
-          "__BLANK_0__": "region_id IS NOT NULL",
-          "__BLANK_1__": "region_id, tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY region_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize",
+          "__BLANK_1__": "region_id IS NOT NULL",
+          "__BLANK_2__": "region_id, tournament_id"
         },
         "blank": {
           "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY region_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize",
@@ -4956,21 +4941,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use AVG(total_earnings_usd) over a forward ROWS frame and return player_id, role, total_earnings_usd, forward_avg_earnings. Order by: role, player_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM player ORDER BY role, player_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM player ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "player_id",
-          "__BLANK_1__": "role",
-          "__BLANK_2__": "role",
-          "__BLANK_3__": "role",
-          "__BLANK_4__": "player_id"
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings"
         },
         "half": {
-          "__BLANK_0__": "role, player_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings",
+          "__BLANK_1__": "role, player_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings",
@@ -5001,21 +4983,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use SUM(prize_pool_usd) over a 2 preceding frame and return tournament_id, tier, prize_pool_usd, framed_prize. Order by: tier, tournament_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM tournament ORDER BY tier, tournament_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM tournament ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "tier",
-          "__BLANK_2__": "tier",
-          "__BLANK_3__": "tier",
-          "__BLANK_4__": "tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize"
         },
         "half": {
-          "__BLANK_0__": "tier, tournament_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize",
+          "__BLANK_1__": "tier, tournament_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize",
@@ -5048,21 +5027,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For each map_name partition, show next_duration from LEAD(duration_minutes). Return map_result_id, map_name, duration_minutes, next_duration. Order by map_name and map_result_id. Order by: map_name, map_result_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY __BLANK_2__) AS next_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM map_result ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "map_name",
-          "__BLANK_2__": "map_name",
-          "__BLANK_3__": "map_name",
-          "__BLANK_4__": "map_result_id"
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration"
         },
         "half": {
-          "__BLANK_0__": "map_name, map_result_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration",
+          "__BLANK_1__": "map_name, map_result_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration",
@@ -5093,21 +5069,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For each tournament partition, show each match with prev_match_at from LAG(match_datetime). Return match_id, tournament_id, match_datetime, prev_match_at. Order by tournament_id and match_id. Order by: tournament_id, match_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS match_id, __BLANK_1__ AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY __BLANK_2__) AS prev_match_at FROM match ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM match ORDER BY tournament_id, match_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM match ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "match_id",
-          "__BLANK_1__": "tournament_id",
-          "__BLANK_2__": "tournament_id",
-          "__BLANK_3__": "tournament_id",
-          "__BLANK_4__": "match_id"
+          "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at"
         },
         "half": {
-          "__BLANK_0__": "tournament_id, match_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at",
+          "__BLANK_1__": "tournament_id, match_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at",
@@ -5138,22 +5111,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For each region partition, show each tournament with prev_start from LAG(start_date). Return tournament_id, region_id, name, start_date, prev_start. Order by region_id and tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY __BLANK_2__) AS prev_start FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__",
-        "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY region_id) AS prev_start FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM tournament WHERE region_id IS NOT NULL ORDER BY region_id, tournament_id",
+        "half": "SELECT __BLANK_0__ FROM tournament WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "region_id",
-          "__BLANK_2__": "region_id",
-          "__BLANK_3__": "region_id",
-          "__BLANK_4__": "region_id",
-          "__BLANK_5__": "tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY region_id) AS prev_start"
         },
         "half": {
-          "__BLANK_0__": "region_id IS NOT NULL",
-          "__BLANK_1__": "region_id, tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY region_id) AS prev_start",
+          "__BLANK_1__": "region_id IS NOT NULL",
+          "__BLANK_2__": "region_id, tournament_id"
         },
         "blank": {
           "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY region_id) AS prev_start",
@@ -5185,21 +5154,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For each role partition, show prev_earnings from LAG(total_earnings_usd). Return player_id, role, total_earnings_usd, prev_earnings. Order by role and player_id. Order by: role, player_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY __BLANK_2__) AS prev_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM player ORDER BY role, player_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM player ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "player_id",
-          "__BLANK_1__": "role",
-          "__BLANK_2__": "role",
-          "__BLANK_3__": "role",
-          "__BLANK_4__": "player_id"
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings"
         },
         "half": {
-          "__BLANK_0__": "role, player_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings",
+          "__BLANK_1__": "role, player_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings",
@@ -5230,22 +5196,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "For each region partition, show each tournament with next_start from LEAD(start_date). Return tournament_id, region_id, name, start_date, next_start. Order by region_id and tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY __BLANK_2__) AS next_start FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__ LIMIT 200",
-        "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start FROM tournament WHERE region_id IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM tournament WHERE region_id IS NOT NULL ORDER BY region_id, tournament_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM tournament WHERE region_id IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "region_id",
-          "__BLANK_2__": "region_id",
-          "__BLANK_3__": "region_id",
-          "__BLANK_4__": "region_id",
-          "__BLANK_5__": "tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start"
         },
         "half": {
-          "__BLANK_0__": "region_id, tournament_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start",
+          "__BLANK_1__": "region_id, tournament_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start",
@@ -5280,20 +5242,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use RANK() with PARTITION BY region_id and return team_id, team_name, region_id, elo_rating, region_rank. Order by: region_id, team_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, __BLANK_1__ AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY __BLANK_2__) AS region_rank FROM team ORDER BY __BLANK_3__, __BLANK_4__",
-        "half": "SELECT team_id AS team_id, name AS team_name, region_id AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY region_id) AS region_rank FROM team ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__ FROM team ORDER BY region_id, team_id",
+        "half": "SELECT __BLANK_0__ FROM team ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "region_id",
-          "__BLANK_2__": "region_id",
-          "__BLANK_3__": "region_id",
-          "__BLANK_4__": "team_id"
+          "__BLANK_0__": "team_id AS team_id, name AS team_name, region_id AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY region_id) AS region_rank"
         },
         "half": {
-          "__BLANK_0__": "region_id, team_id"
+          "__BLANK_0__": "team_id AS team_id, name AS team_name, region_id AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY region_id) AS region_rank",
+          "__BLANK_1__": "region_id, team_id"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, name AS team_name, region_id AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY region_id) AS region_rank",
@@ -5324,21 +5283,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use DENSE_RANK() with PARTITION BY tier and return tournament_id, tier, prize_pool_usd, tier_rank. Order by: tier, tournament_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY __BLANK_2__) AS tier_rank FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM tournament ORDER BY tier, tournament_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM tournament ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "tournament_id",
-          "__BLANK_1__": "tier",
-          "__BLANK_2__": "tier",
-          "__BLANK_3__": "tier",
-          "__BLANK_4__": "tournament_id"
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank"
         },
         "half": {
-          "__BLANK_0__": "tier, tournament_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank",
+          "__BLANK_1__": "tier, tournament_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank",
@@ -5369,21 +5325,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use RANK() with PARTITION BY map_name and return map_result_id, map_name, duration_minutes, map_rank. Order by: map_name, map_result_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY __BLANK_2__) AS map_rank FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM map_result ORDER BY map_name, map_result_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM map_result ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "map_result_id",
-          "__BLANK_1__": "map_name",
-          "__BLANK_2__": "map_name",
-          "__BLANK_3__": "map_name",
-          "__BLANK_4__": "map_result_id"
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank"
         },
         "half": {
-          "__BLANK_0__": "map_name, map_result_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank",
+          "__BLANK_1__": "map_name, map_result_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank",
@@ -5414,21 +5367,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use ROW_NUMBER() with PARTITION BY role and return player_id, role, total_earnings_usd, role_row. Order by: role, player_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY __BLANK_2__) AS role_row FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM player ORDER BY role, player_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM player ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "player_id",
-          "__BLANK_1__": "role",
-          "__BLANK_2__": "role",
-          "__BLANK_3__": "role",
-          "__BLANK_4__": "player_id"
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row"
         },
         "half": {
-          "__BLANK_0__": "role, player_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row",
+          "__BLANK_1__": "role, player_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row",
@@ -5459,21 +5409,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "sideline",
       "task": "Use NTILE(4) with PARTITION BY region_id and return team_id, region_id, elo_rating, elo_quartile. Order by: region_id, team_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS team_id, __BLANK_1__ AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY __BLANK_2__) AS elo_quartile FROM team ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
-        "half": "SELECT team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile FROM team ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM team ORDER BY region_id, team_id LIMIT 200",
+        "half": "SELECT __BLANK_0__ FROM team ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "team_id",
-          "__BLANK_1__": "region_id",
-          "__BLANK_2__": "region_id",
-          "__BLANK_3__": "region_id",
-          "__BLANK_4__": "team_id"
+          "__BLANK_0__": "team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile"
         },
         "half": {
-          "__BLANK_0__": "region_id, team_id",
-          "__BLANK_1__": "200"
+          "__BLANK_0__": "team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile",
+          "__BLANK_1__": "region_id, team_id",
+          "__BLANK_2__": "200"
         },
         "blank": {
           "__BLANK_0__": "team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile",

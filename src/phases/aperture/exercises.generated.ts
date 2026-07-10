@@ -1244,15 +1244,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Group planets by planet_type, keep groups with COUNT(*) >= 1, and return planet_type and n. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "full": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING __BLANK_0__ ORDER BY planet_type",
         "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_type",
-          "__BLANK_1__": "planet_type",
-          "__BLANK_2__": "planet_type"
+          "__BLANK_0__": "COUNT(*) >= 1"
         },
         "half": {
           "__BLANK_0__": "COUNT(*) >= 1",
@@ -1286,15 +1284,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return discovery_method and n for groups with COUNT(*) at least 1. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "full": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING __BLANK_0__ ORDER BY discovery_method",
         "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "discovery_method",
-          "__BLANK_1__": "discovery_method",
-          "__BLANK_2__": "discovery_method"
+          "__BLANK_0__": "COUNT(*) >= 1"
         },
         "half": {
           "__BLANK_0__": "COUNT(*) >= 1",
@@ -1328,15 +1324,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return facility_id and n for groups with COUNT(*) at least 1. Order by: facility_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "full": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY facility_id",
         "half": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "facility_id",
-          "__BLANK_1__": "facility_id",
-          "__BLANK_2__": "facility_id"
+          "__BLANK_0__": "COUNT(*) >= 1"
         },
         "half": {
           "__BLANK_0__": "COUNT(*) >= 1",
@@ -1370,15 +1364,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Group planets by discovery_year, keep groups with COUNT(*) >= 1, and return discovery_year and n. Order by: discovery_year.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_year, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "full": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY discovery_year",
         "half": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "discovery_year",
-          "__BLANK_1__": "discovery_year",
-          "__BLANK_2__": "discovery_year"
+          "__BLANK_0__": "COUNT(*) >= 1"
         },
         "half": {
           "__BLANK_0__": "COUNT(*) >= 1",
@@ -1412,15 +1404,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Group planets by in_habitable_zone, keep groups with COUNT(*) >= 1, and return in_habitable_zone and n. Order by: in_habitable_zone.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ HAVING COUNT(*) >= 1 ORDER BY __BLANK_2__",
+        "full": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY in_habitable_zone",
         "half": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "in_habitable_zone",
-          "__BLANK_1__": "in_habitable_zone",
-          "__BLANK_2__": "in_habitable_zone"
+          "__BLANK_0__": "COUNT(*) >= 1"
         },
         "half": {
           "__BLANK_0__": "COUNT(*) >= 1",
@@ -1456,18 +1446,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1995 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "1995",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_year = 1995",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_year = 1995",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
@@ -1499,18 +1489,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2004. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2004 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "2004",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_year = 2004",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_year = 2004",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
@@ -1542,18 +1532,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2000. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2000 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "2000",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_year = 2000",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_year = 2000",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
@@ -1585,18 +1575,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1999 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "1999",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_year = 1999",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_year = 1999",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
@@ -1628,18 +1618,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, and star_name where in_habitable_zone is true. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = true ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "true",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.in_habitable_zone = true",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.in_habitable_zone = true",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name",
@@ -1669,17 +1659,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, and discovery_method where discovery_method is Radial Velocity. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Radial Velocity' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Radial Velocity' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_method = 'Radial Velocity'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_method = 'Radial Velocity'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
@@ -1710,18 +1701,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2002. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2002 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "2002",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_year = 2002",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_year = 2002",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
@@ -1753,18 +1744,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2001 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "2001",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_year = 2001",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_year = 2001",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
@@ -1796,18 +1787,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and star_name for joined rows matching the habitable-zone condition. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = __BLANK_0__ ORDER BY __BLANK_1__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = false ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "false",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.in_habitable_zone = false",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.in_habitable_zone = false",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name",
@@ -1837,17 +1828,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_method = 'Eclipse Timing Variations'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_method = 'Eclipse Timing Variations'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
@@ -1878,17 +1870,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is Neptune-like. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Neptune-like' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Neptune-like' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.planet_type = 'Neptune-like'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.planet_type = 'Neptune-like'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
@@ -1919,17 +1912,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Gas Giant' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.planet_type = 'Gas Giant'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.planet_type = 'Gas Giant'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
@@ -1960,17 +1954,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is Terrestrial. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Terrestrial' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Terrestrial' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.planet_type = 'Terrestrial'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.planet_type = 'Terrestrial'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
@@ -2001,17 +1996,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Super-Earth' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.planet_type = 'Super-Earth'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.planet_type = 'Super-Earth'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
@@ -2042,17 +2038,18 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Transit' ORDER BY __BLANK_0__",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id"
         },
         "half": {
-          "__BLANK_0__": "planets.discovery_method = 'Transit'",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planets JOIN stars ON planets.star_id = stars.star_id",
+          "__BLANK_1__": "planets.discovery_method = 'Transit'",
+          "__BLANK_2__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
@@ -2742,7 +2739,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly). Order by: mass_solar, star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM stars ORDER BY mass_solar, star_id",
-        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2750,7 +2747,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "*"
         },
         "half": {
-          "__BLANK_0__": "mass_solar, star_id"
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "mass_solar, star_id"
         },
         "blank": {
           "__BLANK_0__": "*",
@@ -2784,7 +2782,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly). Order by: star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM stars ORDER BY star_id",
-        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2792,7 +2790,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "*"
         },
         "half": {
-          "__BLANK_0__": "star_id"
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "star_id"
         },
         "blank": {
           "__BLANK_0__": "*",
@@ -2826,7 +2825,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars. Order by: temperature_k, star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM stars ORDER BY temperature_k, star_id",
-        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2834,7 +2833,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "*"
         },
         "half": {
-          "__BLANK_0__": "temperature_k, star_id"
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "temperature_k, star_id"
         },
         "blank": {
           "__BLANK_0__": "*",
@@ -2868,7 +2868,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly). Order by: distance_ly, star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM stars ORDER BY distance_ly, star_id",
-        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2876,7 +2876,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "*"
         },
         "half": {
-          "__BLANK_0__": "distance_ly, star_id"
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "distance_ly, star_id"
         },
         "blank": {
           "__BLANK_0__": "*",
@@ -2910,7 +2911,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars. Order by: radius_solar, star_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM stars ORDER BY radius_solar, star_id",
-        "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2918,7 +2919,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "*"
         },
         "half": {
-          "__BLANK_0__": "radius_solar, star_id"
+          "__BLANK_0__": "*",
+          "__BLANK_1__": "radius_solar, star_id"
         },
         "blank": {
           "__BLANK_0__": "*",
@@ -2954,7 +2956,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM planets ORDER BY planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2962,7 +2964,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
-          "__BLANK_0__": "planet_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "planet_id"
         },
         "blank": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -2992,7 +2995,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM planets ORDER BY mass_earth, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -3000,7 +3003,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
-          "__BLANK_0__": "mass_earth, planet_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "mass_earth, planet_id"
         },
         "blank": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -3030,7 +3034,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Return planet_id with each planet_name and planet_type. Order by: star_id, planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM planets ORDER BY star_id, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -3038,7 +3042,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
-          "__BLANK_0__": "star_id, planet_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "star_id, planet_id"
         },
         "blank": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -3068,7 +3073,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: orbital_period_days, planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM planets ORDER BY orbital_period_days, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -3076,7 +3081,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
-          "__BLANK_0__": "orbital_period_days, planet_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "orbital_period_days, planet_id"
         },
         "blank": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -3106,7 +3112,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "task": "Return planet_id with each planet_name and planet_type. Order by: radius_earth, planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ FROM planets ORDER BY radius_earth, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -3114,7 +3120,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
-          "__BLANK_0__": "radius_earth, planet_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_1__": "radius_earth, planet_id"
         },
         "blank": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
