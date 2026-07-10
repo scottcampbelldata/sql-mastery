@@ -106,7 +106,10 @@ export function Readiness() {
                     <span className={`rd-dot rd-${row.status}`} aria-hidden="true" />
                     <div className="rd-row-main">
                       <div className="rd-row-top">
-                        <span className="rd-topic">{row.concept.title}</span>
+                        <span className="rd-topic">
+                          {row.concept.title}
+                          {row.concept.teach?.interviewPattern ? <span className="rd-pattern">{row.concept.teach.interviewPattern}</span> : null}
+                        </span>
                         <span className="rd-status">{STATUS_LABEL[row.status]}</span>
                       </div>
                       {row.concept.teach?.interviewNote ? (

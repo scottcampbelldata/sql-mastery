@@ -45,6 +45,7 @@
 .rd-log-summary { color: var(--ink); font-size: var(--text-sm); line-height: 1.6; max-width: 78ch; margin: 0 0 var(--s-3); }
 .rd-log-actions { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-top: var(--s-3); }
 .rd-log-note { color: var(--ink-faint); font-size: var(--text-xs); margin: var(--s-3) 0 0; max-width: 78ch; line-height: 1.55; }
+.rd-pattern { display: inline-block; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand); background: var(--brand-soft); padding: 1px 7px; border-radius: 999px; margin-left: var(--s-2); vertical-align: middle; }
 
 @media (max-width: 720px) {
   .rd-summary { grid-template-columns: 1fr; }

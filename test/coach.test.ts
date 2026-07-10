@@ -99,6 +99,35 @@ test('too few rows with an inner JOIN coaches LEFT JOIN', () => {
   assert.match(c!.text, /LEFT JOIN/);
 });
 
+test('flags NOT IN with a subquery (NULL trap)', () => {
+  const c = diagnoseMistake({ sql: 'SELECT name FROM teams WHERE id NOT IN (SELECT team_id FROM players)', diff: { reason: 'rowCount', yourRowCount: 0, expectedRowCount: 3 } });
+  assert.ok(c);
+  assert.match(c!.text, /NOT EXISTS/);
+});
+
+test('flags an empty OVER() window', () => {
+  const c = diagnoseMistake({ sql: 'SELECT name, ROW_NUMBER() OVER () rn FROM players', diff: { reason: 'values' } });
+  assert.ok(c);
+  assert.match(c!.text, /PARTITION BY|ORDER BY/);
+});
+
+test('flags filtering the right table of a LEFT JOIN in WHERE', () => {
+  const c = diagnoseMistake({
+    sql: "SELECT c.name FROM customers c LEFT JOIN orders o ON o.cust_id = c.id WHERE o.status = 'shipped'",
+    diff: { reason: 'rowCount', yourRowCount: 5, expectedRowCount: 20 }
+  });
+  assert.ok(c);
+  assert.match(c!.text, /ON clause|inner join/i);
+});
+
+test('does not flag a correct LEFT JOIN anti-join (WHERE right IS NULL)', () => {
+  const c = diagnoseMistake({
+    sql: 'SELECT c.name FROM customers c LEFT JOIN orders o ON o.cust_id = c.id WHERE o.id IS NULL',
+    diff: { reason: 'values' }
+  });
+  assert.equal(c, null);
+});
+
 test('returns null when no signature matches', () => {
   const c = diagnoseMistake({ sql: 'SELECT star_name FROM stars WHERE spectral_type = \'G\'', diff: { reason: 'values' } });
   assert.equal(c, null);

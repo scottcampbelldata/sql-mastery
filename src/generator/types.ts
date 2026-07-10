@@ -37,6 +37,7 @@ export interface TeachBlock {
   whyWhen?: string;
   watchOut?: string;
   interviewNote?: string;
+  interviewPattern?: string;
 }
 
 export interface Concept {
