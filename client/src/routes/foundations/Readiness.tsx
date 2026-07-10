@@ -64,6 +64,42 @@ export function Readiness() {
         </p>
       </header>
 
+      <section className="rd-log">
+        <div className="rd-band-head">
+          <h2>Your learning log</h2>
+          <span className="rd-band-count">{summary.exercisesCompleted} done, {summary.totalAttempts} attempts</span>
+        </div>
+        <p className="rd-log-lead">
+          Everything you practice is tracked privately in this browser: the topics you get wrong, how long
+          each task takes, your hints and resets, and your most common mistakes. Export it and paste it into
+          an AI for feedback on where to focus.
+        </p>
+        <div className="rd-log-actions">
+          <Button variant="primary" onClick={downloadLog}>Download log (JSON)</Button>
+          <Button onClick={copySummary}>Copy summary</Button>
+          <Button onClick={resetLog}>Clear log</Button>
+        </div>
+        <p className="rd-log-summary">{summary.text}</p>
+        {summary.bySkill.filter((row) => row.struggleScore > 0).length ? (
+          <ul className="rd-list">
+            {summary.bySkill.filter((row) => row.struggleScore > 0).slice(0, 5).map((row) => (
+              <li key={row.skill} className="rd-row">
+                <div className="rd-row-main">
+                  <div className="rd-row-top">
+                    <span className="rd-topic">{row.title}</span>
+                    <span className="rd-status">{row.wrong} wrong / {row.attempts} tries</span>
+                  </div>
+                  {Object.keys(row.misconceptions).length ? (
+                    <p className="rd-interview">Common slip: {Object.entries(row.misconceptions).map(([k, v]) => `${k} (${v}x)`).join(', ')}</p>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <p className="rd-log-note">Private to this browser; nothing leaves your machine unless you export it.</p>
+      </section>
+
       <section className="rd-summary">
         <div className="rd-overall">
           <div className="rd-overall-top">
@@ -126,40 +162,6 @@ export function Readiness() {
           ))}
         </section>
       ))}
-
-      <section className="rd-log">
-        <div className="rd-band-head">
-          <h2>Your learning log</h2>
-          <span className="rd-band-count">{summary.exercisesCompleted} done, {summary.totalAttempts} attempts</span>
-        </div>
-        <p className="rd-log-summary">{summary.text}</p>
-        {summary.bySkill.filter((row) => row.struggleScore > 0).length ? (
-          <ul className="rd-list">
-            {summary.bySkill.filter((row) => row.struggleScore > 0).slice(0, 5).map((row) => (
-              <li key={row.skill} className="rd-row">
-                <div className="rd-row-main">
-                  <div className="rd-row-top">
-                    <span className="rd-topic">{row.title}</span>
-                    <span className="rd-status">{row.wrong} wrong / {row.attempts} tries</span>
-                  </div>
-                  {Object.keys(row.misconceptions).length ? (
-                    <p className="rd-interview">Common slip: {Object.entries(row.misconceptions).map(([k, v]) => `${k} (${v}x)`).join(', ')}</p>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-        <div className="rd-log-actions">
-          <Button onClick={downloadLog}>Download log (JSON)</Button>
-          <Button onClick={copySummary}>Copy summary</Button>
-          <Button onClick={resetLog}>Clear log</Button>
-        </div>
-        <p className="rd-log-note">
-          Private to this browser; nothing leaves your machine unless you export it. Paste the copied
-          summary (or the JSON) into an AI to get feedback on where you struggle most.
-        </p>
-      </section>
     </div>
     </AppShell>
   );
