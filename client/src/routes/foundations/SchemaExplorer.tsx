@@ -19,9 +19,10 @@ interface ExplorerSchema {
 // data shown as a grid below.
 interface Props {
   database?: string;
+  preferTable?: string;
 }
 
-export function SchemaExplorer({ database }: Props) {
+export function SchemaExplorer({ database, preferTable }: Props) {
   const [schema, setSchema] = useState<ExplorerSchema | null>(null);
   const [error, setError] = useState<ApiError | null>(null);
   const [activeTable, setActiveTable] = useState<ExplorerTable | null>(null);
@@ -32,10 +33,18 @@ export function SchemaExplorer({ database }: Props) {
     let alive = true;
     setSchema(null); setError(null); setActiveTable(null);
     api.schema(database as string)
-      .then((body) => { if (!alive) return; const s = body as unknown as ExplorerSchema; setSchema(s); if (s.tables?.length) setActiveTable(s.tables[0]); })
+      .then((body) => {
+        if (!alive) return;
+        const s = body as unknown as ExplorerSchema;
+        setSchema(s);
+        if (s.tables?.length) {
+          const match = preferTable ? s.tables.find((t) => t.name.toLowerCase() === preferTable.toLowerCase()) : undefined;
+          setActiveTable(match || s.tables[0]);
+        }
+      })
       .catch((e) => alive && setError(e));
     return () => { alive = false; };
-  }, [database]);
+  }, [database, preferTable]);
 
   useEffect(() => {
     if (!activeTable) return;

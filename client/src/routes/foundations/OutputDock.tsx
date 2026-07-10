@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pill } from '../../components/ui';
 import { DataTable } from '../../components/DataTable';
 import { SchemaExplorer } from './SchemaExplorer';
+import { pickStarter } from '../../lib/sqlScaffold';
 import type { Exercise, QueryResult } from '../../types';
 
 type RunResult = QueryResult & { command?: string; durationMs?: number };
@@ -16,6 +17,8 @@ interface Props {
 export function OutputDock({ exercise, result }: Props) {
   const hasDb = Boolean(exercise.database);
   const [peekOpen, setPeekOpen] = useState(false);
+  // Open the peek to the table this exercise actually reads from, not table[0].
+  const preferTable = /\bfrom\s+([a-zA-Z_][a-zA-Z0-9_]*)/i.exec(pickStarter(exercise, 'full'))?.[1];
 
   return (
     <div className="dock2">
@@ -31,7 +34,7 @@ export function OutputDock({ exercise, result }: Props) {
       {hasDb ? (
         <details className="dock-peek" onToggle={(e) => setPeekOpen((e.target as HTMLDetailsElement).open)}>
           <summary>Peek at the {exercise.database} tables</summary>
-          {peekOpen ? <div className="dock-peek-body"><SchemaExplorer database={exercise.database} /></div> : null}
+          {peekOpen ? <div className="dock-peek-body"><SchemaExplorer database={exercise.database} preferTable={preferTable} /></div> : null}
         </details>
       ) : null}
     </div>
