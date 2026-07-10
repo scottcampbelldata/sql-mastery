@@ -2741,13 +2741,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly). Order by: mass_solar, star_id.",
       "starterSql": {
-        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "full": "SELECT __BLANK_0__ FROM stars ORDER BY mass_solar, star_id",
         "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "mass_solar"
+          "__BLANK_0__": "*"
         },
         "half": {
           "__BLANK_0__": "mass_solar, star_id"
@@ -2758,7 +2758,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "mass_solar, star_id"
         }
       },
-      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
+      "hint": "SELECT * returns every column, so type * where the blank is.",
       "expectedSql": "SELECT * FROM stars ORDER BY mass_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2783,13 +2783,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly). Order by: star_id.",
       "starterSql": {
-        "full": "SELECT * FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__ FROM stars ORDER BY star_id",
         "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "star_id"
+          "__BLANK_0__": "*"
         },
         "half": {
           "__BLANK_0__": "star_id"
@@ -2800,7 +2800,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "star_id"
         }
       },
-      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
+      "hint": "SELECT * returns every column, so type * where the blank is.",
       "expectedSql": "SELECT * FROM stars ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2825,13 +2825,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars. Order by: temperature_k, star_id.",
       "starterSql": {
-        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "full": "SELECT __BLANK_0__ FROM stars ORDER BY temperature_k, star_id",
         "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "temperature_k"
+          "__BLANK_0__": "*"
         },
         "half": {
           "__BLANK_0__": "temperature_k, star_id"
@@ -2842,7 +2842,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "temperature_k, star_id"
         }
       },
-      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
+      "hint": "SELECT * returns every column, so type * where the blank is.",
       "expectedSql": "SELECT * FROM stars ORDER BY temperature_k, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2867,13 +2867,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show every stars column (star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, distance_ly). Order by: distance_ly, star_id.",
       "starterSql": {
-        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "full": "SELECT __BLANK_0__ FROM stars ORDER BY distance_ly, star_id",
         "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "distance_ly"
+          "__BLANK_0__": "*"
         },
         "half": {
           "__BLANK_0__": "distance_ly, star_id"
@@ -2884,7 +2884,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "distance_ly, star_id"
         }
       },
-      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
+      "hint": "SELECT * returns every column, so type * where the blank is.",
       "expectedSql": "SELECT * FROM stars ORDER BY distance_ly, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2909,13 +2909,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, spectral_type, temperature_k, mass_solar, radius_solar, and distance_ly from stars. Order by: radius_solar, star_id.",
       "starterSql": {
-        "full": "SELECT * FROM stars ORDER BY __BLANK_0__, star_id",
+        "full": "SELECT __BLANK_0__ FROM stars ORDER BY radius_solar, star_id",
         "half": "SELECT * FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "radius_solar"
+          "__BLANK_0__": "*"
         },
         "half": {
           "__BLANK_0__": "radius_solar, star_id"
@@ -2926,7 +2926,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "radius_solar, star_id"
         }
       },
-      "hint": "SELECT * already returns every column. The blank is the sort column — use the one the task names before star_id.",
+      "hint": "SELECT * returns every column, so type * where the blank is.",
       "expectedSql": "SELECT * FROM stars ORDER BY radius_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
@@ -2953,14 +2953,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__ FROM planets ORDER BY planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id",
-          "__BLANK_1__": "planet_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "planet_id"
@@ -2992,13 +2991,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "full": "SELECT __BLANK_0__ FROM planets ORDER BY mass_earth, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "mass_earth"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "mass_earth, planet_id"
@@ -3030,13 +3029,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id with each planet_name and planet_type. Order by: star_id, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "full": "SELECT __BLANK_0__ FROM planets ORDER BY star_id, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "star_id"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "star_id, planet_id"
@@ -3068,13 +3067,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: orbital_period_days, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "full": "SELECT __BLANK_0__ FROM planets ORDER BY orbital_period_days, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "orbital_period_days"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "orbital_period_days, planet_id"
@@ -3106,13 +3105,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id with each planet_name and planet_type. Order by: radius_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__, planet_id",
+        "full": "SELECT __BLANK_0__ FROM planets ORDER BY radius_earth, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "radius_earth"
+          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "radius_earth, planet_id"

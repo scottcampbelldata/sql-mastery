@@ -164,13 +164,26 @@ function buildClauseTier(sql: string, which: 'half' | 'blank'): { text: string; 
   return { text: out, map };
 }
 
+// Blank the SELECT column list only. For "select every column" / "pick specific columns",
+// the projection IS the skill; the ORDER BY the emitter adds is just there for determinism
+// and should be given, not made the thing the beginner fills in.
+function buildProjectionTier(sql: string): { text: string; map: Record<string, string> } {
+  const selectSpan = topLevelClauseBodies(sql)[0];
+  if (!selectSpan) return { text: sql, map: {} };
+  const map: Record<string, string> = { __BLANK_0__: sql.slice(selectSpan.innerStart, selectSpan.innerEnd) };
+  const text = sql.slice(0, selectSpan.innerStart) + '__BLANK_0__' + sql.slice(selectSpan.innerEnd);
+  return { text, map };
+}
+
 export function buildScaffold(
   expectedSql: string,
   binding: Binding,
   template: Template
 ): { starterSql: StarterSql; blankMap: BlankMap } {
   const atoms = answerAtoms(binding, template);
-  const full = buildFullTier(expectedSql, atoms);
+  const full = template.scaffoldFocus === 'projection'
+    ? buildProjectionTier(expectedSql)
+    : buildFullTier(expectedSql, atoms);
   const half = buildClauseTier(expectedSql, 'half');
   const blank = buildClauseTier(expectedSql, 'blank');
   return {

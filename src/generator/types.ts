@@ -135,6 +135,10 @@ export interface Template {
   phrasings: string[];
   hintTemplate: string;
   scaffoldPlan: ScaffoldPlan;
+  // When 'projection', the beginner (full) scaffold blanks the SELECT column list - the
+  // actual skill for "select every column" / "pick specific columns" - instead of the
+  // incidental ORDER BY the deterministic emitter always adds.
+  scaffoldFocus?: 'projection';
   gateHints: GateHints;
 }
 
