@@ -55,7 +55,22 @@
 .console .dock .tab-bar { padding: var(--s-2) var(--s-4) 0; }
 .console .dock-panel { max-height: 56vh; padding: var(--s-4); }
 
-.session-footer { display: flex; justify-content: flex-end; margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--line); }
+/* Sticks to the bottom of the viewport and aligns with the centered lesson column,
+   so the way forward is always visible after you solve (not stranded below the
+   results table or off in the far corner). */
+.session-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  max-width: 720px;
+  margin: var(--s-5) auto 0;
+  padding: var(--s-3) 0 var(--s-4);
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
 
 @media (max-width: 900px) {
   .lesson-split { grid-template-columns: 1fr; }
