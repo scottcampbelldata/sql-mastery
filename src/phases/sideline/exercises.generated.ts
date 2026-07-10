@@ -361,8 +361,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "contract_status"
         ],
         "rowCount": 120,
-        "orderedRowHash": "0fc6d1fffaf26b036c5323407f4b5a83ead3c3769c81bba4e7855fb1e1ad60d1",
-        "unorderedRowHash": "21d0555fe991bed591bd43c0cc564ac63d9616112361f781b5119c00376725fc"
+        "orderedRowHash": "6eafcdf83934c001112088ef840fd8e380f1fcc8ba82861522836ea7a1b5fcf0",
+        "unorderedRowHash": "d8504af45d8bb9d8c2b45d7bd31334ef232c6434830deaf9eeb3ce6efe7fa68c"
       }
     },
     {
@@ -700,8 +700,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "contract_days"
         ],
         "rowCount": 120,
-        "orderedRowHash": "ec58455393d00add89e52f83e0506bd94e1ee3a2193fb8d066e13b5dab9fd80f",
-        "unorderedRowHash": "769a8f3e823376c8b64ceafdd6774ef6d838cc1b13fadcfdfd0d9abf3b58f867"
+        "orderedRowHash": "223ed21e6d5930e48d5b15aa36b054cd3f8f73f80f0eaf3ec4d8bb072ec79a83",
+        "unorderedRowHash": "e9c671a68834c9d784ab5ca3472f5fa1de5957e8d8f543b2d34ae31bde6fcbdc"
       }
     },
     {
@@ -824,8 +824,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 2,
-        "orderedRowHash": "e5f704a04ca1053e83b4fee968d42e6633e7e49d1e0aa925df41615436752002",
-        "unorderedRowHash": "e5f704a04ca1053e83b4fee968d42e6633e7e49d1e0aa925df41615436752002"
+        "orderedRowHash": "13e608a7bec775b61c46f403c8316ecf1bca1760bcef101659cd0529678d1da8",
+        "unorderedRowHash": "13e608a7bec775b61c46f403c8316ecf1bca1760bcef101659cd0529678d1da8"
       }
     },
     {
@@ -866,8 +866,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 2,
-        "orderedRowHash": "24e68404cdc14a1ab3255811711dbe689f94ddf0997ae78cc9fe5a3d7f157a54",
-        "unorderedRowHash": "6780957a19ce2c9d3383e4394bd73b58421889e7864318a04d84ce6dbe7deaa6"
+        "orderedRowHash": "0753ed171ebc781301d4d7b2c1c013bda7752ec8eb764048f6d48eb485ee726f",
+        "unorderedRowHash": "879523d8c2fb6f549270035c3625642140dc1cf1c9a5f2965bb128861b6c732d"
       }
     },
     {
@@ -908,8 +908,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 1,
-        "orderedRowHash": "77009db1de5e667ed31047df4378a2b4c61f858bde242c4595835cc72f5b5b68",
-        "unorderedRowHash": "77009db1de5e667ed31047df4378a2b4c61f858bde242c4595835cc72f5b5b68"
+        "orderedRowHash": "3430676bee3bde8b1031c020442d3503890dc97b1cce8c794b4ae9d09b13ac55",
+        "unorderedRowHash": "3430676bee3bde8b1031c020442d3503890dc97b1cce8c794b4ae9d09b13ac55"
       }
     },
     {
@@ -950,8 +950,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 1,
-        "orderedRowHash": "9505aa5cf00dce03c51c72cb451a1a50b260d1ef88544cb16fed6e6e422bf115",
-        "unorderedRowHash": "9505aa5cf00dce03c51c72cb451a1a50b260d1ef88544cb16fed6e6e422bf115"
+        "orderedRowHash": "87bf8d9e66d3d59f8f9ff20f390ef08ccb250dd95e09f4adad54f9df4f7e05e2",
+        "unorderedRowHash": "87bf8d9e66d3d59f8f9ff20f390ef08ccb250dd95e09f4adad54f9df4f7e05e2"
       }
     },
     {
@@ -992,8 +992,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 1,
-        "orderedRowHash": "fbaa981cb665a63f1ef2ab9bdbca8fe4b1688aa897575f9e3dffcc31301f71b1",
-        "unorderedRowHash": "fbaa981cb665a63f1ef2ab9bdbca8fe4b1688aa897575f9e3dffcc31301f71b1"
+        "orderedRowHash": "9a7f5df9769322b3642336f448387a3274eaad5455d5027a4f7ec62355a59747",
+        "unorderedRowHash": "9a7f5df9769322b3642336f448387a3274eaad5455d5027a4f7ec62355a59747"
       }
     },
     {
@@ -1034,8 +1034,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 4,
-        "orderedRowHash": "bf5c3739141703cd7ea732aa3c77e7279433ee4132c71b6195e69561e73992f8",
-        "unorderedRowHash": "07aa40f52110043466745abe4de27a18574cf792bfd8ff706f66f00a201a4ccd"
+        "orderedRowHash": "defcfe89c1da543755cc8570cfb0d2c38bff76e3722fa0cb34955bb3ca8318d4",
+        "unorderedRowHash": "ae3899244b41e6494e3f292fa088d13241201181d7710a03a00f6411037e8652"
       }
     },
     {
@@ -1118,8 +1118,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 3,
-        "orderedRowHash": "30d11738dc5e6c0b8131e5720d957adffbeebf24447c20d96deff15f8e616a95",
-        "unorderedRowHash": "09ff6f49b8c23d4829a194c57e0cb5ad3f5213e8d9cf0c8487c77d26f7e55d68"
+        "orderedRowHash": "4c37f5d842902452a175069077662a39504f3b193661ecdbb82be0247704f6d0",
+        "unorderedRowHash": "3f01dd75641350e5a90ea59cde62eaeab3c8cb7794064e554b99c0d089436c25"
       }
     },
     {
@@ -1160,8 +1160,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "start_month"
         ],
         "rowCount": 2,
-        "orderedRowHash": "32649ae5b95f162f7995f449a2af40ce219b8de3b4d345750844b11436fbf750",
-        "unorderedRowHash": "2839901fa47f16facc87f19c01bd6d8a968c20d7516190eae3b48fd83a729e6e"
+        "orderedRowHash": "61c903b4c7ee0e86fd0b3d35770069b4465f42fd62b8960c1ba6a7277a56835c",
+        "unorderedRowHash": "64334e77b3adff9c6a10c656aa7be15b61486e09b52c0da1945d9474be6d9fd3"
       }
     },
     {
@@ -1825,8 +1825,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "annual_value_usd"
         ],
         "rowCount": 127,
-        "orderedRowHash": "a94d3dc9b3e8ee42efc21b67863eb0534a41f3fd5c8595e97d612b6f5c58e588",
-        "unorderedRowHash": "c33020ed065845d04d766383669d2e5cd311207ae5eff032c2cc3f6cf313924c"
+        "orderedRowHash": "914e5993dcf3d074fc3f3ff9444c05498d734ef4c40f88b03ac9f009ef666681",
+        "unorderedRowHash": "35314acd054d2766401eee4648e2e0f49682c801f2ff9788d8fa9c42ac8251e5"
       }
     },
     {
@@ -1866,8 +1866,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "contract_start"
         ],
         "rowCount": 84,
-        "orderedRowHash": "9ae7ad20deeb90e1a9b26231738403525e82e9a4398e65509fee50f7c6a90a75",
-        "unorderedRowHash": "ac120704192c3ecc71dc508e9ac0948e54ef86224dc0de8c0ba0cea66b84c8c5"
+        "orderedRowHash": "ee01efe4e82fda8454821e9e93bef9d1daae7aea538b65a0cdc29bf0b5b03cb9",
+        "unorderedRowHash": "947b5eca134441e3622bb06fcb10039b557a5a5c57d18f30d8952734cfc37622"
       }
     },
     {
@@ -1948,8 +1948,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "contract_start"
         ],
         "rowCount": 121,
-        "orderedRowHash": "799cfa83823a60221590ba5c50b37d56bfb37038ec6b204a2e6733efa6111a9c",
-        "unorderedRowHash": "de3a2e8e4e2bce94d885e489d87d669e9e472c77500b4e80a1c9927c3a01919e"
+        "orderedRowHash": "0a7859cab4fd28ee617c966cb174dc2fbe48e2c57a027246bf03e406b3a8ed38",
+        "unorderedRowHash": "7681009f1e15a353d14c8f5ff92f4ed6651c8b03118459b75b506d091c1f49ea"
       }
     },
     {
@@ -2628,8 +2628,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 10,
-        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
-        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+        "orderedRowHash": "1939a852a6f67d6579549304b6536173961522459276d19e9baf577faf137581",
+        "unorderedRowHash": "a134eeeb703ede91a0a799bd0b8288db395a1e01158e5a35bef00fc6412544d5"
       }
     },
     {
@@ -2671,8 +2671,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 10,
-        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
-        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+        "orderedRowHash": "1939a852a6f67d6579549304b6536173961522459276d19e9baf577faf137581",
+        "unorderedRowHash": "a134eeeb703ede91a0a799bd0b8288db395a1e01158e5a35bef00fc6412544d5"
       }
     },
     {
@@ -2714,8 +2714,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 3,
-        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
-        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+        "orderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7",
+        "unorderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7"
       }
     },
     {
@@ -2757,8 +2757,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 10,
-        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
-        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+        "orderedRowHash": "1939a852a6f67d6579549304b6536173961522459276d19e9baf577faf137581",
+        "unorderedRowHash": "a134eeeb703ede91a0a799bd0b8288db395a1e01158e5a35bef00fc6412544d5"
       }
     },
     {
@@ -2800,8 +2800,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "to_date"
         ],
         "rowCount": 3,
-        "orderedRowHash": "e5b9957a0867b640137f2f328043ff996d843528250c2476b8f97227acb47c6d",
-        "unorderedRowHash": "e5b9957a0867b640137f2f328043ff996d843528250c2476b8f97227acb47c6d"
+        "orderedRowHash": "423f976b70e851a5c894e958d49b35c9ba7ce2fb79b20bb213a504770f5093ed",
+        "unorderedRowHash": "423f976b70e851a5c894e958d49b35c9ba7ce2fb79b20bb213a504770f5093ed"
       }
     },
     {
@@ -2843,8 +2843,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 3,
-        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
-        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+        "orderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7",
+        "unorderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7"
       }
     },
     {
@@ -2886,8 +2886,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "to_date"
         ],
         "rowCount": 5,
-        "orderedRowHash": "03a3af6b0255ae600a0718bac4d3e98af026a47ef28e286b23e5aec5b69660e5",
-        "unorderedRowHash": "245ee72d3e02e48747baa994244cf77c167593e7e1ad7e3c22957edac009eea6"
+        "orderedRowHash": "17cefc61983ec49c88254290cb041909fc7a6d8ae5031c6553c693fe2e167a27",
+        "unorderedRowHash": "25bac79e9cfb706c3a279506ce78c143fbfea97bf247e0104d9dde0aa6d61fb1"
       }
     },
     {
@@ -2929,8 +2929,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 3,
-        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
-        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+        "orderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7",
+        "unorderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7"
       }
     },
     {
@@ -2972,8 +2972,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 5,
-        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
-        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+        "orderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43",
+        "unorderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43"
       }
     },
     {
@@ -3015,8 +3015,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 5,
-        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
-        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+        "orderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43",
+        "unorderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43"
       }
     },
     {
@@ -3058,8 +3058,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "to_date"
         ],
         "rowCount": 10,
-        "orderedRowHash": "8cc26922f6cdebce7b9581f188f3a67d1dce2b7ff544dbaff41fac89a8f19876",
-        "unorderedRowHash": "d71a85ccd7828de3a17fc36002bba10914f054e7bb3c09c03cbf4d213d727c09"
+        "orderedRowHash": "de3e6a873af6df31146508cb9ccfb7dd6c6c60af68b4a3626d89e4e2c00a7226",
+        "unorderedRowHash": "f8b76d9394028136ee868e46a2114af838b733f4cdae841f95b6e3f0c2390678"
       }
     },
     {
@@ -3101,8 +3101,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "from_date"
         ],
         "rowCount": 5,
-        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
-        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+        "orderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43",
+        "unorderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43"
       }
     },
     {
@@ -3144,8 +3144,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "signed_date"
         ],
         "rowCount": 10,
-        "orderedRowHash": "ec94488feb8c8382f19023b93ea02f16f0f744e17e0749093aa9f24a5f10b48a",
-        "unorderedRowHash": "364c813f31a3a28cefdb5a68ea1db40d1b6927efd5cb6ef093257cc05dbdb9cb"
+        "orderedRowHash": "1939a852a6f67d6579549304b6536173961522459276d19e9baf577faf137581",
+        "unorderedRowHash": "a134eeeb703ede91a0a799bd0b8288db395a1e01158e5a35bef00fc6412544d5"
       }
     },
     {
@@ -3187,8 +3187,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "signed_date"
         ],
         "rowCount": 3,
-        "orderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6",
-        "unorderedRowHash": "c3ba53b02d88bad81a3745b2091a536bb3d1f40ed77081f53880dec6731241a6"
+        "orderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7",
+        "unorderedRowHash": "11cb00da0658a18e4fc0b2d02a0048baea5c71b09b6c30db21306f936b07e9e7"
       }
     },
     {
@@ -3230,8 +3230,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "signed_date"
         ],
         "rowCount": 5,
-        "orderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a",
-        "unorderedRowHash": "0739cd9361bc7ddd8c628404e7f60305e3128e8cdec13375786d3195b9aa492a"
+        "orderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43",
+        "unorderedRowHash": "a67335cda01941cc5e017369e406a32e436f0c5ed96febe784418e51dea47c43"
       }
     }
   ],
@@ -4765,8 +4765,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "founded_date"
         ],
         "rowCount": 34,
-        "orderedRowHash": "b4adcbae83c72a82c14df9083339b9d622569fd394e8c9e7ba8916424b6a513e",
-        "unorderedRowHash": "012c493656e97dd7eb0a490060cffa645f238e397edb1b0746067c52180df216"
+        "orderedRowHash": "d178553bb47c6ae75c6b293ba781889e86fee1da18c40ceda62eaaff6061e059",
+        "unorderedRowHash": "0dc971455814ac812a684980b49dde38c6516c4dfb3c40297886506cb3692f1f"
       }
     },
     {
@@ -4946,8 +4946,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "smoothed_prize"
         ],
         "rowCount": 16,
-        "orderedRowHash": "420da25df71e4dcf9f350e0443cd26689cbcd0612364b0285d9acd084f5f0e48",
-        "unorderedRowHash": "3e1405d4e268c16eb7843d07f6fe6da6b7af814b4f425ba91814051713655388"
+        "orderedRowHash": "09be6e46ec9ab235e4a36fddc140482d77b28c9e6313a5ccbac767e7cc1107a7",
+        "unorderedRowHash": "b9cbe187dd33c00e0126701e526c7af35347e6c2cf6167dff1ab70501cb2657c"
       }
     },
     {
@@ -5128,8 +5128,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "prev_match_at"
         ],
         "rowCount": 200,
-        "orderedRowHash": "d0c576bba5236ff5724b2719f15363b4874558b6fc5c65c021fff375a8c6386a",
-        "unorderedRowHash": "7d32f2660ddfd054a98951e6a64f09f730a4a866fb64b12729bd988d9786f338"
+        "orderedRowHash": "8cf5807308ce74b1b8264ebb280b40addc26ddd6acc2b6bdf2f10a9050f08f84",
+        "unorderedRowHash": "be905294c98a04ef971b6941574db162e09f352afd53caa8cb469c5a43a97917"
       }
     },
     {
@@ -5175,8 +5175,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "prev_start"
         ],
         "rowCount": 16,
-        "orderedRowHash": "c61e44e788c0740eb55311d902d864f1d65518b03c42f627f1a270cdc8140ec1",
-        "unorderedRowHash": "3e9ad90b2d687fe608af87204c12df87cc926835796a30e5dcb516274d9cbf49"
+        "orderedRowHash": "6ac82f385e43e62c483d7254c0f248574645ca02c402e604793a5beef3668db0",
+        "unorderedRowHash": "e9633a18eb96637dc47264ef6616a8386ef84ebafe5ffcbc8374e0b1036eb822"
       }
     },
     {
@@ -5268,8 +5268,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "next_start"
         ],
         "rowCount": 16,
-        "orderedRowHash": "5e2eddd3b54196de7cbfa8bc957af0996345ba7a0a3081c97f4cd2f64f786fd6",
-        "unorderedRowHash": "6e6ba0eb021fcb8ee755220ed4359aadf09f0c82828b636448fbc473bf4ed125"
+        "orderedRowHash": "af33ffc8b8238b667d666643d1f28134e3e78ff13300a9438292dd9cfccf1cc8",
+        "unorderedRowHash": "f590ec912c8456076bf04cc4945c17a7f7a69aa6f38415ffaff89e0e89f5318b"
       }
     }
   ],
