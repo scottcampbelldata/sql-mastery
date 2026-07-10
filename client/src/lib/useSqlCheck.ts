@@ -13,12 +13,15 @@ interface UseSqlCheckOptions {
   seed?: string;
 }
 
+export type CheckOutcome = 'idle' | 'checking' | 'correct' | 'incorrect' | 'error';
+
 interface UseSqlCheckReturn {
   sql: string;
   setSql: React.Dispatch<React.SetStateAction<string>>;
   feedback: Feedback | null;
   result: QueryResult | null;
   checking: boolean;
+  outcome: CheckOutcome;
   runCheck: () => Promise<void>;
 }
 
@@ -29,12 +32,14 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [result, setResult] = useState<QueryResult | null>(null);
   const [checking, setChecking] = useState<boolean>(false);
+  const [outcome, setOutcome] = useState<CheckOutcome>('idle');
 
   useEffect(() => {
     setSql(seed !== undefined ? seed : starterSqlForExercise(exercise));
     setFeedback(null);
     setResult(null);
     setChecking(false);
+    setOutcome('idle');
   }, [exercise.id, exercise.starterSql, exercise.expectedSql, seed]);
 
   async function runCheck(): Promise<void> {
@@ -50,14 +55,17 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
       return;
     }
     setChecking(true);
+    setOutcome('checking');
     onAttempt?.();
     setFeedback({ toneClass: TONE.info, title: 'Checking...', message: 'Running your SQL against the expected answer.' });
     try {
       const body = await api.check(exercise.id, trimmed);
       setResult(body.result || null);
       if (body.correct) {
+        setOutcome('correct');
         setFeedback({ toneClass: TONE.ok, title: body.message || 'Correct!', message: body.why || '' });
       } else {
+        setOutcome(body.feedbackType === 'error' ? 'error' : 'incorrect');
         setFeedback({
           toneClass: body.feedbackType === 'error' ? TONE.err : TONE.warn,
           title: body.coaching ? body.coaching.label : (body.feedbackType === 'error' ? 'Your SQL did not run' : 'Not quite yet'),
@@ -68,6 +76,7 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
       onResult?.(Boolean(body.correct), body);
     } catch (error) {
       setResult(null);
+      setOutcome('error');
       const err = error as ApiError;
       setFeedback({ toneClass: TONE.err, title: 'The checker could not run', message: `${err.message}${err.hint ? `: ${err.hint}` : ''}` });
     } finally {
@@ -75,5 +84,5 @@ export function useSqlCheck(exercise: Exercise, { onResult, onAttempt, seed }: U
     }
   }
 
-  return { sql, setSql, feedback, result, checking, runCheck };
+  return { sql, setSql, feedback, result, checking, outcome, runCheck };
 }
