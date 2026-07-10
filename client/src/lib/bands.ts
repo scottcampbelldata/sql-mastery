@@ -39,9 +39,9 @@ export const BAND_META: Record<BandLevel, BandMeta> = {
 };
 
 const TIER_LABEL: Record<ScaffoldTier, string> = {
-  full: 'Scaffold: fill in the blanks',
-  half: 'Scaffold: half blanked',
-  blank: 'Scaffold: write it from memory'
+  full: 'Fill in the blanks',
+  half: 'Fewer hints',
+  blank: 'From memory'
 };
 
 export interface BandGroup {

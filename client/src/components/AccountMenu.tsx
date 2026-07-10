@@ -5,6 +5,8 @@ export function AccountMenu() {
   const { user, status, signOut } = useAuth();
   if (status === 'loading') return null;
   if (!user) {
+    // Don't advertise cross-device sync until sign-in is actually configured.
+    if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) return null;
     return (
       <div className="sync-box">
         <span className="sync-label">Save progress across devices</span>

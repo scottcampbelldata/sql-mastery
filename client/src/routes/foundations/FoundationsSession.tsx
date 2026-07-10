@@ -80,7 +80,7 @@ export default function FoundationsSession() {
   }
 
   return (
-    <AppShell breadcrumb={<span className="here">Learn / Foundations</span>}>
+    <AppShell breadcrumb={<span className="here">Learn / Today's lesson</span>}>
       <FoundationsRep key={step.exercise.id} exercise={step.exercise}
         label={label} kind={step.type === 'review' ? 'review' : 'new'}
         tier={step.tier ?? scaffoldTier(state, step.concept.skill, step.type === 'review')}

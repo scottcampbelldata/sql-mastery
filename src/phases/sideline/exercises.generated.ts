@@ -8,7 +8,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-anti-join-kx7lcw",
       "skill": "sl-anti-join",
       "database": "sideline",
-      "task": "Which teams have zero matches? Return team_id, team_name using an anti-join, ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "task": "Which teams have zero matches? Return team_id, team_name using an anti-join. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t LEFT JOIN match m ON (m.team_a_id = t.team_id OR m.team_b_id = t.team_id) WHERE m.match_id IS NULL ORDER BY __BLANK_0__",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t LEFT JOIN match m ON (m.team_a_id = t.team_id OR m.team_b_id = t.team_id) WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -47,7 +47,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-anti-join-l15luo",
       "skill": "sl-anti-join",
       "database": "sideline",
-      "task": "Find sponsorless teams by anti-joining team to team_sponsor; return team_id, team_name ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "task": "Find sponsorless teams by anti-joining team to team_sponsor; return team_id, team_name. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id WHERE ts.team_id IS NULL ORDER BY __BLANK_0__",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -86,7 +86,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-anti-join-zboe5l",
       "skill": "sl-anti-join",
       "database": "sideline",
-      "task": "Which sponsors have zero team deals? Return sponsor_id, sponsor_name using an anti-join, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
+      "task": "Which sponsors have zero team deals? Return sponsor_id, sponsor_name using an anti-join. Order by: sponsor_id.",
       "starterSql": {
         "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE ts.sponsor_id IS NULL ORDER BY __BLANK_0__",
         "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -125,7 +125,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-anti-join-rrdmfd",
       "skill": "sl-anti-join",
       "database": "sideline",
-      "task": "Anti-join tournament to region to find international tournaments; return tournament_id, tournament_name ordered by tournament_id. Return columns: tournament_id, tournament_name. Order by: tournament_id.",
+      "task": "Anti-join tournament to region to find international tournaments; return tournament_id, tournament_name. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t LEFT JOIN region r ON r.region_id = t.region_id WHERE r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t LEFT JOIN region r ON r.region_id = t.region_id WHERE r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -165,7 +165,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-anti-join-4ufzj8",
       "skill": "sl-anti-join",
       "database": "sideline",
-      "task": "Find player-less teams via NOT EXISTS against player; return team_id, team_name ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "task": "Find player-less teams via NOT EXISTS against player; return team_id, team_name. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE NOT EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id) ORDER BY __BLANK_0__",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -206,7 +206,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-case-expression-1qmupg2",
       "skill": "sl-case-expression",
       "database": "sideline",
-      "task": "Use CASE to bucket elo_rating into tier for every team and return team_id, team_name, tier, ordered by team_id. Return columns: team_id, team_name, tier. Order by: team_id.",
+      "task": "Use CASE to bucket elo_rating into tier for every team and return team_id, team_name, tier. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier FROM team ORDER BY __BLANK_1__",
         "half": "SELECT team_id AS team_id, name AS team_name, CASE WHEN elo_rating >= 1800 THEN 'elite' WHEN elo_rating >= 1500 THEN 'mid' ELSE 'developing' END AS tier FROM team ORDER BY __BLANK_0__",
@@ -245,7 +245,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-case-expression-1613nqf",
       "skill": "sl-case-expression",
       "database": "sideline",
-      "task": "Use CASE on prize_pool_usd to bucket tournaments as tournament_id, name, prize_band, ordered by tournament_id. Return columns: tournament_id, name, prize_band. Order by: tournament_id.",
+      "task": "Use CASE on prize_pool_usd to bucket tournaments as tournament_id, name, prize_band. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, CASE WHEN prize_pool_usd >= 500000 THEN 'major' WHEN prize_pool_usd >= 150000 THEN 'regional' ELSE 'open' END AS prize_band FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -286,7 +286,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-case-expression-172oly4",
       "skill": "sl-case-expression",
       "database": "sideline",
-      "task": "Use CASE on total_earnings_usd to bucket every player as player_id, handle, earnings_band, ordered by player_id. Return columns: player_id, handle, earnings_band. Order by: player_id.",
+      "task": "Use CASE on total_earnings_usd to bucket every player as player_id, handle, earnings_band. Order by: player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT player_id AS player_id, handle AS handle, CASE WHEN total_earnings_usd >= 100000 THEN 'veteran' WHEN total_earnings_usd >= 25000 THEN 'proven' ELSE 'prospect' END AS earnings_band FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -327,7 +327,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-case-expression-59epdt",
       "skill": "sl-case-expression",
       "database": "sideline",
-      "task": "Use CASE on contract_end to return team_id, sponsor_id, contract_start, contract_status, ordered by team_id, sponsor_id, contract_start. Return columns: team_id, sponsor_id, contract_start, contract_status. Order by: team_id, sponsor_id, contract_start.",
+      "task": "Use CASE on contract_end to return team_id, sponsor_id, contract_start, contract_status. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY __BLANK_1__, sponsor_id, contract_start LIMIT 200",
         "half": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, CASE WHEN contract_end IS NULL THEN 'active' ELSE 'ended' END AS contract_status FROM team_sponsor ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -369,7 +369,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-case-expression-x3yy3k",
       "skill": "sl-case-expression",
       "database": "sideline",
-      "task": "Use CASE on best_of to return match_id, stage, format_label for every match, ordered by match_id. Return columns: match_id, stage, format_label. Order by: match_id.",
+      "task": "Use CASE on best_of to return match_id, stage, format_label for every match. Order by: match_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT match_id AS match_id, stage AS stage, CASE WHEN best_of = 5 THEN 'marathon' WHEN best_of = 3 THEN 'series' ELSE 'single_map' END AS format_label FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -412,7 +412,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-cte-812tas",
       "skill": "sl-cte",
       "database": "sideline",
-      "task": "Using a CTE that sums prize pools per tier, return tier and total_prize. Order by tier. Return columns: tier, total_prize. Order by: tier.",
+      "task": "Using a CTE that sums prize pools per tier, return tier and total_prize. Order by tier. Order by: tier.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT __BLANK_1__ AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY __BLANK_2__) SELECT __BLANK_3__ AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY __BLANK_4__ LIMIT 200",
         "half": "SELECT tier AS tier, total_prize AS total_prize FROM (WITH tier_prizes AS (SELECT tier AS tier, sum(prize_pool_usd) AS total_prize FROM tournament GROUP BY tier) SELECT tier AS tier, total_prize AS total_prize FROM tier_prizes) prize_by_tier ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -455,7 +455,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-cte-iooqfx",
       "skill": "sl-cte",
       "database": "sideline",
-      "task": "Using a CTE that counts wins per team, return team_id, team_name, wins for teams with at least one win. Order by team_id. Return columns: team_id, team_name, wins. Order by: team_id.",
+      "task": "Using a CTE that counts wins per team, return team_id, team_name, wins for teams with at least one win. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, wins AS wins FROM (WITH team_wins AS (SELECT winner_team_id AS team_id, count(*) AS wins FROM match GROUP BY winner_team_id) SELECT t.team_id AS team_id, t.name AS team_name, tw.wins AS wins FROM team t JOIN team_wins tw ON tw.team_id = t.team_id) wins_by_team ORDER BY __BLANK_1__",
         "half": "SELECT team_id AS team_id, team_name AS team_name, wins AS wins FROM (WITH team_wins AS (SELECT winner_team_id AS team_id, count(*) AS wins FROM match GROUP BY winner_team_id) SELECT t.team_id AS team_id, t.name AS team_name, tw.wins AS wins FROM team t JOIN team_wins tw ON tw.team_id = t.team_id) wins_by_team ORDER BY __BLANK_0__",
@@ -494,7 +494,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-cte-k9cye",
       "skill": "sl-cte",
       "database": "sideline",
-      "task": "Using a CTE that counts players per role, return role and player_count. Order by role. Return columns: role, player_count. Order by: role.",
+      "task": "Using a CTE that counts players per role, return role and player_count. Order by role. Order by: role.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT __BLANK_1__ AS role, count(*) AS player_count FROM player GROUP BY __BLANK_2__) SELECT __BLANK_3__ AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY __BLANK_4__ LIMIT 200",
         "half": "SELECT role AS role, player_count AS player_count FROM (WITH role_counts AS (SELECT role AS role, count(*) AS player_count FROM player GROUP BY role) SELECT role AS role, player_count AS player_count FROM role_counts) role_summary ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -537,7 +537,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-cte-41a0yl",
       "skill": "sl-cte",
       "database": "sideline",
-      "task": "Using a CTE that counts sponsors per team, return team_id, team_name, sponsor_count. Order by team_id. Return columns: team_id, team_name, sponsor_count. Order by: team_id.",
+      "task": "Using a CTE that counts sponsors per team, return team_id, team_name, sponsor_count. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT __BLANK_1__, count(*) AS sponsor_count FROM team_sponsor GROUP BY __BLANK_2__) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY __BLANK_3__ LIMIT 200",
         "half": "SELECT team_id AS team_id, team_name AS team_name, sponsor_count AS sponsor_count FROM (WITH sponsor_counts AS (SELECT team_id, count(*) AS sponsor_count FROM team_sponsor GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, sc.sponsor_count AS sponsor_count FROM team t JOIN sponsor_counts sc ON sc.team_id = t.team_id) sponsored_team_counts ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -580,7 +580,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-cte-1bxfbre",
       "skill": "sl-cte",
       "database": "sideline",
-      "task": "Using a CTE that counts current roster stints, return team_id, team_name, current_players. Order by team_id. Return columns: team_id, team_name, current_players. Order by: team_id.",
+      "task": "Using a CTE that counts current roster stints, return team_id, team_name, current_players. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT __BLANK_1__, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY __BLANK_2__) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY __BLANK_3__ LIMIT 200",
         "half": "SELECT team_id AS team_id, team_name AS team_name, current_players AS current_players FROM (WITH current_roster AS (SELECT team_id, count(*) AS current_players FROM roster_change WHERE to_date IS NULL GROUP BY team_id) SELECT t.team_id AS team_id, t.name AS team_name, cr.current_players AS current_players FROM team t JOIN current_roster cr ON cr.team_id = t.team_id) current_roster_counts ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -625,7 +625,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-15b0hzd",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tier S tournaments, compute length_days as end_date minus start_date. Return tournament_id, name, length_days. Order by tournament_id. Return columns: tournament_id, name, length_days. Order by: tournament_id.",
+      "task": "For tier S tournaments, compute length_days as end_date minus start_date. Return tournament_id, name, length_days. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'S' ORDER BY __BLANK_1__",
         "half": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -666,7 +666,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-1dk9088",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Compute contract_days for each sponsor contract using contract_end or 2025-12-31 when open. Return team_id, sponsor_id, contract_start, contract_days. Order by team_id, sponsor_id, contract_start. Return columns: team_id, sponsor_id, contract_start, contract_days. Order by: team_id, sponsor_id, contract_start.",
+      "task": "Compute contract_days for each sponsor contract using contract_end or 2025-12-31 when open. Return team_id, sponsor_id, contract_start, contract_days. Order by team_id, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, (COALESCE(contract_end, DATE '2025-12-31') - contract_start) AS contract_days FROM team_sponsor ORDER BY __BLANK_1__, sponsor_id, contract_start LIMIT 200",
         "half": "SELECT team_id AS team_id, sponsor_id AS sponsor_id, contract_start AS contract_start, (COALESCE(contract_end, DATE '2025-12-31') - contract_start) AS contract_days FROM team_sponsor ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -708,7 +708,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-1mq6i57",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Subtract start_date from end_date for tier B tournaments and return tournament_id, name, length_days, ordered by tournament_id. Return columns: tournament_id, name, length_days. Order by: tournament_id.",
+      "task": "Subtract start_date from end_date for tier B tournaments and return tournament_id, name, length_days. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'B' ORDER BY __BLANK_1__",
         "half": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -749,7 +749,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-1stwly5",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tier A tournaments, compute length_days as end_date minus start_date. Return tournament_id, name, length_days. Order by tournament_id. Return columns: tournament_id, name, length_days. Order by: tournament_id.",
+      "task": "For tier A tournaments, compute length_days as end_date minus start_date. Return tournament_id, name, length_days. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE tier = 'A' ORDER BY __BLANK_1__",
         "half": "SELECT tournament_id AS tournament_id, name AS name, (end_date - start_date) AS length_days FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -790,7 +790,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-11tdr9y",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tournaments hosted in Canada, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "For tournaments hosted in Canada, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Canada' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Canada' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -832,7 +832,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-16pb714",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Use date_trunc month on start_date for host_country Japan and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "Use date_trunc month on start_date for host_country Japan and return tournament_id, name, start_month. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Japan' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Japan' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -874,7 +874,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-1j85dzm",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Use date_trunc month on start_date for host_country Spain and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "Use date_trunc month on start_date for host_country Spain and return tournament_id, name, start_month. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Spain' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Spain' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -916,7 +916,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-1xnp6k",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tournaments hosted in Indonesia, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "For tournaments hosted in Indonesia, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Indonesia' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Indonesia' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -958,7 +958,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-88rm3o",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tournaments hosted in Australia, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "For tournaments hosted in Australia, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Australia' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Australia' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1000,7 +1000,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-9l058y",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Use date_trunc month on start_date for host_country China and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "Use date_trunc month on start_date for host_country China and return tournament_id, name, start_month. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'China' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'China' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1042,7 +1042,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-aj1g3w",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For players with both dates, compute days_to_sign as signed_date minus birth_date. Return player_id, handle, days_to_sign. Order by player_id. Return columns: player_id, handle, days_to_sign. Order by: player_id.",
+      "task": "For players with both dates, compute days_to_sign as signed_date minus birth_date. Return player_id, handle, days_to_sign. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, (signed_date - birth_date) AS days_to_sign FROM player WHERE signed_date IS NOT NULL AND birth_date IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT player_id AS player_id, handle AS handle, (signed_date - birth_date) AS days_to_sign FROM player WHERE signed_date IS NOT NULL AND birth_date IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1084,7 +1084,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-c5rmz6",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tournaments hosted in South Korea, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "For tournaments hosted in South Korea, truncate start_date to start_month. Return tournament_id, name, start_month. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'South Korea' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'South Korea' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1126,7 +1126,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-odekou",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Use date_trunc month on start_date for host_country Brazil and return tournament_id, name, start_month ordered by tournament_id. Return columns: tournament_id, name, start_month. Order by: tournament_id.",
+      "task": "Use date_trunc month on start_date for host_country Brazil and return tournament_id, name, start_month. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Brazil' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, date_trunc('month', start_date)::date AS start_month FROM tournament WHERE host_country = 'Brazil' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1168,7 +1168,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-1xmj12n",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "Use EXTRACT(YEAR FROM start_date) for tier B tournaments and return tournament_id, name, start_year ordered by tournament_id. Return columns: tournament_id, name, start_year. Order by: tournament_id.",
+      "task": "Use EXTRACT(YEAR FROM start_date) for tier B tournaments and return tournament_id, name, start_year. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'B' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1210,7 +1210,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-date-functions-7dmivb",
       "skill": "sl-date-functions",
       "database": "sideline",
-      "task": "For tier A tournaments, extract start_year from start_date. Return tournament_id, name, start_year. Order by tournament_id. Return columns: tournament_id, name, start_year. Order by: tournament_id.",
+      "task": "For tier A tournaments, extract start_year from start_date. Return tournament_id, name, start_year. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'A' ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, EXTRACT(YEAR FROM start_date) AS start_year FROM tournament WHERE tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1254,7 +1254,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-aggregate-rwqppo",
       "skill": "sl-join-aggregate",
       "database": "sideline",
-      "task": "For each winning team, return team_id, team_name, match_count, and bo5_count. Order by team_id. Return columns: team_id, team_name, match_count, bo5_count. Order by: team_id.",
+      "task": "For each winning team, return team_id, team_name, match_count, and bo5_count. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, count(m.match_id) AS match_count, sum(CASE WHEN m.best_of = 5 THEN 1 ELSE 0 END) AS bo5_count FROM team t JOIN match m ON m.winner_team_id = t.team_id GROUP BY t.team_id, t.name ORDER BY __BLANK_0__",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, count(m.match_id) AS match_count, sum(CASE WHEN m.best_of = 5 THEN 1 ELSE 0 END) AS bo5_count FROM team t JOIN match m ON m.winner_team_id = t.team_id GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1295,7 +1295,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-aggregate-1yz215q",
       "skill": "sl-join-aggregate",
       "database": "sideline",
-      "task": "For rostered players, return role, player_count, and avg_earnings after joining player to team. Order by role. Return columns: role, player_count, avg_earnings. Order by: role.",
+      "task": "For rostered players, return role, player_count, and avg_earnings after joining player to team. Order by role. Order by: role.",
       "starterSql": {
         "full": "SELECT p.role AS role, count(p.player_id) AS player_count, ROUND(avg(p.total_earnings_usd), 2) AS avg_earnings FROM player p JOIN team t ON t.team_id = p.team_id GROUP BY p.role ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT p.role AS role, count(p.player_id) AS player_count, ROUND(avg(p.total_earnings_usd), 2) AS avg_earnings FROM player p JOIN team t ON t.team_id = p.team_id GROUP BY p.role ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1336,7 +1336,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-aggregate-gxm3tr",
       "skill": "sl-join-aggregate",
       "database": "sideline",
-      "task": "For each team, return team_id, team_name, sponsor_count, and sponsor_value from a left join to team_sponsor. Order by team_id. Return columns: team_id, team_name, sponsor_count, sponsor_value. Order by: team_id.",
+      "task": "For each team, return team_id, team_name, sponsor_count, and sponsor_value from a left join to team_sponsor. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, count(ts.sponsor_id) AS sponsor_count, sum(ts.annual_value_usd) AS sponsor_value FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id GROUP BY t.team_id, t.name ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, count(ts.sponsor_id) AS sponsor_count, sum(ts.annual_value_usd) AS sponsor_value FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id GROUP BY t.team_id, t.name ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1378,7 +1378,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-aggregate-1ls552d",
       "skill": "sl-join-aggregate",
       "database": "sideline",
-      "task": "For each tournament with maps, return tournament_id, tournament_name, map_count, and avg_duration. Order by tournament_id. Return columns: tournament_id, tournament_name, map_count, avg_duration. Order by: tournament_id.",
+      "task": "For each tournament with maps, return tournament_id, tournament_name, map_count, and avg_duration. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, count(mr.map_result_id) AS map_count, ROUND(avg(mr.duration_minutes), 2) AS avg_duration FROM tournament t JOIN match m ON m.tournament_id = t.tournament_id JOIN map_result mr ON mr.match_id = m.match_id GROUP BY t.tournament_id, t.name ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, count(mr.map_result_id) AS map_count, ROUND(avg(mr.duration_minutes), 2) AS avg_duration FROM tournament t JOIN match m ON m.tournament_id = t.tournament_id JOIN map_result mr ON mr.match_id = m.match_id GROUP BY t.tournament_id, t.name ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1420,7 +1420,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-aggregate-5fn2qs",
       "skill": "sl-join-aggregate",
       "database": "sideline",
-      "task": "For each region with matches, return region_id, region_name, and match_count. Order by region_id. Return columns: region_id, region_name, match_count. Order by: region_id.",
+      "task": "For each region with matches, return region_id, region_name, and match_count. Order by region_id. Order by: region_id.",
       "starterSql": {
         "full": "SELECT r.region_id AS region_id, r.name AS region_name, count(m.match_id) AS match_count FROM region r JOIN tournament t ON t.region_id = r.region_id JOIN match m ON m.tournament_id = t.tournament_id GROUP BY r.region_id, r.name ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT r.region_id AS region_id, r.name AS region_name, count(m.match_id) AS match_count FROM region r JOIN tournament t ON t.region_id = r.region_id JOIN match m ON m.tournament_id = t.tournament_id GROUP BY r.region_id, r.name ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1463,7 +1463,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-14lmy94",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "For region 2, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "For region 2, list each rostered player as player_id, handle, and team_name. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1504,7 +1504,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-1ds8tyk",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "For region 8, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "For region 8, list each rostered player as player_id, handle, and team_name. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1545,7 +1545,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-1jixt94",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "For region 6, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "For region 6, list each rostered player as player_id, handle, and team_name. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1586,7 +1586,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-1kudi38",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "For region 4, list each rostered player as player_id, handle, and team_name. Order by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "For region 4, list each rostered player as player_id, handle, and team_name. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1627,7 +1627,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-5opb16",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "Join player to team and return player_id, handle, team_name for teams in region 5, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 5. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1668,7 +1668,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-odkluq",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "Join player to team and return player_id, handle, team_name for teams in region 1, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 1. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1709,7 +1709,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-pfrw5m",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "Join player to team and return player_id, handle, team_name for teams in region 3, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 3. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1750,7 +1750,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-inner-qgltfm",
       "skill": "sl-join-inner",
       "database": "sideline",
-      "task": "Join player to team and return player_id, handle, team_name for teams in region 7, ordered by player_id. Return columns: player_id, handle, team_name. Order by: player_id.",
+      "task": "Join player to team and return player_id, handle, team_name for teams in region 7. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE t.region_id = __BLANK_0__ ORDER BY __BLANK_1__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle, t.name AS team_name FROM player p JOIN team t ON t.team_id = p.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1793,7 +1793,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-1ocqhbz",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List every team sponsor row as team_id, team_name, sponsor_id, contract_start, and annual_value_usd, keeping sponsorless teams. Order by team_id, sponsor_id, contract_start. Return columns: team_id, team_name, sponsor_id, contract_start, annual_value_usd. Order by: team_id, sponsor_id, contract_start.",
+      "task": "List every team sponsor row as team_id, team_name, sponsor_id, contract_start, and annual_value_usd, keeping sponsorless teams. Order by team_id, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id ORDER BY __BLANK_0__, sponsor_id, contract_start",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start, ts.annual_value_usd AS annual_value_usd FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id ORDER BY __BLANK_0__",
@@ -1833,7 +1833,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-a3p5hc",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List teams with active sponsor deals when present as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by team_id, sponsor_id, contract_start. Return columns: team_id, team_name, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
+      "task": "List teams with active sponsor deals when present as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by team_id, sponsor_id, contract_start. Order by: team_id, sponsor_id, contract_start.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY __BLANK_0__, sponsor_id, contract_start LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1874,7 +1874,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-jqcppo",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List teams with rostered players when present as team_id, team_name, player_id, handle, keeping teams without players. Order by team_id, player_id. Return columns: team_id, team_name, player_id, handle. Order by: team_id, player_id.",
+      "task": "List teams with rostered players when present as team_id, team_name, player_id, handle, keeping teams without players. Order by team_id, player_id. Order by: team_id, player_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY __BLANK_0__, player_id LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t LEFT JOIN player p ON p.team_id = t.team_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1915,7 +1915,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-ma0yk2",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List sponsors with team deals when present as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by sponsor_id, team_id, contract_start. Return columns: sponsor_id, sponsor_name, team_id, contract_start. Order by: sponsor_id, team_id, contract_start.",
+      "task": "List sponsors with team deals when present as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by sponsor_id, team_id, contract_start. Order by: sponsor_id, team_id, contract_start.",
       "starterSql": {
         "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY __BLANK_0__, team_id, contract_start LIMIT 200",
         "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1956,7 +1956,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-x0vvhc",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List regions with hosted tournaments when present as region_id, region_name, tournament_id, tournament_name. Order by region_id, tournament_id. Return columns: region_id, region_name, tournament_id, tournament_name. Order by: region_id, tournament_id.",
+      "task": "List regions with hosted tournaments when present as region_id, region_name, tournament_id, tournament_name. Order by region_id, tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
         "full": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY __BLANK_0__, tournament_id LIMIT 200",
         "half": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -1999,7 +1999,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-1619qj7",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "For tier A tournaments, join match to tournament and winner team, returning the first 3 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Return columns: match_id, stage, tournament_name, winner_name. Order by: match_id.",
+      "task": "For tier A tournaments, join match to tournament and winner team, returning the first 3 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2042,7 +2042,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-19yoabi",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "For tier A tournaments, list the first 3 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "task": "For tier A tournaments, list the first 3 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'A' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2085,7 +2085,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-1y3030g",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "Join map_result to match and both team aliases, returning the first 10 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Return columns: map_result_id, map_name, team_a_name, team_b_name. Order by: map_result_id.",
+      "task": "Join map_result to match and both team aliases, returning the first 10 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2127,7 +2127,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-7xmhgl",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "Chain match to tournament to team and return 5 match_id, stage, tournament_name, winner_name rows for tier B, ordered by match_id. Return columns: match_id, stage, tournament_name, winner_name. Order by: match_id.",
+      "task": "Chain match to tournament to team and return 5 match_id, stage, tournament_name, winner_name rows for tier B. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2170,7 +2170,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-bjvang",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "Join map_result to match and both team aliases, returning the first 3 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Return columns: map_result_id, map_name, team_a_name, team_b_name. Order by: map_result_id.",
+      "task": "Join map_result to match and both team aliases, returning the first 3 map_result_id, map_name, team_a_name, and team_b_name rows. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2212,7 +2212,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-rd2320",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "Chain map_result to match to tournament and return 5 map_result_id, map_name, stage, tournament_name rows for tier B, ordered by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "task": "Chain map_result to match to tournament and return 5 map_result_id, map_name, stage, tournament_name rows for tier B. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'B' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2255,7 +2255,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-szos16",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "For tier S tournaments, list the first 10 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Return columns: map_result_id, map_name, stage, tournament_name. Order by: map_result_id.",
+      "task": "For tier S tournaments, list the first 10 rows as map_result_id, map_name, stage, and tournament_name. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, m.stage AS stage, t.name AS tournament_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN tournament t ON t.tournament_id = m.tournament_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2298,7 +2298,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-wkr18g",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "Chain map_result to match to two team aliases and return 5 map_result_id, map_name, team_a_name, team_b_name rows ordered by map_result_id. Return columns: map_result_id, map_name, team_a_name, team_b_name. Order by: map_result_id.",
+      "task": "Chain map_result to match to two team aliases and return 5 map_result_id, map_name, team_a_name, team_b_name rows. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, a.name AS team_a_name, b.name AS team_b_name FROM map_result mr JOIN match m ON m.match_id = mr.match_id JOIN team a ON a.team_id = m.team_a_id JOIN team b ON b.team_id = m.team_b_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2340,7 +2340,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-multi-xgof9n",
       "skill": "sl-join-multi",
       "database": "sideline",
-      "task": "For tier S tournaments, join match to tournament and winner team, returning the first 10 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Return columns: match_id, stage, tournament_name, winner_name. Order by: match_id.",
+      "task": "For tier S tournaments, join match to tournament and winner team, returning the first 10 match_id, stage, tournament_name, and winner_name rows. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, m.stage AS stage, t.name AS tournament_name, w.name AS winner_name FROM match m JOIN tournament t ON t.tournament_id = m.tournament_id JOIN team w ON w.team_id = m.winner_team_id WHERE t.tier = 'S' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2385,7 +2385,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-right-full-okqoqy",
       "skill": "sl-join-right-full",
       "database": "sideline",
-      "task": "Show the outer edge of team versus team_sponsor: rows where one side is NULL. Return team_id, team_name, sponsor_id, ordered by team_id. Return columns: team_id, team_name, sponsor_id. Order by: team_id.",
+      "task": "Show the outer edge of team versus team_sponsor: rows where one side is NULL. Return team_id, team_name, sponsor_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id FROM team t FULL OUTER JOIN team_sponsor ts ON ts.team_id = t.team_id WHERE t.team_id IS NULL OR ts.sponsor_id IS NULL ORDER BY __BLANK_0__",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id FROM team t FULL OUTER JOIN team_sponsor ts ON ts.team_id = t.team_id WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -2425,7 +2425,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-right-full-132p6ue",
       "skill": "sl-join-right-full",
       "database": "sideline",
-      "task": "Show the outer edge of sponsor versus team_sponsor as sponsor_id, sponsor_name, team_id, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name, team_id. Order by: sponsor_id.",
+      "task": "Show the outer edge of sponsor versus team_sponsor as sponsor_id, sponsor_name, team_id. Order by: sponsor_id.",
       "starterSql": {
         "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id FROM sponsor s FULL OUTER JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE s.sponsor_id IS NULL OR ts.team_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id FROM sponsor s FULL OUTER JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id WHERE s.sponsor_id IS NULL OR ts.team_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2466,7 +2466,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-right-full-ow0cew",
       "skill": "sl-join-right-full",
       "database": "sideline",
-      "task": "Show teams without players and free agents from a full join of team and player, ordered by team_id, player_id. Return columns: team_id, team_name, player_id, handle. Order by: team_id, player_id.",
+      "task": "Show teams without players and free agents from a full join of team and player. Return columns: team_id, team_name, player_id, handle. Order by: team_id, player_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t FULL OUTER JOIN player p ON p.team_id = t.team_id WHERE t.team_id IS NULL OR p.player_id IS NULL ORDER BY __BLANK_0__, player_id LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM team t FULL OUTER JOIN player p ON p.team_id = t.team_id WHERE t.team_id IS NULL OR p.player_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2508,7 +2508,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-right-full-s9bfh0",
       "skill": "sl-join-right-full",
       "database": "sideline",
-      "task": "Show tournaments without a region and regions without tournaments from a full outer join, ordered by tournament_id. Return columns: tournament_id, tournament_name, region_id, region_name. Order by: tournament_id.",
+      "task": "Show tournaments without a region and regions without tournaments from a full outer join. Return columns: tournament_id, tournament_name, region_id, region_name. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, r.region_id AS region_id, r.name AS region_name FROM tournament t FULL OUTER JOIN region r ON r.region_id = t.region_id WHERE t.tournament_id IS NULL OR r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name, r.region_id AS region_id, r.name AS region_name FROM tournament t FULL OUTER JOIN region r ON r.region_id = t.region_id WHERE t.tournament_id IS NULL OR r.region_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2550,7 +2550,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-right-full-u96p4d",
       "skill": "sl-join-right-full",
       "database": "sideline",
-      "task": "Show teams that never appear as match team_a using a full outer join; return team_id, team_name, match_id ordered by team_id. Return columns: team_id, team_name, match_id. Order by: team_id.",
+      "task": "Show teams that never appear as match team_a using a full outer join; return team_id, team_name, match_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, m.match_id AS match_id FROM team t FULL OUTER JOIN match m ON m.team_a_id = t.team_id WHERE t.team_id IS NULL OR m.match_id IS NULL ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, m.match_id AS match_id FROM team t FULL OUTER JOIN match m ON m.team_a_id = t.team_id WHERE t.team_id IS NULL OR m.match_id IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2593,7 +2593,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-16gvrpz",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "As of 2025-01-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "As of 2025-01-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2636,7 +2636,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-18hhwoy",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "List the first 10 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "List the first 10 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2679,7 +2679,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-18s0x9",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "As of 2024-07-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "As of 2024-07-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2722,7 +2722,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-1agjbfj",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "As of 2024-07-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "As of 2024-07-01, list the first 10 active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2765,7 +2765,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-1c6yn",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "List the first 3 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
+      "task": "List the first 3 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2808,7 +2808,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-1exdt92",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "List the first 3 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "List the first 3 currently active roster stints as roster_change_id, player_id, team_id, from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2851,7 +2851,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-1mg9y2b",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Use to_date to find closed historical stints by 2024-12-31 and return 5 rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
+      "task": "Use to_date to find closed historical stints by 2024-12-31 and return 5 rows. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2894,7 +2894,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-1vhf35x",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "As of 2025-01-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "As of 2025-01-01, list the first 3 active roster stints as roster_change_id, player_id, team_id, and from_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2937,7 +2937,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-gaa7z9",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Do an as-of lookup on roster_change for 2025-01-01 and return 5 roster_change_id, player_id, team_id, from_date rows, ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "Do an as-of lookup on roster_change for 2025-01-01 and return 5 roster_change_id, player_id, team_id, from_date rows. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2025-01-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2025-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -2980,7 +2980,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-iqg8u5",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Do an as-of lookup on roster_change for 2024-07-01 and return 5 roster_change_id, player_id, team_id, from_date rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "Do an as-of lookup on roster_change for 2024-07-01 and return 5 roster_change_id, player_id, team_id, from_date rows. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.from_date <= DATE '2024-07-01' AND (rc.to_date IS NULL OR rc.to_date > DATE '2024-07-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3023,7 +3023,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-spoprl",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "List the first 10 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, to_date. Order by: roster_change_id.",
+      "task": "List the first 10 roster stints that had ended by 2024-12-31 as roster_change_id, player_id, team_id, to_date. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.to_date AS to_date FROM roster_change rc WHERE rc.to_date IS NOT NULL AND rc.to_date <= DATE '2024-12-31' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3066,7 +3066,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-up1nxa",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Use open-ended roster_change rows and return 5 roster_change_id, player_id, team_id, from_date rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, from_date. Order by: roster_change_id.",
+      "task": "Use open-ended roster_change rows and return 5 roster_change_id, player_id, team_id, from_date rows. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, rc.from_date AS from_date FROM roster_change rc WHERE rc.to_date IS NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3109,7 +3109,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-1if2snq",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Find roster stints active on each player signed_date and return 10 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
+      "task": "Find roster stints active on each player signed_date and return 10 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3152,7 +3152,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-gg3ka2",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Find roster stints active on each player signed_date and return 3 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
+      "task": "Find roster stints active on each player signed_date and return 3 roster_change_id, player_id, team_id, signed_date rows. Order by roster_change_id. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3195,7 +3195,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-scd-asof-i9kpm",
       "skill": "sl-scd-asof",
       "database": "sideline",
-      "task": "Join roster_change to player and use signed_date as the as-of date, returning 5 rows ordered by roster_change_id. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
+      "task": "Join roster_change to player and use signed_date as the as-of date, returning 5 rows. Return columns: roster_change_id, player_id, team_id, signed_date. Order by: roster_change_id.",
       "starterSql": {
         "full": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT rc.roster_change_id AS roster_change_id, rc.player_id AS player_id, rc.team_id AS team_id, p.signed_date AS signed_date FROM roster_change rc JOIN player p ON p.player_id = rc.player_id WHERE p.signed_date >= rc.from_date AND p.signed_date < COALESCE(rc.to_date, DATE '2026-01-01') ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3240,7 +3240,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-compare-s144yi",
       "skill": "sl-self-join-compare",
       "database": "sideline",
-      "task": "Self-join team on region_id and elo_rating and return team_id, team_a_name, team_b_name for each pair, ordered by team_id. Return columns: team_id, team_a_name, team_b_name. Order by: team_id.",
+      "task": "Self-join team on region_id and elo_rating and return team_id, team_a_name, team_b_name for each pair. Order by: team_id.",
       "starterSql": {
         "full": "SELECT a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name FROM team a JOIN team b ON a.region_id = b.region_id AND a.elo_rating = b.elo_rating AND a.team_id < b.team_id ORDER BY __BLANK_0__",
         "half": "SELECT a.team_id AS team_id, a.name AS team_a_name, b.name AS team_b_name FROM team a JOIN team b ON a.region_id = b.region_id AND a.elo_rating = b.elo_rating AND a.team_id < b.team_id ORDER BY __BLANK_0__",
@@ -3278,7 +3278,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-compare-1gf7sqc",
       "skill": "sl-self-join-compare",
       "database": "sideline",
-      "task": "Self-join player to the next same-country same-role peer and return player_id, handle, peer_player_id, peer_handle ordered by player_id. Return columns: player_id, handle, peer_player_id, peer_handle. Order by: player_id.",
+      "task": "Self-join player to the next same-country same-role peer and return player_id, handle, peer_player_id, peer_handle. Order by: player_id.",
       "starterSql": {
         "full": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT a.player_id AS player_id, a.handle AS handle, b.player_id AS peer_player_id, b.handle AS peer_handle FROM player a JOIN player b ON b.country = a.country AND b.role = a.role AND b.player_id > a.player_id WHERE b.player_id = (SELECT min(c.player_id) FROM player c WHERE c.country = a.country AND c.role = a.role AND c.player_id > a.player_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3320,7 +3320,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-compare-1plrzh3",
       "skill": "sl-self-join-compare",
       "database": "sideline",
-      "task": "Self-join team to the next same-region peer and return team_id, team_name, peer_team_id, peer_team_name ordered by team_id. Return columns: team_id, team_name, peer_team_id, peer_team_name. Order by: team_id.",
+      "task": "Self-join team to the next same-region peer and return team_id, team_name, peer_team_id, peer_team_name. Order by: team_id.",
       "starterSql": {
         "full": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT a.team_id AS team_id, a.name AS team_name, b.team_id AS peer_team_id, b.name AS peer_team_name FROM team a JOIN team b ON b.region_id = a.region_id AND b.team_id > a.team_id WHERE b.team_id = (SELECT min(c.team_id) FROM team c WHERE c.region_id = a.region_id AND c.team_id > a.team_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3362,7 +3362,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-compare-3rmzue",
       "skill": "sl-self-join-compare",
       "database": "sideline",
-      "task": "Self-join sponsor to the next headquarters-country peer and return sponsor_id, sponsor_name, peer_sponsor_id, peer_sponsor_name ordered by sponsor_id. Return columns: sponsor_id, sponsor_name, peer_sponsor_id, peer_sponsor_name. Order by: sponsor_id.",
+      "task": "Self-join sponsor to the next headquarters-country peer and return sponsor_id, sponsor_name, peer_sponsor_id, peer_sponsor_name. Order by: sponsor_id.",
       "starterSql": {
         "full": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT a.sponsor_id AS sponsor_id, a.name AS sponsor_name, b.sponsor_id AS peer_sponsor_id, b.name AS peer_sponsor_name FROM sponsor a JOIN sponsor b ON b.headquarters_country = a.headquarters_country AND b.sponsor_id > a.sponsor_id WHERE b.sponsor_id = (SELECT min(c.sponsor_id) FROM sponsor c WHERE c.headquarters_country = a.headquarters_country AND c.sponsor_id > a.sponsor_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3404,7 +3404,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-compare-p21w0h",
       "skill": "sl-self-join-compare",
       "database": "sideline",
-      "task": "Self-join tournament to the next same-tier peer and return tournament_id, tournament_name, peer_tournament_id, peer_tournament_name ordered by tournament_id. Return columns: tournament_id, tournament_name, peer_tournament_id, peer_tournament_name. Order by: tournament_id.",
+      "task": "Self-join tournament to the next same-tier peer and return tournament_id, tournament_name, peer_tournament_id, peer_tournament_name. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT a.tournament_id AS tournament_id, a.name AS tournament_name, b.tournament_id AS peer_tournament_id, b.name AS peer_tournament_name FROM tournament a JOIN tournament b ON b.tier = a.tier AND b.tournament_id > a.tournament_id WHERE b.tournament_id = (SELECT min(c.tournament_id) FROM tournament c WHERE c.tier = a.tier AND c.tournament_id > a.tournament_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3448,7 +3448,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-11rfprz",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "Show 10 Group matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "Show 10 Group matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3490,7 +3490,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-19o2ipl",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "Show 5 Semifinal matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "Show 5 Semifinal matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Semifinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3532,7 +3532,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-4a53tl",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "For Grand Final matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "For Grand Final matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3574,7 +3574,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-9tru77",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "For Quarterfinal matches, list the first 3 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "For Quarterfinal matches, list the first 3 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Quarterfinal' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3616,7 +3616,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-hd6wf5",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "Show 3 Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "Show 3 Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3658,7 +3658,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-l9fph9",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "For Group matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "For Group matches, list the first 5 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Group' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3700,7 +3700,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-uoq1ih",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "Show 3 Grand Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "Show 3 Grand Final matches as match_id, winner_name, loser_name by joining team twice. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Grand Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3742,7 +3742,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-self-join-match-zlv17f",
       "skill": "sl-self-join-match",
       "database": "sideline",
-      "task": "For Final matches, list the first 10 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Return columns: match_id, winner_name, loser_name. Order by: match_id.",
+      "task": "For Final matches, list the first 10 rows as match_id, winner_name, and loser_name. The loser is the team that was not the winner. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "half": "SELECT m.match_id AS match_id, w.name AS winner_name, l.name AS loser_name FROM match m\nJOIN team w ON w.team_id = m.winner_team_id\nJOIN team l ON l.team_id = CASE WHEN m.winner_team_id = m.team_a_id THEN m.team_b_id ELSE m.team_a_id END\nWHERE m.stage = 'Final' ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3786,7 +3786,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-semi-join-1rgsv2k",
       "skill": "sl-semi-join",
       "database": "sideline",
-      "task": "Use EXISTS against team_sponsor to return sponsored teams as team_id, team_name, ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "task": "Use EXISTS against team_sponsor to return sponsored teams as team_id, team_name. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.team_id = t.team_id) ORDER BY __BLANK_0__",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -3825,7 +3825,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-semi-join-1gvzk7z",
       "skill": "sl-semi-join",
       "database": "sideline",
-      "task": "Use EXISTS against team_sponsor to return active or historical sponsors once, ordered by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
+      "task": "Use EXISTS against team_sponsor to return active or historical sponsors once. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
       "starterSql": {
         "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.sponsor_id = s.sponsor_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name FROM sponsor s WHERE EXISTS (SELECT 1 FROM team_sponsor ts WHERE ts.sponsor_id = s.sponsor_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3865,7 +3865,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-semi-join-1qq3fom",
       "skill": "sl-semi-join",
       "database": "sideline",
-      "task": "Use EXISTS against match to return tournaments with match activity as tournament_id, tournament_name, ordered by tournament_id. Return columns: tournament_id, tournament_name. Order by: tournament_id.",
+      "task": "Use EXISTS against match to return tournaments with match activity as tournament_id, tournament_name. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t WHERE EXISTS (SELECT 1 FROM match m WHERE m.tournament_id = t.tournament_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.tournament_id AS tournament_id, t.name AS tournament_name FROM tournament t WHERE EXISTS (SELECT 1 FROM match m WHERE m.tournament_id = t.tournament_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3905,7 +3905,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-semi-join-vut0e0",
       "skill": "sl-semi-join",
       "database": "sideline",
-      "task": "Use EXISTS against player to return teams with rostered players as team_id, team_name, ordered by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "task": "Use EXISTS against player to return teams with rostered players as team_id, team_name. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name FROM team t WHERE EXISTS (SELECT 1 FROM player p WHERE p.team_id = t.team_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3945,7 +3945,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-semi-join-vyp7lr",
       "skill": "sl-semi-join",
       "database": "sideline",
-      "task": "Use EXISTS against roster_change to return players with roster history as player_id, handle, ordered by player_id. Return columns: player_id, handle. Order by: player_id.",
+      "task": "Use EXISTS against roster_change to return players with roster history as player_id, handle. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE EXISTS (SELECT 1 FROM roster_change rc WHERE rc.player_id = p.player_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE EXISTS (SELECT 1 FROM roster_change rc WHERE rc.player_id = p.player_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3987,7 +3987,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-set-ops-12p0j6u",
       "skill": "sl-set-ops",
       "database": "sideline",
-      "task": "UNION match team_a_id and team_b_id into one team_id column and return distinct values ordered by team_id. Return columns: team_id. Order by: team_id.",
+      "task": "UNION match team_a_id and team_b_id into one team_id column and return distinct values. Order by: team_id.",
       "starterSql": {
         "full": "SELECT DISTINCT __BLANK_0__ AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_a_id AS team_id FROM match UNION SELECT team_b_id AS team_id FROM match) participating_teams ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4026,7 +4026,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-set-ops-1rqwcxx",
       "skill": "sl-set-ops",
       "database": "sideline",
-      "task": "Use EXCEPT to subtract winner_team_id values from team_id values and return team_id ordered by team_id. Return columns: team_id. Order by: team_id.",
+      "task": "Use EXCEPT to subtract winner_team_id values from team_id values and return team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT DISTINCT __BLANK_0__ AS team_id FROM (SELECT __BLANK_1__ AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY __BLANK_2__ LIMIT 200",
         "half": "SELECT DISTINCT team_id AS team_id FROM (SELECT team_id AS team_id FROM team EXCEPT SELECT winner_team_id AS team_id FROM match) winless_teams ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4066,7 +4066,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-set-ops-1w4d6oi",
       "skill": "sl-set-ops",
       "database": "sideline",
-      "task": "INTERSECT player country with tournament host_country and return distinct country values ordered by country. Return columns: country. Order by: country.",
+      "task": "INTERSECT player country with tournament host_country and return distinct country values. Order by: country.",
       "starterSql": {
         "full": "SELECT DISTINCT __BLANK_0__ AS country FROM (SELECT __BLANK_1__ AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY __BLANK_2__ LIMIT 200",
         "half": "SELECT DISTINCT country AS country FROM (SELECT country AS country FROM player INTERSECT SELECT host_country AS country FROM tournament) shared_countries ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4106,7 +4106,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-set-ops-lmmbtq",
       "skill": "sl-set-ops",
       "database": "sideline",
-      "task": "UNION player role with roster_change change_reason into role and return distinct values ordered by role. Return columns: role. Order by: role.",
+      "task": "UNION player role with roster_change change_reason into role and return distinct values. Order by: role.",
       "starterSql": {
         "full": "SELECT DISTINCT __BLANK_0__ AS role FROM (SELECT __BLANK_1__ AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY __BLANK_2__ LIMIT 200",
         "half": "SELECT DISTINCT role AS role FROM (SELECT role AS role FROM player UNION SELECT change_reason AS role FROM roster_change) role_values ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4146,7 +4146,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-set-ops-sxq06e",
       "skill": "sl-set-ops",
       "database": "sideline",
-      "task": "UNION tournament host_country with player country into one country column and return the distinct non-NULL values ordered by country. Return columns: country. Order by: country.",
+      "task": "UNION tournament host_country with player country into one country column and return the distinct non-NULL values. Order by: country.",
       "starterSql": {
         "full": "SELECT DISTINCT __BLANK_0__ AS country FROM (SELECT host_country AS country FROM tournament UNION SELECT __BLANK_1__ AS country FROM player) countries WHERE __BLANK_2__ IS NOT NULL ORDER BY __BLANK_3__",
         "half": "SELECT DISTINCT country AS country FROM (SELECT host_country AS country FROM tournament UNION SELECT country AS country FROM player) countries WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4189,7 +4189,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-correlated-lllys",
       "skill": "sl-subquery-correlated",
       "database": "sideline",
-      "task": "List rostered players who earn more than their own team average. Return player_id and handle. Order by player_id. Return columns: player_id, handle. Order by: player_id.",
+      "task": "List rostered players who earn more than their own team average. Return player_id and handle. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE p.team_id IS NOT NULL AND p.total_earnings_usd > (SELECT avg(p2.total_earnings_usd) FROM player p2 WHERE p2.team_id = p.team_id) ORDER BY __BLANK_0__",
         "half": "SELECT p.player_id AS player_id, p.handle AS handle FROM player p WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4228,7 +4228,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-correlated-1okswsg",
       "skill": "sl-subquery-correlated",
       "database": "sideline",
-      "task": "List map results whose duration_minutes is above the average for that same map_name. Return map_result_id, map_name, duration_minutes. Order by map_result_id. Return columns: map_result_id, map_name, duration_minutes. Order by: map_result_id.",
+      "task": "List map results whose duration_minutes is above the average for that same map_name. Return map_result_id, map_name, duration_minutes. Order by map_result_id. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, mr.duration_minutes AS duration_minutes FROM map_result mr WHERE mr.duration_minutes > (SELECT avg(mr2.duration_minutes) FROM map_result mr2 WHERE mr2.map_name = mr.map_name) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT mr.map_result_id AS map_result_id, mr.map_name AS map_name, mr.duration_minutes AS duration_minutes FROM map_result mr WHERE mr.duration_minutes > (SELECT avg(mr2.duration_minutes) FROM map_result mr2 WHERE mr2.map_name = mr.map_name) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4269,7 +4269,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-correlated-1qibsn7",
       "skill": "sl-subquery-correlated",
       "database": "sideline",
-      "task": "List tournaments whose prize_pool_usd is above their own tier average. Return tournament_id, name, prize_pool_usd. Order by tournament_id. Return columns: tournament_id, name, prize_pool_usd. Order by: tournament_id.",
+      "task": "List tournaments whose prize_pool_usd is above their own tier average. Return tournament_id, name, prize_pool_usd. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT t.tournament_id AS tournament_id, t.name AS name, t.prize_pool_usd AS prize_pool_usd FROM tournament t WHERE t.prize_pool_usd > (SELECT avg(t2.prize_pool_usd) FROM tournament t2 WHERE t2.tier = t.tier) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.tournament_id AS tournament_id, t.name AS name, t.prize_pool_usd AS prize_pool_usd FROM tournament t WHERE t.prize_pool_usd > (SELECT avg(t2.prize_pool_usd) FROM tournament t2 WHERE t2.tier = t.tier) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4310,7 +4310,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-correlated-6gkrke",
       "skill": "sl-subquery-correlated",
       "database": "sideline",
-      "task": "List matches whose best_of is above the average for their own stage. Return match_id, stage, best_of. Order by match_id. Return columns: match_id, stage, best_of. Order by: match_id.",
+      "task": "List matches whose best_of is above the average for their own stage. Return match_id, stage, best_of. Order by match_id. Order by: match_id.",
       "starterSql": {
         "full": "SELECT m.match_id AS match_id, m.stage AS stage, m.best_of AS best_of FROM match m WHERE m.best_of > (SELECT avg(m2.best_of) FROM match m2 WHERE m2.stage = m.stage) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT m.match_id AS match_id, m.stage AS stage, m.best_of AS best_of FROM match m WHERE m.best_of > (SELECT avg(m2.best_of) FROM match m2 WHERE m2.stage = m.stage) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4351,7 +4351,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-correlated-zqyvqj",
       "skill": "sl-subquery-correlated",
       "database": "sideline",
-      "task": "List teams whose elo_rating is above their own region average. Return team_id, team_name, elo_rating. Order by team_id. Return columns: team_id, team_name, elo_rating. Order by: team_id.",
+      "task": "List teams whose elo_rating is above their own region average. Return team_id, team_name, elo_rating. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, t.elo_rating AS elo_rating FROM team t WHERE t.elo_rating > (SELECT avg(t2.elo_rating) FROM team t2 WHERE t2.region_id = t.region_id) ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, t.elo_rating AS elo_rating FROM team t WHERE t.elo_rating > (SELECT avg(t2.elo_rating) FROM team t2 WHERE t2.region_id = t.region_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4394,7 +4394,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-in-11c4e2g",
       "skill": "sl-subquery-in",
       "database": "sideline",
-      "task": "List teams in regions that host at least one tier A tournament. Return team_id and team_name. Order by team_id. Return columns: team_id, team_name. Order by: team_id.",
+      "task": "List teams in regions that host at least one tier A tournament. Return team_id and team_name. Order by team_id. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, name AS team_name FROM team WHERE region_id IN (SELECT region_id FROM tournament WHERE tier = 'A' AND region_id IS NOT NULL) ORDER BY __BLANK_1__",
         "half": "SELECT team_id AS team_id, name AS team_name FROM team WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4434,7 +4434,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-in-1vzwisf",
       "skill": "sl-subquery-in",
       "database": "sideline",
-      "task": "List players whose team_id appears among match winners. Return player_id and handle. Order by player_id. Return columns: player_id, handle. Order by: player_id.",
+      "task": "List players whose team_id appears among match winners. Return player_id and handle. Order by player_id. Order by: player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, handle AS handle FROM player WHERE team_id IN (SELECT winner_team_id FROM match) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT player_id AS player_id, handle AS handle FROM player WHERE team_id IN (SELECT winner_team_id FROM match) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4475,7 +4475,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-in-afrah8",
       "skill": "sl-subquery-in",
       "database": "sideline",
-      "task": "List sponsors with at least one active contract. Return sponsor_id and sponsor_name. Order by sponsor_id. Return columns: sponsor_id, sponsor_name. Order by: sponsor_id.",
+      "task": "List sponsors with at least one active contract. Return sponsor_id and sponsor_name. Order by sponsor_id. Order by: sponsor_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS sponsor_id, name AS sponsor_name FROM sponsor WHERE __BLANK_1__ IN (SELECT __BLANK_2__ FROM team_sponsor WHERE contract_end IS NULL) ORDER BY __BLANK_3__ LIMIT 200",
         "half": "SELECT sponsor_id AS sponsor_id, name AS sponsor_name FROM sponsor WHERE sponsor_id IN (SELECT sponsor_id FROM team_sponsor WHERE contract_end IS NULL) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4518,7 +4518,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-in-jlwxo6",
       "skill": "sl-subquery-in",
       "database": "sideline",
-      "task": "List tournaments that include at least one best_of 5 match. Return tournament_id and name. Order by tournament_id. Return columns: tournament_id, name. Order by: tournament_id.",
+      "task": "List tournaments that include at least one best_of 5 match. Return tournament_id and name. Order by tournament_id. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name FROM tournament WHERE __BLANK_1__ IN (SELECT __BLANK_2__ FROM match WHERE best_of = 5) ORDER BY __BLANK_3__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name FROM tournament WHERE tournament_id IN (SELECT tournament_id FROM match WHERE best_of = 5) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4561,7 +4561,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-in-z4w46s",
       "skill": "sl-subquery-in",
       "database": "sideline",
-      "task": "List regions that have at least one elite-Elo team. Return region_id and region_name. Order by region_id. Return columns: region_id, region_name. Order by: region_id.",
+      "task": "List regions that have at least one elite-Elo team. Return region_id and region_name. Order by region_id. Order by: region_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS region_id, name AS region_name FROM region WHERE __BLANK_1__ IN (SELECT __BLANK_2__ FROM team WHERE elo_rating >= 1800) ORDER BY __BLANK_3__ LIMIT 200",
         "half": "SELECT region_id AS region_id, name AS region_name FROM region WHERE region_id IN (SELECT region_id FROM team WHERE elo_rating >= 1800) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4606,7 +4606,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-scalar-tfcqjz",
       "skill": "sl-subquery-scalar",
       "database": "sideline",
-      "task": "Compare each team to the scalar average Elo subquery and return team_id, team_name, elo_rating for the above-average teams, ordered by team_id. Return columns: team_id, team_name, elo_rating. Order by: team_id.",
+      "task": "Compare each team to the scalar average Elo subquery and return team_id, team_name, elo_rating for the above-average teams. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, elo_rating AS elo_rating FROM team WHERE elo_rating > (SELECT avg(elo_rating) FROM team) ORDER BY __BLANK_1__",
         "half": "SELECT team_id AS team_id, name AS team_name, elo_rating AS elo_rating FROM team WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4647,7 +4647,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-scalar-10kis8",
       "skill": "sl-subquery-scalar",
       "database": "sideline",
-      "task": "Use a scalar average duration subquery and return map_result_id, map_name, duration_minutes for longer maps, ordered by map_result_id. Return columns: map_result_id, map_name, duration_minutes. Order by: map_result_id.",
+      "task": "Use a scalar average duration subquery and return map_result_id, map_name, duration_minutes for longer maps. Order by: map_result_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes FROM map_result WHERE duration_minutes > (SELECT avg(duration_minutes) FROM map_result) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes FROM map_result WHERE duration_minutes > (SELECT avg(duration_minutes) FROM map_result) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4689,7 +4689,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-scalar-1mdh9pu",
       "skill": "sl-subquery-scalar",
       "database": "sideline",
-      "task": "Compare each tournament to the scalar average prize_pool_usd subquery and return tournament_id, name, prize_pool_usd, ordered by tournament_id. Return columns: tournament_id, name, prize_pool_usd. Order by: tournament_id.",
+      "task": "Compare each tournament to the scalar average prize_pool_usd subquery and return tournament_id, name, prize_pool_usd. Order by: tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, name AS name, prize_pool_usd AS prize_pool_usd FROM tournament WHERE prize_pool_usd > (SELECT avg(prize_pool_usd) FROM tournament) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, name AS name, prize_pool_usd AS prize_pool_usd FROM tournament WHERE prize_pool_usd > (SELECT avg(prize_pool_usd) FROM tournament) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4731,7 +4731,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-scalar-1n8rmbb",
       "skill": "sl-subquery-scalar",
       "database": "sideline",
-      "task": "Compare founded_date to a scalar min tournament start_date subquery and return team_id, team_name, founded_date ordered by team_id. Return columns: team_id, team_name, founded_date. Order by: team_id.",
+      "task": "Compare founded_date to a scalar min tournament start_date subquery and return team_id, team_name, founded_date. Order by: team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, founded_date AS founded_date FROM team WHERE founded_date < (SELECT min(start_date) FROM tournament) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT team_id AS team_id, name AS team_name, founded_date AS founded_date FROM team WHERE founded_date < (SELECT min(start_date) FROM tournament) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4773,7 +4773,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-subquery-scalar-n9w55g",
       "skill": "sl-subquery-scalar",
       "database": "sideline",
-      "task": "Compare each player to a scalar average earnings subquery and return player_id, handle, total_earnings_usd, ordered by player_id. Return columns: player_id, handle, total_earnings_usd. Order by: player_id.",
+      "task": "Compare each player to a scalar average earnings subquery and return player_id, handle, total_earnings_usd. Order by: player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, handle AS handle, total_earnings_usd AS total_earnings_usd FROM player WHERE total_earnings_usd > (SELECT avg(total_earnings_usd) FROM player) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT player_id AS player_id, handle AS handle, total_earnings_usd AS total_earnings_usd FROM player WHERE total_earnings_usd > (SELECT avg(total_earnings_usd) FROM player) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4817,7 +4817,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-frame-basic-1hp364",
       "skill": "sl-window-frame-basic",
       "database": "sideline",
-      "task": "Use AVG(duration_minutes) over a one-row preceding frame and return map_result_id, map_name, duration_minutes, framed_duration ordered by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, framed_duration. Order by: map_name, map_result_id.",
+      "task": "Use AVG(duration_minutes) over a one-row preceding frame and return map_result_id, map_name, duration_minutes, framed_duration. Order by: map_name, map_result_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 2) AS framed_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4862,7 +4862,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-frame-basic-1ilzjsk",
       "skill": "sl-window-frame-basic",
       "database": "sideline",
-      "task": "Use COUNT(*) over a centered ROWS frame and return match_id, tournament_id, best_of, nearby_matches ordered by tournament_id and match_id. Return columns: match_id, tournament_id, best_of, nearby_matches. Order by: tournament_id, match_id.",
+      "task": "Use COUNT(*) over a centered ROWS frame and return match_id, tournament_id, best_of, nearby_matches. Order by: tournament_id, match_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS match_id, __BLANK_1__ AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT match_id AS match_id, tournament_id AS tournament_id, best_of AS best_of, COUNT(*) OVER (PARTITION BY tournament_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS nearby_matches FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4907,7 +4907,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-frame-basic-5a7afu",
       "skill": "sl-window-frame-basic",
       "database": "sideline",
-      "task": "Use AVG(prize_pool_usd) over a ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING frame and return tournament_id, region_id, start_date, prize_pool_usd, smoothed_prize, ordered by region_id and tournament_id. Return columns: tournament_id, region_id, start_date, prize_pool_usd, smoothed_prize. Order by: region_id, tournament_id.",
+      "task": "Use AVG(prize_pool_usd) over a ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING frame and return tournament_id, region_id, start_date, prize_pool_usd, smoothed_prize. Order by: region_id, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__",
         "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, start_date AS start_date, prize_pool_usd AS prize_pool_usd, ROUND(AVG(prize_pool_usd) OVER (PARTITION BY region_id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS smoothed_prize FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4954,7 +4954,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-frame-basic-fb5feg",
       "skill": "sl-window-frame-basic",
       "database": "sideline",
-      "task": "Use AVG(total_earnings_usd) over a forward ROWS frame and return player_id, role, total_earnings_usd, forward_avg_earnings ordered by role and player_id. Return columns: player_id, role, total_earnings_usd, forward_avg_earnings. Order by: role, player_id.",
+      "task": "Use AVG(total_earnings_usd) over a forward ROWS frame and return player_id, role, total_earnings_usd, forward_avg_earnings. Order by: role, player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROUND(AVG(total_earnings_usd) OVER (PARTITION BY role ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING), 2) AS forward_avg_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4999,7 +4999,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-frame-basic-moqd4c",
       "skill": "sl-window-frame-basic",
       "database": "sideline",
-      "task": "Use SUM(prize_pool_usd) over a 2 preceding frame and return tournament_id, tier, prize_pool_usd, framed_prize ordered by tier and tournament_id. Return columns: tournament_id, tier, prize_pool_usd, framed_prize. Order by: tier, tournament_id.",
+      "task": "Use SUM(prize_pool_usd) over a 2 preceding frame and return tournament_id, tier, prize_pool_usd, framed_prize. Order by: tier, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY __BLANK_2__ ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY tier ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS framed_prize FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5046,7 +5046,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-lag-lead-1q2co49",
       "skill": "sl-window-lag-lead",
       "database": "sideline",
-      "task": "For each map_name partition, show next_duration from LEAD(duration_minutes). Return map_result_id, map_name, duration_minutes, next_duration. Order by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, next_duration. Order by: map_name, map_result_id.",
+      "task": "For each map_name partition, show next_duration from LEAD(duration_minutes). Return map_result_id, map_name, duration_minutes, next_duration. Order by map_name and map_result_id. Order by: map_name, map_result_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY __BLANK_2__) AS next_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, LEAD(duration_minutes) OVER (PARTITION BY map_name) AS next_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5091,7 +5091,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-lag-lead-a5q3f",
       "skill": "sl-window-lag-lead",
       "database": "sideline",
-      "task": "For each tournament partition, show each match with prev_match_at from LAG(match_datetime). Return match_id, tournament_id, match_datetime, prev_match_at. Order by tournament_id and match_id. Return columns: match_id, tournament_id, match_datetime, prev_match_at. Order by: tournament_id, match_id.",
+      "task": "For each tournament partition, show each match with prev_match_at from LAG(match_datetime). Return match_id, tournament_id, match_datetime, prev_match_at. Order by tournament_id and match_id. Order by: tournament_id, match_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS match_id, __BLANK_1__ AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY __BLANK_2__) AS prev_match_at FROM match ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT match_id AS match_id, tournament_id AS tournament_id, match_datetime AS match_datetime, LAG(match_datetime) OVER (PARTITION BY tournament_id) AS prev_match_at FROM match ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5136,7 +5136,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-lag-lead-fiqy3f",
       "skill": "sl-window-lag-lead",
       "database": "sideline",
-      "task": "For each region partition, show each tournament with prev_start from LAG(start_date). Return tournament_id, region_id, name, start_date, prev_start. Order by region_id and tournament_id. Return columns: tournament_id, region_id, name, start_date, prev_start. Order by: region_id, tournament_id.",
+      "task": "For each region partition, show each tournament with prev_start from LAG(start_date). Return tournament_id, region_id, name, start_date, prev_start. Order by region_id and tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY __BLANK_2__) AS prev_start FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__",
         "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LAG(start_date) OVER (PARTITION BY region_id) AS prev_start FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -5183,7 +5183,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-lag-lead-nddjmk",
       "skill": "sl-window-lag-lead",
       "database": "sideline",
-      "task": "For each role partition, show prev_earnings from LAG(total_earnings_usd). Return player_id, role, total_earnings_usd, prev_earnings. Order by role and player_id. Return columns: player_id, role, total_earnings_usd, prev_earnings. Order by: role, player_id.",
+      "task": "For each role partition, show prev_earnings from LAG(total_earnings_usd). Return player_id, role, total_earnings_usd, prev_earnings. Order by role and player_id. Order by: role, player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY __BLANK_2__) AS prev_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, LAG(total_earnings_usd) OVER (PARTITION BY role) AS prev_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5228,7 +5228,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-lag-lead-jfwfuq",
       "skill": "sl-window-lag-lead",
       "database": "sideline",
-      "task": "For each region partition, show each tournament with next_start from LEAD(start_date). Return tournament_id, region_id, name, start_date, next_start. Order by region_id and tournament_id. Return columns: tournament_id, region_id, name, start_date, next_start. Order by: region_id, tournament_id.",
+      "task": "For each region partition, show each tournament with next_start from LEAD(start_date). Return tournament_id, region_id, name, start_date, next_start. Order by region_id and tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY __BLANK_2__) AS next_start FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, start_date AS start_date, LEAD(start_date) OVER (PARTITION BY region_id) AS next_start FROM tournament WHERE region_id IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5278,7 +5278,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-rank-tfrah5",
       "skill": "sl-window-rank",
       "database": "sideline",
-      "task": "Use RANK() with PARTITION BY region_id and return team_id, team_name, region_id, elo_rating, region_rank, ordered by region_id and team_id. Return columns: team_id, team_name, region_id, elo_rating, region_rank. Order by: region_id, team_id.",
+      "task": "Use RANK() with PARTITION BY region_id and return team_id, team_name, region_id, elo_rating, region_rank. Order by: region_id, team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, name AS team_name, __BLANK_1__ AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY __BLANK_2__) AS region_rank FROM team ORDER BY __BLANK_3__, __BLANK_4__",
         "half": "SELECT team_id AS team_id, name AS team_name, region_id AS region_id, elo_rating AS elo_rating, RANK() OVER (PARTITION BY region_id) AS region_rank FROM team ORDER BY __BLANK_0__",
@@ -5322,7 +5322,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-rank-1q0din6",
       "skill": "sl-window-rank",
       "database": "sideline",
-      "task": "Use DENSE_RANK() with PARTITION BY tier and return tournament_id, tier, prize_pool_usd, tier_rank ordered by tier and tournament_id. Return columns: tournament_id, tier, prize_pool_usd, tier_rank. Order by: tier, tournament_id.",
+      "task": "Use DENSE_RANK() with PARTITION BY tier and return tournament_id, tier, prize_pool_usd, tier_rank. Order by: tier, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY __BLANK_2__) AS tier_rank FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, tier AS tier, prize_pool_usd AS prize_pool_usd, DENSE_RANK() OVER (PARTITION BY tier) AS tier_rank FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5367,7 +5367,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-rank-1qap2z7",
       "skill": "sl-window-rank",
       "database": "sideline",
-      "task": "Use RANK() with PARTITION BY map_name and return map_result_id, map_name, duration_minutes, map_rank ordered by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, map_rank. Order by: map_name, map_result_id.",
+      "task": "Use RANK() with PARTITION BY map_name and return map_result_id, map_name, duration_minutes, map_rank. Order by: map_name, map_result_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY __BLANK_2__) AS map_rank FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, RANK() OVER (PARTITION BY map_name) AS map_rank FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5412,7 +5412,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-rank-f3rtws",
       "skill": "sl-window-rank",
       "database": "sideline",
-      "task": "Use ROW_NUMBER() with PARTITION BY role and return player_id, role, total_earnings_usd, role_row ordered by role and player_id. Return columns: player_id, role, total_earnings_usd, role_row. Order by: role, player_id.",
+      "task": "Use ROW_NUMBER() with PARTITION BY role and return player_id, role, total_earnings_usd, role_row. Order by: role, player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY __BLANK_2__) AS role_row FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT player_id AS player_id, role AS role, total_earnings_usd AS total_earnings_usd, ROW_NUMBER() OVER (PARTITION BY role) AS role_row FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5457,7 +5457,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-rank-ue63dn",
       "skill": "sl-window-rank",
       "database": "sideline",
-      "task": "Use NTILE(4) with PARTITION BY region_id and return team_id, region_id, elo_rating, elo_quartile ordered by region_id and team_id. Return columns: team_id, region_id, elo_rating, elo_quartile. Order by: region_id, team_id.",
+      "task": "Use NTILE(4) with PARTITION BY region_id and return team_id, region_id, elo_rating, elo_quartile. Order by: region_id, team_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS team_id, __BLANK_1__ AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY __BLANK_2__) AS elo_quartile FROM team ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT team_id AS team_id, region_id AS region_id, elo_rating AS elo_rating, NTILE(4) OVER (PARTITION BY region_id) AS elo_quartile FROM team ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5504,7 +5504,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-running-13eek05",
       "skill": "sl-window-running",
       "database": "sideline",
-      "task": "For each region partition, calculate running_prize with a windowed SUM. Return tournament_id, region_id, name, prize_pool_usd, running_prize. Order by region_id and tournament_id. Return columns: tournament_id, region_id, name, prize_pool_usd, running_prize. Order by: region_id, tournament_id.",
+      "task": "For each region partition, calculate running_prize with a windowed SUM. Return tournament_id, region_id, name, prize_pool_usd, running_prize. Order by region_id and tournament_id. Order by: region_id, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS region_id, name AS name, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY __BLANK_2__) AS running_prize FROM tournament WHERE __BLANK_3__ IS NOT NULL ORDER BY __BLANK_4__, __BLANK_5__",
         "half": "SELECT tournament_id AS tournament_id, region_id AS region_id, name AS name, prize_pool_usd AS prize_pool_usd, SUM(prize_pool_usd) OVER (PARTITION BY region_id) AS running_prize FROM tournament WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -5551,7 +5551,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-running-1dt58uc",
       "skill": "sl-window-running",
       "database": "sideline",
-      "task": "For each map_name partition, calculate map_avg_duration with a windowed AVG. Return map_result_id, map_name, duration_minutes, map_avg_duration. Order by map_name and map_result_id. Return columns: map_result_id, map_name, duration_minutes, map_avg_duration. Order by: map_name, map_result_id.",
+      "task": "For each map_name partition, calculate map_avg_duration with a windowed AVG. Return map_result_id, map_name, duration_minutes, map_avg_duration. Order by map_name and map_result_id. Order by: map_name, map_result_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS map_result_id, __BLANK_1__ AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY __BLANK_2__), 2) AS map_avg_duration FROM map_result ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT map_result_id AS map_result_id, map_name AS map_name, duration_minutes AS duration_minutes, ROUND(AVG(duration_minutes) OVER (PARTITION BY map_name), 2) AS map_avg_duration FROM map_result ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5596,7 +5596,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-running-hl4nri",
       "skill": "sl-window-running",
       "database": "sideline",
-      "task": "For each role partition, calculate role_earnings with a windowed SUM. Return player_id, role, handle, total_earnings_usd, role_earnings. Order by role and player_id. Return columns: player_id, role, handle, total_earnings_usd, role_earnings. Order by: role, player_id.",
+      "task": "For each role partition, calculate role_earnings with a windowed SUM. Return player_id, role, handle, total_earnings_usd, role_earnings. Order by role and player_id. Order by: role, player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS role, handle AS handle, total_earnings_usd AS total_earnings_usd, SUM(total_earnings_usd) OVER (PARTITION BY __BLANK_2__) AS role_earnings FROM player ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT player_id AS player_id, role AS role, handle AS handle, total_earnings_usd AS total_earnings_usd, SUM(total_earnings_usd) OVER (PARTITION BY role) AS role_earnings FROM player ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5642,7 +5642,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-running-ypmodl",
       "skill": "sl-window-running",
       "database": "sideline",
-      "task": "For each tier partition, calculate tier_tournament_count with a windowed COUNT. Return tournament_id, tier, name, prize_pool_usd, tier_tournament_count. Order by tier and tournament_id. Return columns: tournament_id, tier, name, prize_pool_usd, tier_tournament_count. Order by: tier, tournament_id.",
+      "task": "For each tier partition, calculate tier_tournament_count with a windowed COUNT. Return tournament_id, tier, name, prize_pool_usd, tier_tournament_count. Order by tier and tournament_id. Order by: tier, tournament_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS tournament_id, __BLANK_1__ AS tier, name AS name, prize_pool_usd AS prize_pool_usd, COUNT(*) OVER (PARTITION BY __BLANK_2__) AS tier_tournament_count FROM tournament ORDER BY __BLANK_3__, __BLANK_4__ LIMIT 200",
         "half": "SELECT tournament_id AS tournament_id, tier AS tier, name AS name, prize_pool_usd AS prize_pool_usd, COUNT(*) OVER (PARTITION BY tier) AS tier_tournament_count FROM tournament ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5688,7 +5688,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-window-running-1hvxin2",
       "skill": "sl-window-running",
       "database": "sideline",
-      "task": "For each team_id partition, calculate roster_size with a windowed COUNT. Return player_id, team_id, handle, roster_size. Order by team_id and player_id. Return columns: player_id, team_id, handle, roster_size. Order by: team_id, player_id.",
+      "task": "For each team_id partition, calculate roster_size with a windowed COUNT. Return player_id, team_id, handle, roster_size. Order by team_id and player_id. Order by: team_id, player_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS player_id, __BLANK_1__ AS team_id, handle AS handle, COUNT(__BLANK_2__) OVER (PARTITION BY __BLANK_3__) AS roster_size FROM player WHERE __BLANK_4__ IS NOT NULL ORDER BY __BLANK_5__, __BLANK_6__ LIMIT 200",
         "half": "SELECT player_id AS player_id, team_id AS team_id, handle AS handle, COUNT(player_id) OVER (PARTITION BY team_id) AS roster_size FROM player WHERE team_id IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",

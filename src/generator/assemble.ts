@@ -90,13 +90,25 @@ function orderAliases(sql: string): string[] {
     .filter(Boolean);
 }
 
+// A precise "Order by: ..." contract is appended below, generated from the actual
+// expectedSql. So drop any prose ordering clause the phrasing added: it merely restates
+// the sort and, when the sort key equals the hardcoded tiebreaker, reads as a duplicate
+// (for example "ordered by star_id and then star_id").
+function stripProseOrdering(task: string): string {
+  const cleaned = task.replace(/\s*,?\s+(?:after\s+)?order(?:ed|ing)\s+by\b[^.]*/i, '').trim();
+  return /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
+}
+
 function appendAnswerContract(task: string, expectedSql: string): string {
   const aliases = outputAliases(expectedSql);
   const order = orderAliases(expectedSql);
+  const base = order.length > 0 ? stripProseOrdering(task) : task;
   const parts: string[] = [];
-  if (aliases.length > 0) parts.push(`Return columns: ${aliases.join(', ')}.`);
+  // Only spell out the columns if the prose does not already name them all.
+  const proseNamesAllColumns = aliases.length > 0 && aliases.every((a) => new RegExp(`\\b${a}\\b`).test(base));
+  if (aliases.length > 0 && !proseNamesAllColumns) parts.push(`Return columns: ${aliases.join(', ')}.`);
   if (order.length > 0) parts.push(`Order by: ${order.join(', ')}.`);
-  return parts.length > 0 ? `${task} ${parts.join(' ')}` : task;
+  return parts.length > 0 ? `${base} ${parts.join(' ')}` : base;
 }
 
 export function assembleExercise(

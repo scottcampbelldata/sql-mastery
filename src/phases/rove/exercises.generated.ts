@@ -134,7 +134,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-case-canonicalize-15ldt3y",
       "skill": "rv-case-canonicalize",
       "database": "rove",
-      "task": "For city 3, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "task": "For city 3, return payment_id, order_id, and canonical_method after mapping method synonyms. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -176,7 +176,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-case-canonicalize-1p80zqy",
       "skill": "rv-case-canonicalize",
       "database": "rove",
-      "task": "For city 5, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "task": "For city 5, return payment_id, order_id, and canonical_method after mapping method synonyms. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -260,7 +260,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-case-canonicalize-3icyfy",
       "skill": "rv-case-canonicalize",
       "database": "rove",
-      "task": "For city 7, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "task": "For city 7, return payment_id, order_id, and canonical_method after mapping method synonyms. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 7 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -302,7 +302,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-case-canonicalize-8liv82",
       "skill": "rv-case-canonicalize",
       "database": "rove",
-      "task": "For city 1, return payment_id, order_id, and canonical_method after mapping method synonyms. Return columns: payment_id, order_id, canonical_method. Order by: payment_id.",
+      "task": "For city 1, return payment_id, order_id, and canonical_method after mapping method synonyms. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -346,7 +346,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-clean-layer-capstone-llwx2r",
       "skill": "rv-clean-layer-capstone",
       "database": "rove",
-      "task": "Build a valid-customer clean layer and report city_id, order_count, and delivered_orders. Return columns: city_id, order_count, delivered_orders. Order by: city_id.",
+      "task": "Build a valid-customer clean layer and report city_id, order_count, and delivered_orders. Order by: city_id.",
       "starterSql": {
         "full": "SELECT\n  canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -387,7 +387,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-clean-layer-capstone-s58lmj",
       "skill": "rv-clean-layer-capstone",
       "database": "rove",
-      "task": "Build a clean active-merchant order layer and report category, order_count, and gross_cents. Return columns: category, order_count, gross_cents. Order by: category.",
+      "task": "Build a clean active-merchant order layer and report category, order_count, and gross_cents. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -428,7 +428,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-clean-layer-capstone-1vfkff9",
       "skill": "rv-clean-layer-capstone",
       "database": "rove",
-      "task": "Build a valid-customer payment layer, deduplicate by order, and report method, payment_count, and amount_cents. Return columns: method, payment_count, amount_cents. Order by: method.",
+      "task": "Build a valid-customer payment layer, deduplicate by order, and report method, payment_count, and amount_cents. Order by: method.",
       "starterSql": {
         "full": "SELECT\n  canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -471,7 +471,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-clean-layer-capstone-redfsa",
       "skill": "rv-clean-layer-capstone",
       "database": "rove",
-      "task": "Build a clean layer with valid customers and deduped payments, then report status, order_count, and gross_cents. Return columns: status, order_count, gross_cents. Order by: status.",
+      "task": "Build a clean layer with valid customers and deduped payments, then report status, order_count, and gross_cents. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -512,7 +512,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-clean-layer-capstone-1a220ch",
       "skill": "rv-clean-layer-capstone",
       "database": "rove",
-      "task": "Stack clean-layer subqueries and report merchant_id, order_count, gross_cents, delivered_orders. Return columns: merchant_id, order_count, gross_cents, delivered_orders. Order by: merchant_id.",
+      "task": "Stack clean-layer subqueries and report merchant_id, order_count, gross_cents, delivered_orders. Order by: merchant_id.",
       "starterSql": {
         "full": "SELECT\n  canon.merchant_id AS merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  canon.merchant_id AS merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -718,7 +718,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-dedup-rownumber-pw4ddr",
       "skill": "rv-dedup-rownumber",
       "database": "rove",
-      "task": "Keep one representative payment_id per order in order_id range 259100-259199. Return columns: order_id, payment_id. Order by: payment_id.",
+      "task": "Keep one representative payment_id per order in order_id range 259100-259199. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -760,7 +760,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-funnel-conversion-19ctc8z",
       "skill": "rv-funnel-conversion",
       "database": "rove",
-      "task": "For city 3, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "task": "For city 3, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
         "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
         "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -883,7 +883,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-funnel-conversion-4qel8z",
       "skill": "rv-funnel-conversion",
       "database": "rove",
-      "task": "For city 5, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "task": "For city 5, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
         "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
         "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -924,7 +924,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-funnel-conversion-9amx63",
       "skill": "rv-funnel-conversion",
       "database": "rove",
-      "task": "For city 7, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "task": "For city 7, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
         "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
         "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -965,7 +965,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-funnel-conversion-mfrzsb",
       "skill": "rv-funnel-conversion",
       "database": "rove",
-      "task": "For city 1, count reached_customers at each funnel event_type from app_open to order_placed. Return columns: event_type, reached_customers. Order by: event_type.",
+      "task": "For city 1, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
         "full": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = __BLANK_0__\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY __BLANK_1__",
         "half": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -1452,7 +1452,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-118xekd",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "For city 1, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "task": "For city 1, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1496,7 +1496,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-15z5uah",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "For city 7, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "task": "For city 7, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1628,7 +1628,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-18tt52x",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "For city 3, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "task": "For city 3, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1672,7 +1672,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-1bjzpmh",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "Report status, avg_approve_to_active_seconds, and activated_couriers for couriers with activation timestamps. Return columns: status, avg_approve_to_active_seconds, activated_couriers. Order by: status.",
+      "task": "Report status, avg_approve_to_active_seconds, and activated_couriers for couriers with activation timestamps. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1804,7 +1804,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-ccb07t",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "Report home_city_id, avg_apply_to_approve_seconds, and approved_couriers for approved couriers. Return columns: home_city_id, avg_apply_to_approve_seconds, approved_couriers. Order by: home_city_id.",
+      "task": "Report home_city_id, avg_apply_to_approve_seconds, and approved_couriers for approved couriers. Order by: home_city_id.",
       "starterSql": {
         "full": "SELECT\n  c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1847,7 +1847,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-z5ha9x",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "For city 5, report status, avg_place_to_deliver_seconds, and delivered_orders. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status.",
+      "task": "For city 5, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = __BLANK_0__ AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1891,7 +1891,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-lifecycle-latency-1uxj9e3",
       "skill": "rv-lifecycle-latency",
       "database": "rove",
-      "task": "Report priority plus avg_first_response_seconds and avg_resolution_seconds for valid support tickets. Return columns: priority, avg_first_response_seconds, avg_resolution_seconds. Order by: priority.",
+      "task": "Report priority plus avg_first_response_seconds and avg_resolution_seconds for valid support tickets. Order by: priority.",
       "starterSql": {
         "full": "SELECT\n  t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -3018,7 +3018,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-null-coalesce-nullif-107lxmj",
       "skill": "rv-null-coalesce-nullif",
       "database": "rove",
-      "task": "For city 8, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "task": "For city 8, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 8 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3144,7 +3144,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-null-coalesce-nullif-1ga1flf",
       "skill": "rv-null-coalesce-nullif",
       "database": "rove",
-      "task": "For city 4, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "task": "For city 4, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 4 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3186,7 +3186,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-null-coalesce-nullif-1r6j4yn",
       "skill": "rv-null-coalesce-nullif",
       "database": "rove",
-      "task": "For city 6, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "task": "For city 6, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 6 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3312,7 +3312,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-null-coalesce-nullif-vltc67",
       "skill": "rv-null-coalesce-nullif",
       "database": "rove",
-      "task": "For city 2, return order_id, tip_cents_filled, and legacy_total_or_null. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id.",
+      "task": "For city 2, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 2 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3397,7 +3397,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-orphan-anti-join-1nh9hfy",
       "skill": "rv-orphan-anti-join",
       "database": "rove",
-      "task": "For city 2, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "task": "For city 2, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 2\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3438,7 +3438,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-orphan-anti-join-1oays9y",
       "skill": "rv-orphan-anti-join",
       "database": "rove",
-      "task": "For city 6, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "task": "For city 6, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3520,7 +3520,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-orphan-anti-join-1s6f8wm",
       "skill": "rv-orphan-anti-join",
       "database": "rove",
-      "task": "For city 4, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "task": "For city 4, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3644,7 +3644,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-orphan-anti-join-5u2de6",
       "skill": "rv-orphan-anti-join",
       "database": "rove",
-      "task": "For city 8, list order_id and customer_id for orders whose customer no longer exists. Return columns: order_id, customer_id. Order by: order_id.",
+      "task": "For city 8, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = __BLANK_0__\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3687,7 +3687,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-1ottapf",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "Keep one payment per order and return order_id, payment_id, amount_cents. Return columns: order_id, payment_id, amount_cents. Order by: payment_id.",
+      "task": "Keep one payment per order and return order_id, payment_id, amount_cents. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  winner.order_id AS order_id, winner.payment_id AS payment_id, winner.amount_cents AS amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE winner.payment_id = winner.chosen_payment_id ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  winner.order_id AS order_id, winner.payment_id AS payment_id, winner.amount_cents AS amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE winner.payment_id = winner.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3728,7 +3728,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-g90r0t",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "Keep the earliest payment attempt per order and return order_id, payment_id, and status. Return columns: order_id, payment_id, status. Order by: payment_id.",
+      "task": "Keep the earliest payment attempt per order and return order_id, payment_id, and status. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3769,7 +3769,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-w78r9l",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "Deduplicate payments by order_id, then report method, deduped_payments, and deduped_amount_cents. Return columns: method, deduped_payments, deduped_amount_cents. Order by: method.",
+      "task": "Deduplicate payments by order_id, then report method, deduped_payments, and deduped_amount_cents. Order by: method.",
       "starterSql": {
         "full": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.method ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -3812,7 +3812,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-190kw36",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "For city 1, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "task": "For city 1, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3941,7 +3941,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-1ykjaie",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "For city 7, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "task": "For city 7, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -3984,7 +3984,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-4dgjky",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "For city 5, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "task": "For city 5, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4027,7 +4027,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-byt01a",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "For city 3, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id.",
+      "task": "For city 3, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id.",
       "starterSql": {
         "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = __BLANK_0__\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4070,7 +4070,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-payment-dedup-ch0dki",
       "skill": "rv-payment-dedup",
       "database": "rove",
-      "task": "After deduplicating paid payment retries, report processor, paid_order_count, and paid_amount_cents. Return columns: processor, paid_order_count, paid_amount_cents. Order by: processor.",
+      "task": "After deduplicating paid payment retries, report processor, paid_order_count, and paid_amount_cents. Order by: processor.",
       "starterSql": {
         "full": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.processor ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -4201,7 +4201,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-profile-dirty-data-175yy2z",
       "skill": "rv-profile-dirty-data",
       "database": "rove",
-      "task": "For each city, report city_id, table_name, total_rows, null_tips, and blank_totals for orders. Return columns: city_id, table_name, total_rows, null_tips, blank_totals. Order by: city_id.",
+      "task": "For each city, report city_id, table_name, total_rows, null_tips, and blank_totals for orders. Order by: city_id.",
       "starterSql": {
         "full": "SELECT\n  o.city_id AS city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals FROM orders o\nGROUP BY o.city_id ORDER BY __BLANK_0__",
         "half": "SELECT\n  o.city_id AS city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals FROM orders o\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4243,7 +4243,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-profile-dirty-data-7cfn8l",
       "skill": "rv-profile-dirty-data",
       "database": "rove",
-      "task": "Profile merchants by category with total_rows, nonpositive_prep_minutes, and inactive_merchants. Return columns: category, total_rows, nonpositive_prep_minutes, inactive_merchants. Order by: category.",
+      "task": "Profile merchants by category with total_rows, nonpositive_prep_minutes, and inactive_merchants. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY m.category ORDER BY __BLANK_0__",
         "half": "SELECT\n  m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4284,7 +4284,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-profile-dirty-data-u7uje3",
       "skill": "rv-profile-dirty-data",
       "database": "rove",
-      "task": "Profile event_log by event_type with total_rows, null_order_ids, and null_customer_ids. Return columns: event_type, total_rows, null_order_ids, null_customer_ids. Order by: event_type.",
+      "task": "Profile event_log by event_type with total_rows, null_order_ids, and null_customer_ids. Order by: event_type.",
       "starterSql": {
         "full": "SELECT\n  e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY e.event_type ORDER BY __BLANK_0__",
         "half": "SELECT\n  e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
@@ -4325,7 +4325,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-profile-dirty-data-gh0frf",
       "skill": "rv-profile-dirty-data",
       "database": "rove",
-      "task": "Profile promo_redemption by promo_id with total_rows, nonpositive_discounts, and null_redeemed_at. Return columns: promo_id, total_rows, nonpositive_discounts, null_redeemed_at. Order by: promo_id.",
+      "task": "Profile promo_redemption by promo_id with total_rows, nonpositive_discounts, and null_redeemed_at. Order by: promo_id.",
       "starterSql": {
         "full": "SELECT\n  pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4367,7 +4367,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-profile-dirty-data-1xgfejz",
       "skill": "rv-profile-dirty-data",
       "database": "rove",
-      "task": "Profile orders by status with total_rows, null_accepted_at, null_delivered_at, and blank_promo_codes. Return columns: status, total_rows, null_accepted_at, null_delivered_at, blank_promo_codes. Order by: status.",
+      "task": "Profile orders by status with total_rows, null_accepted_at, null_delivered_at, and blank_promo_codes. Order by: status.",
       "starterSql": {
         "full": "SELECT\n  o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY __BLANK_0__ LIMIT 200",
         "half": "SELECT\n  o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -4766,7 +4766,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-rating-outlier-clean-1798vxa",
       "skill": "rv-rating-outlier-clean",
       "database": "rove",
-      "task": "For city 8, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "task": "For city 8, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id.",
       "starterSql": {
         "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -4810,7 +4810,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-rating-outlier-clean-1c80gxi",
       "skill": "rv-rating-outlier-clean",
       "database": "rove",
-      "task": "For city 6, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "task": "For city 6, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id.",
       "starterSql": {
         "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -4899,7 +4899,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-rating-outlier-clean-49q4u",
       "skill": "rv-rating-outlier-clean",
       "database": "rove",
-      "task": "For city 2, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "task": "For city 2, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id.",
       "starterSql": {
         "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), __BLANK_0__) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_1__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_2__ LIMIT 200",
         "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -4988,7 +4988,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-rating-outlier-clean-m8w552",
       "skill": "rv-rating-outlier-clean",
       "database": "rove",
-      "task": "For city 4, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id.",
+      "task": "For city 4, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id.",
       "starterSql": {
         "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = __BLANK_0__ AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5123,7 +5123,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-recursive-cte-10fv9t2",
       "skill": "rv-recursive-cte",
       "database": "rove",
-      "task": "Walk cleaned categories and return category_id, name, depth, and path_ids. Return columns: category_id, name, depth, path_ids. Order by: category_id.",
+      "task": "Walk cleaned categories and return category_id, name, depth, and path_ids. Order by: category_id.",
       "starterSql": {
         "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, __BLANK_2__::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_3__, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_4__",
         "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_0__",
@@ -5166,7 +5166,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-recursive-cte-1oh87f5",
       "skill": "rv-recursive-cte",
       "database": "rove",
-      "task": "Walk cleaned category roots and return category_id, name, depth, and path. Return columns: category_id, name, depth, path. Order by: category_id.",
+      "task": "Walk cleaned category roots and return category_id, name, depth, and path. Order by: category_id.",
       "starterSql": {
         "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_3__",
         "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_0__",
@@ -5208,7 +5208,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-recursive-cte-8xp99j",
       "skill": "rv-recursive-cte",
       "database": "rove",
-      "task": "Clean dangling category parents, then walk all roots and return category_id, name, parent_category_id, and depth. Return columns: category_id, name, parent_category_id, depth. Order by: category_id.",
+      "task": "Clean dangling category parents, then walk all roots and return category_id, name, parent_category_id, and depth. Order by: category_id.",
       "starterSql": {
         "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_3__",
         "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_0__",
@@ -5250,7 +5250,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-recursive-cte-169gz2p",
       "skill": "rv-recursive-cte",
       "database": "rove",
-      "task": "Walk the category tree from its cleaned root and return category_id, name, depth, and path. Return columns: category_id, name, depth, path. Order by: category_id.",
+      "task": "Walk the category tree from its cleaned root and return category_id, name, depth, and path. Order by: category_id.",
       "starterSql": {
         "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(__BLANK_1__) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path\n  FROM tree\n) tree_walk ORDER BY __BLANK_3__",
         "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(category_id) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
@@ -5292,7 +5292,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-recursive-cte-loqaah",
       "skill": "rv-recursive-cte",
       "database": "rove",
-      "task": "Walk cleaned categories and return category_id, name, depth, and is_leaf. Return columns: category_id, name, depth, is_leaf. Order by: category_id.",
+      "task": "Walk cleaned categories and return category_id, name, depth, and is_leaf. Order by: category_id.",
       "starterSql": {
         "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_2__",
         "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
@@ -5377,7 +5377,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-regex-clean-contacts-1bxub5e",
       "skill": "rv-regex-clean-contacts",
       "database": "rove",
-      "task": "For signup city 7, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "task": "For signup city 7, return customer_id, phone_digits, and clean_email. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5461,7 +5461,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-regex-clean-contacts-9n6gau",
       "skill": "rv-regex-clean-contacts",
       "database": "rove",
-      "task": "For signup city 5, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "task": "For signup city 5, return customer_id, phone_digits, and clean_email. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5545,7 +5545,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-regex-clean-contacts-nira6u",
       "skill": "rv-regex-clean-contacts",
       "database": "rove",
-      "task": "For signup city 1, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "task": "For signup city 1, return customer_id, phone_digits, and clean_email. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5587,7 +5587,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-regex-clean-contacts-vp8phm",
       "skill": "rv-regex-clean-contacts",
       "database": "rove",
-      "task": "For signup city 3, return customer_id, phone_digits, and clean_email. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id.",
+      "task": "For signup city 3, return customer_id, phone_digits, and clean_email. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -5673,7 +5673,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-1jva185",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "Build a retention cohort rollup for city 5: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "Build a retention cohort rollup for city 5: signup_ts month and active_customers. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 5 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5716,7 +5716,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-3gi8yt",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "For signup city 8, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "For signup city 8, return signup_ts cohort month and active_customers with orders. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 8 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5759,7 +5759,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-548i7p",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "For signup city 6, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "For signup city 6, return signup_ts cohort month and active_customers with orders. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 6 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5802,7 +5802,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-9aoml1",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "For signup city 2, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "For signup city 2, return signup_ts cohort month and active_customers with orders. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 2 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5845,7 +5845,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-d00klh",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "Build a retention cohort rollup for city 1: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "Build a retention cohort rollup for city 1: signup_ts month and active_customers. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 1 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5888,7 +5888,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-jrgpad",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "For signup city 4, return signup_ts cohort month and active_customers with orders. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "For signup city 4, return signup_ts cohort month and active_customers with orders. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 4 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5931,7 +5931,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-koq3al",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "Build a retention cohort rollup for city 7: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "Build a retention cohort rollup for city 7: signup_ts month and active_customers. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 7 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -5974,7 +5974,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-retention-cohort-xlk5kt",
       "skill": "rv-retention-cohort",
       "database": "rove",
-      "task": "Build a retention cohort rollup for city 3: signup_ts month and active_customers. Return columns: signup_ts, active_customers. Order by: signup_ts.",
+      "task": "Build a retention cohort rollup for city 3: signup_ts month and active_customers. Order by: signup_ts.",
       "starterSql": {
         "full": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = __BLANK_0__ AND c.is_deleted = false\nGROUP BY date_trunc('month', c.signup_ts) ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  date_trunc('month', c.signup_ts)::date AS signup_ts, COUNT(DISTINCT c.customer_id) AS active_customers FROM customers c\nJOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_city_id = 3 AND c.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -6381,7 +6381,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-sessionization-151ua38",
       "skill": "rv-sessionization",
       "database": "rove",
-      "task": "Sessionize events in city 5; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "task": "Sessionize events in city 5; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
       "starterSql": {
         "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
         "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -6471,7 +6471,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-sessionization-1ox8ylg",
       "skill": "rv-sessionization",
       "database": "rove",
-      "task": "Sessionize events in city 1; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "task": "Sessionize events in city 1; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
       "starterSql": {
         "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN __BLANK_0__ ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_1__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_2__ LIMIT 100",
         "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -6517,7 +6517,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-sessionization-1v9ling",
       "skill": "rv-sessionization",
       "database": "rove",
-      "task": "Sessionize events in city 3; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "task": "Sessionize events in city 3; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
       "starterSql": {
         "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
         "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -6607,7 +6607,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-sessionization-1w0qax8",
       "skill": "rv-sessionization",
       "database": "rove",
-      "task": "Sessionize events in city 7; return session_id, customer_id, session_seq, session_start, session_end, event_count. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
+      "task": "Sessionize events in city 7; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id.",
       "starterSql": {
         "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = __BLANK_0__\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT 100",
         "half": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -6787,7 +6787,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-soft-delete-valid-12cmmz3",
       "skill": "rv-soft-delete-valid",
       "database": "rove",
-      "task": "For city 5, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "task": "For city 5, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 5 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -6830,7 +6830,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-soft-delete-valid-131v69r",
       "skill": "rv-soft-delete-valid",
       "database": "rove",
-      "task": "For city 3, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "task": "For city 3, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 3 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -6873,7 +6873,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-soft-delete-valid-151ze2f",
       "skill": "rv-soft-delete-valid",
       "database": "rove",
-      "task": "For city 7, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "task": "For city 7, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 7 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -7002,7 +7002,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-soft-delete-valid-ifof0n",
       "skill": "rv-soft-delete-valid",
       "database": "rove",
-      "task": "For city 1, count valid_tickets per support ticket category, excluding soft-deleted tickets. Return columns: category, valid_tickets. Order by: category.",
+      "task": "For city 1, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category.",
       "starterSql": {
         "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = __BLANK_0__ AND t.is_deleted = false\nGROUP BY t.category ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 1 AND t.is_deleted = false\nGROUP BY __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -7131,7 +7131,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-text-normalize-16mol6e",
       "skill": "rv-text-normalize",
       "database": "rove",
-      "task": "For signup city 1, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "task": "For signup city 1, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7172,7 +7172,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-text-normalize-1itr466",
       "skill": "rv-text-normalize",
       "database": "rove",
-      "task": "For signup city 7, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "task": "For signup city 7, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7213,7 +7213,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-text-normalize-1k2mczy",
       "skill": "rv-text-normalize",
       "database": "rove",
-      "task": "For signup city 5, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "task": "For signup city 5, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7295,7 +7295,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-text-normalize-fs4uty",
       "skill": "rv-text-normalize",
       "database": "rove",
-      "task": "For signup city 3, return customer_id and clean_name as the trimmed, lowercased full_name. Return columns: customer_id, clean_name. Order by: customer_id.",
+      "task": "For signup city 3, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id.",
       "starterSql": {
         "full": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = __BLANK_0__ AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7587,7 +7587,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-timezone-city-join-1bl05ff",
       "skill": "rv-timezone-city-join",
       "database": "rove",
-      "task": "For city 8, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "task": "For city 8, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7630,7 +7630,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-timezone-city-join-1fkoyq3",
       "skill": "rv-timezone-city-join",
       "database": "rove",
-      "task": "For city 4, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "task": "For city 4, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7716,7 +7716,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-timezone-city-join-1kzjtg3",
       "skill": "rv-timezone-city-join",
       "database": "rove",
-      "task": "For city 2, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "task": "For city 2, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7887,7 +7887,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-timezone-city-join-u25jv7",
       "skill": "rv-timezone-city-join",
       "database": "rove",
-      "task": "For city 6, return order_id, local_placed_at, placed_utc, and iana_timezone. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id.",
+      "task": "For city 6, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id.",
       "starterSql": {
         "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = __BLANK_0__ ORDER BY __BLANK_1__ LIMIT 200",
         "half": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7932,7 +7932,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-topn-per-group-129alye",
       "skill": "rv-topn-per-group",
       "database": "rove",
-      "task": "For city 7, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "task": "For city 7, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id.",
       "starterSql": {
         "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
         "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -7975,7 +7975,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-topn-per-group-19v12ke",
       "skill": "rv-topn-per-group",
       "database": "rove",
-      "task": "For city 3, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "task": "For city 3, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id.",
       "starterSql": {
         "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= __BLANK_1__ ORDER BY __BLANK_2__, __BLANK_3__ LIMIT 200",
         "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -8019,7 +8019,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-topn-per-group-1p5x026",
       "skill": "rv-topn-per-group",
       "database": "rove",
-      "task": "For city 1, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "task": "For city 1, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id.",
       "starterSql": {
         "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
         "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
@@ -8062,7 +8062,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "rv-topn-per-group-1tl6rt2",
       "skill": "rv-topn-per-group",
       "database": "rove",
-      "task": "For city 5, return three merchant rows with city_id, merchant_id, and order_count. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id.",
+      "task": "For city 5, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id.",
       "starterSql": {
         "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = __BLANK_0__\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_1__, __BLANK_2__ LIMIT 200",
         "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
