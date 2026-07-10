@@ -2955,13 +2955,15 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ FROM planets ORDER BY planet_id",
+        "full": "SELECT __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM planets ORDER BY planet_id",
         "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
+          "__BLANK_0__": "planet_id AS planet_id",
+          "__BLANK_1__": "planet_name AS planet_name",
+          "__BLANK_2__": "planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -2994,13 +2996,15 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ FROM planets ORDER BY mass_earth, planet_id",
+        "full": "SELECT __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM planets ORDER BY mass_earth, planet_id",
         "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
+          "__BLANK_0__": "planet_id AS planet_id",
+          "__BLANK_1__": "planet_name AS planet_name",
+          "__BLANK_2__": "planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -3033,13 +3037,15 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id with each planet_name and planet_type. Order by: star_id, planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ FROM planets ORDER BY star_id, planet_id",
+        "full": "SELECT __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM planets ORDER BY star_id, planet_id",
         "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
+          "__BLANK_0__": "planet_id AS planet_id",
+          "__BLANK_1__": "planet_name AS planet_name",
+          "__BLANK_2__": "planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -3072,13 +3078,15 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and planet_type from planets. Order by: orbital_period_days, planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ FROM planets ORDER BY orbital_period_days, planet_id",
+        "full": "SELECT __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM planets ORDER BY orbital_period_days, planet_id",
         "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
+          "__BLANK_0__": "planet_id AS planet_id",
+          "__BLANK_1__": "planet_name AS planet_name",
+          "__BLANK_2__": "planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
@@ -3111,13 +3119,15 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id with each planet_name and planet_type. Order by: radius_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ FROM planets ORDER BY radius_earth, planet_id",
+        "full": "SELECT __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM planets ORDER BY radius_earth, planet_id",
         "half": "SELECT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type"
+          "__BLANK_0__": "planet_id AS planet_id",
+          "__BLANK_1__": "planet_name AS planet_name",
+          "__BLANK_2__": "planet_type AS planet_type"
         },
         "half": {
           "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
