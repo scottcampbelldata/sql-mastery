@@ -329,6 +329,42 @@ test('checkQuery accepts a matching fingerprint without expectedSql', async () =
   assert.deepEqual(feedback.expectedSummary, { columns: ['ok'], rowCount: 2 });
 });
 
+test('checkQuery returns object-keyed display rows for a fingerprint pass (client renders row[name])', async () => {
+  const fingerprint = buildFingerprint({
+    fields: [{ name: 'star_id' }, { name: 'star_name' }],
+    rows: [[1, '47 UMa'], [2, '51 Peg']]
+  });
+
+  class DisplayPool {
+    async query(query: any) {
+      return {
+        command: 'SELECT',
+        rowCount: 2,
+        fields: [{ name: 'star_id' }, { name: 'star_name' }],
+        rows: [[1, '47 UMa'], [2, '51 Peg']]
+      };
+    }
+    async end() {}
+  }
+
+  const service = createQueryService({ Pool: DisplayPool, env: {} });
+  const feedback = await service.checkQuery({
+    database: 'aperture',
+    sql: 'SELECT star_id, star_name FROM stars',
+    fingerprint,
+    orderMatters: true
+  });
+
+  // Grading is array-based internally, but the result shown to the learner must be
+  // object-keyed by column name (QueryResult contract) or DataTable renders all NULL.
+  assert.equal(feedback.correct, true);
+  assert.deepEqual(feedback.result.columns, ['star_id', 'star_name']);
+  assert.deepEqual(feedback.result.rows, [
+    { star_id: 1, star_name: '47 UMa' },
+    { star_id: 2, star_name: '51 Peg' }
+  ]);
+});
+
 test('checkQuery reports fingerprint column mismatches', async () => {
   const fingerprint = buildFingerprint({
     fields: [{ name: 'ok' }],

@@ -78,6 +78,25 @@ function normalizeRows(result: any): (string | null)[][] {
   });
 }
 
+// Convert an array-mode result (rowMode 'array', positional rows) into the object-keyed
+// shape the client's QueryResult contract expects for display. Fingerprint grading needs
+// positional rows, but the learner-facing result must be keyed by column name or the
+// client DataTable (which reads row[columnName]) renders every cell as NULL. Object-mode
+// rows pass through unchanged, so this is a safe no-op on the legacy expectedSql path.
+function toDisplayResult(result: any): any {
+  const fields = Array.isArray(result.fields) ? result.fields : [];
+  const names = fields.map((field: any) => field.name);
+  const rows = Array.isArray(result.rows)
+    ? result.rows.map((row: any) => {
+        if (!Array.isArray(row)) return row;
+        const record: Record<string, unknown> = {};
+        for (let i = 0; i < names.length; i++) record[names[i]] = row[i];
+        return record;
+      })
+    : [];
+  return { ...result, rows };
+}
+
 function boundedLimit(value: unknown, fallback = 20, max = 100): number {
   const parsed = Number(value);
   if (!Number.isInteger(parsed) || parsed <= 0) return fallback;
@@ -678,7 +697,7 @@ function createQueryService(options: any = {}): any {
           expectedRowCount: mismatch.diff.expectedRowCount,
           hint: mismatch.hint,
           diff: mismatch.diff,
-          result: userResult,
+          result: toDisplayResult(userResult),
           expectedSummary
         };
       }
@@ -690,7 +709,7 @@ function createQueryService(options: any = {}): any {
         why: input.orderMatters === false
           ? 'Your columns, row count, and row values match the model answer on this database.'
           : 'Your columns, row count, row values, and row order match the model answer on this database.',
-        result: userResult,
+        result: toDisplayResult(userResult),
         expectedSummary
       };
     }
@@ -735,7 +754,7 @@ function createQueryService(options: any = {}): any {
         reason: mismatch.reason,
         hint: mismatch.hint,
         diff: mismatch.diff,
-        result: userResult,
+        result: toDisplayResult(userResult),
         expectedSummary
       };
     }
@@ -745,7 +764,7 @@ function createQueryService(options: any = {}): any {
       feedbackType: 'success',
       message: 'You got it right.',
       why: 'Your columns, row count, row values, and row order match the model answer on this database.',
-      result: userResult,
+      result: toDisplayResult(userResult),
       expectedSummary
     };
   }
