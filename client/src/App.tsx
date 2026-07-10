@@ -8,6 +8,7 @@ import Foundations from './routes/Foundations';
 import FoundationsSession from './routes/foundations/FoundationsSession';
 import Checkpoint from './routes/foundations/Checkpoint';
 import ConceptPractice from './routes/foundations/ConceptPractice';
+import { Readiness } from './routes/foundations/Readiness';
 
 function Body() {
   const { curriculum, error } = useCurriculum();
@@ -20,6 +21,7 @@ function Body() {
       <Route path="/learn/session" element={<FoundationsSession />} />
       <Route path="/learn/checkpoint/:id" element={<Checkpoint />} />
       <Route path="/learn/concept/:conceptId" element={<ConceptPractice />} />
+      <Route path="/readiness" element={<Readiness />} />
       <Route path="/databases" element={<Databases />} />
       <Route path="*" element={<EmptyState title="Page not found" />} />
     </Routes>
