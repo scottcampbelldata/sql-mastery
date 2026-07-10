@@ -352,10 +352,11 @@ function mergedReviews(track: Track, state: LearningState): DueReview[] {
   return [...resets, ...due].slice(0, MAX_REVIEWS_PER_SESSION);
 }
 
-function lessonMain(concept: Concept, state: LearningState): TodaySession['main'] {
-  const answered = new Set(state.skillCorrect[concept.skill] || []);
-  const reps = concept.exercises.filter((e) => !answered.has(e.id));
-  return { kind: 'lesson', concept, reps: reps.length ? reps : concept.exercises };
+function lessonMain(concept: Concept): TodaySession['main'] {
+  // Keep the whole lesson as the plan so the step count ("Step 1 of N") stays stable
+  // across visits; the session view resumes at the first unanswered step rather than
+  // shrinking the total as exercises are completed.
+  return { kind: 'lesson', concept, reps: concept.exercises };
 }
 
 export function buildTodaySession(track: Track, state: LearningState): TodaySession {
@@ -363,10 +364,10 @@ export function buildTodaySession(track: Track, state: LearningState): TodaySess
   const cp = checkpointDue(track, state);
   if (cp) return { reviews, main: { kind: 'checkpoint', checkpoint: cp } };
   const frontier = frontierConcept(track, state);
-  if (frontier) return { reviews, main: lessonMain(frontier, state) };
+  if (frontier) return { reviews, main: lessonMain(frontier) };
   const fallback = nextConcept(track, state);
   if (!fallback) return { reviews, main: { kind: 'graduated' } };
-  return { reviews: reviews.filter((r) => r.skill !== fallback.skill), main: lessonMain(fallback, state) };
+  return { reviews: reviews.filter((r) => r.skill !== fallback.skill), main: lessonMain(fallback) };
 }
 
 export function recordCheckpointResult(state: LearningState, checkpoint: Checkpoint, score: number, missedSkills: string[] = []): LearningState {

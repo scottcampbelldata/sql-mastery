@@ -1,8 +1,9 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider } from './state/AuthContext';
 import { CurriculumProvider, useCurriculum } from './state/CurriculumContext';
 import { FoundationsProvider } from './state/FoundationsContext';
-import { EmptyState } from './components/ui';
+import { AppShell } from './components/AppShell';
+import { Button, EmptyState } from './components/ui';
 import Databases from './routes/Databases';
 import Foundations from './routes/Foundations';
 import FoundationsSession from './routes/foundations/FoundationsSession';
@@ -25,8 +26,21 @@ function Body() {
       <Route path="/readiness" element={<Readiness />} />
       <Route path="/interview" element={<InterviewMode />} />
       <Route path="/databases" element={<Databases />} />
-      <Route path="*" element={<EmptyState title="Page not found" />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
+  );
+}
+
+function NotFound() {
+  return (
+    <AppShell breadcrumb={<span className="here">Page not found</span>}>
+      <EmptyState title="Page not found">
+        That page doesn’t exist. It may have moved, or the link was mistyped.
+      </EmptyState>
+      <div style={{ marginTop: '1rem' }}>
+        <Link to="/learn"><Button variant="primary">Back to your path</Button></Link>
+      </div>
+    </AppShell>
   );
 }
 

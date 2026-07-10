@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { createQueryService } from './query-service';
 
 export interface QueryLike {
-  describeDatabase(input: { database: string }): Promise<{
+  describeDatabase(input: { database: string; includeInternal?: boolean }): Promise<{
     database: string;
     tables: Array<{
       schema: string;
@@ -54,7 +54,9 @@ export async function computeSnapshotHash(
   const service: QueryLike = deps.service || (createQueryService() as unknown as QueryLike);
 
   try {
-    const schema = await service.describeDatabase({ database });
+    // Hash the full schema (including internal tables like seed_meta) so the fingerprint
+    // stays stable regardless of what the learner-facing schema endpoint chooses to hide.
+    const schema = await service.describeDatabase({ database, includeInternal: true });
     const tables = [...schema.tables].sort((a, b) =>
       `${a.schema}.${a.name}`.localeCompare(`${b.schema}.${b.name}`)
     );
