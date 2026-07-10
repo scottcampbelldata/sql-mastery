@@ -92,6 +92,7 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
         </div>
         {teach ? (
           <div className="instr-teach">
+            {teach.interviewPattern ? <span className="instr-pattern">Pattern: {teach.interviewPattern}</span> : null}
             <p className="instr-lead">{teach.plain}</p>
             <p className="instr-model"><b>Mental model:</b> {teach.mentalModel}</p>
             <div className="instr-example">

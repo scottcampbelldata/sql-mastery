@@ -45,6 +45,7 @@ export interface Teach {
   whyWhen?: string;
   watchOut?: string;
   interviewNote?: string;
+  interviewPattern?: string;
 }
 
 export interface Concept {

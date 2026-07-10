@@ -218,150 +218,329 @@ export const ROVE_CHECKPOINTS: CheckpointMeta[] = [
 ];
 
 export const ROVE_CONCEPT_META: ConceptMeta[] = [
-  cm('rv-profile-dirty-data', 'rv-clean', 1, 'Profile dirty data', teach(
+  cm('rv-profile-dirty-data', 'rv-clean', 1, 'Profile dirty data', { ...teach(
     'Before cleaning anything, count dirty conditions such as nulls, blanks, and out-of-range values.',
     'A data profile is a health report you run once so you know what to fix.',
     "SELECT COUNT(*) FILTER (WHERE tip_cents IS NULL) AS null_tips FROM orders",
     'FILTER counts a condition without a separate scan.'
-  )),
-  cm('rv-text-normalize', 'rv-clean', 2, 'Normalize text', teach(
+  ),
+    whyWhen:
+      "Run a profile as step one on any unfamiliar table so you fix real problems instead of guessing, sizing nulls, blanks, and out-of-range values before committing to a cleaning plan.",
+    watchOut:
+      "COUNT(col) silently skips NULLs and so understates the gap; use COUNT(*) FILTER (WHERE col IS NULL) to measure each dirty condition in one scan.",
+    interviewNote:
+      "Data-quality rounds open with 'how would you check this table is trustworthy' - lead with a single-pass FILTER profile rather than row-by-row spot checks.",
+  }),
+  cm('rv-text-normalize', 'rv-clean', 2, 'Normalize text', { ...teach(
     'Trim whitespace and lowercase text so the same value stops looking like many values.',
     'TRIM plus LOWER collapse cosmetic variants onto one canonical spelling.',
     'SELECT LOWER(TRIM(full_name)) AS clean_name FROM customers',
     'Cleaning can be a projection; it does not have to mutate the table.'
-  )),
-  cm('rv-case-canonicalize', 'rv-clean', 3, 'Canonicalize synonyms', teach(
+  ),
+    whyWhen:
+      "Apply TRIM plus LOWER whenever a GROUP BY or JOIN on text splits one real value across cosmetic variants like ' Ana ' and 'ana'.",
+    watchOut:
+      "Normalizing in the SELECT but grouping on the raw column still double-counts; apply the same LOWER(TRIM(...)) to the GROUP BY and JOIN keys, not just the output.",
+    interviewNote:
+      "Expect 'why is this category showing up twice' - the answer they want is casing and whitespace, fixed by normalizing before you aggregate.",
+  }),
+  cm('rv-case-canonicalize', 'rv-clean', 3, 'Canonicalize synonyms', { ...teach(
     'Map casing variants and synonyms such as cc and credit onto one canonical label with CASE.',
     'A CASE ladder is a small lookup table written inline.',
     "SELECT CASE WHEN LOWER(method) IN ('cc', 'credit') THEN 'credit_card' ELSE LOWER(method) END AS method FROM payments",
     'Lowercase first, then match the synonym set.'
-  )),
-  cm('rv-null-coalesce-nullif', 'rv-clean', 4, 'COALESCE and NULLIF', teach(
+  ),
+    whyWhen:
+      "Use a CASE ladder when variants are true synonyms like 'cc', 'credit', and 'credit card' that TRIM and LOWER alone cannot merge onto one label.",
+    watchOut:
+      "A CASE with no ELSE returns NULL for any unlisted value and silently drops it; keep an ELSE that passes the cleaned original through.",
+    interviewNote:
+      "Framed as 'consolidate these payment methods' - show the inline CASE map and mention a lookup or mapping table as the scalable version.",
+  }),
+  cm('rv-null-coalesce-nullif', 'rv-clean', 4, 'COALESCE and NULLIF', { ...teach(
     'COALESCE fills missing values; NULLIF turns a sentinel such as an empty string back into NULL.',
     'COALESCE picks the first non-null; NULLIF is the inverse for one bad value.',
     "SELECT COALESCE(tip_cents, 0) AS tip_cents, NULLIF(TRIM(order_total_legacy), '') AS raw_total FROM orders",
     'NULL and zero carry different meanings for tips.'
-  )),
-  cm('rv-money-text-cast', 'rv-clean', 5, 'Cast money text', teach(
+  ),
+    whyWhen:
+      "Reach for COALESCE to supply a default for a genuinely missing value and NULLIF to turn a fake value like '' or -1 back into NULL before it corrupts math.",
+    watchOut:
+      "COALESCE(tip_cents, 0) is correct for SUM but wrong for AVG, since it turns unknown tips into real zeros and drags the mean down; only default when zero is the true meaning.",
+    interviewNote:
+      "Probed as 'these blanks are actually -1, 9999, or N/A, clean them' - answer NULLIF to demote the sentinel, then COALESCE only where a default is meaningful.",
+  }),
+  cm('rv-money-text-cast', 'rv-clean', 5, 'Cast money text', { ...teach(
     'Strip currency symbols, commas, and words from money-as-text before casting to a number.',
     'Clean the string first, then cast; never sum raw text.',
     "SELECT REGEXP_REPLACE(order_total_legacy, '[^0-9.]', '', 'g')::numeric AS dollars FROM orders",
     'Keep only digits and the decimal point.'
-  )),
-  cm('rv-regex-clean-contacts', 'rv-clean', 6, 'Regex-clean contacts', teach(
+  ),
+    whyWhen:
+      "Strip-then-cast whenever money is stored as text like '$1,299' or '1,299 USD' and you need to SUM, average, or compare it numerically.",
+    watchOut:
+      "Casting the raw string errors or truncates because '$' and ',' are not numeric; REGEXP_REPLACE everything except digits and the decimal point first, then cast to numeric.",
+    interviewNote:
+      "A classic trap is 'sum this revenue column' when it is really text - they watch whether you notice the symbols and clean before CAST instead of summing garbage.",
+  }),
+  cm('rv-regex-clean-contacts', 'rv-clean', 6, 'Regex-clean contacts', { ...teach(
     'Normalize phone and email with regex: strip non-digits from phones and lowercase email addresses.',
     'REGEXP_REPLACE is find-and-replace with pattern power.',
     "SELECT REGEXP_REPLACE(phone, '[^0-9]', '', 'g') AS phone_digits FROM customers",
     'Digits-only makes phone values comparable.'
-  )),
-  cm('rv-timezone-city-join', 'rv-clean', 7, 'Timezone via city join', teach(
+  ),
+    whyWhen:
+      "Use REGEXP_REPLACE to standardize phones and emails so one person stops appearing as several contacts across formats like '(555) 100' and '555-100'.",
+    watchOut:
+      "Stripping every non-digit from a phone also removes a leading '+' country code; decide whether E.164 matters before flattening, and lowercase-plus-trim emails rather than deleting their punctuation.",
+    interviewNote:
+      "Phrased as 'dedupe customers by phone or email' - graders want the key normalized first, since the dedupe is only as good as the cleaned contact.",
+  }),
+  cm('rv-timezone-city-join', 'rv-clean', 7, 'Timezone via city join', { ...teach(
     "Convert a local timestamp using the city's IANA timezone from the cities table.",
     'The city timezone is the source of truth; a stored numeric offset can go stale.',
     'SELECT o.placed_at AT TIME ZONE ci.timezone AS utc_instant FROM orders o JOIN cities ci ON ci.city_id = o.city_id',
     'Join to get the timezone, then convert the timestamp.'
-  )),
-  cm('rv-dedup-rownumber', 'rv-clean', 8, 'Deduplicate with ROW_NUMBER', teach(
+  ),
+    whyWhen:
+      "Convert naive local timestamps like placed_at with AT TIME ZONE using the city's IANA zone whenever you compare or roll up events across cities.",
+    watchOut:
+      "The denormalized utc_offset_hours column goes stale across DST and is wrong for some rows on purpose; join cities.timezone and let AT TIME ZONE derive the offset instead of trusting a static number.",
+    interviewNote:
+      "Expect 'these events span time zones, align them' - name storing UTC timestamptz and converting via the IANA zone, and flag any fixed-offset column as a DST bug.",
+  }),
+  cm('rv-dedup-rownumber', 'rv-clean', 8, 'Deduplicate with ROW_NUMBER', { ...teach(
     'Collapse duplicate customer rows to one row per person using ROW_NUMBER over master_customer_id.',
     'Number the duplicates inside each identity group, then keep one representative row.',
     'SELECT customer_id, ROW_NUMBER() OVER (PARTITION BY master_customer_id) AS rn FROM customers',
     'master_customer_id is the hidden identity key.'
-  )),
-  cm('rv-orphan-anti-join', 'rv-clean', 9, 'Find orphan rows', teach(
+  ),
+    whyWhen:
+      "Reach for ROW_NUMBER when a natural key such as master_customer_id repeats and you must keep exactly one row per identity, usually the most recent.",
+    watchOut:
+      "An ORDER BY with no unique tie-break keeps a nondeterministic row that changes between runs; add a stable key like customer_id so the survivor is reproducible, and note that plain SELECT DISTINCT will not collapse rows differing on a noise column.",
+    interviewNote:
+      "The canonical prompt is 'keep the latest record per user' - answer ROW_NUMBER() OVER (PARTITION BY key ORDER BY updated_at DESC) filtered to rn = 1, and mention Postgres DISTINCT ON (key) as the shortcut.",
+    interviewPattern: "Deduplication",
+  }),
+  cm('rv-orphan-anti-join', 'rv-clean', 9, 'Find orphan rows', { ...teach(
     'Find orders whose customer_id has no matching customer after purges.',
     'An anti-join keeps the left rows that fail to match.',
     'SELECT o.order_id FROM orders o WHERE NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)',
     'orders.customer_id has no foreign key on purpose.'
-  )),
-  cm('rv-soft-delete-valid', 'rv-clean', 10, 'Valid non-deleted population', teach(
+  ),
+    whyWhen:
+      "Use an anti-join to find child rows whose parent is gone, such as orders.customer_id pointing at a purged customer, since orders carries no enforcing foreign key.",
+    watchOut:
+      "NOT IN returns no rows the moment its subquery yields a single NULL; prefer NOT EXISTS or LEFT JOIN ... WHERE parent.id IS NULL, which are NULL-safe.",
+    interviewNote:
+      "Asked as 'find records with no matching parent' - reach for NOT EXISTS and explain why it beats NOT IN on nullable keys.",
+    interviewPattern: "Anti-join",
+  }),
+  cm('rv-soft-delete-valid', 'rv-clean', 10, 'Valid non-deleted population', { ...teach(
     'Analyze only the valid population by excluding soft-deleted rows.',
     'Soft-deleted rows still exist; you must filter them out yourself.',
     'SELECT COUNT(*) FROM support_tickets WHERE is_deleted = false',
     'Forgetting this filter inflates metrics.'
-  )),
-  cm('rv-payment-dedup', 'rv-clean', 11, 'Dedup payment retries', teach(
+  ),
+    whyWhen:
+      "Add an explicit is_deleted = false filter on any soft-delete table so archived rows stop inflating counts, sums, and averages.",
+    watchOut:
+      "Deleted rows still live in the table, so omitting the filter silently overstates every metric; bake WHERE is_deleted = false into the base view or CTE so downstream queries cannot forget it.",
+    interviewNote:
+      "Interviewers plant the soft-delete column and watch whether you filter it; state the assumption out loud ('excluding deleted rows') rather than trusting the table to be clean.",
+  }),
+  cm('rv-payment-dedup', 'rv-clean', 11, 'Dedup payment retries', { ...teach(
     'Keep one payment per order even when retry rows exist.',
     'Partition retries by order_id, choose one deterministic payment_id, and keep that representative.',
     'SELECT order_id, MIN(payment_id) OVER (PARTITION BY order_id) AS chosen_payment_id FROM payments',
     'The raw table is intentionally not unique by order_id, so the representative needs a stable rule.'
-  )),
-  cm('rv-rating-outlier-clean', 'rv-clean', 12, 'Clean rating outliers', teach(
+  ),
+    whyWhen:
+      "Reach for this when a table that should be one-per-key is not - payments allows retry rows per order_id - and you need a single representative before summing amounts.",
+    watchOut:
+      "Joining orders to raw payments multiplies revenue by counting every retry; collapse to one payment per order_id with a deterministic pick before aggregating.",
+    interviewNote:
+      "Framed as 'one payment per order' or 'why is revenue doubled' - answer partition by order_id, keep one deterministic row, then join.",
+    interviewPattern: "Deduplication",
+  }),
+  cm('rv-rating-outlier-clean', 'rv-clean', 12, 'Clean rating outliers', { ...teach(
     'Drop out-of-range star ratings before averaging.',
     'Sentinels such as 0, 6, -1, and 99 poison an average; filter to the valid band first.',
     'SELECT AVG(stars) FROM ratings WHERE stars BETWEEN 1 AND 5',
     'Range-guard, then aggregate.'
-  )),
-  cm('rv-rank-leaderboard', 'rv-analytic', 1, 'Rank a leaderboard', teach(
+  ),
+    whyWhen:
+      "Range-guard before averaging any bounded metric such as 1-5 stars, so injected sentinels like 0, 6, -1, and 99 cannot skew the mean.",
+    watchOut:
+      "AVG(stars) over raw data quietly absorbs out-of-band sentinels and returns a wrong number with no error; filter stars BETWEEN 1 AND 5 first rather than nulling each bad value one at a time.",
+    interviewNote:
+      "Probed as 'this average looks off' - the expected move is to spot impossible values, filter to the valid band, then aggregate.",
+  }),
+  cm('rv-rank-leaderboard', 'rv-analytic', 1, 'Rank a leaderboard', { ...teach(
     'Rank couriers within a city by lifetime deliveries, keeping ties visible.',
     'A ranking window keeps each row while calculating a relative position.',
     'SELECT courier_id, RANK() OVER (PARTITION BY home_city_id) AS city_rank FROM couriers',
     'The partition scopes the leaderboard to one city.'
-  )),
-  cm('rv-topn-per-group', 'rv-analytic', 2, 'Top-N per group', teach(
+  ),
+    whyWhen:
+      "Use RANK or DENSE_RANK when you need a per-partition standing that keeps ties visible, like ranking couriers within home_city_id by lifetime_deliveries.",
+    watchOut:
+      "RANK leaves gaps after ties (1, 1, 3) while DENSE_RANK does not (1, 1, 2), and ROW_NUMBER forces an arbitrary single winner; pick the one whose tie behavior matches the ask, since lifetime_deliveries has deliberate ties here.",
+    interviewNote:
+      "Expect 'rank X within each group' - be ready to contrast RANK, DENSE_RANK, and ROW_NUMBER, because the tie semantics are the whole point of the question.",
+    interviewPattern: "Ranking",
+  }),
+  cm('rv-topn-per-group', 'rv-analytic', 2, 'Top-N per group', { ...teach(
     'Return a bounded top slice per group by numbering rows inside each group and filtering the number.',
     'Number rows per group, then keep the first few rows from each group.',
     'SELECT * FROM (SELECT city_id, merchant_id, ROW_NUMBER() OVER (PARTITION BY city_id) AS rn FROM orders) x WHERE rn <= 3',
     'The row number makes a group-local slice possible.'
-  )),
-  cm('rv-lag-lead-deltas', 'rv-analytic', 3, 'LAG and LEAD deltas', teach(
+  ),
+    whyWhen:
+      "Reach for number-rows-then-filter when you need the top N per group, like the top 3 merchants by order_count in each city_id, not just the single max.",
+    watchOut:
+      "GROUP BY plus MAX gives only N=1 and drops the other columns; use ROW_NUMBER() OVER (PARTITION BY group ORDER BY metric DESC) in a subquery and keep rn <= N, remembering RANK can return more than N when ties exist.",
+    interviewNote:
+      "The stock prompt is 'top 2 products by revenue per category' - answer the window-in-subquery pattern and state whether ties should be kept (RANK) or the count capped hard (ROW_NUMBER).",
+    interviewPattern: "Top-N per group",
+  }),
+  cm('rv-lag-lead-deltas', 'rv-analytic', 3, 'LAG and LEAD deltas', { ...teach(
     'Compare the current row to a previous row in the same city with LAG.',
     'LAG pulls another row into the current row so you can subtract.',
     'SELECT amount_cents - LAG(amount_cents) OVER (PARTITION BY city_id) AS delta FROM orders',
     'The first row in a partition has no previous value.'
-  )),
-  cm('rv-running-total', 'rv-analytic', 4, 'Running total', teach(
+  ),
+    whyWhen:
+      "Reach for LAG or LEAD when a row needs a value from the previous or next row in the same ordered partition, such as period-over-period amount deltas within a city_id.",
+    watchOut:
+      "The first row of each partition has no previous row, so LAG returns NULL and the delta is NULL; supply a default with LAG(x, 1, 0) or filter it, and always set an explicit ORDER BY or the offset is meaningless.",
+    interviewNote:
+      "Asked as 'change versus the prior period' - answer LAG over an explicit ORDER BY and call out the first-row NULL as the edge case being checked.",
+  }),
+  cm('rv-running-total', 'rv-analytic', 4, 'Running total', { ...teach(
     'Accumulate a city-level total with a SUM window.',
     'A window aggregate keeps row detail while adding a group-level calculation.',
     'SELECT SUM(amount_cents) OVER (PARTITION BY city_id) AS city_total FROM orders',
     'The row still remains after the window calculation.'
-  )),
-  cm('rv-moving-average-frame', 'rv-analytic', 5, 'Moving average on a date spine', teach(
+  ),
+    whyWhen:
+      "Use a windowed SUM with ORDER BY when you need a cumulative total that keeps every row, such as gross revenue accumulating across a city's date range.",
+    watchOut:
+      "SUM(x) OVER (PARTITION BY ...) with no ORDER BY returns one partition-wide total on every row instead of a running one; add ORDER BY inside OVER() to make it accumulate, and note the default RANGE frame ties rows sharing a sort value.",
+    interviewNote:
+      "Probed as 'running or cumulative total' - the tell is placing ORDER BY inside OVER(); a bare PARTITION BY total is the common wrong answer.",
+  }),
+  cm('rv-moving-average-frame', 'rv-analytic', 5, 'Moving average on a date spine', { ...teach(
     'Build a dense date spine before applying a framed moving calculation.',
     'A generated spine makes missing days visible instead of silently skipping them.',
     "SELECT AVG(n) OVER (RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS framed_avg FROM daily",
     'The frame defines which rows feed each window value.'
-  )),
-  cm('rv-ntile-bucketing', 'rv-analytic', 6, 'NTILE bucketing', teach(
+  ),
+    whyWhen:
+      "Frame an AVG over a gap-free date spine for smoothed trends like a 7-day moving average, where missing days would otherwise distort the window.",
+    watchOut:
+      "ROWS counts physical rows while RANGE counts sort values, so ROWS BETWEEN 6 PRECEDING misfires when dates are missing; build a generate_series spine and LEFT JOIN so every day exists, then frame with ROWS for an exact N-row window.",
+    interviewNote:
+      "Classic ask is '7-day moving average' - graders look for a date spine to fill gaps plus the correct ROWS versus RANGE choice, not just AVG OVER.",
+    interviewPattern: "Moving average",
+  }),
+  cm('rv-ntile-bucketing', 'rv-analytic', 6, 'NTILE bucketing', { ...teach(
     'Split rows into quartile buckets with NTILE(4).',
     'NTILE assigns each row to one of several size-balanced buckets.',
     'SELECT NTILE(4) OVER (PARTITION BY city_id) AS quartile FROM orders',
     'Buckets are count-balanced, not value-balanced.'
-  )),
-  cm('rv-sessionization', 'rv-behavioral', 1, 'Sessionize events', teach(
+  ),
+    whyWhen:
+      "Use NTILE(n) to split rows into n equal-count buckets like spend quartiles or deciles; switch to PERCENTILE_CONT when they ask for a median or p90 cut point.",
+    watchOut:
+      "NTILE balances by row count, not value, so equal-value rows can land in different buckets and any remainder is pushed into the earliest buckets; do not use it when they actually want a median (use PERCENTILE_CONT).",
+    interviewNote:
+      "Asked as 'split customers into spend quartiles' or 'p90 latency' - know NTILE for even-count buckets and PERCENTILE_CONT or DISC for percentiles, and that AVG is not a median.",
+    interviewPattern: "Bucketing",
+  }),
+  cm('rv-sessionization', 'rv-behavioral', 1, 'Sessionize events', { ...teach(
     'Group a customer event stream into sessions with a 30-minute inactivity gap.',
     'Flag a new session at each gap, then cumulative-sum the flags into a session number.',
     "SELECT LAG(event_ts) OVER (PARTITION BY customer_id) AS previous_event_ts FROM event_log",
     'The previous event timestamp is the comparison point.'
-  )),
-  cm('rv-funnel-conversion', 'rv-behavioral', 2, 'Funnel conversion', teach(
+  ),
+    whyWhen:
+      "Reach for the gaps-and-islands pattern to cut an event stream into sessions by an inactivity threshold, such as a new session after 30 idle minutes per customer.",
+    watchOut:
+      "Grouping by calendar day splits one late-night session and merges unrelated visits; instead LAG(event_ts) per customer, flag gaps over the threshold, and cumulative-SUM the flags in one linear pass rather than a self-join.",
+    interviewNote:
+      "Posed as '30-minute inactivity sessions' or 'login streaks' - the expected answer is LAG then a running SUM of the new-session flag, and graders watch that you avoid an O(n^2) self-join.",
+    interviewPattern: "Sessionization",
+  }),
+  cm('rv-funnel-conversion', 'rv-behavioral', 2, 'Funnel conversion', { ...teach(
     'Count distinct customers reaching each funnel step in one city to measure drop-off.',
     'A funnel is one distinct-customer count per step.',
     'SELECT event_type, COUNT(DISTINCT customer_id) FROM event_log GROUP BY event_type',
     'Distinct customers matter more than raw event count.'
-  )),
-  cm('rv-retention-cohort', 'rv-behavioral', 3, 'Retention cohort', teach(
+  ),
+    whyWhen:
+      "Build a funnel when you need the count of distinct users clearing each ordered stage, from app_open to order_placed, plus the drop-off between steps.",
+    watchOut:
+      "COUNT(*) counts events and inflates each step; use COUNT(DISTINCT customer_id), require the stage timestamps to be non-decreasing, and cast when dividing (conversions::numeric / visits) or integer division floors the rate to 0.",
+    interviewNote:
+      "The stock prompt is 'signup to activate to purchase %' - answer distinct users per ordered step, drop-off via LAG, and flag integer division on the conversion rate.",
+    interviewPattern: "Funnel",
+  }),
+  cm('rv-retention-cohort', 'rv-behavioral', 3, 'Retention cohort', { ...teach(
     'Bucket customers by signup month and measure how many have later order activity.',
     'The cohort key is fixed at signup; the active customer count shows whether customers return.',
     "SELECT date_trunc('month', signup_ts) AS cohort_month FROM customers",
     'The cohort month never changes for a customer.'
-  )),
-  cm('rv-lifecycle-latency', 'rv-behavioral', 4, 'Lifecycle latency', teach(
+  ),
+    whyWhen:
+      "Use cohort retention to group users by their first-seen period, such as signup month, and measure how many return in each later period.",
+    watchOut:
+      "Cohorting by calendar activity instead of first-seen inflates retention, and dividing returns by the wrong base distorts the rate; fix the cohort key at each user's MIN signup via date_trunc and always divide by that cohort's original size.",
+    interviewNote:
+      "Asked for a 'month-N retention matrix' - anchor the cohort to first activity, count returns in period N, and be explicit about the denominator.",
+    interviewPattern: "Cohort retention",
+  }),
+  cm('rv-lifecycle-latency', 'rv-behavioral', 4, 'Lifecycle latency', { ...teach(
     'Measure elapsed time between lifecycle timestamps for courier onboarding.',
     'Subtract two timestamps to get duration, then average it per group.',
     'SELECT EXTRACT(EPOCH FROM approved_at - applied_at) FROM couriers',
     'Filter NULL lifecycle stamps before measuring elapsed time.'
-  )),
-  cm('rv-clean-layer-capstone', 'rv-behavioral', 5, 'Clean-layer capstone', teach(
+  ),
+    whyWhen:
+      "Subtract lifecycle timestamps to measure elapsed time between stages, like courier applied_at to approved_at to activated_at, then average per segment.",
+    watchOut:
+      "Subtracting when either stamp is NULL yields NULL and silently shrinks the sample; keep only rows where both timestamps exist and EXTRACT(EPOCH FROM ...) for comparable seconds.",
+    interviewNote:
+      "Framed as 'average time from X to Y' - state how you handle NULL or unreached stages, and offer median over mean when the latency distribution is long-tailed.",
+  }),
+  cm('rv-clean-layer-capstone', 'rv-behavioral', 5, 'Clean-layer capstone', { ...teach(
     'Stack cleaning subqueries for valid customers, canonical labels, and deduped payments, then analyze the bounded slice.',
     'Build a trusted layer first, then ask the business question on top.',
     'SELECT merchant_id, clean_status, COUNT(*) FROM clean_orders GROUP BY merchant_id, clean_status',
     'The performance story is to bound the slice before composing the layers.'
-  )),
-  cm('rv-recursive-cte', 'rv-behavioral', 6, 'Recursive CTE category tree', teach(
+  ),
+    whyWhen:
+      "Stack a clean layer when a question depends on several fixes at once - valid customers, deduped payments, canonical status - composed in CTEs before the final aggregate.",
+    watchOut:
+      "Cleaning in the final SELECT after the joins already fired multiplies and mislabels rows; build each trusted layer (filter, dedupe, canonicalize) first, then join and aggregate the bounded slice.",
+    interviewNote:
+      "The take-home version is 'answer the business question on these messy tables' - graders reward a readable CTE stack that cleans before it aggregates over one giant tangled query.",
+  }),
+  cm('rv-recursive-cte', 'rv-behavioral', 6, 'Recursive CTE category tree', { ...teach(
     'Walk the self-referencing merchant-category tree with WITH RECURSIVE after cleaning dangling parents.',
     'A recursive CTE is a base row UNION ALL a step that joins children to the growing frontier.',
     'WITH RECURSIVE tree AS (SELECT root_id UNION ALL SELECT child_id FROM child JOIN tree ON true) SELECT * FROM tree',
     'Materialize depth and path while traversing the hierarchy.'
-  )),
+  ),
+    whyWhen:
+      "Reach for WITH RECURSIVE to walk a self-referencing tree of unknown depth, like a merchant-category hierarchy or an org chart, that a fixed set of joins cannot traverse.",
+    watchOut:
+      "A cycle or a dangling parent pointer can loop forever; null out orphaned parents first and carry a depth or path column so you can cap recursion and detect repeats, anchoring the base case on true roots where parent_category_id IS NULL.",
+    interviewNote:
+      "Asked as 'list all reports under a manager with their level' - answer an anchor row UNION ALL a child-join step that materializes depth, and mention the termination guard.",
+    interviewPattern: "Recursive hierarchy",
+  }),
 ];
 
 const CLEAN_TEMPLATES: Template[] = [

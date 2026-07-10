@@ -11,6 +11,7 @@ export function TeachCard({ concept }: Props) {
     <section className="teach-card">
       <span className="teach-kicker">Learn this</span>
       <h2>{title}</h2>
+      {teach.interviewPattern ? <span className="teach-pattern">Interview pattern: {teach.interviewPattern}</span> : null}
       <p className="teach-plain">{teach.plain}</p>
       <p className="teach-model"><strong>Mental model:</strong> {teach.mentalModel}</p>
       <div className="teach-example">

@@ -58,6 +58,29 @@ function pgErrorCoaching(err: { code?: string; message?: string }): Coaching | n
   return null;
 }
 
+// Heuristic: does a WHERE clause filter the right (joined) table of a LEFT JOIN with a
+// condition other than IS NULL, silently converting it into an inner join?
+function leftJoinRightFiltered(sql: string): boolean {
+  const lower = sql.toLowerCase();
+  if (!/\bleft\s+(?:outer\s+)?join\b/.test(lower)) return false;
+  const rightNames: string[] = [];
+  const re = /left\s+(?:outer\s+)?join\s+(\w+)(?:\s+(?:as\s+)?(\w+))?/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(sql)) !== null) rightNames.push((m[2] || m[1]).toLowerCase());
+  if (!rightNames.length) return false;
+  const whereMatch = /\bwhere\b([\s\S]*?)(?:\bgroup\s+by\b|\border\s+by\b|\bhaving\b|\blimit\b|$)/i.exec(sql);
+  if (!whereMatch) return false;
+  const where = whereMatch[1].toLowerCase();
+  for (const name of rightNames) {
+    const col = '\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.\\w+';
+    const filter = new RegExp(col + '\\s*(?:=|<>|!=|>=|<=|<|>|\\blike\\b|\\bilike\\b|\\bin\\b|\\bbetween\\b)', 'i');
+    const isNotNull = new RegExp(col + '\\s+is\\s+not\\s+null\\b', 'i');
+    const isNull = new RegExp(col + '\\s+is\\s+null\\b', 'i');
+    if ((filter.test(where) || isNotNull.test(where)) && !isNull.test(where)) return true;
+  }
+  return false;
+}
+
 export function diagnoseMistake(input: DiagnoseInput): Coaching | null {
   const sql = input.sql || '';
   const lower = sql.toLowerCase();
@@ -76,10 +99,28 @@ export function diagnoseMistake(input: DiagnoseInput): Coaching | null {
       text: 'Nothing equals NULL, not even NULL itself, so "= NULL" (or "!= NULL") matches no rows. Use IS NULL or IS NOT NULL to test for missing values.'
     };
   }
+  if (/\bnot\s+in\s*\(\s*select\b/i.test(sql)) {
+    return {
+      label: 'NOT IN with a subquery',
+      text: 'NOT IN breaks if the subquery returns even one NULL: the whole condition becomes UNKNOWN and you get zero rows. For an anti-join (rows with no match) use NOT EXISTS, or LEFT JOIN ... WHERE the right side IS NULL.'
+    };
+  }
+  if (/\bover\s*\(\s*\)/i.test(sql)) {
+    return {
+      label: 'Empty OVER()',
+      text: 'An empty OVER() makes the window the entire result, so every row gets the same value. Add PARTITION BY to split into groups and/or ORDER BY to sequence rows within each window.'
+    };
+  }
   if (/\blimit\b/.test(lower) && !/\border\s+by\b/.test(lower)) {
     return {
       label: 'LIMIT without ORDER BY',
       text: 'LIMIT with no ORDER BY returns an arbitrary handful of rows, because row order is undefined. Add ORDER BY (with a tiebreaker column) before LIMIT so "top N" actually means something.'
+    };
+  }
+  if (leftJoinRightFiltered(sql)) {
+    return {
+      label: 'Filtering a LEFT JOIN in WHERE',
+      text: 'A WHERE condition on the right (joined) table of a LEFT JOIN drops the unmatched rows, silently turning it into an inner join. To keep the unmatched rows, move that condition into the ON clause instead.'
     };
   }
 
