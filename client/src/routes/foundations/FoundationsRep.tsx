@@ -21,6 +21,16 @@ export function editorPlaceholder(exercise: Exercise, tier: ScaffoldTier = 'full
     : 'Type your SQL here...';
 }
 
+// "New | Select every column" / "Practice: Select every column" -> "Select every column"
+function conceptTitleFrom(label: string): string {
+  return label.replace(/^(New|Review)\s*\|\s*/, '').replace(/^Practice:\s*/, '').trim();
+}
+function kindLabelFrom(label: string): string {
+  if (/^Review/.test(label)) return 'Spaced review';
+  if (/^Practice/.test(label)) return 'Practice';
+  return 'New lesson';
+}
+
 interface Props {
   exercise: Exercise;
   label: string;
@@ -34,6 +44,10 @@ interface Props {
 export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect, tier = 'full' }: Props) {
   const { track, state, update } = useFoundations();
   const [hintOpen, setHintOpen] = useState(false);
+  // Two-beat flow: read the concept first ("learn"), then work the exercise ("try").
+  // Reps with no teach block (steps 2+) open straight into "try".
+  const hasTeach = Boolean(teach);
+  const [phase, setPhase] = useState<'learn' | 'try'>(hasTeach ? 'learn' : 'try');
   const dbSchema = useDbSchema(exercise.database);
   const fullStarter = pickStarter(exercise, 'full');
   const seed = pickStarter(exercise, tier);
@@ -83,46 +97,64 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
     logEvent({ type: 'reset', exerciseId: exercise.id, skill: exercise.skill });
   };
 
-  return (
-    <div className="lesson-split">
-      <aside className="instr">
-        <div className="instr-top">
-          <span className={`step-badge ${kind === 'review' ? 'review' : 'new'}`}>{label}</span>
-          {stepText ? <span className="step-text">{stepText}</span> : null}
-        </div>
-        {teach ? (
-          <div className="instr-teach">
-            {teach.interviewPattern ? <span className="instr-pattern">Pattern: {teach.interviewPattern}</span> : null}
-            <p className="instr-lead">{teach.plain}</p>
-            <p className="instr-model"><b>Mental model:</b> {teach.mentalModel}</p>
-            <div className="instr-example">
-              <span className="instr-label">Example</span>
-              <pre className="sql-block">{formatSql(teach.example.sql)}</pre>
-              <p className="instr-note">{teach.example.note}</p>
-            </div>
-            {teach.watchOut ? <p className="instr-watchout"><b>Watch out:</b> {teach.watchOut}</p> : null}
-            {(teach.whyWhen || teach.interviewNote) ? (
-              <details className="instr-why">
-                <summary>Why and when</summary>
-                {teach.whyWhen ? <p>{teach.whyWhen}</p> : null}
-                {teach.interviewNote ? <p className="instr-interview"><b>In interviews:</b> {teach.interviewNote}</p> : null}
-              </details>
-            ) : null}
-          </div>
-        ) : null}
-        <div className="instr-exercise">
-          <span className="instr-label">Exercise</span>
-          <p className="instr-task">{exercise.task}</p>
-        </div>
-        {exercise.hint ? (
-          <div className="instr-hint">
-            <Button onClick={() => { setHintOpen(true); logEvent({ type: 'hint', exerciseId: exercise.id, skill: exercise.skill }); }} disabled={hintOpen}>Hint</Button>
-            {hintOpen ? <Callout tone="tip" title="Hint">{exercise.hint}</Callout> : null}
-          </div>
-        ) : null}
-      </aside>
+  const title = conceptTitleFrom(label);
+  const kindLabel = kindLabelFrom(label);
+  const hasMore = Boolean(teach && (teach.watchOut || teach.whyWhen || teach.interviewNote));
 
-      <section className="console">
+  // ---- LEARN: one calm concept card, then a single "Try it" ----
+  if (phase === 'learn' && teach) {
+    return (
+      <div className="lesson2">
+        <div className="l2-flow" aria-hidden="true">
+          <span className="l2-beat active"><i>1</i> Learn</span>
+          <span className="l2-rule" />
+          <span className="l2-beat"><i>2</i> Try</span>
+        </div>
+        <section className="learn-view">
+          <div className="l2-tag">{kindLabel}{stepText ? ` - ${stepText}` : ''}</div>
+          <h1 className="l2-title">{title}</h1>
+          {teach.interviewPattern ? <span className="l2-pattern">Pattern: {teach.interviewPattern}</span> : null}
+          <p className="l2-lede">{teach.plain}</p>
+          <p className="l2-model">{teach.mentalModel}</p>
+          <div className="l2-example">
+            <pre className="sql-block">{formatSql(teach.example.sql)}</pre>
+            {teach.example.note ? <p className="l2-note">{teach.example.note}</p> : null}
+          </div>
+          {hasMore ? (
+            <details className="l2-more">
+              <summary>Good to know</summary>
+              {teach.watchOut ? <p><b>Watch out:</b> {teach.watchOut}</p> : null}
+              {teach.whyWhen ? <p>{teach.whyWhen}</p> : null}
+              {teach.interviewNote ? <p><b>In interviews:</b> {teach.interviewNote}</p> : null}
+            </details>
+          ) : null}
+          <div className="l2-cta">
+            <Button variant="primary" onClick={() => setPhase('try')}>Try it</Button>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // ---- TRY: the exercise is the focus ----
+  return (
+    <div className="lesson2">
+      {hasTeach ? (
+        <div className="l2-flow" aria-hidden="true">
+          <span className="l2-beat done"><i>1</i> Learn</span>
+          <span className="l2-rule" />
+          <span className="l2-beat active"><i>2</i> Try</span>
+        </div>
+      ) : null}
+      <section className="try-view">
+        {hasTeach ? (
+          <button className="l2-back" onClick={() => setPhase('learn')}>Back to the lesson</button>
+        ) : (
+          <div className="l2-tag">{kindLabel}{stepText ? ` - ${stepText}` : ''}</div>
+        )}
+        <h2 className="l2-task-h">Your turn</h2>
+        <p className="l2-task">{exercise.task}</p>
+
         <div className="console-editor">
           <span className="wb-editor-label" aria-hidden="true">Your SQL</span>
           <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
@@ -137,15 +169,21 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
             </Button>
             {wrong ? <Button onClick={resetToStarter}>Reset to the starter</Button> : null}
             {tier !== 'full' && fullStarter ? <Button onClick={() => check.setSql(fullStarter)}>Show the starter</Button> : null}
+            {exercise.hint ? (
+              <Button onClick={() => { setHintOpen(true); logEvent({ type: 'hint', exerciseId: exercise.id, skill: exercise.skill }); }} disabled={hintOpen}>Hint</Button>
+            ) : null}
           </div>
-          {wrong ? (
-            <p className="console-retry">Not correct yet. Fix your query and run again, or reset to the starter to bring the blanks back.</p>
-          ) : null}
         </div>
-        <div role="status" aria-live="polite">
-          {check.feedback ? <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout> : null}
-          {check.feedback?.diff ? <DiffPanel diff={check.feedback.diff} /> : null}
-        </div>
+
+        {hintOpen && exercise.hint ? <Callout tone="tip" title="Hint">{exercise.hint}</Callout> : null}
+
+        {check.feedback ? (
+          <div className="lesson-feedback" role="status" aria-live="polite">
+            <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout>
+            {check.feedback.diff ? <DiffPanel diff={check.feedback.diff} /> : null}
+          </div>
+        ) : null}
+
         <OutputDock exercise={exercise} result={check.result} />
       </section>
     </div>
