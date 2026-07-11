@@ -9,6 +9,8 @@ import Foundations from './routes/Foundations';
 import FoundationsSession from './routes/foundations/FoundationsSession';
 import Checkpoint from './routes/foundations/Checkpoint';
 import ConceptPractice from './routes/foundations/ConceptPractice';
+import Gauntlet from './routes/foundations/Gauntlet';
+import Settings from './routes/Settings';
 import { Readiness } from './routes/foundations/Readiness';
 import { InterviewMode } from './routes/foundations/InterviewMode';
 
@@ -24,8 +26,10 @@ function Body() {
       <Route path="/learn/checkpoint/:id" element={<Checkpoint />} />
       <Route path="/learn/concept/:conceptId" element={<ConceptPractice />} />
       <Route path="/readiness" element={<Readiness />} />
+      <Route path="/readiness/gauntlet/:id" element={<Gauntlet />} />
       <Route path="/interview" element={<InterviewMode />} />
       <Route path="/databases" element={<Databases />} />
+      <Route path="/settings" element={<Settings />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
@@ -35,7 +39,7 @@ function NotFound() {
   return (
     <AppShell breadcrumb={<span className="here">Page not found</span>}>
       <EmptyState title="Page not found">
-        That page doesn’t exist. It may have moved, or the link was mistyped.
+        That page does not exist. It may have moved, or the link was mistyped.
       </EmptyState>
       <div style={{ marginTop: '1rem' }}>
         <Link to="/learn"><Button variant="primary">Back to your path</Button></Link>

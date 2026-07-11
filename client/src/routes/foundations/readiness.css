@@ -50,3 +50,34 @@
 @media (max-width: 720px) {
   .rd-summary { grid-template-columns: 1fr; }
 }
+
+/* ---- gauntlet cards ---- */
+.rd-gauntlets { margin-bottom: var(--s-5); }
+.rd-gt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+.rd-gt {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: var(--s-3);
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+}
+.rd-gt.passed { border-left: 3px solid var(--ok); }
+.rd-gt-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-2); }
+.rd-gt-title { font-weight: 600; }
+.rd-gt-status {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.rd-gt-status.ok { color: var(--ok); }
+.rd-gt-meta { color: var(--ink-dim); font-size: var(--text-sm); margin: 0; }
+.rd-gt-link { color: var(--accent); font-size: var(--text-sm); text-decoration: none; }
+.rd-gt-link:hover { text-decoration: underline; }

@@ -238,3 +238,9 @@
 }
 
 .lh-weakspots { color: var(--ink-dim); font-size: var(--text-sm); margin: var(--s-3) 0 0; }
+
+/* ---- AI coach (wrong-answer nudge) ---- */
+.coach-box { margin-top: var(--s-3); display: grid; gap: var(--s-2); justify-items: start; }
+.coach-busy { color: var(--ink-dim); font-size: var(--text-sm); }
+.coach-nudge { margin-top: var(--s-3); color: var(--ink-faint); font-size: var(--text-sm); max-width: 56ch; }
+.coach-nudge a { color: var(--accent); }

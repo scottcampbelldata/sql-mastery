@@ -16,7 +16,8 @@ function normalize(parsed: any): LearningState {
     checkpointsPassed: Array.isArray(parsed.checkpointsPassed) ? parsed.checkpointsPassed : [],
     sessionCounter: Number.isFinite(parsed.sessionCounter) ? parsed.sessionCounter : 0,
     reviewsPassed: asObject(parsed.reviewsPassed),
-    maxUnlockedOrder: Number.isFinite(parsed.maxUnlockedOrder) && parsed.maxUnlockedOrder > 0 ? parsed.maxUnlockedOrder : 0
+    maxUnlockedOrder: Number.isFinite(parsed.maxUnlockedOrder) && parsed.maxUnlockedOrder > 0 ? parsed.maxUnlockedOrder : 0,
+    gauntlets: asObject(parsed.gauntlets)
   };
 }
 

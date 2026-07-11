@@ -4,6 +4,7 @@ import { useFoundations } from '../../state/FoundationsContext';
 import { frontierConcept } from '../../lib/foundations';
 import { readinessReport, type ReadinessStatus } from '../../lib/readiness';
 import { summarizeLog, getLog, clearLog } from '../../lib/learningLog';
+import { GAUNTLETS, gauntletRecord, gauntletPassed } from '../../lib/gauntlet';
 import { Button } from '../../components/ui';
 import { AppShell } from '../../components/AppShell';
 import './readiness.css';
@@ -63,6 +64,35 @@ export function Readiness() {
           as <b>Mastered</b> once you have answered it correctly enough times for it to enter spaced review.
         </p>
       </header>
+
+      <section className="rd-gauntlets">
+        <div className="rd-band-head">
+          <h2>Prove it: the gauntlets</h2>
+        </div>
+        <p className="rd-log-lead">
+          Each band ends in a timed screen: no hints, no starters, fresh questions every attempt.
+          Passing one is the real readiness signal for that band.
+        </p>
+        <div className="rd-gt-grid">
+          {GAUNTLETS.map((g) => {
+            const record = gauntletRecord(state, g.id);
+            const passed = gauntletPassed(record, g);
+            const status = passed ? 'Passed' : record.attempts ? `Best ${record.bestScore}/${g.questions}` : 'Not attempted';
+            return (
+              <div key={g.id} className={`rd-gt ${passed ? 'passed' : ''}`}>
+                <div className="rd-gt-top">
+                  <span className="rd-gt-title">{g.title}</span>
+                  <span className={`rd-gt-status ${passed ? 'ok' : ''}`}>{status}</span>
+                </div>
+                <p className="rd-gt-meta">{g.questions} questions, {g.minutes} minutes, from memory. Pass {g.pass}/{g.questions}.</p>
+                <Link className="rd-gt-link" to={`/readiness/gauntlet/${g.id}`}>
+                  {record.attempts ? (passed ? 'Retake it' : 'Try again') : 'Take the gauntlet'}
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       <section className="rd-log">
         <div className="rd-band-head">

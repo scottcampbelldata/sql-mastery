@@ -2,10 +2,11 @@ import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import type { ReactNode } from 'react';
+import type { LearningState } from '../../types';
 
 const update = vi.fn();
 
-function baseState() {
+function baseState(): LearningState {
   return {
     skillCorrect: {},
     attempts: {},

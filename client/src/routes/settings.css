@@ -1,0 +1,46 @@
+/* Settings: one calm column of cards. */
+
+.settings {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.set-head { padding-top: var(--s-4); margin-bottom: var(--s-4); }
+.set-head h1 { margin-bottom: var(--s-1); }
+.set-sub { color: var(--ink-dim); }
+
+.set-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+.set-card h2 { font-size: var(--text-md); margin-bottom: var(--s-2); }
+.set-lead { color: var(--ink-dim); max-width: 60ch; margin-bottom: var(--s-3); }
+
+.set-field { display: grid; gap: var(--s-1); margin-bottom: var(--s-3); max-width: 420px; }
+.set-field label {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.set-field input,
+.set-field select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.5em 0.7em;
+}
+.set-field input:focus,
+.set-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.set-hint { color: var(--ink-faint); font-size: var(--text-sm); max-width: 56ch; }
+
+.set-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-2); }
+.set-ok { color: var(--ok); font-size: var(--text-sm); }
+.set-warn { color: var(--warn, #b9770e); font-size: var(--text-sm); }
+.set-privacy { color: var(--ink-faint); font-size: var(--text-sm); max-width: 56ch; margin-top: var(--s-2); }
