@@ -42,6 +42,48 @@ function defaults(): AiSettings {
   return { provider: 'off', apiKey: '', model: '', ollamaUrl: DEFAULT_OLLAMA_URL, baseUrl: '' };
 }
 
+// True when the browser will refuse (or silently upgrade) the request: an https page may
+// not call a plain-http server unless it is localhost. Tailscale/LAN IPs hit this.
+export function mixedContentRisk(url: string, pageProtocol: string = window.location.protocol): boolean {
+  if (pageProtocol !== 'https:') return false;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'http:') return false;
+    return !['localhost', '127.0.0.1', '[::1]', '::1'].includes(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
+export const MIXED_CONTENT_HELP =
+  'This site is https, so browsers block plain-http calls to anything except localhost. ' +
+  'Give the server an https address - on Tailscale, run: tailscale serve --bg --https=443 localhost:11434 ' +
+  'on that machine and use the https://<machine>.<tailnet>.ts.net URL it prints - or allow ' +
+  '"Insecure content" for this site in your browser\'s site settings.';
+
+// Local models can be legitimately slow, but a request that never settles leaves the UI
+// stuck on "Testing...". Abort with a readable message instead.
+async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs: number, onAbortMessage: string): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } catch (error) {
+    if (controller.signal.aborted) throw new Error(onAbortMessage);
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Generous ceiling: a large local model composing 400 tokens can take minutes.
+const CHAT_TIMEOUT_MS = 240000;
+
+function abortMessageFor(url: string): string {
+  if (mixedContentRisk(url)) return `No response - the browser likely blocked the plain-http request. ${MIXED_CONTENT_HELP}`;
+  return 'The model did not answer within 4 minutes. Check that the server is up and the model is loaded.';
+}
+
 export function loadAiSettings(): AiSettings {
   try {
     const parsed = JSON.parse(localStorage.getItem(AI_SETTINGS_KEY) as string);
@@ -155,7 +197,7 @@ async function chatOllama(settings: AiSettings, system: string, user: string): P
   const base = settings.ollamaUrl.replace(/\/+$/, '');
   let response: Response;
   try {
-    response = await fetch(`${base}/api/chat`, {
+    response = await fetchWithTimeout(`${base}/api/chat`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
@@ -163,11 +205,14 @@ async function chatOllama(settings: AiSettings, system: string, user: string): P
         stream: false,
         messages: [{ role: 'system', content: system }, { role: 'user', content: user }]
       })
-    });
-  } catch {
+    }, CHAT_TIMEOUT_MS, abortMessageFor(base));
+  } catch (error) {
+    if (error instanceof Error && error.message.startsWith('No response')) throw error;
+    if (error instanceof Error && error.message.startsWith('The model did not answer')) throw error;
+    if (mixedContentRisk(base)) throw new Error(`The browser blocked the plain-http request to ${base}. ${MIXED_CONTENT_HELP}`);
     throw new Error(
-      `Could not reach Ollama at ${base}. Is it running? If this site is not on localhost, ` +
-      'start Ollama with OLLAMA_ORIGINS set to this site (for example OLLAMA_ORIGINS=https://sql-mastery.scottcampbell.io).'
+      `Could not reach Ollama at ${base}. Is it running, is OLLAMA_HOST set so it listens beyond localhost, ` +
+      `and is OLLAMA_ORIGINS set to this site (for example OLLAMA_ORIGINS=${window.location.origin})?`
     );
   }
   const body = await readBody(response);
@@ -184,7 +229,7 @@ async function chatCompat(settings: AiSettings, system: string, user: string): P
   const model = modelFor(settings);
   let response: Response;
   try {
-    response = await fetch(`${base}/v1/chat/completions`, {
+    response = await fetchWithTimeout(`${base}/v1/chat/completions`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -195,8 +240,10 @@ async function chatCompat(settings: AiSettings, system: string, user: string): P
         max_tokens: 400,
         messages: [{ role: 'system', content: system }, { role: 'user', content: user }]
       })
-    });
-  } catch {
+    }, CHAT_TIMEOUT_MS, abortMessageFor(base));
+  } catch (error) {
+    if (error instanceof Error && (error.message.startsWith('No response') || error.message.startsWith('The model did not answer'))) throw error;
+    if (mixedContentRisk(base)) throw new Error(`The browser blocked the plain-http request to ${base}. ${MIXED_CONTENT_HELP}`);
     throw new Error(`Could not reach the server at ${base}. Is it running, and does it allow requests from this site?`);
   }
   const body = await readBody(response);

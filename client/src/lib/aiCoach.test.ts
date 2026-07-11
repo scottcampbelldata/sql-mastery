@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import {
   AI_SETTINGS_KEY, DEFAULT_OLLAMA_URL, loadAiSettings, saveAiSettings, coachConfigured,
-  modelFor, buildCoachPrompt, askCoach, testCoachConnection, type AiSettings
+  modelFor, buildCoachPrompt, askCoach, testCoachConnection, mixedContentRisk, type AiSettings
 } from './aiCoach';
 
 function settings(over: Partial<AiSettings> = {}): AiSettings {
@@ -46,6 +46,16 @@ describe('AI coach settings', () => {
   it('falls back to per-provider default models', () => {
     expect(modelFor(settings({ provider: 'openai' }))).toBe('gpt-4o-mini');
     expect(modelFor(settings({ provider: 'openai', model: ' my-model ' }))).toBe('my-model');
+  });
+
+  it('flags plain-http URLs as mixed content from an https page, except localhost', () => {
+    expect(mixedContentRisk('http://100.91.251.89:11434', 'https:')).toBe(true);
+    expect(mixedContentRisk('http://192.168.1.20:1234', 'https:')).toBe(true);
+    expect(mixedContentRisk('http://localhost:11434', 'https:')).toBe(false);
+    expect(mixedContentRisk('http://127.0.0.1:11434', 'https:')).toBe(false);
+    expect(mixedContentRisk('https://box.tail1234.ts.net', 'https:')).toBe(false);
+    expect(mixedContentRisk('http://100.91.251.89:11434', 'http:')).toBe(false);
+    expect(mixedContentRisk('not a url', 'https:')).toBe(false);
   });
 });
 

@@ -7,6 +7,7 @@ import { syncNow } from '../lib/sync';
 import { getLog, summarizeLog, clearLog } from '../lib/learningLog';
 import {
   loadAiSettings, saveAiSettings, coachConfigured, testCoachConnection,
+  mixedContentRisk, MIXED_CONTENT_HELP,
   DEFAULT_MODEL, DEFAULT_OLLAMA_URL, PROVIDER_LABEL, type AiSettings, type AiProvider
 } from '../lib/aiCoach';
 import './settings.css';
@@ -121,6 +122,9 @@ function CoachCard() {
             ports and speak a different API). On the Ollama machine, set OLLAMA_ORIGINS to this site's
             origin (or *) so your browser may call it, and OLLAMA_HOST=0.0.0.0 if it is a different machine.
           </p>
+          {mixedContentRisk(settings.ollamaUrl) ? (
+            <Callout tone="caution" title="Your browser will block this URL">{MIXED_CONTENT_HELP}</Callout>
+          ) : null}
         </div>
       ) : null}
       {settings.provider === 'compat' ? (
@@ -132,6 +136,9 @@ function CoachCard() {
             Any server speaking the OpenAI chat API: LM Studio, vLLM, llama.cpp, or Open WebUI (create an
             API key in its settings). The coach calls /v1/chat/completions on this URL.
           </p>
+          {mixedContentRisk(settings.baseUrl) ? (
+            <Callout tone="caution" title="Your browser will block this URL">{MIXED_CONTENT_HELP}</Callout>
+          ) : null}
         </div>
       ) : null}
       {needsKey || settings.provider === 'compat' ? (
