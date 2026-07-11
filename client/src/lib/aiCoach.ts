@@ -6,13 +6,16 @@ import type { DbSchemaMap, SqlDiff } from '../types';
 // AI_SETTINGS_KEY, which is deliberately absent from the progress-sync allowlist, so it
 // never reaches the SQL Mastery server or any other device.
 
-export type AiProvider = 'off' | 'ollama' | 'openai' | 'anthropic' | 'gemini';
+export type AiProvider = 'off' | 'ollama' | 'compat' | 'openai' | 'anthropic' | 'gemini';
 
 export interface AiSettings {
   provider: AiProvider;
   apiKey: string;
   model: string;
   ollamaUrl: string;
+  // OpenAI-compatible server root (LM Studio, vLLM, llama.cpp, Open WebUI). The app calls
+  // {baseUrl}/v1/chat/completions on it; the API key is optional for servers that need one.
+  baseUrl: string;
 }
 
 export const AI_SETTINGS_KEY = 'sqlm:ai:v1';
@@ -21,6 +24,7 @@ export const DEFAULT_OLLAMA_URL = 'http://localhost:11434';
 export const PROVIDER_LABEL: Record<AiProvider, string> = {
   off: 'Off',
   ollama: 'Ollama (local)',
+  compat: 'OpenAI-compatible (local)',
   openai: 'OpenAI',
   anthropic: 'Anthropic',
   gemini: 'Google Gemini'
@@ -28,26 +32,28 @@ export const PROVIDER_LABEL: Record<AiProvider, string> = {
 
 export const DEFAULT_MODEL: Record<Exclude<AiProvider, 'off'>, string> = {
   ollama: 'llama3.1',
+  compat: '',
   openai: 'gpt-4o-mini',
   anthropic: 'claude-sonnet-5',
   gemini: 'gemini-2.5-flash'
 };
 
 function defaults(): AiSettings {
-  return { provider: 'off', apiKey: '', model: '', ollamaUrl: DEFAULT_OLLAMA_URL };
+  return { provider: 'off', apiKey: '', model: '', ollamaUrl: DEFAULT_OLLAMA_URL, baseUrl: '' };
 }
 
 export function loadAiSettings(): AiSettings {
   try {
     const parsed = JSON.parse(localStorage.getItem(AI_SETTINGS_KEY) as string);
     if (!parsed || typeof parsed !== 'object') return defaults();
-    const provider: AiProvider = ['off', 'ollama', 'openai', 'anthropic', 'gemini'].includes(parsed.provider)
+    const provider: AiProvider = ['off', 'ollama', 'compat', 'openai', 'anthropic', 'gemini'].includes(parsed.provider)
       ? parsed.provider : 'off';
     return {
       provider,
       apiKey: typeof parsed.apiKey === 'string' ? parsed.apiKey : '',
       model: typeof parsed.model === 'string' ? parsed.model : '',
-      ollamaUrl: typeof parsed.ollamaUrl === 'string' && parsed.ollamaUrl ? parsed.ollamaUrl : DEFAULT_OLLAMA_URL
+      ollamaUrl: typeof parsed.ollamaUrl === 'string' && parsed.ollamaUrl ? parsed.ollamaUrl : DEFAULT_OLLAMA_URL,
+      baseUrl: typeof parsed.baseUrl === 'string' ? parsed.baseUrl : ''
     };
   } catch {
     return defaults();
@@ -61,6 +67,7 @@ export function saveAiSettings(settings: AiSettings): void {
 export function coachConfigured(settings: AiSettings = loadAiSettings()): boolean {
   if (settings.provider === 'off') return false;
   if (settings.provider === 'ollama') return Boolean(settings.ollamaUrl);
+  if (settings.provider === 'compat') return Boolean(settings.baseUrl);
   return Boolean(settings.apiKey);
 }
 
@@ -117,11 +124,31 @@ async function readBody(response: Response): Promise<any> {
 }
 
 function providerError(provider: AiProvider, status: number, body: any): Error {
-  const detail = body?.error?.message || body?.error || body?.message || '';
+  const detail = String(body?.error?.message || body?.error || body?.detail || body?.message || '');
+  if (provider === 'ollama') {
+    // Ollama has no API keys; its 403 means the browser's Origin was refused, and a
+    // 404/405 usually means the URL points at a web UI instead of the Ollama API.
+    if (status === 403) {
+      return new Error(
+        `Ollama refused this site. On the Ollama machine set OLLAMA_ORIGINS=${window.location.origin} ` +
+        '(or OLLAMA_ORIGINS=*) and restart Ollama, then try again.'
+      );
+    }
+    if (status === 404 && /model/i.test(detail)) {
+      return new Error(`Ollama does not have that model${detail ? ` (${detail.slice(0, 120)})` : ''}. Check the model name in Settings or pull it with: ollama pull <name>`);
+    }
+    if (status === 404 || status === 405) {
+      return new Error(
+        'That server answered, but it is not the Ollama chat API. Web UIs such as Open WebUI usually listen ' +
+        'on port 8080, while the Ollama API itself listens on port 11434. Point the URL at the Ollama port, ' +
+        'or switch the provider to OpenAI-compatible for a web UI or LM Studio style server.'
+      );
+    }
+  }
   if (status === 401 || status === 403) return new Error(`${PROVIDER_LABEL[provider]} rejected the API key. Check it in Settings.`);
   if (status === 404) return new Error(`${PROVIDER_LABEL[provider]} does not know that model. Check the model name in Settings.`);
   if (status === 429) return new Error(`${PROVIDER_LABEL[provider]} rate limit hit. Wait a moment and try again.`);
-  return new Error(`${PROVIDER_LABEL[provider]} request failed (${status})${detail ? `: ${String(detail).slice(0, 200)}` : ''}`);
+  return new Error(`${PROVIDER_LABEL[provider]} request failed (${status})${detail ? `: ${detail.slice(0, 200)}` : ''}`);
 }
 
 async function chatOllama(settings: AiSettings, system: string, user: string): Promise<string> {
@@ -147,6 +174,35 @@ async function chatOllama(settings: AiSettings, system: string, user: string): P
   if (!response.ok) throw providerError('ollama', response.status, body);
   const text = body?.message?.content;
   if (typeof text !== 'string' || !text.trim()) throw new Error('Ollama returned an empty reply.');
+  return text.trim();
+}
+
+// Any local server speaking the OpenAI chat protocol: LM Studio, vLLM, llama.cpp's
+// llama-server, or Open WebUI (which fronts Ollama and issues its own API keys).
+async function chatCompat(settings: AiSettings, system: string, user: string): Promise<string> {
+  const base = settings.baseUrl.replace(/\/+$/, '');
+  const model = modelFor(settings);
+  let response: Response;
+  try {
+    response = await fetch(`${base}/v1/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        ...(settings.apiKey ? { authorization: `Bearer ${settings.apiKey}` } : {})
+      },
+      body: JSON.stringify({
+        ...(model ? { model } : {}),
+        max_tokens: 400,
+        messages: [{ role: 'system', content: system }, { role: 'user', content: user }]
+      })
+    });
+  } catch {
+    throw new Error(`Could not reach the server at ${base}. Is it running, and does it allow requests from this site?`);
+  }
+  const body = await readBody(response);
+  if (!response.ok) throw providerError('compat', response.status, body);
+  const text = body?.choices?.[0]?.message?.content;
+  if (typeof text !== 'string' || !text.trim()) throw new Error('The server returned an empty reply.');
   return text.trim();
 }
 
@@ -216,6 +272,7 @@ async function chatGemini(settings: AiSettings, system: string, user: string): P
 async function chat(settings: AiSettings, system: string, user: string): Promise<string> {
   switch (settings.provider) {
     case 'ollama': return chatOllama(settings, system, user);
+    case 'compat': return chatCompat(settings, system, user);
     case 'openai': return chatOpenAi(settings, system, user);
     case 'anthropic': return chatAnthropic(settings, system, user);
     case 'gemini': return chatGemini(settings, system, user);
