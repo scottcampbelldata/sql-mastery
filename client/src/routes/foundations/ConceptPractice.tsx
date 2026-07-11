@@ -16,7 +16,17 @@ export default function ConceptPractice() {
   const [locallyCorrect, setLocallyCorrect] = useState<Record<string, boolean>>({});
 
   const concept = track ? conceptPracticeTarget(track, state, conceptId || '') : null;
-  const steps = useMemo(() => (concept ? buildLessonSteps(concept) : []), [concept]);
+  // Freeze each step's scaffold tier when the lesson is built: only the first step of a
+  // brand-new skill gets the first-exposure help bump, and solving a step must not
+  // re-scaffold the exercise still on screen.
+  const steps = useMemo(() => {
+    if (!concept) return [];
+    const ctx = scaffoldCtxFor(track?.phases, state, concept.skill);
+    return buildLessonSteps(concept).map((step, stepIndex) => ({
+      ...step,
+      tier: scaffoldTier(state, concept.skill, false, ctx && { ...ctx, firstExposure: ctx.firstExposure && stepIndex === 0 })
+    }));
+  }, [concept]); // eslint-disable-line react-hooks/exhaustive-deps
   const savedCorrect = new Set(concept ? (state.skillCorrect[concept.skill] || []) : []);
 
   useEffect(() => {
@@ -52,7 +62,7 @@ export default function ConceptPractice() {
   return (
     <AppShell breadcrumb={<span className="here">Learn / {concept.title}</span>}>
       <FoundationsRep key={step.id} exercise={step.exercise} label={`Practice: ${concept.title}`} kind="new"
-        tier={scaffoldTier(state, concept.skill, false, scaffoldCtxFor(track.phases, state, concept.skill))}
+        tier={step.tier}
         teach={index === 0 ? concept.teach : null}
         stepText={`Step ${index + 1} of ${steps.length} - focused practice`}
         onCorrect={() => setLocallyCorrect((current) => ({ ...current, [step.id]: true }))} />

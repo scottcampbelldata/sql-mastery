@@ -15,6 +15,7 @@ interface Step {
   type: 'review' | 'rep';
   exercise: Exercise;
   concept: Concept;
+  tier: ReturnType<typeof scaffoldTier>;
 }
 
 export default function FoundationsSession() {
@@ -23,15 +24,25 @@ export default function FoundationsSession() {
 
   // Freeze the session plan for this visit so completing reps does not reshuffle it.
   const plan = useMemo<TodaySession | null>(() => (track ? buildTodaySession(track, state) : null), [track]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Tiers are frozen alongside the plan: only the first rep of a brand-new skill gets the
+  // first-exposure help bump, and passing a step (or a review) must not re-scaffold the
+  // exercise still on screen.
   const steps = useMemo<Step[]>(() => {
     if (!plan) return [];
-    const s: Step[] = plan.reviews.map((r) => ({ type: 'review', exercise: r.exercise, concept: r.concept }));
+    const s: Step[] = plan.reviews.map((r) => ({
+      type: 'review', exercise: r.exercise, concept: r.concept,
+      tier: scaffoldTier(state, r.concept.skill, true, scaffoldCtxFor(track?.phases, state, r.concept.skill))
+    }));
     if (plan.main.kind === 'lesson') {
       const concept = (plan.main as { concept: Concept }).concept;
-      buildLessonSteps(concept, plan.main.reps).forEach((step) => s.push({ type: 'rep', exercise: step.exercise, concept }));
+      const ctx = scaffoldCtxFor(track?.phases, state, concept.skill);
+      buildLessonSteps(concept, plan.main.reps).forEach((step, stepIndex) => s.push({
+        type: 'rep', exercise: step.exercise, concept,
+        tier: scaffoldTier(state, concept.skill, false, ctx && { ...ctx, firstExposure: ctx.firstExposure && stepIndex === 0 })
+      }));
     }
     return s;
-  }, [plan]);
+  }, [plan]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [index, setIndex] = useState(0);
   const [finished, setFinished] = useState(false);
@@ -83,7 +94,7 @@ export default function FoundationsSession() {
     <AppShell breadcrumb={<span className="here">Learn / Today's lesson</span>}>
       <FoundationsRep key={step.exercise.id} exercise={step.exercise}
         label={label} kind={step.type === 'review' ? 'review' : 'new'}
-        tier={scaffoldTier(state, step.concept.skill, step.type === 'review', scaffoldCtxFor(track.phases, state, step.concept.skill))}
+        tier={step.tier}
         teach={showTeach ? step.concept.teach : null} stepText={stepText} />
       <div className="session-footer">
         <Button variant="primary" onClick={next} disabled={!stepDone}>{isLast ? 'Finish session' : 'Next exercise'}</Button>
