@@ -434,8 +434,8 @@ export const ROVE_CONCEPT_META: ConceptMeta[] = [
   cm('rv-moving-average-frame', 'rv-analytic', 5, 'Moving average on a date spine', { ...teach(
     'Build a dense date spine before applying a framed moving calculation.',
     'A generated spine makes missing days visible instead of silently skipping them.',
-    "SELECT AVG(n) OVER (RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS framed_avg FROM daily",
-    'The frame defines which rows feed each window value.'
+    "SELECT placed_at::date AS order_day, AVG(amount_cents) OVER (ORDER BY placed_at::date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS framed_avg FROM orders",
+    'The frame defines which rows feed each window value - here each day averages itself plus the six days before it.'
   ),
     whyWhen:
       "Frame an AVG over a gap-free date spine for smoothed trends like a 7-day moving average, where missing days would otherwise distort the window.",
@@ -517,8 +517,8 @@ export const ROVE_CONCEPT_META: ConceptMeta[] = [
   cm('rv-clean-layer-capstone', 'rv-behavioral', 5, 'Clean-layer capstone', { ...teach(
     'Stack cleaning subqueries for valid customers, canonical labels, and deduped payments, then analyze the bounded slice.',
     'Build a trusted layer first, then ask the business question on top.',
-    'SELECT merchant_id, clean_status, COUNT(*) FROM clean_orders GROUP BY merchant_id, clean_status',
-    'The performance story is to bound the slice before composing the layers.'
+    'SELECT canon.city_id, canon.clean_status, COUNT(*) AS order_count FROM (SELECT city_id, LOWER(TRIM(status)) AS clean_status FROM orders) canon GROUP BY canon.city_id, canon.clean_status',
+    'Clean once in an inner layer, then aggregate the cleaned columns; bound the slice before composing bigger stacks.'
   ),
     whyWhen:
       "Stack a clean layer when a question depends on several fixes at once - valid customers, deduped payments, canonical status - composed in CTEs before the final aggregate.",
@@ -530,8 +530,8 @@ export const ROVE_CONCEPT_META: ConceptMeta[] = [
   cm('rv-recursive-cte', 'rv-behavioral', 6, 'Recursive CTE category tree', { ...teach(
     'Walk the self-referencing merchant-category tree with WITH RECURSIVE after cleaning dangling parents.',
     'A recursive CTE is a base row UNION ALL a step that joins children to the growing frontier.',
-    'WITH RECURSIVE tree AS (SELECT root_id UNION ALL SELECT child_id FROM child JOIN tree ON true) SELECT * FROM tree',
-    'Materialize depth and path while traversing the hierarchy.'
+    'WITH RECURSIVE tree AS (SELECT category_id, name, 1 AS depth FROM categories WHERE parent_category_id IS NULL UNION ALL SELECT c.category_id, c.name, t.depth + 1 FROM categories c JOIN tree t ON c.parent_category_id = t.category_id) SELECT category_id, name, depth FROM tree',
+    'The base row seeds the roots, the UNION ALL step joins children to the growing frontier, and depth is materialized as it walks.'
   ),
     whyWhen:
       "Reach for WITH RECURSIVE to walk a self-referencing tree of unknown depth, like a merchant-category hierarchy or an org chart, that a fixed set of joins cannot traverse.",

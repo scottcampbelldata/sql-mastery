@@ -3584,7 +3584,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-boolean-logic-183ae7v",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows matching either the habitable-zone condition or the missing-temperature condition. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows where in_habitable_zone = true or equilibrium_temp_k is missing (NULL). Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY __BLANK_1__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -3626,7 +3626,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-boolean-logic-1jhjc1f",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = true and planet_type equals Gas Giant. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -3755,7 +3755,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-boolean-logic-1wfwamv",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = true and planet_type equals Super-Earth. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -3798,7 +3798,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-boolean-logic-7ck6pl",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = false and planet_type equals Gas Giant. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
@@ -3841,7 +3841,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-where-boolean-logic-irn7ul",
       "skill": "ap-where-boolean-logic",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = false and planet_type equals Super-Earth. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",

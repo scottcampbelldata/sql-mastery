@@ -1309,25 +1309,35 @@ ORDER BY p.promo_id;`,
     expectedSql: `WITH s AS (
   SELECT customer_id, acquisition_channel FROM customers
   WHERE signup_city_id = 12 AND signup_ts >= DATE '2021-01-01' AND signup_ts < DATE '2022-01-01'
+),
+ordered_customers AS (
+  SELECT DISTINCT customer_id FROM orders
 )
 SELECT s.acquisition_channel,
        count(*) AS signups,
-       count(*) FILTER (WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = s.customer_id)) AS never_ordered,
-       round(100.0 * count(*) FILTER (WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = s.customer_id)) / count(*), 1) AS never_ordered_pct
-FROM s GROUP BY s.acquisition_channel ORDER BY s.acquisition_channel`,
-    modelAnswer: `-- Boston 2021 signups; a NOT EXISTS against orders marks the ones that never converted.
+       count(*) FILTER (WHERE oc.customer_id IS NULL) AS never_ordered,
+       round(100.0 * count(*) FILTER (WHERE oc.customer_id IS NULL) / count(*), 1) AS never_ordered_pct
+FROM s LEFT JOIN ordered_customers oc ON oc.customer_id = s.customer_id
+GROUP BY s.acquisition_channel ORDER BY s.acquisition_channel`,
+    modelAnswer: `-- Boston 2021 signups; the anti-join marks the ones that never converted.
 WITH s AS (
   SELECT customer_id, acquisition_channel FROM customers
   WHERE signup_city_id = 12 AND signup_ts >= DATE '2021-01-01' AND signup_ts < DATE '2022-01-01'
+),
+-- Collapse orders to distinct customer ids once, so the anti-join is a single hash join
+-- instead of a correlated probe per signup row.
+ordered_customers AS (
+  SELECT DISTINCT customer_id FROM orders
 )
 -- COUNT(*) FILTER keeps the signups denominator and the never-ordered tally in one pass.
 SELECT s.acquisition_channel,
        count(*) AS signups,
-       count(*) FILTER (WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = s.customer_id)) AS never_ordered,
-       round(100.0 * count(*) FILTER (WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = s.customer_id)) / count(*), 1) AS never_ordered_pct
-FROM s GROUP BY s.acquisition_channel ORDER BY s.acquisition_channel;`,
+       count(*) FILTER (WHERE oc.customer_id IS NULL) AS never_ordered,
+       round(100.0 * count(*) FILTER (WHERE oc.customer_id IS NULL) / count(*), 1) AS never_ordered_pct
+FROM s LEFT JOIN ordered_customers oc ON oc.customer_id = s.customer_id
+GROUP BY s.acquisition_channel ORDER BY s.acquisition_channel;`,
     approachNote:
-      'A NOT EXISTS against orders inside COUNT(*) FILTER yields the never-converted tally next to the channel total in a single pass. Wrong turns: doing the anti-join before the per-channel aggregate loses the signups denominator, and equating never-ordered with is_deleted confuses account churn with non-conversion.',
+      'A LEFT JOIN to the distinct order customer ids leaves NULL on the never-converted side, and COUNT(*) FILTER keeps that tally next to the channel total in one pass. Wrong turns: a correlated NOT EXISTS inside the FILTER re-probes orders for every signup row and crawls on a table this size, doing the anti-join before the per-channel aggregate loses the signups denominator, and equating never-ordered with is_deleted confuses account churn with non-conversion.',
     orderMatters: true,
     rowCeiling: 5,
   },

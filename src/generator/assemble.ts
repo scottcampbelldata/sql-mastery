@@ -91,11 +91,11 @@ function orderAliases(sql: string): string[] {
 }
 
 // A precise "Order by: ..." contract is appended below, generated from the actual
-// expectedSql. So drop any prose ordering clause the phrasing added: it merely restates
-// the sort and, when the sort key equals the hardcoded tiebreaker, reads as a duplicate
-// (for example "ordered by star_id and then star_id").
+// expectedSql. So drop any prose ordering the phrasing added - a mid-sentence ", ordered
+// by star_id" or a whole trailing "Order by tier." sentence - because either form reads
+// as a duplicate once the canonical contract follows it.
 function stripProseOrdering(task: string): string {
-  const cleaned = task.replace(/\s*,?\s+(?:after\s+)?order(?:ed|ing)\s+by\b[^.]*/i, '').trim();
+  const cleaned = task.replace(/\s*,?\s+(?:after\s+)?order(?:ed|ing)?\s+by\b[^.]*\.?/i, '').trim();
   return /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
 }
 

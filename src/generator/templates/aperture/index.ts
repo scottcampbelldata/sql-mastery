@@ -426,7 +426,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is {habitable} and planet_type is {ptype}, ordered by planet_id.',
-      'Return planet_id, planet_name, in_habitable_zone, and planet_type for rows matching both conditions, ordered by planet_id.'
+      'Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = {habitable} and planet_type equals {ptype}, ordered by planet_id.'
     ],
     hintTemplate: 'AND means both WHERE conditions must be true for the same row.',
     scaffoldPlan: PLAN,
@@ -442,7 +442,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'List planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k where in_habitable_zone is true or equilibrium_temp_k is NULL, ordered by planet_id.',
-      'Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows matching either the habitable-zone condition or the missing-temperature condition, ordered by planet_id.'
+      'Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows where in_habitable_zone = true or equilibrium_temp_k is missing (NULL), ordered by planet_id.'
     ],
     hintTemplate: 'OR keeps a row when either condition is true.',
     scaffoldPlan: PLAN,
