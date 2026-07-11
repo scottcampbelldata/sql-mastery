@@ -99,6 +99,24 @@ function stripProseOrdering(task: string): string {
   return /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
 }
 
+// The trailing top-level LIMIT the emitter (or a template) appended. Learners see no
+// starter at the blank tier or in a gauntlet, so any LIMIT the grader expects must be
+// spelled out in the task or the row counts can never match.
+function topLevelLimit(expectedSql: string): string | null {
+  const match = expectedSql.match(/\bLIMIT\s+(\d+)\s*;?\s*$/i);
+  return match ? match[1] : null;
+}
+
+// Distinct ROUND(..., n) precisions in the answer. Same reasoning as the LIMIT: the
+// rounding is part of the graded values, so the task must state it.
+function roundPrecisions(expectedSql: string): number[] {
+  const out = new Set<number>();
+  for (const match of expectedSql.matchAll(/\bROUND\s*\([^()]*(?:\([^()]*\)[^()]*)*,\s*(\d+)\s*\)/gi)) {
+    out.add(Number(match[1]));
+  }
+  return [...out].sort();
+}
+
 function appendAnswerContract(task: string, expectedSql: string): string {
   const aliases = outputAliases(expectedSql);
   const order = orderAliases(expectedSql);
@@ -108,6 +126,13 @@ function appendAnswerContract(task: string, expectedSql: string): string {
   const proseNamesAllColumns = aliases.length > 0 && aliases.every((a) => new RegExp(`\\b${a}\\b`).test(base));
   if (aliases.length > 0 && !proseNamesAllColumns) parts.push(`Return columns: ${aliases.join(', ')}.`);
   if (order.length > 0) parts.push(`Order by: ${order.join(', ')}.`);
+  const limit = topLevelLimit(expectedSql);
+  if (limit && !new RegExp(`\\b${limit}\\b`).test(base)) parts.push(`Limit: first ${limit} rows.`);
+  const precisions = roundPrecisions(expectedSql);
+  if (precisions.length && !/round|decimal/i.test(base)) {
+    const spelled = precisions.map((p) => (p === 0 ? 'whole numbers' : `${p} decimals`)).join(' and ');
+    parts.push(`Round computed values to ${spelled}.`);
+  }
   return parts.length > 0 ? `${base} ${parts.join(' ')}` : base;
 }
 
