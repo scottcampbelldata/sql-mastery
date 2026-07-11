@@ -4,6 +4,7 @@ import { AppShell } from '../../components/AppShell';
 import { EmptyState, Button } from '../../components/ui';
 import { useFoundations } from '../../state/FoundationsContext';
 import { buildTodaySession, advanceSession, scaffoldTier } from '../../lib/foundations';
+import { scaffoldCtxFor } from '../../lib/bands';
 import { buildLessonSteps } from '../../lib/lessonSteps';
 import { FoundationsRep } from './FoundationsRep';
 import type { TodaySession } from '../../lib/foundations';
@@ -14,7 +15,6 @@ interface Step {
   type: 'review' | 'rep';
   exercise: Exercise;
   concept: Concept;
-  tier?: ReturnType<typeof scaffoldTier>;
 }
 
 export default function FoundationsSession() {
@@ -28,7 +28,7 @@ export default function FoundationsSession() {
     const s: Step[] = plan.reviews.map((r) => ({ type: 'review', exercise: r.exercise, concept: r.concept }));
     if (plan.main.kind === 'lesson') {
       const concept = (plan.main as { concept: Concept }).concept;
-      buildLessonSteps(concept, plan.main.reps).forEach((step) => s.push({ type: 'rep', exercise: step.exercise, concept, tier: step.tier }));
+      buildLessonSteps(concept, plan.main.reps).forEach((step) => s.push({ type: 'rep', exercise: step.exercise, concept }));
     }
     return s;
   }, [plan]);
@@ -83,7 +83,7 @@ export default function FoundationsSession() {
     <AppShell breadcrumb={<span className="here">Learn / Today's lesson</span>}>
       <FoundationsRep key={step.exercise.id} exercise={step.exercise}
         label={label} kind={step.type === 'review' ? 'review' : 'new'}
-        tier={step.tier ?? scaffoldTier(state, step.concept.skill, step.type === 'review')}
+        tier={scaffoldTier(state, step.concept.skill, step.type === 'review', scaffoldCtxFor(track.phases, state, step.concept.skill))}
         teach={showTeach ? step.concept.teach : null} stepText={stepText} />
       <div className="session-footer">
         <Button variant="primary" onClick={next} disabled={!stepDone}>{isLast ? 'Finish session' : 'Next exercise'}</Button>

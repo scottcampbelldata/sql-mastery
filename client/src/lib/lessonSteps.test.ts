@@ -16,7 +16,6 @@ describe('lesson step builder', () => {
     expect(steps).toHaveLength(1);
     expect(steps[0]).toMatchObject({
       id: 'ap-select-all-1',
-      tier: 'full',
       exercise: { id: 'ap-select-all-1', expectedSql: 'SELECT * FROM stars' }
     });
   });

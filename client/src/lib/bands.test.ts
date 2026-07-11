@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { bandCapstoneId, bandGroups, phaseBand } from './bands';
+import { bandCapstoneId, bandGroups, phaseBand, scaffoldCtxFor } from './bands';
 import type { LearningState, Phase } from '../types';
 
 const beginnerPhase = {
@@ -67,5 +67,28 @@ describe('band grouping', () => {
     expect(phaseBand(beginnerPhase)).toBe('beginner');
     expect(phaseBand({ ...beginnerPhase, level: undefined as any, database: 'rove' })).toBe('advanced');
     expect(bandCapstoneId([beginnerPhase])).toBe('cpE');
+  });
+
+  it('builds scaffold context: band level, earned floor, first exposure', () => {
+    const phases = [beginnerPhase, intermediatePhase];
+
+    // Before the aperture capstone the intermediate floor is not earned.
+    expect(scaffoldCtxFor(phases, state(), 'sl-join-inner')).toEqual({
+      level: 'intermediate', priorBandCapstonePassed: false, firstExposure: true
+    });
+
+    // Passing the prior band capstone earns the reduced-help floor.
+    expect(scaffoldCtxFor(phases, state(['cpE']), 'sl-join-inner')).toEqual({
+      level: 'intermediate', priorBandCapstonePassed: true, firstExposure: true
+    });
+
+    // A solved skill is no longer a first exposure.
+    const practiced = state(['cpE']);
+    practiced.skillCorrect['sl-join-inner'] = ['sl-join-inner-x1'];
+    expect(scaffoldCtxFor(phases, practiced, 'sl-join-inner')!.firstExposure).toBe(false);
+
+    // Unknown skills and missing phases yield no context (callers keep full scaffolds).
+    expect(scaffoldCtxFor(phases, state(), 'nope')).toBeUndefined();
+    expect(scaffoldCtxFor(undefined, state(), 'sl-join-inner')).toBeUndefined();
   });
 });

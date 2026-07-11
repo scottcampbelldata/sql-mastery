@@ -17,8 +17,12 @@ interface Props {
 export function OutputDock({ exercise, result }: Props) {
   const hasDb = Boolean(exercise.database);
   const [peekOpen, setPeekOpen] = useState(false);
-  // Open the peek to the table this exercise actually reads from, not table[0].
-  const preferTable = /\bfrom\s+([a-zA-Z_][a-zA-Z0-9_]*)/i.exec(pickStarter(exercise, 'full'))?.[1];
+  // Open the peek to the table this exercise actually reads from, not table[0]. Starters
+  // can blank the FROM itself (join lessons render "FROM ____"), so scan every FROM/JOIN
+  // identifier and take the first one that is not a blank.
+  const preferTable = Array.from(pickStarter(exercise, 'full').matchAll(/\b(?:from|join)\s+([a-zA-Z_][a-zA-Z0-9_]*)/gi))
+    .map((m) => m[1])
+    .find((name) => !/^_+$/.test(name));
 
   return (
     <div className="dock2">

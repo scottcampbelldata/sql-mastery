@@ -37,7 +37,6 @@ vi.mock('../../state/FoundationsContext', () => ({
 }));
 
 import ConceptPractice from './ConceptPractice';
-import { MIN_LESSON_STEPS } from '../../lib/lessonSteps';
 
 describe('ConceptPractice route guard', () => {
   it('redirects an unknown or locked concept id back to /learn', () => {
@@ -52,7 +51,7 @@ describe('ConceptPractice route guard', () => {
     expect(screen.getByText('foundations home')).toBeInTheDocument();
   });
 
-  it('drives focused practice at full scaffold with the new-lesson kind (no fade, no clock tick)', () => {
+  it('drives focused practice at full scaffold when the skill has no band context', () => {
     render(
       <MemoryRouter initialEntries={['/learn/concept/c1']}>
         <Routes>
@@ -61,9 +60,9 @@ describe('ConceptPractice route guard', () => {
       </MemoryRouter>
     );
     const rep = screen.getByTestId('rep');
-    expect(rep.getAttribute('data-kind')).toBe('new');   // never 'review', so the scaffold never fades
-    expect(rep.getAttribute('data-tier')).toBe('full');  // focused practice always shows the full scaffold
-    expect(rep).toHaveTextContent(`Step 1 of ${MIN_LESSON_STEPS}`);
+    expect(rep.getAttribute('data-kind')).toBe('new');   // never 'review'
+    expect(rep.getAttribute('data-tier')).toBe('full');  // no band ctx -> full scaffold, today's behavior
+    expect(rep).toHaveTextContent('Step 1 of 5');
     expect(screen.getByRole('button', { name: /next exercise/i })).toBeDisabled();
   });
 });
