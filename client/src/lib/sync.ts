@@ -1,15 +1,34 @@
 import { safeGet, safeSet } from './progress';
 import { api } from './api';
 
+// Only these keys ever leave the browser. AI-coach settings (sqlm:ai:v1, which can hold a
+// provider API key) and the auth token are deliberately NOT here.
 const SYNCED_JSON = new Set([
-  'sqlm:learning:v1'
+  'sqlm:learning:v1',
+  'sqlm:log:v1'
 ]);
+
+// The learning log grows without bound locally; cap what syncs so the payload stays well
+// under the server's write limit while still carrying enough history for analysis.
+const LOG_KEY = 'sqlm:log:v1';
+const SYNCED_LOG_EVENTS = 1200;
+
+function trimForSync(key: string, value: string | null): string | null {
+  if (key !== LOG_KEY || value == null) return value;
+  try {
+    const events = JSON.parse(value);
+    if (!Array.isArray(events) || events.length <= SYNCED_LOG_EVENTS) return value;
+    return JSON.stringify(events.slice(-SYNCED_LOG_EVENTS));
+  } catch {
+    return value;
+  }
+}
 
 export function collectProgress(): Record<string, string | null> {
   const out: Record<string, string | null> = {};
   for (let i = 0; i < localStorage.length; i += 1) {
     const key = localStorage.key(i);
-    if (key && SYNCED_JSON.has(key)) out[key] = safeGet(key);
+    if (key && SYNCED_JSON.has(key)) out[key] = trimForSync(key, safeGet(key));
   }
   return out;
 }

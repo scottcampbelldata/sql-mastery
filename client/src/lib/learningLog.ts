@@ -6,7 +6,7 @@
 const LOG_KEY = 'sqlm:log:v1';
 const MAX_EVENTS = 2000;
 
-export type LogEventType = 'start' | 'attempt' | 'hint' | 'reset' | 'complete';
+export type LogEventType = 'start' | 'attempt' | 'hint' | 'reset' | 'complete' | 'coach' | 'gauntlet';
 
 export interface LogEvent {
   t: number; // epoch ms
@@ -17,8 +17,10 @@ export interface LogEvent {
   tier?: string;
   outcome?: 'correct' | 'incorrect' | 'error';
   misconception?: string; // coach label, when a wrong answer was diagnosed
-  durationMs?: number; // on 'complete'
+  durationMs?: number; // on 'complete' and 'gauntlet'
   attempts?: number; // on 'complete'
+  score?: number; // on 'gauntlet'
+  total?: number; // on 'gauntlet'
 }
 
 function read(): LogEvent[] {

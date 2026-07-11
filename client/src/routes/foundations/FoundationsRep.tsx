@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useFoundations } from '../../state/FoundationsContext';
 import { useSqlCheck } from '../../lib/useSqlCheck';
 import { recordConceptProgress, recordAttempt, recordReviewPass, isSkillStrong } from '../../lib/foundations';
@@ -7,6 +8,7 @@ import { pickStarter, starterSqlForExercise } from '../../lib/sqlScaffold';
 import { formatSql } from '../../lib/sqlFormat';
 import { logEvent } from '../../lib/learningLog';
 import { useDbSchema } from '../../lib/dbSchema';
+import { askCoach, coachConfigured } from '../../lib/aiCoach';
 import { SqlEditor } from '../../components/SqlEditor';
 import { OutputDock } from './OutputDock';
 import { Button, Callout } from '../../components/ui';
@@ -39,11 +41,14 @@ interface Props {
   stepText?: string;
   onCorrect?: () => void;
   tier?: ScaffoldTier;
+  // Assessments (checkpoints) turn the AI coach off; lessons and practice leave it on.
+  allowCoach?: boolean;
 }
 
-export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect, tier = 'full' }: Props) {
+export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorrect, tier = 'full', allowCoach = true }: Props) {
   const { track, state, update } = useFoundations();
   const [hintOpen, setHintOpen] = useState(false);
+  const [coach, setCoach] = useState<{ status: 'idle' | 'busy' | 'done' | 'failed'; text: string }>({ status: 'idle', text: '' });
   // Two-beat flow: read the concept first ("learn"), then work the exercise ("try").
   // Reps with no teach block (steps 2+) open straight into "try".
   const hasTeach = Boolean(teach);
@@ -58,6 +63,7 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
     startedAt.current = Date.now();
     attempts.current = 0;
     setHintOpen(false);
+    setCoach({ status: 'idle', text: '' });
     logEvent({ type: 'start', exerciseId: exercise.id, skill: exercise.skill, tier });
   }, [exercise.id, tier]);
 
@@ -96,6 +102,27 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
     check.setSql(seed);
     logEvent({ type: 'reset', exerciseId: exercise.id, skill: exercise.skill });
   };
+
+  const coachReady = allowCoach && coachConfigured();
+  async function runCoach() {
+    if (coach.status === 'busy') return;
+    setCoach({ status: 'busy', text: '' });
+    logEvent({ type: 'coach', exerciseId: exercise.id, skill: exercise.skill });
+    try {
+      const text = await askCoach({
+        task: exercise.task || '',
+        sql: check.sql,
+        database: exercise.database || '',
+        feedbackTitle: check.feedback?.title || '',
+        feedbackMessage: check.feedback?.message || '',
+        diff: check.feedback?.diff || null,
+        schema: dbSchema
+      });
+      setCoach({ status: 'done', text });
+    } catch (error) {
+      setCoach({ status: 'failed', text: (error as Error).message });
+    }
+  }
 
   const title = conceptTitleFrom(label);
   const kindLabel = kindLabelFrom(label);
@@ -182,6 +209,29 @@ export function FoundationsRep({ exercise, label, kind, teach, stepText, onCorre
             <Callout tone={check.feedback.toneClass} title={check.feedback.title}>{check.feedback.message}</Callout>
             {check.feedback.diff ? <DiffPanel diff={check.feedback.diff} /> : null}
           </div>
+        ) : null}
+
+        {wrong && allowCoach ? (
+          coachReady ? (
+            <div className="coach-box">
+              {coach.status === 'idle' ? (
+                <Button onClick={runCoach}>Ask the AI coach</Button>
+              ) : null}
+              {coach.status === 'busy' ? <p className="coach-busy">The coach is reading your query...</p> : null}
+              {coach.status === 'done' ? <Callout tone="info" title="AI coach">{coach.text}</Callout> : null}
+              {coach.status === 'failed' ? (
+                <Callout tone="caution" title="Coach unavailable">{coach.text}</Callout>
+              ) : null}
+              {coach.status === 'done' || coach.status === 'failed' ? (
+                <Button onClick={runCoach}>Ask again</Button>
+              ) : null}
+            </div>
+          ) : (
+            <p className="coach-nudge">
+              Stuck? Set up the <Link to="/settings">AI coach</Link> (local Ollama or your own API key) for a
+              pointed nudge on wrong answers.
+            </p>
+          )
         ) : null}
 
         <OutputDock exercise={exercise} result={check.result} />

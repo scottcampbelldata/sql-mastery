@@ -118,6 +118,22 @@ export interface Curriculum {
   stats: Record<string, number>;
 }
 
+// One finished gauntlet run. Whether a gauntlet is passed is always derived from
+// bestScore (never stored as a flag) so the union/max cross-device merge in sync.ts can
+// only improve a record, never regress it.
+export interface GauntletRun {
+  score: number;
+  total: number;
+  seconds: number;
+  at: number;
+}
+
+export interface GauntletRecord {
+  attempts: number;
+  bestScore: number;
+  history: GauntletRun[];
+}
+
 export interface LearningState {
   skillCorrect: Record<string, string[]>;
   attempts: Record<string, number>;
@@ -127,6 +143,7 @@ export interface LearningState {
   sessionCounter: number;
   reviewsPassed: Record<string, number>;
   maxUnlockedOrder: number;
+  gauntlets?: Record<string, GauntletRecord>;
 }
 
 export type DbSchemaMap = Record<string, string[]>;
