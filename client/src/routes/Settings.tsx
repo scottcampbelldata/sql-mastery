@@ -12,7 +12,7 @@ import {
 import './settings.css';
 
 const SIGNIN_CONFIGURED = Boolean(import.meta.env.VITE_GOOGLE_CLIENT_ID);
-const PROVIDERS: AiProvider[] = ['off', 'ollama', 'openai', 'anthropic', 'gemini'];
+const PROVIDERS: AiProvider[] = ['off', 'ollama', 'compat', 'openai', 'anthropic', 'gemini'];
 
 function AccountCard() {
   const { user, signOut } = useAuth();
@@ -117,22 +117,36 @@ function CoachCard() {
           <input id="ai-ollama" type="text" value={settings.ollamaUrl} placeholder={DEFAULT_OLLAMA_URL}
             onChange={(e) => patch({ ollamaUrl: e.target.value })} autoComplete="off" spellCheck={false} />
           <p className="set-hint">
-            Ollama runs on your machine. If you are using this site from the web (not localhost), start
-            Ollama with OLLAMA_ORIGINS set to this site's origin so your browser may call it.
+            Point this at the Ollama API itself, usually port 11434 (web UIs like Open WebUI sit on other
+            ports and speak a different API). On the Ollama machine, set OLLAMA_ORIGINS to this site's
+            origin (or *) so your browser may call it, and OLLAMA_HOST=0.0.0.0 if it is a different machine.
           </p>
         </div>
       ) : null}
-      {needsKey ? (
+      {settings.provider === 'compat' ? (
         <div className="set-field">
-          <label htmlFor="ai-key">API key</label>
-          <input id="ai-key" type="password" value={settings.apiKey} placeholder="Paste your key"
+          <label htmlFor="ai-base">Server URL</label>
+          <input id="ai-base" type="text" value={settings.baseUrl} placeholder="http://localhost:1234"
+            onChange={(e) => patch({ baseUrl: e.target.value })} autoComplete="off" spellCheck={false} />
+          <p className="set-hint">
+            Any server speaking the OpenAI chat API: LM Studio, vLLM, llama.cpp, or Open WebUI (create an
+            API key in its settings). The coach calls /v1/chat/completions on this URL.
+          </p>
+        </div>
+      ) : null}
+      {needsKey || settings.provider === 'compat' ? (
+        <div className="set-field">
+          <label htmlFor="ai-key">{settings.provider === 'compat' ? 'API key (optional)' : 'API key'}</label>
+          <input id="ai-key" type="password" value={settings.apiKey}
+            placeholder={settings.provider === 'compat' ? 'Only if the server requires one' : 'Paste your key'}
             onChange={(e) => patch({ apiKey: e.target.value })} autoComplete="off" spellCheck={false} />
         </div>
       ) : null}
       {settings.provider !== 'off' ? (
         <div className="set-field">
           <label htmlFor="ai-model">Model</label>
-          <input id="ai-model" type="text" value={settings.model} placeholder={`${modelPlaceholder} (default)`}
+          <input id="ai-model" type="text" value={settings.model}
+            placeholder={modelPlaceholder ? `${modelPlaceholder} (default)` : 'server default model'}
             onChange={(e) => patch({ model: e.target.value })} autoComplete="off" spellCheck={false} />
         </div>
       ) : null}

@@ -5,7 +5,7 @@ import {
 } from './aiCoach';
 
 function settings(over: Partial<AiSettings> = {}): AiSettings {
-  return { provider: 'off', apiKey: '', model: '', ollamaUrl: DEFAULT_OLLAMA_URL, ...over };
+  return { provider: 'off', apiKey: '', model: '', ollamaUrl: DEFAULT_OLLAMA_URL, baseUrl: '', ...over };
 }
 
 const CTX = {
@@ -39,6 +39,8 @@ describe('AI coach settings', () => {
     expect(coachConfigured(settings({ provider: 'openai' }))).toBe(false);
     expect(coachConfigured(settings({ provider: 'openai', apiKey: 'k' }))).toBe(true);
     expect(coachConfigured(settings({ provider: 'ollama' }))).toBe(true);
+    expect(coachConfigured(settings({ provider: 'compat' }))).toBe(false);
+    expect(coachConfigured(settings({ provider: 'compat', baseUrl: 'http://localhost:1234' }))).toBe(true);
   });
 
   it('falls back to per-provider default models', () => {
@@ -112,10 +114,41 @@ describe('provider adapters', () => {
     expect(String(url)).toContain('models/gemini-2.5-flash:generateContent?key=g-key');
   });
 
+  it('calls an OpenAI-compatible server, omitting the model and auth when absent', async () => {
+    const fn = mockFetch({ choices: [{ message: { content: 'local nudge' } }] });
+    const reply = await askCoach(CTX, settings({ provider: 'compat', baseUrl: 'http://localhost:1234/' }));
+    expect(reply).toBe('local nudge');
+    const [url, init] = fn.mock.calls[0];
+    expect(url).toBe('http://localhost:1234/v1/chat/completions');
+    expect(new Headers((init as RequestInit).headers).get('authorization')).toBeNull();
+    const payload = JSON.parse((init as RequestInit).body as string);
+    expect('model' in payload).toBe(false);
+
+    const fn2 = mockFetch({ choices: [{ message: { content: 'keyed' } }] });
+    await askCoach(CTX, settings({ provider: 'compat', baseUrl: 'http://x:8080', apiKey: 'owui-key', model: 'gemma4:31b' }));
+    const [, init2] = fn2.mock.calls[0];
+    expect(new Headers((init2 as RequestInit).headers).get('authorization')).toBe('Bearer owui-key');
+    expect(JSON.parse((init2 as RequestInit).body as string).model).toBe('gemma4:31b');
+  });
+
   it('maps auth failures to a readable message', async () => {
     mockFetch({ error: { message: 'bad key' } }, false, 401);
     await expect(askCoach(CTX, settings({ provider: 'openai', apiKey: 'nope' })))
       .rejects.toThrow(/rejected the API key/i);
+  });
+
+  it('explains Ollama origin refusals and wrong-port answers specifically', async () => {
+    mockFetch({}, false, 403);
+    await expect(askCoach(CTX, settings({ provider: 'ollama' })))
+      .rejects.toThrow(/OLLAMA_ORIGINS/);
+
+    mockFetch({ detail: 'Method Not Allowed' }, false, 405);
+    await expect(askCoach(CTX, settings({ provider: 'ollama' })))
+      .rejects.toThrow(/not the Ollama chat API/i);
+
+    mockFetch({ error: "model 'nope:1b' not found" }, false, 404);
+    await expect(askCoach(CTX, settings({ provider: 'ollama' })))
+      .rejects.toThrow(/ollama pull/i);
   });
 
   it('explains an unreachable Ollama including the origins hint', async () => {
