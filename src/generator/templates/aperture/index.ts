@@ -575,8 +575,8 @@ export const APERTURE_TEMPLATES: Template[] = [
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
-      'Compute orbital_years and show planet_id, planet_name, and orbital_years, ordered by planet_id.',
-      'Show planet_id, planet_name, and orbital_years from planets, ordered by planet_id.'
+      'Compute orbital_years as orbital_period_days / 365.0 and show planet_id, planet_name, and orbital_years, ordered by planet_id.',
+      'Show planet_id, planet_name, and orbital_years (orbital_period_days / 365.0) from planets, ordered by planet_id.'
     ],
     hintTemplate: 'Put orbital_period_days / 365.0 in the SELECT list and name it with AS.',
     scaffoldPlan: PLAN,
@@ -591,8 +591,8 @@ export const APERTURE_TEMPLATES: Template[] = [
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'radius_earth' }],
     phrasings: [
-      'Compute radius_km and show planet_id, planet_name, and radius_km, ordered by radius_earth and then planet_id.',
-      'Show planet_id, planet_name, and radius_km from planets, ordered by radius_earth with planet_id as the tie-breaker.'
+      'Compute radius_km as radius_earth * 6371 and show planet_id, planet_name, and radius_km, ordered by radius_earth and then planet_id.',
+      'Show planet_id, planet_name, and radius_km (radius_earth * 6371) from planets, ordered by radius_earth with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'Put radius_earth * 6371 in the SELECT list and name it with AS.',
     scaffoldPlan: PLAN,
@@ -607,8 +607,8 @@ export const APERTURE_TEMPLATES: Template[] = [
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'semi_major_axis_au' }],
     phrasings: [
-      'Compute axis_km and show planet_id, planet_name, and axis_km, ordered by semi_major_axis_au and then planet_id.',
-      'Show planet_id, planet_name, and axis_km from planets, ordered by semi_major_axis_au with planet_id as the tie-breaker.'
+      'Compute axis_km as semi_major_axis_au * 149597870.7 and show planet_id, planet_name, and axis_km, ordered by semi_major_axis_au and then planet_id.',
+      'Show planet_id, planet_name, and axis_km (semi_major_axis_au * 149597870.7) from planets, ordered by semi_major_axis_au with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'A computed column can multiply a stored value by a constant.',
     scaffoldPlan: PLAN,
@@ -623,8 +623,8 @@ export const APERTURE_TEMPLATES: Template[] = [
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'equilibrium_temp_k' }],
     phrasings: [
-      'Compute temp_c and show planet_id, planet_name, and temp_c, ordered by equilibrium_temp_k and then planet_id.',
-      'Show planet_id, planet_name, and temp_c from planets, ordered by equilibrium_temp_k with planet_id as the tie-breaker.'
+      'Compute temp_c as equilibrium_temp_k - 273.15 and show planet_id, planet_name, and temp_c, ordered by equilibrium_temp_k and then planet_id.',
+      'Show planet_id, planet_name, and temp_c (equilibrium_temp_k - 273.15) from planets, ordered by equilibrium_temp_k with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'A computed column can subtract a constant from a stored value.',
     scaffoldPlan: PLAN,
@@ -639,8 +639,8 @@ export const APERTURE_TEMPLATES: Template[] = [
     slots: [{ name: 'sortKey', kind: 'sortKey', table: 'planets' }],
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'mass_earth' }],
     phrasings: [
-      'Compute mass_per_radius and show planet_id, planet_name, and mass_per_radius, ordered by mass_earth and then planet_id.',
-      'Show planet_id, planet_name, and mass_per_radius from planets, ordered by mass_earth with planet_id as the tie-breaker.'
+      'Compute mass_per_radius as mass_earth / radius_earth and show planet_id, planet_name, and mass_per_radius, ordered by mass_earth and then planet_id.',
+      'Show planet_id, planet_name, and mass_per_radius (mass_earth / radius_earth) from planets, ordered by mass_earth with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'A computed column can divide one numeric column by another.',
     scaffoldPlan: PLAN,
@@ -806,7 +806,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'Join planets to stars and list planet_id, planet_name, and star_name where in_habitable_zone is {habitable}, ordered by planet_id.',
-      'Return planet_id, planet_name, and star_name for joined rows matching the habitable-zone condition, ordered by planet_id.'
+      'Return planet_id, planet_name, and star_name for joined rows where in_habitable_zone = {habitable}, ordered by planet_id.'
     ],
     hintTemplate: 'Join on planets.star_id = stars.star_id to attach each planet to its host star.',
     scaffoldPlan: PLAN,
@@ -825,7 +825,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is {year}, ordered by planet_id.',
-      'Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year, ordered by planet_id.'
+      'Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year {year}, ordered by planet_id.'
     ],
     hintTemplate: 'Join on planets.star_id = stars.star_id, then filter the planet discovery_year.',
     scaffoldPlan: PLAN,
@@ -844,7 +844,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is {ptype}, ordered by planet_id.',
-      'Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type, ordered by planet_id.'
+      'Return planet_id, planet_name, star_name, and planet_type for joined rows with planet_type {ptype}, ordered by planet_id.'
     ],
     hintTemplate: 'The join attaches star_name before the WHERE filter keeps matching planet rows.',
     scaffoldPlan: PLAN,
@@ -863,7 +863,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'Join planets to stars and list planet_id, planet_name, star_name, and discovery_method where discovery_method is {method}, ordered by planet_id.',
-      'Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method, ordered by planet_id.'
+      'Return planet_id, planet_name, star_name, and discovery_method for joined rows with discovery_method {method}, ordered by planet_id.'
     ],
     hintTemplate: 'Keep the ON clause for the relationship, then filter planets.discovery_method.',
     scaffoldPlan: PLAN,

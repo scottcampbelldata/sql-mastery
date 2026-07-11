@@ -8,7 +8,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-aggregate-scalar-1iq6j4l",
       "skill": "ap-aggregate-scalar",
       "database": "aperture",
-      "task": "Return planet_count and avg_value by averaging equilibrium_temp_k for all planets. Order by: planet_count.",
+      "task": "Return planet_count and avg_value by averaging equilibrium_temp_k for all planets. Order by: planet_count. Round computed values to 2 decimals.",
       "starterSql": {
         "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
         "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(equilibrium_temp_k), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
@@ -45,7 +45,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-aggregate-scalar-1mr8hqt",
       "skill": "ap-aggregate-scalar",
       "database": "aperture",
-      "task": "Count all planets as planet_count and show the average radius_earth as avg_value. Order by: planet_count.",
+      "task": "Count all planets as planet_count and show the average radius_earth as avg_value. Order by: planet_count. Round computed values to 2 decimals.",
       "starterSql": {
         "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
         "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(radius_earth), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
@@ -82,7 +82,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-aggregate-scalar-dljnmp",
       "skill": "ap-aggregate-scalar",
       "database": "aperture",
-      "task": "Count all planets as planet_count and show the average semi_major_axis_au as avg_value. Order by: planet_count.",
+      "task": "Count all planets as planet_count and show the average semi_major_axis_au as avg_value. Order by: planet_count. Round computed values to 2 decimals.",
       "starterSql": {
         "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
         "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(semi_major_axis_au), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
@@ -119,7 +119,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-aggregate-scalar-p0kkdt",
       "skill": "ap-aggregate-scalar",
       "database": "aperture",
-      "task": "Return planet_count and avg_value by averaging mass_earth for all planets. Order by: planet_count.",
+      "task": "Return planet_count and avg_value by averaging mass_earth for all planets. Order by: planet_count. Round computed values to 2 decimals.",
       "starterSql": {
         "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
         "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(mass_earth), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
@@ -156,7 +156,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-aggregate-scalar-uwwfzx",
       "skill": "ap-aggregate-scalar",
       "database": "aperture",
-      "task": "Return planet_count and avg_value by averaging orbital_period_days for all planets. Order by: planet_count.",
+      "task": "Return planet_count and avg_value by averaging orbital_period_days for all planets. Order by: planet_count. Round computed values to 2 decimals.",
       "starterSql": {
         "full": "SELECT COUNT(*) AS planet_count, ROUND(AVG(__BLANK_0__), 2) AS avg_value FROM planets ORDER BY planet_count",
         "half": "SELECT COUNT(*) AS planet_count, ROUND(AVG(orbital_period_days), 2) AS avg_value FROM planets ORDER BY __BLANK_0__",
@@ -391,7 +391,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-computed-columns-138fwix",
       "skill": "ap-computed-columns",
       "database": "aperture",
-      "task": "Show planet_id, planet_name, and axis_km from planets. Order by: semi_major_axis_au, planet_id.",
+      "task": "Show planet_id, planet_name, and axis_km (semi_major_axis_au * 149597870.7) from planets. Order by: semi_major_axis_au, planet_id.",
       "starterSql": {
         "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_1__, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_0__",
@@ -430,7 +430,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-computed-columns-1bkmo0x",
       "skill": "ap-computed-columns",
       "database": "aperture",
-      "task": "Show planet_id, planet_name, and temp_c from planets. Order by: equilibrium_temp_k, planet_id.",
+      "task": "Show planet_id, planet_name, and temp_c (equilibrium_temp_k - 273.15) from planets. Order by: equilibrium_temp_k, planet_id.",
       "starterSql": {
         "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ - 273.15 AS temp_c FROM planets ORDER BY __BLANK_1__, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY __BLANK_0__",
@@ -469,7 +469,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-computed-columns-1wec98e",
       "skill": "ap-computed-columns",
       "database": "aperture",
-      "task": "Show planet_id, planet_name, and radius_km from planets. Order by: radius_earth, planet_id.",
+      "task": "Show planet_id, planet_name, and radius_km (radius_earth * 6371) from planets. Order by: radius_earth, planet_id.",
       "starterSql": {
         "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ * 6371 AS radius_km FROM planets ORDER BY __BLANK_1__, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY __BLANK_0__",
@@ -508,7 +508,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-computed-columns-3zkb27",
       "skill": "ap-computed-columns",
       "database": "aperture",
-      "task": "Show planet_id, planet_name, and orbital_years from planets. Order by: planet_id.",
+      "task": "Show planet_id, planet_name, and orbital_years (orbital_period_days / 365.0) from planets. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY __BLANK_1__",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY __BLANK_0__",
@@ -547,7 +547,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-computed-columns-kuonjh",
       "skill": "ap-computed-columns",
       "database": "aperture",
-      "task": "Show planet_id, planet_name, and mass_per_radius from planets. Order by: mass_earth, planet_id.",
+      "task": "Show planet_id, planet_name, and mass_per_radius (mass_earth / radius_earth) from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
         "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_1__, planet_id",
         "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_0__",
@@ -1444,7 +1444,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-135bk2s",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year 1995. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1995 ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -1573,7 +1573,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-1iq6mbo",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year 1999. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1999 ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -1742,7 +1742,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-1s5974g",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows matching the discovery year. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year 2001. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2001 ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -1785,7 +1785,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-1tzir4e",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, and star_name for joined rows matching the habitable-zone condition. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, and star_name for joined rows where in_habitable_zone = false. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = false ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -1826,7 +1826,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-1wnga2h",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows with discovery_method Eclipse Timing Variations. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -1910,7 +1910,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-45k6sr",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows with planet_type Gas Giant. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -1994,7 +1994,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-9oesor",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows matching the planet type. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows with planet_type Super-Earth. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
@@ -2036,7 +2036,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "ap-join-intro-a8vuz9",
       "skill": "ap-join-intro",
       "database": "aperture",
-      "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows matching the discovery method. Order by: planet_id.",
+      "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows with discovery_method Transit. Order by: planet_id.",
       "starterSql": {
         "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
         "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
