@@ -4,7 +4,8 @@ import { AppShell } from '../../components/AppShell';
 import { EmptyState, Button } from '../../components/ui';
 import { FoundationsRep } from './FoundationsRep';
 import { useFoundations } from '../../state/FoundationsContext';
-import { buildTodaySession, conceptPracticeTarget } from '../../lib/foundations';
+import { buildTodaySession, conceptPracticeTarget, scaffoldTier } from '../../lib/foundations';
+import { scaffoldCtxFor } from '../../lib/bands';
 import { buildLessonSteps } from '../../lib/lessonSteps';
 
 export default function ConceptPractice() {
@@ -51,7 +52,8 @@ export default function ConceptPractice() {
   return (
     <AppShell breadcrumb={<span className="here">Learn / {concept.title}</span>}>
       <FoundationsRep key={step.id} exercise={step.exercise} label={`Practice: ${concept.title}`} kind="new"
-        tier={step.tier} teach={index === 0 ? concept.teach : null}
+        tier={scaffoldTier(state, concept.skill, false, scaffoldCtxFor(track.phases, state, concept.skill))}
+        teach={index === 0 ? concept.teach : null}
         stepText={`Step ${index + 1} of ${steps.length} - focused practice`}
         onCorrect={() => setLocallyCorrect((current) => ({ ...current, [step.id]: true }))} />
       <div className="session-footer">

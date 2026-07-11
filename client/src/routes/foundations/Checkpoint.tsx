@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AppShell } from '../../components/AppShell';
 import { EmptyState, Button, Callout } from '../../components/ui';
 import { useFoundations } from '../../state/FoundationsContext';
-import { recordCheckpointResult, advanceSession, recordCorrect, recordAttempt, CHECKPOINT_SIZE, CHECKPOINT_PASS } from '../../lib/foundations';
+import { recordCheckpointResult, advanceSession, recordCorrect, recordAttempt, scaffoldTier, CHECKPOINT_SIZE, CHECKPOINT_PASS } from '../../lib/foundations';
+import { scaffoldCtxFor } from '../../lib/bands';
 import { FoundationsRep } from './FoundationsRep';
 import type { Exercise, Checkpoint as CheckpointType, LearningState } from '../../types';
 import './foundations.css';
@@ -73,6 +74,11 @@ export default function Checkpoint() {
 
   const q = questions[index];
   const currentChecked = Boolean(q && checkedCorrect[q.id]);
+  // A checkpoint is an assessment, so no first-exposure help bump: the question renders at
+  // the band's earned floor (beginner fills blanks, intermediate gets fewer hints, advanced
+  // works from memory), matching the tier label shown on the band card.
+  const ctx = q ? scaffoldCtxFor(track.phases, state, q.skill as string) : undefined;
+  const tier = q ? scaffoldTier(state, q.skill as string, false, ctx && { ...ctx, firstExposure: false }) : 'full';
   return (
     <AppShell breadcrumb={<span className="here">{checkpoint.title}</span>}>
       <div className="fnd-session-progress">Mixed practice | Question {index + 1} of {questions.length}</div>
@@ -81,7 +87,7 @@ export default function Checkpoint() {
           <span key={i} className={`cp-dot ${i < results.length ? (results[i] ? 'pass' : 'fail') : ''} ${i === index ? 'current' : ''}`} />
         ))}
       </div>
-      <FoundationsRep key={q.id} exercise={q} label="Mixed practice" kind="new"
+      <FoundationsRep key={q.id} exercise={q} label="Mixed practice" kind="new" tier={tier}
         onCorrect={() => setCheckedCorrect((current) => ({ ...current, [q.id]: true }))} />
       <div style={{ marginTop: 'var(--s-4)', display: 'flex', gap: 'var(--s-2)' }}>
         <Button variant="primary" onClick={() => answer(true, q)} disabled={!currentChecked}>I solved it, next</Button>

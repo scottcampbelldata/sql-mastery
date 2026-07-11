@@ -1,4 +1,4 @@
-import { levelBaseTier, type Level as FoundationLevel, type ScaffoldTier } from './foundations';
+import { levelBaseTier, type Level as FoundationLevel, type ScaffoldTier, type ScaffoldCtx } from './foundations';
 import { phaseGraduation } from './learning-path';
 import type { LearningState, Phase } from '../types';
 
@@ -109,4 +109,22 @@ export function bandGroups(phases: Phase[], state: LearningState): BandGroup[] {
 
 export function bandTierLabel(group: BandGroup): string {
   return TIER_LABEL[levelBaseTier(group.meta.level as FoundationLevel)];
+}
+
+// Scaffold context for a skill: its band level, whether the learner has earned that band's
+// reduced-help floor (every prior band capstone passed), and whether this is their first
+// exposure to the skill (no correct solutions yet). This wires the fade the product
+// promises - beginner lessons stay fully scaffolded, intermediate fades to fewer hints,
+// advanced works from memory - into lesson reps, focused practice, and checkpoints.
+// Returns undefined when the skill has no band (ctx-less callers keep today's behavior).
+export function scaffoldCtxFor(phases: Phase[] | undefined, state: LearningState, skill: string): ScaffoldCtx | undefined {
+  const phase = (phases || []).find((p) => (p.concepts || []).some((concept) => concept.skill === skill));
+  if (!phase) return undefined;
+  const level = phaseBand(phase);
+  const group = bandGroups(phases || [], state).find((g) => g.meta.level === level);
+  return {
+    level,
+    priorBandCapstonePassed: group ? !group.locked : true,
+    firstExposure: (state.skillCorrect[skill] || []).length === 0
+  };
 }
