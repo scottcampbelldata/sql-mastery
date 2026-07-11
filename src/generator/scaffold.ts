@@ -168,23 +168,64 @@ type FocusTarget = 'projection' | 'from' | 'where' | 'having';
 const FOCUS_CLAUSE: Record<FocusTarget, string> = { projection: 'select', from: 'from', where: 'where', having: 'having' };
 
 // Which clause each concept's query actually teaches. Every deterministic query carries an
-// ORDER BY for grading; without this, the full/half scaffolds blanked that instead of the
-// real skill (a lesson labeled "pick specific columns" or "left join" that only makes you
-// fill in the sort). Concepts not listed keep the default slot/clause scaffolding.
+// ORDER BY for grading, and the default full-tier scaffold blanks only the answer's plain
+// column/literal atoms - so for any concept whose signature lives in a structural clause (a
+// JOIN, a subquery, a window/CASE/cast expression, an EXISTS/IN filter) the first exercise a
+// learner sees would hand them the concept and blank only the sort. Mapping the concept to its
+// carrying clause makes the full/half scaffolds blank that clause instead. The clause chosen is
+// where the lesson's named idea lives: the JOIN (from), the filter that defines it (where), or
+// the projected expression (projection). Concepts not listed (plain SELECT/WHERE/GROUP BY
+// beginner lessons, ORDER BY, top-N, recursive CTE) keep the default slot/clause scaffolding.
 const FOCUS_BY_SKILL: Record<string, FocusTarget> = {
+  // Aperture (beginner)
   'ap-join-intro': 'from',
   'ap-having': 'having',
+  // Sideline (intermediate)
+  'sl-join-inner': 'from',
   'sl-join-left': 'from',
+  'sl-join-right-full': 'from',
+  'sl-join-multi': 'from',
+  'sl-join-aggregate': 'from',
   'sl-self-join-compare': 'from',
   'sl-self-join-match': 'from',
-  'sl-join-multi': 'from',
   'sl-cte': 'from',
   'sl-set-ops': 'from',
+  'sl-anti-join': 'where',
+  'sl-semi-join': 'where',
+  'sl-subquery-in': 'where',
+  'sl-subquery-scalar': 'where',
+  'sl-subquery-correlated': 'where',
+  'sl-scd-asof': 'where',
   'sl-case-expression': 'projection',
+  'sl-date-functions': 'projection',
   'sl-window-rank': 'projection',
   'sl-window-lag-lead': 'projection',
   'sl-window-frame-basic': 'projection',
-  'sl-scd-asof': 'where'
+  'sl-window-running': 'projection',
+  // Rove (advanced)
+  'rv-orphan-anti-join': 'where',
+  'rv-soft-delete-valid': 'where',
+  'rv-rating-outlier-clean': 'where',
+  'rv-dedup-rownumber': 'where',
+  'rv-payment-dedup': 'where',
+  'rv-topn-per-group': 'where',
+  'rv-case-canonicalize': 'projection',
+  'rv-money-text-cast': 'projection',
+  'rv-null-coalesce-nullif': 'projection',
+  'rv-regex-clean-contacts': 'projection',
+  'rv-profile-dirty-data': 'projection',
+  'rv-rank-leaderboard': 'projection',
+  'rv-ntile-bucketing': 'projection',
+  'rv-lag-lead-deltas': 'projection',
+  'rv-running-total': 'projection',
+  'rv-moving-average-frame': 'projection',
+  'rv-timezone-city-join': 'projection',
+  'rv-retention-cohort': 'projection',
+  'rv-funnel-conversion': 'projection',
+  'rv-lifecycle-latency': 'projection',
+  'rv-text-normalize': 'projection',
+  'rv-clean-layer-capstone': 'projection',
+  'rv-sessionization': 'projection'
 };
 
 function blankSpans(sql: string, spans: Array<{ innerStart: number; innerEnd: number }>): { text: string; map: Record<string, string> } {
@@ -238,12 +279,21 @@ function isSimpleColumn(item: string): boolean {
   return /^[a-zA-Z_][a-zA-Z0-9_.]*(\s+as\s+[a-zA-Z_][a-zA-Z0-9_]*)?$/i.test(item.trim());
 }
 
-// The clause region(s) to blank for a focus. A plain column list in the beginner tier blanks
-// per column (SELECT ____, ____, ____); everything else blanks the whole clause as one.
+// The clause region(s) to blank for a projection focus in the full (most-help) tier:
+//   - a plain column list blanks per column (SELECT ____, ____, ____) so a beginner fills each;
+//   - a mixed list (plain columns plus a concept expression - a window, CASE, cast, aggregate,
+//     regex) blanks only the concept expression(s), leaving the plain columns given, so the
+//     learner writes the thing the lesson is about, not the incidental columns;
+//   - anything else (all expressions, or a single item) blanks the whole clause as one.
 function focusSpansFor(sql: string, focus: FocusTarget, focusSpan: { innerStart: number; innerEnd: number }, which: 'full' | 'half'): Array<{ innerStart: number; innerEnd: number }> {
   if (focus === 'projection' && which === 'full') {
     const items = selectItemSpans(sql, focusSpan);
-    if (items.length > 1 && items.every((sp) => isSimpleColumn(sql.slice(sp.innerStart, sp.innerEnd)))) return items;
+    if (items.length > 1) {
+      const simple = (sp: { innerStart: number; innerEnd: number }) => isSimpleColumn(sql.slice(sp.innerStart, sp.innerEnd));
+      if (items.every(simple)) return items;
+      const concept = items.filter((sp) => !simple(sp));
+      if (concept.length > 0 && concept.length < items.length) return concept;
+    }
   }
   return [focusSpan];
 }
