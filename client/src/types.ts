@@ -144,6 +144,10 @@ export interface LearningState {
   reviewsPassed: Record<string, number>;
   maxUnlockedOrder: number;
   gauntlets?: Record<string, GauntletRecord>;
+  // Per-skill reset epoch. The cross-device merge is union-based (it can only add), so a
+  // deletion cannot travel by itself; bumping this counter is the synced fact that says
+  // "progress recorded under an older epoch for this skill is void everywhere".
+  skillResets?: Record<string, number>;
 }
 
 export type DbSchemaMap = Record<string, string[]>;

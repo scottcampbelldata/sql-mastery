@@ -61,6 +61,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [user]);
 
+  // And pull when the tab comes back into focus (throttled), so switching devices
+  // converges without anyone hunting for a Sync button: the leaving device pushes on
+  // hide, the arriving device pulls on focus.
+  useEffect(() => {
+    if (!user) return;
+    let lastPull = 0;
+    const pull = () => {
+      if (document.hidden) return;
+      const now = Date.now();
+      if (now - lastPull < 60000) return;
+      lastPull = now;
+      void syncNow();
+    };
+    window.addEventListener('focus', pull);
+    document.addEventListener('visibilitychange', pull);
+    return () => {
+      window.removeEventListener('focus', pull);
+      document.removeEventListener('visibilitychange', pull);
+    };
+  }, [user]);
+
   const signIn = useCallback(async (idToken: string) => {
     const res = await api.auth.google(idToken);
     writeToken(res.token);

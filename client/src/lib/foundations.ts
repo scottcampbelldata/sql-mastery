@@ -294,12 +294,15 @@ export function recordConceptProgress(track: Track, state: LearningState, exerci
 
 // Clears one concept's mastery so its full scaffold returns, without touching the path, the
 // high-water mark, checkpoints, or any other skill. Reassigns fresh maps (never mutates in
-// place) so a prior state snapshot is not corrupted.
+// place) so a prior state snapshot is not corrupted. Bumping the skill's reset epoch is what
+// carries the reset to other devices: the sync merge lets a higher epoch void progress that
+// was recorded under an older one (a plain deletion cannot survive a union merge).
 export function resetConcept(state: LearningState, skill: string): LearningState {
   const omit = (m: Record<string, unknown>) => { const n = { ...m }; delete n[skill]; return n; };
   state.skillCorrect = omit(state.skillCorrect) as Record<string, string[]>;
   state.reviewsPassed = omit(state.reviewsPassed) as Record<string, number>;
   state.lastPracticedSession = omit(state.lastPracticedSession) as Record<string, number>;
+  state.skillResets = { ...(state.skillResets || {}), [skill]: ((state.skillResets || {})[skill] || 0) + 1 };
   return state;
 }
 
