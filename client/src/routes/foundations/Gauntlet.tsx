@@ -40,7 +40,8 @@ function GauntletQuestion({ exercise, onDone }: { exercise: Exercise; onDone: (c
       <div className="console-editor">
         <span className="wb-editor-label" aria-hidden="true">Your SQL</span>
         <SqlEditor value={check.sql} onChange={check.setSql} onSubmit={check.runCheck}
-          placeholder="Write the full query from memory." ariaLabel="SQL editor" minHeight="180px" schema={dbSchema} />
+          placeholder="Write the full query from memory." ariaLabel="SQL editor" minHeight="180px"
+          schema={dbSchema} autocomplete={false} />
         <div className="console-actions">
           <Button variant="primary" onClick={check.runCheck} disabled={check.checking || solved}>
             {check.checking ? 'Checking...' : `Run and check  ${isMac ? 'Cmd+Enter' : 'Ctrl+Enter'}`}

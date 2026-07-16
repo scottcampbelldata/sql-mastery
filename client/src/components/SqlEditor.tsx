@@ -112,9 +112,12 @@ interface Props {
   minHeight?: string;
   ariaLabel?: string;
   schema?: DbSchemaMap | null;
+  // Table/column type-ahead. Off for the timed gauntlet, where a real screen would not
+  // hand you completion (the schema peek stays - interviews do let you read the tables).
+  autocomplete?: boolean;
 }
 
-export function SqlEditor({ value, onChange, onSubmit, placeholder, minHeight = '140px', ariaLabel = 'SQL editor', schema }: Props) {
+export function SqlEditor({ value, onChange, onSubmit, placeholder, minHeight = '140px', ariaLabel = 'SQL editor', schema, autocomplete = true }: Props) {
   const onSubmitRef = useRef(onSubmit);
   onSubmitRef.current = onSubmit;
   const extensions = useMemo<Extension[]>(() => [
@@ -138,13 +141,13 @@ export function SqlEditor({ value, onChange, onSubmit, placeholder, minHeight = 
       { key: 'Shift-Tab', run: (view) => moveToBlank(view, false) }
     ])),
     EditorView.contentAttributes.of({ 'aria-label': ariaLabel }),
-    // With a schema, complete ONLY the real tables/columns: the context-aware source
-    // (tables after FROM, columns after `t.`) plus a flat name source for bare typing.
-    // No wall of SQL keywords.
-    autocompletion(schema
+    // With a schema (and autocomplete on), complete ONLY the real tables/columns: the
+    // context-aware source (tables after FROM, columns after `t.`) plus a flat name source
+    // for bare typing. No wall of SQL keywords. With autocomplete off, no source fires at all.
+    autocompletion(autocomplete && schema
       ? { override: [schemaCompletionSource({ dialect: PostgreSQL, schema }), flatIdentifierSource(schema)] }
-      : {})
-  ], [ariaLabel, schema]);
+      : { override: [], activateOnTyping: false })
+  ], [ariaLabel, schema, autocomplete]);
   return (
     <div className="sql-editor-frame">
       <CodeMirror
