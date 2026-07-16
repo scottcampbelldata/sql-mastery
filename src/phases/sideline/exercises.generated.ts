@@ -1830,7 +1830,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-a3p5hc",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List teams with active sponsor deals when present as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by: team_id, sponsor_id, contract_start. Limit: first 200 rows.",
+      "task": "List every team and its active sponsor deals (if any) as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by: team_id, sponsor_id, contract_start. Limit: first 200 rows.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY team_id, sponsor_id, contract_start LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, ts.sponsor_id AS sponsor_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1872,7 +1872,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-jqcppo",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List teams with rostered players when present as team_id, team_name, player_id, handle, keeping teams without players. Order by: team_id, player_id. Limit: first 200 rows.",
+      "task": "List every team and its rostered players (if any) as team_id, team_name, player_id, handle, keeping teams without players. Order by: team_id, player_id. Limit: first 200 rows.",
       "starterSql": {
         "full": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM __BLANK_0__ ORDER BY team_id, player_id LIMIT 200",
         "half": "SELECT t.team_id AS team_id, t.name AS team_name, p.player_id AS player_id, p.handle AS handle FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1914,7 +1914,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-ma0yk2",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List sponsors with team deals when present as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by: sponsor_id, team_id, contract_start. Limit: first 200 rows.",
+      "task": "List every sponsor and its team deals (if any) as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by: sponsor_id, team_id, contract_start. Limit: first 200 rows.",
       "starterSql": {
         "full": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY sponsor_id, team_id, contract_start LIMIT 200",
         "half": "SELECT s.sponsor_id AS sponsor_id, s.name AS sponsor_name, ts.team_id AS team_id, ts.contract_start AS contract_start FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
@@ -1956,7 +1956,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "id": "sl-join-left-x0vvhc",
       "skill": "sl-join-left",
       "database": "sideline",
-      "task": "List regions with hosted tournaments when present as region_id, region_name, tournament_id, tournament_name. Order by: region_id, tournament_id. Limit: first 200 rows.",
+      "task": "List every region and its hosted tournaments (if any) as region_id, region_name, tournament_id, tournament_name. Order by: region_id, tournament_id. Limit: first 200 rows.",
       "starterSql": {
         "full": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM __BLANK_0__ ORDER BY region_id, tournament_id LIMIT 200",
         "half": "SELECT r.region_id AS region_id, r.name AS region_name, t.tournament_id AS tournament_id, t.name AS tournament_name FROM __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
