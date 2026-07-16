@@ -59,7 +59,7 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'SELECT * returns every column from every row in a table.',
       mentalModel: 'Think of the table as a spreadsheet; SELECT * hands you the whole sheet.',
-      example: { sql: 'SELECT * FROM stars', note: 'The star means all columns.' },
+      example: { sql: 'SELECT * FROM stars', note: 'The star means all columns. When you try it, the exercise ends with an ORDER BY that just holds the rows in a stable order so the checker can compare them; you will learn ORDER BY in the Order the rows lesson.' },
       whyWhen: 'Use SELECT * for a quick peek at an unfamiliar table; in real reports you name the columns you need so results stay small and predictable.',
       watchOut: 'SELECT * pulls every column and its column order can shift if the table changes, so avoid it in saved queries and reports; list the columns once you know which you want.',
       interviewNote: 'Interviewers expect you to know SELECT * is fine for exploring but rarely what you ship, so be ready to say why you would name columns instead.'
@@ -73,7 +73,7 @@ export const APERTURE_CONCEPT_META: ConceptMeta[] = [
     teach: {
       plain: 'List column names after SELECT to choose exactly which output columns you want.',
       mentalModel: 'You keep a few spreadsheet columns and leave the rest behind.',
-      example: { sql: 'SELECT planet_name, planet_type FROM planets', note: 'The result has those two columns in that order.' },
+      example: { sql: 'SELECT planet_name, planet_type FROM planets', note: 'The result has those two columns in that order. When you try it, the exercise ends with an ORDER BY that just holds the rows in a stable order so the checker can compare them; you will learn ORDER BY in the Order the rows lesson.' },
       whyWhen: 'This is the everyday default: pick just planet_name and planet_type instead of dragging every column along.',
       watchOut: 'Forgetting the comma is the classic slip: SELECT planet_name planet_type reads planet_type as an alias for planet_name, not two columns, so always comma-separate your columns.',
       interviewNote: 'Interviewers watch whether you select only the columns the question asks for; pulling extras reads as careless.'
