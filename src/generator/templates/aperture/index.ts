@@ -319,7 +319,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => ['planet_id', 'star_id', 'mass_earth', 'radius_earth', 'orbital_period_days'].includes(value) }],
     phrasings: [
       'Show planet_id, planet_name, and planet_type from planets, ordered by {sortKey} and then planet_id.',
-      'Return planet_id with each planet_name and planet_type, ordered by {sortKey} with planet_id as the tie-breaker.'
+      'Return the planet_id, planet_name, and planet_type columns, ordered by {sortKey} with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'Put the exact columns you need after SELECT, separated by commas.',
     scaffoldPlan: PLAN,
@@ -336,9 +336,9 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string, catalog: any) => numericCols(catalog, 'stars').some((column) => column.name === value) }],
     phrasings: [
       'List star_id, star_name, and temperature_k, ordered by {sortKey} and then star_id.',
-      'Return star_id, star_name, and temperature_k from stars in {sortKey} order, tied by star_id.'
+      'Return star_id, star_name, and temperature_k from stars, ordered by {sortKey} with star_id as the tie-breaker.'
     ],
-    hintTemplate: 'The template projects star_name and temperature_k; the emitted query adds the deterministic sort.',
+    hintTemplate: 'ORDER BY {sortKey} sorts the rows; keeping star_id after it makes the order stable when values tie.',
     scaffoldPlan: PLAN,
     gateHints: gate(2, 2, true)
   },
@@ -354,7 +354,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     ],
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => ['mass_earth', 'radius_earth'].includes(value) }],
     phrasings: [
-      'Show the first {topN} planet_id, planet_name, and mass_earth rows after ordering by {sortKey} and then planet_id.',
+      'Show the first {topN} rows of planet_id, planet_name, and mass_earth, ordered by {sortKey} and then planet_id.',
       'Return {topN} rows with planet_id, planet_name, and mass_earth from planets, ordered by {sortKey} with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'LIMIT {topN} keeps only the first {topN} rows of the ordered result.',
@@ -656,7 +656,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'star_id' }],
     phrasings: [
       'Return star_id, name, and light_years from stars, ordered by star_id.',
-      'Alias star_name as name and distance_ly as light_years, with star_id, ordered by star_id.'
+      'Alias star_name as name and distance_ly as light_years, and include star_id, ordered by star_id.'
     ],
     hintTemplate: 'AS changes the output header for a column.',
     scaffoldPlan: PLAN,
@@ -672,7 +672,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'temperature_k' }],
     phrasings: [
       'Return star_id, star_class, and kelvin from stars, ordered by temperature_k and then star_id.',
-      'Alias spectral_type as star_class and temperature_k as kelvin, with star_id, ordered by temperature_k with star_id as the tie-breaker.'
+      'Alias spectral_type as star_class and temperature_k as kelvin, and include star_id, ordered by temperature_k with star_id as the tie-breaker.'
     ],
     hintTemplate: 'AS gives the output column a new name.',
     scaffoldPlan: PLAN,
@@ -688,7 +688,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'planet_id' }],
     phrasings: [
       'Return planet_id, name, and type from planets, ordered by planet_id.',
-      'Alias planet_name as name and planet_type as type, with planet_id, ordered by planet_id.'
+      'Alias planet_name as name and planet_type as type, and include planet_id, ordered by planet_id.'
     ],
     hintTemplate: 'AS changes the column headers in the result.',
     scaffoldPlan: PLAN,
@@ -704,7 +704,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'mass_earth' }],
     phrasings: [
       'Return planet_id, earth_masses, and earth_radii from planets, ordered by mass_earth and then planet_id.',
-      'Alias mass_earth as earth_masses and radius_earth as earth_radii, with planet_id, ordered by mass_earth with planet_id as the tie-breaker.'
+      'Alias mass_earth as earth_masses and radius_earth as earth_radii, and include planet_id, ordered by mass_earth with planet_id as the tie-breaker.'
     ],
     hintTemplate: 'The alias is the output name, not a table change.',
     scaffoldPlan: PLAN,
@@ -720,7 +720,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'facility_id' }],
     phrasings: [
       'Return facility_id and facility_name from facility, ordered by facility_id.',
-      'Alias name as facility_name, with facility_id, ordered by facility_id.'
+      'Alias name as facility_name, and include facility_id, ordered by facility_id.'
     ],
     hintTemplate: 'Use AS to rename name as facility_name.',
     scaffoldPlan: PLAN,
@@ -752,7 +752,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'groupCols', predicate: (value: string) => ['planet_type', 'discovery_method', 'discovery_year', 'facility_id', 'in_habitable_zone'].includes(value) }],
     phrasings: [
       'Return {groupCols} and n by counting planets for each {groupCols}, ordered by {groupCols}.',
-      'Count planets into n for each {groupCols} value, returning {groupCols} and n ordered by {groupCols}.'
+      'For each {groupCols} value, count the planets as n, returning {groupCols} and n ordered by {groupCols}.'
     ],
     hintTemplate: 'GROUP BY {groupCols} creates one bucket per value, then COUNT(*) counts the bucket.',
     scaffoldPlan: PLAN,
@@ -787,7 +787,7 @@ export const APERTURE_TEMPLATES: Template[] = [
     bindingRules: [{ slot: 'groupCols', predicate: (value: string) => ['planet_type', 'discovery_method'].includes(value) }],
     phrasings: [
       'Return the first {topN} grouped rows with {groupCols} and n, ordered by {groupCols}.',
-      'Show {topN} {groupCols} groups with n, ordered by {groupCols}.'
+      'Show the first {topN} {groupCols} groups with their count n, ordered by {groupCols}.'
     ],
     hintTemplate: 'Group first, then keep only {topN} grouped rows.',
     scaffoldPlan: PLAN,

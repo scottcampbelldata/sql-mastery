@@ -252,7 +252,7 @@ const tSelfJoinCompare: Template = {
   slots: [{ name: 'sortKey', kind: 'sortKey', table: 'team' }],
   bindingRules: [{ slot: 'sortKey', predicate: (value: string) => value === 'team_id' }],
   phrasings: [
-    'Find pairs of teams in the same region with equal elo_rating. Return team_id, team_a_name, team_b_name with a.team_id < b.team_id. Order by team_id.',
+    'Find pairs of teams in the same region with equal elo_rating. Return team_id, team_a_name, team_b_name, keeping each pair once with the lower team_id first. Order by team_id.',
     'Self-join team on region_id and elo_rating and return team_id, team_a_name, team_b_name for each pair, ordered by team_id.',
   ],
   hintTemplate: 'Join team to itself; the a.team_id < b.team_id guard removes self-pairs and mirrored duplicates.',
@@ -643,7 +643,7 @@ const joinLeftTemplates: Template[] = [
       'FROM team t LEFT JOIN player p ON p.team_id = t.team_id',
     ...withSort([], 'player', 'team_id'),
     phrasings: [
-      'List teams with rostered players when present as team_id, team_name, player_id, handle, keeping teams without players. Order by team_id, player_id.',
+      'List every team and its rostered players (if any) as team_id, team_name, player_id, handle, keeping teams without players. Order by team_id, player_id.',
       'LEFT JOIN team to player and return team_id, team_name, player_id, handle, ordered by team_id, player_id.',
     ],
     hintTemplate: 'The team table is preserved, so teams with no players keep NULL player columns.',
@@ -658,7 +658,7 @@ const joinLeftTemplates: Template[] = [
       'FROM sponsor s LEFT JOIN team_sponsor ts ON ts.sponsor_id = s.sponsor_id',
     ...withSort([], 'team_sponsor', 'sponsor_id'),
     phrasings: [
-      'List sponsors with team deals when present as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by sponsor_id, team_id, contract_start.',
+      'List every sponsor and its team deals (if any) as sponsor_id, sponsor_name, team_id, contract_start, keeping sponsors with no deals. Order by sponsor_id, team_id, contract_start.',
       'LEFT JOIN sponsor to team_sponsor and return sponsor_id, sponsor_name, team_id, contract_start, ordered by sponsor_id, team_id, contract_start.',
     ],
     hintTemplate: 'Sponsors stay in the result even when no team_sponsor row exists.',
@@ -673,7 +673,7 @@ const joinLeftTemplates: Template[] = [
       'FROM region r LEFT JOIN tournament t ON t.region_id = r.region_id',
     ...withSort([], 'tournament', 'region_id'),
     phrasings: [
-      'List regions with hosted tournaments when present as region_id, region_name, tournament_id, tournament_name. Order by region_id, tournament_id.',
+      'List every region and its hosted tournaments (if any) as region_id, region_name, tournament_id, tournament_name. Order by region_id, tournament_id.',
       'LEFT JOIN region to tournament and return region_id, region_name, tournament_id, tournament_name, ordered by region_id, tournament_id.',
     ],
     hintTemplate: 'A LEFT JOIN from region keeps every region even if the tournament side is missing.',
@@ -688,7 +688,7 @@ const joinLeftTemplates: Template[] = [
       'FROM team t LEFT JOIN team_sponsor ts ON ts.team_id = t.team_id AND ts.contract_end IS NULL',
     ...withSort([], 'team_sponsor', 'team_id'),
     phrasings: [
-      'List teams with active sponsor deals when present as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by team_id, sponsor_id, contract_start.',
+      'List every team and its active sponsor deals (if any) as team_id, team_name, sponsor_id, contract_start, keeping teams with no active sponsor. Order by team_id, sponsor_id, contract_start.',
       'LEFT JOIN team to active team_sponsor rows and return team_id, team_name, sponsor_id, contract_start, ordered by team_id, sponsor_id, contract_start.',
     ],
     hintTemplate: 'Put contract_end IS NULL inside the ON clause so teams without active sponsors are still kept.',
