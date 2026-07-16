@@ -57,13 +57,43 @@ export function deepMerge(a: any, b: any): any {
   return b;
 }
 
+const LEARNING_KEY = 'sqlm:learning:v1';
+const RESET_SCOPED_FIELDS = ['skillCorrect', 'reviewsPassed', 'lastPracticedSession'] as const;
+
+// The learning state needs one rule the generic union merge cannot express: a lesson reset.
+// Each reset bumps skillResets[skill]; when the epochs differ, the side with the higher
+// epoch wins that skill's progress wholesale (typically: none, right after the reset), so
+// the reset propagates instead of being resurrected by the union. Equal epochs merge
+// loss-free exactly as before.
+export function mergeLearningState(a: any, b: any): any {
+  const merged = deepMerge(a, b);
+  const skills = new Set([...Object.keys(a?.skillResets || {}), ...Object.keys(b?.skillResets || {})]);
+  if (!skills.size) return merged;
+  merged.skillResets = { ...(merged.skillResets || {}) };
+  for (const skill of skills) {
+    const epochA = (a?.skillResets || {})[skill] || 0;
+    const epochB = (b?.skillResets || {})[skill] || 0;
+    merged.skillResets[skill] = Math.max(epochA, epochB);
+    if (epochA === epochB) continue;
+    const winner = epochA > epochB ? a : b;
+    for (const field of RESET_SCOPED_FIELDS) {
+      if (!merged[field]) continue;
+      const kept = winner?.[field]?.[skill];
+      if (kept === undefined) delete merged[field][skill];
+      else merged[field][skill] = kept;
+    }
+  }
+  return merged;
+}
+
 function mergeValue(key: string, local: string | null, remote: string | null): string | null {
   if (local == null) return remote;
   if (remote == null) return local;
   if (local === remote) return local;
   if (SYNCED_JSON.has(key)) {
     try {
-      return JSON.stringify(deepMerge(JSON.parse(local), JSON.parse(remote)));
+      const merge = key === LEARNING_KEY ? mergeLearningState : deepMerge;
+      return JSON.stringify(merge(JSON.parse(local), JSON.parse(remote)));
     } catch {
       return local;
     }
@@ -85,6 +115,11 @@ function applyMerged(merged: Record<string, string | null>): boolean {
       safeSet(key, value);
       changed = true;
     }
+  }
+  // Tell live views the stored state moved under them, so a pulled sync shows up without
+  // a manual reload (FoundationsContext re-reads on this event).
+  if (changed && typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('sqlm:learning-updated'));
   }
   return changed;
 }

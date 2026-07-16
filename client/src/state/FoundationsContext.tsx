@@ -23,6 +23,14 @@ export function FoundationsProvider({ children }: FoundationsProviderProps) {
   const { curriculum } = useCurriculum();
   const [state, setState] = useState<LearningState>(loadLearning);
 
+  // A pulled sync rewrites the stored state behind React's back; re-read it so the UI
+  // reflects the merged progress without a manual reload.
+  useEffect(() => {
+    const refresh = () => setState(loadLearning());
+    window.addEventListener('sqlm:learning-updated', refresh);
+    return () => window.removeEventListener('sqlm:learning-updated', refresh);
+  }, []);
+
   const update = useCallback((mutate: (next: LearningState) => void) => {
     setState((prev) => {
       const next = {

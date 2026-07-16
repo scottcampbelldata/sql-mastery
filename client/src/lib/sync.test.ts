@@ -1,6 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
-import { collectProgress, deepMerge, mergeProgress, syncNow } from './sync';
+import { collectProgress, deepMerge, mergeProgress, mergeLearningState, syncNow } from './sync';
+import { resetConcept } from './foundations';
 import * as apiModule from './api';
+import type { LearningState } from '../types';
 
 describe('deepMerge (monotonic)', () => {
   it('takes the max of numbers', () => {
@@ -39,6 +41,44 @@ describe('learning progress sync', () => {
     expect(merged.skillCorrect.b).toEqual(['b1']);
     expect(merged.attempts).toEqual({ e1: 5 });
     expect(merged.checkpointsPassed.sort()).toEqual(['cpA', 'cpB']);
+  });
+
+  it('propagates a lesson reset: the higher reset epoch voids the other side\'s progress', async () => {
+    const before = { skillCorrect: { a: ['a1', 'a2'], b: ['b1'] }, reviewsPassed: { a: 2, b: 1 }, lastPracticedSession: { a: 4, b: 4 } };
+    const afterReset = { skillCorrect: { b: ['b1'] }, reviewsPassed: { b: 1 }, lastPracticedSession: { b: 4 }, skillResets: { a: 1 } };
+
+    // Both directions: whichever side carries the newer epoch for skill a wins skill a wholesale.
+    for (const merged of [mergeLearningState(before, afterReset), mergeLearningState(afterReset, before)]) {
+      expect(merged.skillCorrect.a).toBeUndefined();
+      expect(merged.reviewsPassed.a).toBeUndefined();
+      expect(merged.lastPracticedSession.a).toBeUndefined();
+      expect(merged.skillCorrect.b).toEqual(['b1']); // untouched skill still unions
+      expect(merged.skillResets.a).toBe(1);
+    }
+  });
+
+  it('progress earned after the reset survives; equal epochs still merge loss-free', async () => {
+    const stale = { skillCorrect: { a: ['old1', 'old2'] }, reviewsPassed: {}, lastPracticedSession: {} };
+    const resetThenPracticed = { skillCorrect: { a: ['new1'] }, reviewsPassed: {}, lastPracticedSession: { a: 9 }, skillResets: { a: 1 } };
+    const merged = mergeLearningState(stale, resetThenPracticed);
+    expect(merged.skillCorrect.a).toEqual(['new1']);
+    expect(merged.lastPracticedSession.a).toBe(9);
+
+    const sameEpochA = { skillCorrect: { a: ['x1'] }, skillResets: { a: 1 } };
+    const sameEpochB = { skillCorrect: { a: ['x2'] }, skillResets: { a: 1 } };
+    expect(mergeLearningState(sameEpochA, sameEpochB).skillCorrect.a.sort()).toEqual(['x1', 'x2']);
+  });
+
+  it('resetConcept bumps the synced epoch alongside clearing local progress', () => {
+    const state = {
+      skillCorrect: { a: ['a1'] }, attempts: {}, lastSql: {}, lastPracticedSession: { a: 3 },
+      checkpointsPassed: [], sessionCounter: 5, reviewsPassed: { a: 1 }, maxUnlockedOrder: 4
+    } as LearningState;
+    resetConcept(state, 'a');
+    expect(state.skillCorrect.a).toBeUndefined();
+    expect(state.skillResets).toEqual({ a: 1 });
+    resetConcept(state, 'a');
+    expect(state.skillResets).toEqual({ a: 2 });
   });
 
   it('syncNow merges account progress into local and pushes the union', async () => {
