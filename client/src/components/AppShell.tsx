@@ -76,8 +76,15 @@ export function AppShell({ children, breadcrumb }: AppShellProps) {
       <aside id="app-sidebar" className="sidebar">
         <div className="brand">
           <Link to="/" className="brand-mark">SQL<span>/</span>Mastery</Link>
-          <button className="collapse-btn" onClick={toggle} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
-            {collapsed ? '>>' : '<<'}
+          <button className="collapse-btn" onClick={toggle}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+              style={{ transform: collapsed ? 'rotate(180deg)' : 'none' }}>
+              <rect x="3" y="4" width="18" height="16" rx="2" />
+              <path d="M9 4v16" />
+              <path d="M16 9l-2 3 2 3" />
+            </svg>
           </button>
         </div>
         <nav className="side-nav">
