@@ -359,7 +359,10 @@ test('CORS reflects allowed origins, answers preflight, and ignores others', asy
       headers: { origin: 'https://sql-mastery.pages.dev' }
     });
     assert.equal(preflight.status, 204);
-    assert.match(preflight.headers.get('access-control-allow-methods') || '', /POST/);
+    const methods = preflight.headers.get('access-control-allow-methods') || '';
+    assert.match(methods, /POST/);
+    // PUT must be allowed or cross-origin progress sync (PUT /api/progress) is blocked.
+    assert.match(methods, /PUT/);
 
     // A non-allowlisted origin gets no CORS header.
     const blocked = await fetch(`${baseUrl}/api/databases`, {

@@ -41,7 +41,9 @@ function createApp(options: any = {}) {
     if (origin && (allowedOrigins.includes('*') || allowedOrigins.includes(origin))) {
       response.setHeader('Access-Control-Allow-Origin', origin);
       response.setHeader('Vary', 'Origin');
-      response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      // PUT is required: cross-device progress sync saves via PUT /api/progress. Without it
+      // the browser's preflight blocks the save and sync silently does nothing.
+      response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
       response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
       response.setHeader('Access-Control-Max-Age', '86400');
     }
