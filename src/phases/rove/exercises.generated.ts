@@ -10,7 +10,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Canonicalize payment method text for city 4: map cc, credit, and credit card to credit_card, map applepay and apple pay to apple_pay, and keep other methods lowercased and trimmed. Return columns: payment_id, order_id, canonical_method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -19,12 +19,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 4",
           "__BLANK_3__": "payment_id",
@@ -32,7 +32,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 4 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -52,7 +52,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Canonicalize payment method text for city 8: map cc, credit, and credit card to credit_card, map applepay and apple pay to apple_pay, and keep other methods lowercased and trimmed. Return columns: payment_id, order_id, canonical_method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -61,12 +61,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 8",
           "__BLANK_3__": "payment_id",
@@ -74,7 +74,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 8 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -94,7 +94,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Canonicalize payment method text for city 2: map cc, credit, and credit card to credit_card, map applepay and apple pay to apple_pay, and keep other methods lowercased and trimmed. Return columns: payment_id, order_id, canonical_method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -103,12 +103,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 2",
           "__BLANK_3__": "payment_id",
@@ -116,7 +116,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 2 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -136,7 +136,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, return payment_id, order_id, and canonical_method: cc, credit, and credit card become credit_card; applepay and apple pay become apple_pay; anything else stays as the lowercased trimmed method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -145,12 +145,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 3",
           "__BLANK_3__": "payment_id",
@@ -158,7 +158,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 3 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -178,7 +178,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, return payment_id, order_id, and canonical_method: cc, credit, and credit card become credit_card; applepay and apple pay become apple_pay; anything else stays as the lowercased trimmed method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -187,12 +187,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 5",
           "__BLANK_3__": "payment_id",
@@ -200,7 +200,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 5 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -220,7 +220,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Canonicalize payment method text for city 6: map cc, credit, and credit card to credit_card, map applepay and apple pay to apple_pay, and keep other methods lowercased and trimmed. Return columns: payment_id, order_id, canonical_method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -229,12 +229,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 6",
           "__BLANK_3__": "payment_id",
@@ -242,7 +242,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 6 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -262,7 +262,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, return payment_id, order_id, and canonical_method: cc, credit, and credit card become credit_card; applepay and apple pay become apple_pay; anything else stays as the lowercased trimmed method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 7 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 7 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 7 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -271,12 +271,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 7",
           "__BLANK_3__": "payment_id",
@@ -284,7 +284,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 7 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 7 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -304,7 +304,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, return payment_id, order_id, and canonical_method: cc, credit, and credit card become credit_card; applepay and apple pay become apple_pay; anything else stays as the lowercased trimmed method. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY payment_id LIMIT 200",
+        "full": "SELECT\n  p.payment_id, p.order_id, __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY payment_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -313,12 +313,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method"
         },
         "half": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payment_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
+          "__BLANK_0__": "p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method",
           "__BLANK_1__": "payments p\nJOIN orders o ON o.order_id = p.order_id",
           "__BLANK_2__": "o.city_id = 1",
           "__BLANK_3__": "payment_id",
@@ -326,7 +326,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Lowercase and trim first, then map synonym groups with a CASE ladder.",
-      "expectedSql": "SELECT\n  p.payment_id AS payment_id, p.order_id AS order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  p.payment_id, p.order_id, CASE\n    WHEN LOWER(TRIM(p.method)) IN ('cc', 'credit', 'credit card') THEN 'credit_card'\n    WHEN LOWER(TRIM(p.method)) IN ('applepay', 'apple pay') THEN 'apple_pay'\n    ELSE LOWER(TRIM(p.method))\n  END AS canonical_method FROM payments p\nJOIN orders o ON o.order_id = p.order_id\nWHERE o.city_id = 1 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -348,7 +348,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a clean layer over non-deleted customers, mapping statuses delivered and complete to delivered, and report city_id, order_count, and delivered_orders. Order by: city_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  canon.city_id AS city_id, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY city_id LIMIT 200",
+        "full": "SELECT\n  canon.city_id, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY city_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -358,12 +358,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders",
+          "__BLANK_0__": "canon.city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders",
           "__BLANK_1__": "city_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders",
+          "__BLANK_0__": "canon.city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders",
           "__BLANK_1__": "(\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon",
           "__BLANK_2__": "canon.city_id",
           "__BLANK_3__": "city_id",
@@ -371,7 +371,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "The clean layer filters customers before the city rollup.",
-      "expectedSql": "SELECT\n  canon.city_id AS city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY city_id LIMIT 200",
+      "expectedSql": "SELECT\n  canon.city_id, COUNT(*) AS order_count, COUNT(*) FILTER (WHERE canon.status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.city_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status\n  FROM orders o\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nGROUP BY canon.city_id ORDER BY city_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -391,7 +391,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a clean active-merchant order layer and report category, order_count, and gross_cents. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  canon.category AS category, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY category LIMIT 200",
+        "full": "SELECT\n  canon.category, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY category LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -401,12 +401,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "SUM(canon.amount_cents) AS gross_cents"
         },
         "half": {
-          "__BLANK_0__": "canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
+          "__BLANK_0__": "canon.category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
           "__BLANK_1__": "category",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
+          "__BLANK_0__": "canon.category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
           "__BLANK_1__": "(\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon",
           "__BLANK_2__": "canon.category",
           "__BLANK_3__": "category",
@@ -414,7 +414,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Join active merchants and valid customers before grouping normalized category.",
-      "expectedSql": "SELECT\n  canon.category AS category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  canon.category, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    LOWER(TRIM(m.category)) AS category,\n    o.amount_cents\n  FROM orders o\n  JOIN merchants m ON m.merchant_id = o.merchant_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false AND m.is_active = true\n) canon\nGROUP BY canon.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -434,7 +434,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a valid-customer payment layer, deduplicate by order, and report method, payment_count, and amount_cents. Order by: method. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  canon.method AS method, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY method LIMIT 200",
+        "full": "SELECT\n  canon.method, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY method LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -444,13 +444,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "SUM(canon.amount_cents) AS amount_cents"
         },
         "half": {
-          "__BLANK_0__": "canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents",
+          "__BLANK_0__": "canon.method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents",
           "__BLANK_1__": "canon.method",
           "__BLANK_2__": "method",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents",
+          "__BLANK_0__": "canon.method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents",
           "__BLANK_1__": "(\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon",
           "__BLANK_2__": "canon.payment_id = canon.chosen_payment_id",
           "__BLANK_3__": "canon.method",
@@ -459,7 +459,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter to valid customers and rn = 1 before grouping payment methods.",
-      "expectedSql": "SELECT\n  canon.method AS method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY method LIMIT 200",
+      "expectedSql": "SELECT\n  canon.method, COUNT(*) AS payment_count, SUM(canon.amount_cents) AS amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  JOIN customers c ON c.customer_id = o.customer_id\n  WHERE c.is_deleted = false\n) canon\nWHERE canon.payment_id = canon.chosen_payment_id\nGROUP BY canon.method ORDER BY method LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -479,7 +479,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a clean layer with non-deleted customers and one payment per order, mapping statuses delivered and complete to delivered, then report status, order_count, and gross_cents. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  canon.status AS status, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  canon.status, __BLANK_0__, __BLANK_1__ FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -489,12 +489,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "SUM(canon.amount_cents) AS gross_cents"
         },
         "half": {
-          "__BLANK_0__": "canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
+          "__BLANK_0__": "canon.status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
           "__BLANK_1__": "status",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
+          "__BLANK_0__": "canon.status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents",
           "__BLANK_1__": "(\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon",
           "__BLANK_2__": "canon.status",
           "__BLANK_3__": "status",
@@ -502,7 +502,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Stack valid customers, one payment per order, and canonical status before grouping.",
-      "expectedSql": "SELECT\n  canon.status AS status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  canon.status, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents FROM (\n  SELECT\n    o.order_id,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS status,\n    dp.amount_cents\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT picked.order_id, picked.amount_cents\n    FROM (\n      SELECT p.order_id, p.payment_id, p.amount_cents, MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n      FROM payments p\n    ) picked\n    WHERE picked.payment_id = picked.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -522,7 +522,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Stack clean-layer subqueries (one payment per order; statuses delivered and complete both count as delivered) and report merchant_id, order_count, gross_cents, delivered_orders. Order by: merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  canon.merchant_id AS merchant_id, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY merchant_id LIMIT 200",
+        "full": "SELECT\n  canon.merchant_id, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY merchant_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -533,12 +533,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "canon.merchant_id AS merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders",
+          "__BLANK_0__": "canon.merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders",
           "__BLANK_1__": "merchant_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "canon.merchant_id AS merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders",
+          "__BLANK_0__": "canon.merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders",
           "__BLANK_1__": "(\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon",
           "__BLANK_2__": "canon.merchant_id",
           "__BLANK_3__": "merchant_id",
@@ -546,7 +546,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Compose the trusted layer from valid customers, one payment per order, and canonical status, then aggregate the bounded city slice.",
-      "expectedSql": "SELECT\n  canon.merchant_id AS merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  canon.merchant_id, COUNT(*) AS order_count, SUM(canon.amount_cents) AS gross_cents, COUNT(*) FILTER (WHERE canon.clean_status = 'delivered') AS delivered_orders FROM (\n  SELECT\n    o.order_id,\n    o.merchant_id,\n    dp.amount_cents,\n    CASE\n      WHEN LOWER(TRIM(o.status)) IN ('delivered', 'complete') THEN 'delivered'\n      ELSE LOWER(TRIM(o.status))\n    END AS clean_status\n  FROM orders o\n  JOIN (SELECT customer_id FROM customers WHERE is_deleted = false) valid_customers\n    ON valid_customers.customer_id = o.customer_id\n  JOIN (\n    SELECT\n      chosen.order_id,\n      chosen.amount_cents\n    FROM (\n      SELECT\n        p.order_id,\n        p.amount_cents,\n        MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n        p.payment_id\n      FROM payments p\n    ) chosen\n    WHERE chosen.payment_id = chosen.chosen_payment_id\n  ) dp ON dp.order_id = o.order_id\n) canon\nGROUP BY canon.merchant_id ORDER BY merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -569,8 +569,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER to keep one active courier row per cleaned phone number in city 5. Return columns: courier_id, phone_digits. Order by: courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  ranked.courier_id, ranked.phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  ranked.courier_id, ranked.phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -583,7 +583,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits",
+          "__BLANK_0__": "ranked.courier_id, ranked.phone_digits",
           "__BLANK_1__": "(\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked",
           "__BLANK_2__": "rn = 1",
           "__BLANK_3__": "courier_id",
@@ -591,7 +591,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Clean the phone number before partitioning, keep rn = 1, and return the stable chosen courier_id.",
-      "expectedSql": "SELECT\n  ranked.courier_id AS courier_id, ranked.phone_digits AS phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  ranked.courier_id, ranked.phone_digits FROM (\n  SELECT\n    MIN(c.courier_id) OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS courier_id,\n    REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits,\n    ROW_NUMBER() OVER (PARTITION BY REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g')) AS rn\n  FROM couriers c\n  WHERE c.home_city_id = 5 AND c.status = 'active' AND c.phone IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -610,8 +610,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER to keep one order_placed event per customer and session in city 15. Return columns: event_id, customer_id, session_id, event_type. Order by: event_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE __BLANK_0__ ORDER BY event_id LIMIT 200",
-        "half": "SELECT\n  ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  ranked.event_id, ranked.customer_id, ranked.session_id, ranked.event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE __BLANK_0__ ORDER BY event_id LIMIT 200",
+        "half": "SELECT\n  ranked.event_id, ranked.customer_id, ranked.session_id, ranked.event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -624,7 +624,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type",
+          "__BLANK_0__": "ranked.event_id, ranked.customer_id, ranked.session_id, ranked.event_type",
           "__BLANK_1__": "(\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked",
           "__BLANK_2__": "rn = 1",
           "__BLANK_3__": "event_id",
@@ -632,7 +632,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Partition by the natural duplicate key, keep rn = 1, and return the stable chosen event_id.",
-      "expectedSql": "SELECT\n  ranked.event_id AS event_id, ranked.customer_id AS customer_id, ranked.session_id AS session_id, ranked.event_type AS event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE rn = 1 ORDER BY event_id LIMIT 200",
+      "expectedSql": "SELECT\n  ranked.event_id, ranked.customer_id, ranked.session_id, ranked.event_type FROM (\n  SELECT\n    MIN(e.event_id) OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS event_id,\n    e.customer_id,\n    e.session_id,\n    e.event_type,\n    ROW_NUMBER() OVER (PARTITION BY e.customer_id, e.session_id, e.event_type) AS rn\n  FROM event_log e\n  WHERE e.city_id = 15 AND e.event_type = 'order_placed'\n) ranked\nWHERE rn = 1 ORDER BY event_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -653,8 +653,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER to keep one customer row per cleaned email in city 15. Return columns: customer_id, email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  ranked.customer_id AS customer_id, ranked.email AS email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY customer_id LIMIT 200",
-        "half": "SELECT\n  ranked.customer_id AS customer_id, ranked.email AS email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  ranked.customer_id, ranked.email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY customer_id LIMIT 200",
+        "half": "SELECT\n  ranked.customer_id, ranked.email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -667,7 +667,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "ranked.customer_id AS customer_id, ranked.email AS email",
+          "__BLANK_0__": "ranked.customer_id, ranked.email",
           "__BLANK_1__": "(\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked",
           "__BLANK_2__": "rn = 1",
           "__BLANK_3__": "customer_id",
@@ -675,7 +675,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Normalize email inside the partition expression, keep rn = 1, and return the stable chosen customer_id.",
-      "expectedSql": "SELECT\n  ranked.customer_id AS customer_id, ranked.email AS email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  ranked.customer_id, ranked.email FROM (\n  SELECT\n    MIN(c.customer_id) OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS customer_id,\n    LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', ''))) AS email,\n    ROW_NUMBER() OVER (PARTITION BY LOWER(TRIM(REGEXP_REPLACE(COALESCE(c.email, ''), '^mailto:', '')))) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.email IS NOT NULL\n) ranked\nWHERE rn = 1 ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -694,8 +694,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Deduplicate customers in city 15 with ROW_NUMBER over master_customer_id and keep rn = 1. Return columns: master_customer_id, customer_id. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE __BLANK_0__ ORDER BY customer_id LIMIT 200",
-        "half": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  deduped.master_customer_id, deduped.customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE __BLANK_0__ ORDER BY customer_id LIMIT 200",
+        "half": "SELECT\n  deduped.master_customer_id, deduped.customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -708,7 +708,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id",
+          "__BLANK_0__": "deduped.master_customer_id, deduped.customer_id",
           "__BLANK_1__": "(\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped",
           "__BLANK_2__": "rn = 1",
           "__BLANK_3__": "customer_id",
@@ -716,7 +716,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use ROW_NUMBER() OVER (PARTITION BY master_customer_id), keep rn = 1, and return the stable chosen customer_id.",
-      "expectedSql": "SELECT\n  deduped.master_customer_id AS master_customer_id, deduped.customer_id AS customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE rn = 1 ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  deduped.master_customer_id, deduped.customer_id FROM (\n  SELECT\n    c.master_customer_id,\n    MIN(c.customer_id) OVER (PARTITION BY c.master_customer_id) AS customer_id,\n    ROW_NUMBER() OVER (PARTITION BY c.master_customer_id) AS rn\n  FROM customers c\n  WHERE c.signup_city_id = 15 AND c.is_deleted = false\n) deduped\nWHERE rn = 1 ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -735,8 +735,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Keep one representative payment_id per order in order_id range 259100-259199. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  ranked.order_id, ranked.payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  ranked.order_id, ranked.payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -749,7 +749,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "ranked.order_id AS order_id, ranked.payment_id AS payment_id",
+          "__BLANK_0__": "ranked.order_id, ranked.payment_id",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked",
           "__BLANK_2__": "rn = 1",
           "__BLANK_3__": "payment_id",
@@ -757,7 +757,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Partition by order_id, number each retry group, keep rn = 1, and return the stable chosen payment_id.",
-      "expectedSql": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  ranked.order_id, ranked.payment_id FROM (\n  SELECT\n    p.order_id,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS payment_id,\n    ROW_NUMBER() OVER (PARTITION BY p.order_id) AS rn\n  FROM payments p\n  WHERE p.order_id >= 259100 AND p.order_id < 259200\n) ranked\nWHERE rn = 1 ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -778,7 +778,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -787,12 +787,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -800,7 +800,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 3\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -819,7 +819,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure funnel drop-off in city 6: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -828,12 +828,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -841,7 +841,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 6\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -860,7 +860,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure funnel drop-off in city 4: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -869,12 +869,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -882,7 +882,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 4\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -901,7 +901,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -910,12 +910,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -923,7 +923,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 5\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -942,7 +942,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -951,12 +951,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -964,7 +964,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 7\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -983,7 +983,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, count reached_customers at each funnel event_type from app_open to order_placed. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -992,12 +992,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -1005,7 +1005,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 1\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1024,7 +1024,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure funnel drop-off in city 2: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -1033,12 +1033,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -1046,7 +1046,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 2\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1065,7 +1065,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure funnel drop-off in city 8: distinct customers per event_type step. Return columns: event_type, reached_customers. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__ FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -1074,12 +1074,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "COUNT(DISTINCT e.customer_id) AS reached_customers"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
+          "__BLANK_0__": "e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')",
           "__BLANK_3__": "e.event_type",
@@ -1087,7 +1087,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COUNT(DISTINCT customer_id) per event_type gives the funnel width at each step.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(DISTINCT e.customer_id) AS reached_customers FROM event_log e\nWHERE e.city_id = 8\n  AND e.event_type IN ('app_open', 'view_merchant', 'add_to_cart', 'checkout_start', 'order_placed')\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1108,7 +1108,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-02T02:17:04.000Z, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1117,12 +1117,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1130,7 +1130,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1152,7 +1152,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-01T21:12:07.000Z, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1161,12 +1161,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1174,7 +1174,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1196,7 +1196,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute an order amount delta for city 1 using LAG within the 30 days starting 2020-01-03T02:16:38.000Z. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1205,12 +1205,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1218,7 +1218,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1240,7 +1240,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-02T16:56:31.000Z, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1249,12 +1249,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1262,7 +1262,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1284,7 +1284,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute an order amount delta for city 1 using LAG within the 30 days starting 2020-01-02T06:48:22.000Z. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1293,12 +1293,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1306,7 +1306,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1328,7 +1328,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute an order amount delta for city 1 using LAG within the 30 days starting 2020-01-02T22:39:14.000Z. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1337,12 +1337,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1350,7 +1350,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1372,7 +1372,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute an order amount delta for city 1 using LAG within the 30 days starting 2020-01-02T01:55:27.000Z. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1381,12 +1381,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1394,7 +1394,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1416,7 +1416,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-03T01:21:56.000Z, return order_id, placed_at, amount_cents, and amount_delta_cents. Return columns: order_id, city_id, placed_at, amount_cents, amount_delta_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -1425,12 +1425,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -1438,7 +1438,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LAG(amount_cents) pulls another row from the same city partition so the current row can subtract it.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, o.amount_cents - LAG(o.amount_cents) OVER (PARTITION BY o.city_id) AS amount_delta_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -1462,7 +1462,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1472,13 +1472,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1487,7 +1487,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 1 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1507,7 +1507,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1517,13 +1517,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 7 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1532,7 +1532,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 7 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1552,7 +1552,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 4. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1562,13 +1562,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 4 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1577,7 +1577,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 4 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1597,7 +1597,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 6. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1607,13 +1607,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 6 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1622,7 +1622,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 6 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1642,7 +1642,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1652,13 +1652,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 3 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1667,7 +1667,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 3 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1687,7 +1687,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report status, avg_approve_to_active_seconds, and activated_couriers for couriers with activation timestamps. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.status AS status, __BLANK_0__, __BLANK_1__ FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  c.status, __BLANK_0__, __BLANK_1__ FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1697,13 +1697,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS activated_couriers"
         },
         "half": {
-          "__BLANK_0__": "c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers",
+          "__BLANK_0__": "c.status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers",
           "__BLANK_1__": "c.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers",
+          "__BLANK_0__": "c.status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL",
           "__BLANK_3__": "c.status",
@@ -1712,7 +1712,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter out NULL lifecycle endpoints before subtracting timestamps.",
-      "expectedSql": "SELECT\n  c.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  c.status, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds, COUNT(*) AS activated_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL AND c.activated_at IS NOT NULL\nGROUP BY c.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1732,7 +1732,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 8. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1742,13 +1742,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 8 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1757,7 +1757,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 8 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1777,7 +1777,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Measure order lifecycle latency from placed_at to delivered_at by status in city 2. Return columns: status, avg_place_to_deliver_seconds, delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1787,13 +1787,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 2 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1802,7 +1802,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 2 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1822,7 +1822,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report home_city_id, avg_apply_to_approve_seconds, and approved_couriers for approved couriers. Order by: home_city_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.home_city_id AS home_city_id, __BLANK_0__, __BLANK_1__ FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY home_city_id LIMIT 200",
+        "full": "SELECT\n  c.home_city_id, __BLANK_0__, __BLANK_1__ FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY home_city_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1832,13 +1832,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS approved_couriers"
         },
         "half": {
-          "__BLANK_0__": "c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers",
+          "__BLANK_0__": "c.home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers",
           "__BLANK_1__": "c.home_city_id",
           "__BLANK_2__": "home_city_id",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers",
+          "__BLANK_0__": "c.home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.approved_at IS NOT NULL",
           "__BLANK_3__": "c.home_city_id",
@@ -1847,7 +1847,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Subtract applied_at from approved_at and extract epoch seconds before averaging.",
-      "expectedSql": "SELECT\n  c.home_city_id AS home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY home_city_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.home_city_id, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, COUNT(*) AS approved_couriers FROM couriers c\nWHERE c.approved_at IS NOT NULL\nGROUP BY c.home_city_id ORDER BY home_city_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1867,7 +1867,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, report status, avg_place_to_deliver_seconds, and delivered_orders. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1877,13 +1877,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.status",
           "__BLANK_2__": "status",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 5 AND o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.status",
@@ -1892,7 +1892,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to a city, filter delivered_at, then average elapsed delivery seconds.",
-      "expectedSql": "SELECT\n  o.status AS status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, ROUND(AVG(EXTRACT(EPOCH FROM o.delivered_at - o.placed_at)), 2) AS avg_place_to_deliver_seconds, COUNT(*) AS delivered_orders FROM orders o\nWHERE o.city_id = 5 AND o.delivered_at IS NOT NULL\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1912,7 +1912,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report priority plus avg_first_response_seconds and avg_resolution_seconds for valid support tickets. Order by: priority. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.priority AS priority, __BLANK_0__, __BLANK_1__ FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY priority LIMIT 200",
+        "full": "SELECT\n  t.priority, __BLANK_0__, __BLANK_1__ FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY priority LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1922,13 +1922,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds"
         },
         "half": {
-          "__BLANK_0__": "t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds",
+          "__BLANK_0__": "t.priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds",
           "__BLANK_1__": "t.priority",
           "__BLANK_2__": "priority",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds",
+          "__BLANK_0__": "t.priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds",
           "__BLANK_1__": "support_tickets t",
           "__BLANK_2__": "t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false",
           "__BLANK_3__": "t.priority",
@@ -1937,7 +1937,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Timestamp subtraction works for support lifecycles too; filter NULL endpoints first.",
-      "expectedSql": "SELECT\n  t.priority AS priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY priority LIMIT 200",
+      "expectedSql": "SELECT\n  t.priority, ROUND(AVG(EXTRACT(EPOCH FROM t.first_response_at - t.opened_at)), 2) AS avg_first_response_seconds, ROUND(AVG(EXTRACT(EPOCH FROM t.resolved_at - t.opened_at)), 2) AS avg_resolution_seconds FROM support_tickets t\nWHERE t.first_response_at IS NOT NULL AND t.resolved_at IS NOT NULL AND t.is_deleted = false\nGROUP BY t.priority ORDER BY priority LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1957,7 +1957,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report vehicle_type plus average apply-to-approve and approve-to-active seconds. Return columns: vehicle_type, avg_apply_to_approve_seconds, avg_approve_to_active_seconds. Order by: vehicle_type. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.vehicle_type AS vehicle_type, __BLANK_0__, __BLANK_1__ FROM couriers c\nWHERE c.approved_at IS NOT NULL\n  AND c.activated_at IS NOT NULL\nGROUP BY c.vehicle_type ORDER BY vehicle_type LIMIT 200",
+        "full": "SELECT\n  c.vehicle_type, __BLANK_0__, __BLANK_1__ FROM couriers c\nWHERE c.approved_at IS NOT NULL\n  AND c.activated_at IS NOT NULL\nGROUP BY c.vehicle_type ORDER BY vehicle_type LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.approved_at IS NOT NULL\n  AND c.activated_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
@@ -1967,13 +1967,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds"
         },
         "half": {
-          "__BLANK_0__": "c.vehicle_type AS vehicle_type, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds",
+          "__BLANK_0__": "c.vehicle_type, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds",
           "__BLANK_1__": "c.vehicle_type",
           "__BLANK_2__": "vehicle_type",
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.vehicle_type AS vehicle_type, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds",
+          "__BLANK_0__": "c.vehicle_type, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.approved_at IS NOT NULL\n  AND c.activated_at IS NOT NULL",
           "__BLANK_3__": "c.vehicle_type",
@@ -1982,7 +1982,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Subtract timestamps, extract epoch seconds, filter NULL stamps, then average per vehicle_type.",
-      "expectedSql": "SELECT\n  c.vehicle_type AS vehicle_type, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds FROM couriers c\nWHERE c.approved_at IS NOT NULL\n  AND c.activated_at IS NOT NULL\nGROUP BY c.vehicle_type ORDER BY vehicle_type LIMIT 200",
+      "expectedSql": "SELECT\n  c.vehicle_type, ROUND(AVG(EXTRACT(EPOCH FROM c.approved_at - c.applied_at)), 2) AS avg_apply_to_approve_seconds, ROUND(AVG(EXTRACT(EPOCH FROM c.activated_at - c.approved_at)), 2) AS avg_approve_to_active_seconds FROM couriers c\nWHERE c.approved_at IS NOT NULL\n  AND c.activated_at IS NOT NULL\nGROUP BY c.vehicle_type ORDER BY vehicle_type LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2004,7 +2004,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2013,12 +2013,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2026,7 +2026,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 4\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2045,7 +2045,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2054,12 +2054,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2067,7 +2067,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 2\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2086,7 +2086,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Strip currency symbols from order_total_legacy in city 3 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2095,12 +2095,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2108,7 +2108,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 3\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2127,7 +2127,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Strip currency symbols from order_total_legacy in city 5 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2136,12 +2136,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2149,7 +2149,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 5\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2168,7 +2168,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Strip currency symbols from order_total_legacy in city 1 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2177,12 +2177,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2190,7 +2190,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 1\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2209,7 +2209,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2218,12 +2218,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2231,7 +2231,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 6\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2250,7 +2250,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Strip currency symbols from order_total_legacy in city 7 and cast the result to numeric. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2259,12 +2259,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2272,7 +2272,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 7\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2291,7 +2291,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, parse order_total_legacy into numeric legacy_dollars for rows containing a number. Return columns: order_id, legacy_dollars. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__ FROM orders o\nWHERE o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2300,12 +2300,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
+          "__BLANK_0__": "o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]'",
           "__BLANK_3__": "order_id",
@@ -2313,7 +2313,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(text, '[^0-9.]', '', 'g') keeps digits and decimal points before the cast.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, REGEXP_REPLACE(o.order_total_legacy, '[^0-9.]', '', 'g')::numeric AS legacy_dollars FROM orders o\nWHERE o.city_id = 8\n  AND NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') IS NOT NULL\n  AND o.order_total_legacy ~ '[0-9]' ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2334,7 +2334,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, build a dense 30-day date spine starting 2020-01-02T06:48:22.000Z and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T06:48:22.000Z'::date, '2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T06:48:22.000Z'::date AND ('2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T06:48:22.000Z'::date, '2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T06:48:22.000Z'::date AND ('2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-02T06:48:22.000Z'::date, '2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T06:48:22.000Z'::date AND ('2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2346,17 +2346,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-02T06:48:22.000Z'::date, '2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T06:48:22.000Z'::date AND ('2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T06:48:22.000Z'::date, '2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T06:48:22.000Z'::date AND ('2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T06:48:22.000Z'::date, '2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T06:48:22.000Z'::date AND ('2020-01-02T06:48:22.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2378,7 +2378,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute a framed moving average over a gap-free 30-day spine starting 2020-01-02T16:56:31.000Z for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T16:56:31.000Z'::date, '2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T16:56:31.000Z'::date AND ('2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T16:56:31.000Z'::date, '2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T16:56:31.000Z'::date AND ('2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-02T16:56:31.000Z'::date, '2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T16:56:31.000Z'::date AND ('2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2390,17 +2390,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-02T16:56:31.000Z'::date, '2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T16:56:31.000Z'::date AND ('2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T16:56:31.000Z'::date, '2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T16:56:31.000Z'::date AND ('2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T16:56:31.000Z'::date, '2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T16:56:31.000Z'::date AND ('2020-01-02T16:56:31.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2422,7 +2422,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute a framed moving average over a gap-free 30-day spine starting 2020-01-03T01:21:56.000Z for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-03T01:21:56.000Z'::date, '2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T01:21:56.000Z'::date AND ('2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-03T01:21:56.000Z'::date, '2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T01:21:56.000Z'::date AND ('2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-03T01:21:56.000Z'::date, '2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T01:21:56.000Z'::date AND ('2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2434,17 +2434,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-03T01:21:56.000Z'::date, '2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T01:21:56.000Z'::date AND ('2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-03T01:21:56.000Z'::date, '2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T01:21:56.000Z'::date AND ('2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-03T01:21:56.000Z'::date, '2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T01:21:56.000Z'::date AND ('2020-01-03T01:21:56.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2466,7 +2466,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, build a dense 30-day date spine starting 2020-01-03T02:16:38.000Z and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-03T02:16:38.000Z'::date, '2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T02:16:38.000Z'::date AND ('2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-03T02:16:38.000Z'::date, '2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T02:16:38.000Z'::date AND ('2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-03T02:16:38.000Z'::date, '2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T02:16:38.000Z'::date AND ('2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2478,17 +2478,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-03T02:16:38.000Z'::date, '2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T02:16:38.000Z'::date AND ('2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-03T02:16:38.000Z'::date, '2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T02:16:38.000Z'::date AND ('2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-03T02:16:38.000Z'::date, '2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-03T02:16:38.000Z'::date AND ('2020-01-03T02:16:38.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2510,7 +2510,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, build a dense 30-day date spine starting 2020-01-02T22:39:14.000Z and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T22:39:14.000Z'::date, '2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T22:39:14.000Z'::date AND ('2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T22:39:14.000Z'::date, '2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T22:39:14.000Z'::date AND ('2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-02T22:39:14.000Z'::date, '2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T22:39:14.000Z'::date AND ('2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2522,17 +2522,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-02T22:39:14.000Z'::date, '2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T22:39:14.000Z'::date AND ('2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T22:39:14.000Z'::date, '2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T22:39:14.000Z'::date AND ('2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T22:39:14.000Z'::date, '2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T22:39:14.000Z'::date AND ('2020-01-02T22:39:14.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2554,7 +2554,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute a framed moving average over a gap-free 30-day spine starting 2020-01-01T21:12:07.000Z for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-01T21:12:07.000Z'::date, '2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:12:07.000Z'::date AND ('2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-01T21:12:07.000Z'::date, '2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:12:07.000Z'::date AND ('2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-01T21:12:07.000Z'::date, '2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:12:07.000Z'::date AND ('2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2566,17 +2566,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-01T21:12:07.000Z'::date, '2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:12:07.000Z'::date AND ('2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T21:12:07.000Z'::date, '2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:12:07.000Z'::date AND ('2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-01T21:12:07.000Z'::date, '2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-01T21:12:07.000Z'::date AND ('2020-01-01T21:12:07.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2598,7 +2598,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Compute a framed moving average over a gap-free 30-day spine starting 2020-01-02T02:17:04.000Z for city 1. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T02:17:04.000Z'::date, '2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T02:17:04.000Z'::date AND ('2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T02:17:04.000Z'::date, '2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T02:17:04.000Z'::date AND ('2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-02T02:17:04.000Z'::date, '2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T02:17:04.000Z'::date AND ('2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2610,17 +2610,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-02T02:17:04.000Z'::date, '2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T02:17:04.000Z'::date AND ('2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T02:17:04.000Z'::date, '2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T02:17:04.000Z'::date AND ('2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T02:17:04.000Z'::date, '2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T02:17:04.000Z'::date AND ('2020-01-02T02:17:04.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2642,7 +2642,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, build a dense 30-day date spine starting 2020-01-02T01:55:27.000Z and return order_day, gross_cents, and trailing_7day_avg_cents. Return columns: city_id, placed_at, order_day, gross_cents, trailing_7day_avg_cents. Order by: city_id, placed_at.",
       "starterSql": {
-        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day AS order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T01:55:27.000Z'::date, '2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:55:27.000Z'::date AND ('2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+        "full": "SELECT\n  __BLANK_0__, __BLANK_1__, spine.order_day, __BLANK_2__, __BLANK_3__ FROM generate_series('2020-01-02T01:55:27.000Z'::date, '2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:55:27.000Z'::date AND ('2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
         "half": "SELECT\n  __BLANK_0__ FROM generate_series('2020-01-02T01:55:27.000Z'::date, '2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:55:27.000Z'::date AND ('2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY __BLANK_1__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
@@ -2654,17 +2654,17 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents"
         },
         "half": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "city_id, placed_at"
         },
         "blank": {
-          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
+          "__BLANK_0__": "1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents",
           "__BLANK_1__": "generate_series('2020-01-02T01:55:27.000Z'::date, '2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:55:27.000Z'::date AND ('2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day",
           "__BLANK_2__": "city_id, placed_at"
         }
       },
       "hint": "Use generate_series for the date spine, LEFT JOIN daily totals, then AVG over a RANGE BETWEEN frame.",
-      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day AS order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T01:55:27.000Z'::date, '2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:55:27.000Z'::date AND ('2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
+      "expectedSql": "SELECT\n  1::smallint AS city_id, spine.order_day::timestamp AS placed_at, spine.order_day, COALESCE(daily.gross_cents, 0) AS gross_cents, ROUND(AVG(COALESCE(daily.gross_cents, 0)) OVER (\n    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ), 2) AS trailing_7day_avg_cents FROM generate_series('2020-01-02T01:55:27.000Z'::date, '2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days', INTERVAL '1 day') AS spine(order_day)\nLEFT JOIN (\n  SELECT\n    o.placed_at::date AS order_day,\n    SUM(o.amount_cents) AS gross_cents\n  FROM orders o\n  WHERE o.city_id = 1\n    AND o.placed_at::date BETWEEN '2020-01-02T01:55:27.000Z'::date AND ('2020-01-02T01:55:27.000Z'::date + INTERVAL '29 days')\n  GROUP BY o.placed_at::date\n) daily ON daily.order_day = spine.order_day ORDER BY city_id, placed_at",
       "orderMatters": true,
       "rowCeiling": 30,
       "fingerprint": {
@@ -2688,7 +2688,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 3 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 3 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 3 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2697,12 +2697,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 3",
           "__BLANK_3__": "city_id, order_id",
@@ -2710,7 +2710,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 3 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 3 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2732,7 +2732,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Assign each bounded city 8 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 8 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 8 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 8 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2741,12 +2741,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 8",
           "__BLANK_3__": "city_id, order_id",
@@ -2754,7 +2754,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 8 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 8 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2776,7 +2776,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Assign each bounded city 4 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 4 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 4 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 4 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2785,12 +2785,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 4",
           "__BLANK_3__": "city_id, order_id",
@@ -2798,7 +2798,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 4 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 4 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2820,7 +2820,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Assign each bounded city 6 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 6 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 6 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 6 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2829,12 +2829,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 6",
           "__BLANK_3__": "city_id, order_id",
@@ -2842,7 +2842,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 6 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 6 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2864,7 +2864,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 7 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 7 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 7 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2873,12 +2873,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 7",
           "__BLANK_3__": "city_id, order_id",
@@ -2886,7 +2886,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 7 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 7 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2908,7 +2908,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2917,12 +2917,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1",
           "__BLANK_3__": "city_id, order_id",
@@ -2930,7 +2930,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 1 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 1 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2952,7 +2952,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, bucket bounded order rows into quartiles by average-order-value proxy fields. Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 5 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 5 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 5 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -2961,12 +2961,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 5",
           "__BLANK_3__": "city_id, order_id",
@@ -2974,7 +2974,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 5 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 5 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2996,7 +2996,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Assign each bounded city 2 order an aov_quartile with NTILE(4). Return columns: order_id, city_id, merchant_id, amount_cents, aov_quartile. Order by: city_id, order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 2 ORDER BY city_id, order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 2 ORDER BY city_id, order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 2 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3005,12 +3005,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
+          "__BLANK_0__": "o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 2",
           "__BLANK_3__": "city_id, order_id",
@@ -3018,7 +3018,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NTILE(4) OVER (PARTITION BY city_id) splits the bounded partition into four buckets.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.merchant_id AS merchant_id, o.amount_cents AS amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 2 ORDER BY city_id, order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.merchant_id, o.amount_cents, NTILE(4) OVER (PARTITION BY o.city_id) AS aov_quartile FROM orders o\nWHERE o.city_id = 2 ORDER BY city_id, order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3042,7 +3042,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 8 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3052,12 +3052,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 8",
           "__BLANK_3__": "order_id",
@@ -3065,7 +3065,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3085,7 +3085,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 3. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 3 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3095,12 +3095,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 3",
           "__BLANK_3__": "order_id",
@@ -3108,7 +3108,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3128,7 +3128,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 7. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 7 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3138,12 +3138,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 7",
           "__BLANK_3__": "order_id",
@@ -3151,7 +3151,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3171,7 +3171,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 4 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3181,12 +3181,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 4",
           "__BLANK_3__": "order_id",
@@ -3194,7 +3194,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3214,7 +3214,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 6 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3224,12 +3224,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 6",
           "__BLANK_3__": "order_id",
@@ -3237,7 +3237,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3257,7 +3257,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 5. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 5 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3267,12 +3267,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 5",
           "__BLANK_3__": "order_id",
@@ -3280,7 +3280,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3300,7 +3300,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Fill missing tips with zero and turn blank legacy totals into NULL for city 1. Return columns: order_id, tip_cents_filled, legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3310,12 +3310,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1",
           "__BLANK_3__": "order_id",
@@ -3323,7 +3323,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3343,7 +3343,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, return order_id, tip_cents_filled, and legacy_total_or_null. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, __BLANK_0__, __BLANK_1__ FROM orders o\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 2 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -3353,12 +3353,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
+          "__BLANK_0__": "o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 2",
           "__BLANK_3__": "order_id",
@@ -3366,7 +3366,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "COALESCE fills a missing value; NULLIF turns an empty-string sentinel back into NULL.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, COALESCE(o.tip_cents, 0) AS tip_cents_filled, NULLIF(TRIM(COALESCE(o.order_total_legacy, '')), '') AS legacy_total_or_null FROM orders o\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3388,8 +3388,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Find orphaned orders in city 7 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3402,7 +3402,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 7\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3410,7 +3410,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 7\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 7\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3429,8 +3429,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3443,7 +3443,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 2\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3451,7 +3451,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 2\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 2\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3470,8 +3470,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3484,7 +3484,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3492,7 +3492,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 6\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3511,8 +3511,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Find orphaned orders in city 5 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3525,7 +3525,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 5\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3533,7 +3533,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 5\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 5\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3552,8 +3552,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3566,7 +3566,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3574,7 +3574,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 4\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3593,8 +3593,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Find orphaned orders in city 1 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3607,7 +3607,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3615,7 +3615,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 1\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 1\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3634,8 +3634,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Find orphaned orders in city 3 with an anti-join against customers. Return columns: order_id, customer_id. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3648,7 +3648,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 3\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3656,7 +3656,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 3\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 3\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3675,8 +3675,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, list order_id and customer_id for orders whose customer no longer exists. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
-        "half": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY order_id LIMIT 200",
+        "half": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3689,7 +3689,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.customer_id AS customer_id",
+          "__BLANK_0__": "o.order_id, o.customer_id",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id)",
           "__BLANK_3__": "order_id",
@@ -3697,7 +3697,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "NOT EXISTS keeps only orders that fail to match a customer row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.customer_id AS customer_id FROM orders o\nWHERE o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.customer_id FROM orders o\nWHERE o.city_id = 8\n  AND NOT EXISTS (SELECT 1 FROM customers c WHERE c.customer_id = o.customer_id) ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3718,8 +3718,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Keep one payment per order and return order_id, payment_id, amount_cents. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  winner.order_id AS order_id, winner.payment_id AS payment_id, winner.amount_cents AS amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  winner.order_id AS order_id, winner.payment_id AS payment_id, winner.amount_cents AS amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  winner.order_id, winner.payment_id, winner.amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  winner.order_id, winner.payment_id, winner.amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3732,7 +3732,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "winner.order_id AS order_id, winner.payment_id AS payment_id, winner.amount_cents AS amount_cents",
+          "__BLANK_0__": "winner.order_id, winner.payment_id, winner.amount_cents",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner",
           "__BLANK_2__": "winner.payment_id = winner.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -3740,7 +3740,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use a partitioned MIN(payment_id) to choose one deterministic representative payment per order.",
-      "expectedSql": "SELECT\n  winner.order_id AS order_id, winner.payment_id AS payment_id, winner.amount_cents AS amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE winner.payment_id = winner.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  winner.order_id, winner.payment_id, winner.amount_cents FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) winner\nWHERE winner.payment_id = winner.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3760,8 +3760,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Keep the earliest payment attempt per order and return order_id, payment_id, and status. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  ranked.order_id, ranked.payment_id, ranked.status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  ranked.order_id, ranked.payment_id, ranked.status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3774,7 +3774,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status",
+          "__BLANK_0__": "ranked.order_id, ranked.payment_id, ranked.status",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked",
           "__BLANK_2__": "ranked.payment_id = ranked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -3782,7 +3782,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Partition by order_id and keep rn = 1 for a deterministic retry representative.",
-      "expectedSql": "SELECT\n  ranked.order_id AS order_id, ranked.payment_id AS payment_id, ranked.status AS status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  ranked.order_id, ranked.payment_id, ranked.status FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.status,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n) ranked\nWHERE ranked.payment_id = ranked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3802,8 +3802,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Deduplicate payments by order_id, then report method, deduped_payments, and deduped_amount_cents. Order by: method. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE __BLANK_0__\nGROUP BY deduped.method ORDER BY method LIMIT 200",
-        "half": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  deduped.method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE __BLANK_0__\nGROUP BY deduped.method ORDER BY method LIMIT 200",
+        "half": "SELECT\n  deduped.method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -3817,7 +3817,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents",
+          "__BLANK_0__": "deduped.method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents",
           "__BLANK_1__": "(\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped",
           "__BLANK_2__": "deduped.payment_id = deduped.chosen_payment_id",
           "__BLANK_3__": "deduped.method",
@@ -3826,7 +3826,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Choose the representative payment before counting payment methods.",
-      "expectedSql": "SELECT\n  deduped.method AS method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.method ORDER BY method LIMIT 200",
+      "expectedSql": "SELECT\n  deduped.method, COUNT(*) AS deduped_payments, SUM(deduped.amount_cents) AS deduped_amount_cents FROM (\n  SELECT\n    LOWER(TRIM(p.method)) AS method,\n    p.order_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id,\n    p.payment_id\n  FROM payments p\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.method ORDER BY method LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3846,8 +3846,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3860,7 +3860,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -3868,7 +3868,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 1\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3889,8 +3889,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Deduplicate payment retry rows inside city 2 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3903,7 +3903,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -3911,7 +3911,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 2\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3932,8 +3932,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Deduplicate payment retry rows inside city 8 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3946,7 +3946,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -3954,7 +3954,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 8\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3975,8 +3975,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -3989,7 +3989,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -3997,7 +3997,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 7\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4018,8 +4018,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -4032,7 +4032,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -4040,7 +4040,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 5\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4061,8 +4061,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, keep one payment per order and return order_id, payment_id, amount_cents, and currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -4075,7 +4075,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -4083,7 +4083,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 3\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4104,8 +4104,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "After deduplicating retries among payments with status paid or captured, report processor, paid_order_count, and paid_amount_cents. Order by: processor. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE __BLANK_0__\nGROUP BY deduped.processor ORDER BY processor LIMIT 200",
-        "half": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  deduped.processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE __BLANK_0__\nGROUP BY deduped.processor ORDER BY processor LIMIT 200",
+        "half": "SELECT\n  deduped.processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -4119,7 +4119,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents",
+          "__BLANK_0__": "deduped.processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents",
           "__BLANK_1__": "(\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped",
           "__BLANK_2__": "deduped.payment_id = deduped.chosen_payment_id",
           "__BLANK_3__": "deduped.processor",
@@ -4128,7 +4128,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Deduplicate inside the subquery before grouping by processor.",
-      "expectedSql": "SELECT\n  deduped.processor AS processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.processor ORDER BY processor LIMIT 200",
+      "expectedSql": "SELECT\n  deduped.processor, COUNT(*) AS paid_order_count, SUM(deduped.amount_cents) AS paid_amount_cents FROM (\n  SELECT\n    p.processor,\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  WHERE LOWER(TRIM(p.status)) IN ('paid', 'captured')\n) deduped\nWHERE deduped.payment_id = deduped.chosen_payment_id\nGROUP BY deduped.processor ORDER BY processor LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4148,8 +4148,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Deduplicate payment retry rows inside city 4 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -4162,7 +4162,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -4170,7 +4170,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 4\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4191,8 +4191,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Deduplicate payment retry rows inside city 6 with ROW_NUMBER. Return columns: order_id, payment_id, amount_cents, currency. Order by: payment_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
-        "half": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE __BLANK_0__ ORDER BY payment_id LIMIT 200",
+        "half": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -4205,7 +4205,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency",
+          "__BLANK_0__": "picked.order_id, picked.payment_id, picked.amount_cents, picked.currency",
           "__BLANK_1__": "(\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked",
           "__BLANK_2__": "picked.payment_id = picked.chosen_payment_id",
           "__BLANK_3__": "payment_id",
@@ -4213,7 +4213,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Bound to the city first, row-number retries per order, and keep rn = 1.",
-      "expectedSql": "SELECT\n  picked.order_id AS order_id, picked.payment_id AS payment_id, picked.amount_cents AS amount_cents, picked.currency AS currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
+      "expectedSql": "SELECT\n  picked.order_id, picked.payment_id, picked.amount_cents, picked.currency FROM (\n  SELECT\n    p.order_id,\n    p.payment_id,\n    p.amount_cents,\n    p.currency,\n    MIN(p.payment_id) OVER (PARTITION BY p.order_id) AS chosen_payment_id\n  FROM payments p\n  JOIN orders o ON o.order_id = p.order_id\n  WHERE o.city_id = 6\n) picked\nWHERE picked.payment_id = picked.chosen_payment_id ORDER BY payment_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4236,7 +4236,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For each city, report city_id, table_name, total_rows, null_tips, and blank_totals for orders. Order by: city_id.",
       "starterSql": {
-        "full": "SELECT\n  o.city_id AS city_id, __BLANK_0__, __BLANK_1__, __BLANK_2__, __BLANK_3__ FROM orders o\nGROUP BY o.city_id ORDER BY city_id",
+        "full": "SELECT\n  o.city_id, __BLANK_0__, __BLANK_1__, __BLANK_2__, __BLANK_3__ FROM orders o\nGROUP BY o.city_id ORDER BY city_id",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -4248,19 +4248,19 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals"
         },
         "half": {
-          "__BLANK_0__": "o.city_id AS city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals",
+          "__BLANK_0__": "o.city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals",
           "__BLANK_1__": "o.city_id",
           "__BLANK_2__": "city_id"
         },
         "blank": {
-          "__BLANK_0__": "o.city_id AS city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals",
+          "__BLANK_0__": "o.city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id",
           "__BLANK_3__": "city_id"
         }
       },
       "hint": "Use COUNT(*) FILTER (WHERE ...) to count each dirty condition in one grouped scan.",
-      "expectedSql": "SELECT\n  o.city_id AS city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals FROM orders o\nGROUP BY o.city_id ORDER BY city_id",
+      "expectedSql": "SELECT\n  o.city_id, 'orders' AS table_name, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.tip_cents IS NULL) AS null_tips, COUNT(*) FILTER (WHERE TRIM(COALESCE(o.order_total_legacy, '')) = '') AS blank_totals FROM orders o\nGROUP BY o.city_id ORDER BY city_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4282,7 +4282,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Profile merchants by category with total_rows, nonpositive_prep_minutes, and inactive_merchants. Order by: category.",
       "starterSql": {
-        "full": "SELECT\n  m.category AS category, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM merchants m\nGROUP BY m.category ORDER BY category",
+        "full": "SELECT\n  m.category, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM merchants m\nGROUP BY m.category ORDER BY category",
         "half": "SELECT\n  __BLANK_0__ FROM merchants m\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -4293,19 +4293,19 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants"
         },
         "half": {
-          "__BLANK_0__": "m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants",
+          "__BLANK_0__": "m.category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants",
           "__BLANK_1__": "m.category",
           "__BLANK_2__": "category"
         },
         "blank": {
-          "__BLANK_0__": "m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants",
+          "__BLANK_0__": "m.category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants",
           "__BLANK_1__": "merchants m",
           "__BLANK_2__": "m.category",
           "__BLANK_3__": "category"
         }
       },
       "hint": "Use conditional counts to profile operational fields before ranking merchants.",
-      "expectedSql": "SELECT\n  m.category AS category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY m.category ORDER BY category",
+      "expectedSql": "SELECT\n  m.category, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE m.avg_prep_minutes <= 0) AS nonpositive_prep_minutes, COUNT(*) FILTER (WHERE m.is_active = false) AS inactive_merchants FROM merchants m\nGROUP BY m.category ORDER BY category",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4326,7 +4326,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Profile event_log by event_type with total_rows, null_order_ids, and null_customer_ids. Order by: event_type.",
       "starterSql": {
-        "full": "SELECT\n  e.event_type AS event_type, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM event_log e\nGROUP BY e.event_type ORDER BY event_type",
+        "full": "SELECT\n  e.event_type, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM event_log e\nGROUP BY e.event_type ORDER BY event_type",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -4337,19 +4337,19 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids"
         },
         "half": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids",
+          "__BLANK_0__": "e.event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids",
           "__BLANK_1__": "e.event_type",
           "__BLANK_2__": "event_type"
         },
         "blank": {
-          "__BLANK_0__": "e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids",
+          "__BLANK_0__": "e.event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids",
           "__BLANK_1__": "event_log e",
           "__BLANK_2__": "e.event_type",
           "__BLANK_3__": "event_type"
         }
       },
       "hint": "Event profiles often separate optional references from true defects.",
-      "expectedSql": "SELECT\n  e.event_type AS event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY e.event_type ORDER BY event_type",
+      "expectedSql": "SELECT\n  e.event_type, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE e.order_id IS NULL) AS null_order_ids, COUNT(*) FILTER (WHERE e.customer_id IS NULL) AS null_customer_ids FROM event_log e\nGROUP BY e.event_type ORDER BY event_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4370,7 +4370,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Profile promo_redemption by promo_id with total_rows, nonpositive_discounts, and null_redeemed_at. Order by: promo_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  pr.promo_id AS promo_id, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY promo_id LIMIT 200",
+        "full": "SELECT\n  pr.promo_id, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY promo_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4381,12 +4381,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at"
         },
         "half": {
-          "__BLANK_0__": "pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at",
+          "__BLANK_0__": "pr.promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at",
           "__BLANK_1__": "promo_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at",
+          "__BLANK_0__": "pr.promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at",
           "__BLANK_1__": "promo_redemption pr",
           "__BLANK_2__": "pr.promo_id",
           "__BLANK_3__": "promo_id",
@@ -4394,7 +4394,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Profile redemption defects with FILTER counts before trusting discount analysis.",
-      "expectedSql": "SELECT\n  pr.promo_id AS promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY promo_id LIMIT 200",
+      "expectedSql": "SELECT\n  pr.promo_id, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE pr.discount_cents <= 0) AS nonpositive_discounts, COUNT(*) FILTER (WHERE pr.redeemed_at IS NULL) AS null_redeemed_at FROM promo_redemption pr\nGROUP BY pr.promo_id ORDER BY promo_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4415,7 +4415,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Profile orders by status with total_rows, null_accepted_at, null_delivered_at, and blank_promo_codes. Order by: status. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.status AS status, __BLANK_0__, __BLANK_1__, __BLANK_2__, __BLANK_3__ FROM orders o\nGROUP BY o.status ORDER BY status LIMIT 200",
+        "full": "SELECT\n  o.status, __BLANK_0__, __BLANK_1__, __BLANK_2__, __BLANK_3__ FROM orders o\nGROUP BY o.status ORDER BY status LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nGROUP BY o.status ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4427,12 +4427,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes"
         },
         "half": {
-          "__BLANK_0__": "o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes",
+          "__BLANK_0__": "o.status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes",
           "__BLANK_1__": "status",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes",
+          "__BLANK_0__": "o.status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.status",
           "__BLANK_3__": "status",
@@ -4440,7 +4440,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "A status-level profile shows whether missing timestamps are expected or suspicious.",
-      "expectedSql": "SELECT\n  o.status AS status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY status LIMIT 200",
+      "expectedSql": "SELECT\n  o.status, COUNT(*) AS total_rows, COUNT(*) FILTER (WHERE o.accepted_at IS NULL) AS null_accepted_at, COUNT(*) FILTER (WHERE o.delivered_at IS NULL) AS null_delivered_at, COUNT(*) FILTER (WHERE NULLIF(TRIM(COALESCE(o.promo_code, '')), '') IS NULL) AS blank_promo_codes FROM orders o\nGROUP BY o.status ORDER BY status LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4464,7 +4464,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4473,12 +4473,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 6 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4486,7 +4486,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 6 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4507,7 +4507,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4516,12 +4516,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 2 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4529,7 +4529,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 2 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4550,7 +4550,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4559,12 +4559,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 8 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4572,7 +4572,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 8 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4593,7 +4593,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a courier leaderboard for city 5 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4602,12 +4602,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 5 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4615,7 +4615,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 5 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4636,7 +4636,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a courier leaderboard for city 7 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4645,12 +4645,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 7 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4658,7 +4658,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 7 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4679,7 +4679,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, rank active couriers by lifetime_deliveries and return courier_id, lifetime_deliveries, delivery_rank. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4688,12 +4688,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 4 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4701,7 +4701,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 4 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4722,7 +4722,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a courier leaderboard for city 3 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 3 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 3 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 3 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4731,12 +4731,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 3 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4744,7 +4744,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 3 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 3 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4765,7 +4765,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Build a courier leaderboard for city 1 using RANK over active couriers. Return columns: courier_id, home_city_id, lifetime_deliveries, delivery_rank. Order by: home_city_id, courier_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+        "full": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -4774,12 +4774,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank"
         },
         "half": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "home_city_id, courier_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
+          "__BLANK_0__": "c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank",
           "__BLANK_1__": "couriers c",
           "__BLANK_2__": "c.home_city_id = 1 AND c.status = 'active'",
           "__BLANK_3__": "home_city_id, courier_id",
@@ -4787,7 +4787,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use RANK() OVER (PARTITION BY home_city_id) and keep the result bounded to one city.",
-      "expectedSql": "SELECT\n  c.courier_id AS courier_id, c.home_city_id AS home_city_id, c.lifetime_deliveries AS lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.courier_id, c.home_city_id, c.lifetime_deliveries, RANK() OVER (PARTITION BY c.home_city_id) AS delivery_rank FROM couriers c\nWHERE c.home_city_id = 1 AND c.status = 'active' ORDER BY home_city_id, courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4810,8 +4810,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -4825,7 +4825,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -4834,7 +4834,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 8 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4854,8 +4854,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -4869,7 +4869,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -4878,7 +4878,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 6 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4898,8 +4898,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Clean rating outliers in city 5 by keeping only stars between 1 and 5, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -4913,7 +4913,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 5 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -4922,7 +4922,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 5 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 5 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4942,8 +4942,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -4957,7 +4957,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -4966,7 +4966,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 2 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4986,8 +4986,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Clean rating outliers in city 7 by keeping only stars between 1 and 5, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -5001,7 +5001,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 7 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -5010,7 +5010,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 7 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 7 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5030,8 +5030,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, report courier_id, avg_stars, and rating_count using only valid 1..5 ratings. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -5045,7 +5045,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -5054,7 +5054,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 4 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5074,8 +5074,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Clean rating outliers in city 1 by keeping only stars between 1 and 5, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -5089,7 +5089,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 1 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -5098,7 +5098,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 1 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 1 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5118,8 +5118,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Clean rating outliers in city 3 by keeping only stars between 1 and 5, then average stars per courier_id. Return columns: courier_id, avg_stars, rating_count. Order by: courier_id. Limit: first 200 rows. Round computed values to 2 decimals.",
       "starterSql": {
-        "full": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
-        "half": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+        "half": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -5133,7 +5133,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
+          "__BLANK_0__": "r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count",
           "__BLANK_1__": "ratings r\nJOIN orders o ON o.order_id = r.order_id",
           "__BLANK_2__": "o.city_id = 3 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL",
           "__BLANK_3__": "r.courier_id",
@@ -5142,7 +5142,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Filter stars BETWEEN 1 AND 5 before calculating AVG.",
-      "expectedSql": "SELECT\n  r.courier_id AS courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 3 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
+      "expectedSql": "SELECT\n  r.courier_id, ROUND(AVG(r.stars), 2) AS avg_stars, COUNT(*) AS rating_count FROM ratings r\nJOIN orders o ON o.order_id = r.order_id\nWHERE o.city_id = 3 AND r.stars BETWEEN 1 AND 5 AND r.courier_id IS NOT NULL\nGROUP BY r.courier_id ORDER BY courier_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5164,8 +5164,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Walk cleaned categories and return category_id, name, depth, and path_ids. Order by: category_id.",
       "starterSql": {
-        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, __BLANK_2__::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_3__, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_4__",
-        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "full": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, __BLANK_2__::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_3__, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_4__",
+        "half": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -5180,13 +5180,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "category_id"
         },
         "blank": {
-          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids",
+          "__BLANK_0__": "tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path_ids",
           "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk",
           "__BLANK_2__": "category_id"
         }
       },
       "hint": "Carry a text path_ids value through each recursive child step.",
-      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path_ids AS path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY category_id",
+      "expectedSql": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path_ids FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, category_id::text AS path_ids\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path_ids || '>' || child.category_id::text\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path_ids FROM tree\n) tree_walk ORDER BY category_id",
       "orderMatters": true,
       "rowCeiling": 60,
       "fingerprint": {
@@ -5207,8 +5207,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Walk cleaned category roots and return category_id, name, depth, and path. Order by: category_id.",
       "starterSql": {
-        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_3__",
-        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "full": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_3__",
+        "half": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -5222,13 +5222,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "category_id"
         },
         "blank": {
-          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path",
+          "__BLANK_0__": "tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path",
           "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk",
           "__BLANK_2__": "category_id"
         }
       },
       "hint": "Concatenate the parent path with each child name during the recursive step.",
-      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY category_id",
+      "expectedSql": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth, name AS path\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1, parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path FROM tree\n) tree_walk ORDER BY category_id",
       "orderMatters": true,
       "rowCeiling": 60,
       "fingerprint": {
@@ -5249,8 +5249,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Clean dangling category parents, then walk all roots and return category_id, name, parent_category_id, and depth. Order by: category_id.",
       "starterSql": {
-        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_3__",
-        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "full": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.parent_category_id, tree_walk.depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_3__",
+        "half": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.parent_category_id, tree_walk.depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -5264,13 +5264,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "category_id"
         },
         "blank": {
-          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth",
+          "__BLANK_0__": "tree_walk.category_id, tree_walk.name, tree_walk.parent_category_id, tree_walk.depth",
           "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk",
           "__BLANK_2__": "category_id"
         }
       },
       "hint": "The cleaned CTE nulls dangling parents before the recursive tree walk.",
-      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.parent_category_id AS parent_category_id, tree_walk.depth AS depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY category_id",
+      "expectedSql": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.parent_category_id, tree_walk.depth FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, parent_category_id, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, child.parent_category_id, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, parent_category_id, depth FROM tree\n) tree_walk ORDER BY category_id",
       "orderMatters": true,
       "rowCeiling": 60,
       "fingerprint": {
@@ -5291,8 +5291,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Walk the category tree from its cleaned root and return category_id, name, depth, and path. Order by: category_id.",
       "starterSql": {
-        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(__BLANK_1__) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path\n  FROM tree\n) tree_walk ORDER BY __BLANK_3__",
-        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(category_id) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "full": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(__BLANK_1__) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT __BLANK_2__, name, depth, path\n  FROM tree\n) tree_walk ORDER BY __BLANK_3__",
+        "half": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(category_id) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -5306,13 +5306,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "category_id"
         },
         "blank": {
-          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path",
+          "__BLANK_0__": "tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path",
           "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(category_id) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path\n  FROM tree\n) tree_walk",
           "__BLANK_2__": "category_id"
         }
       },
       "hint": "Clean dangling parents first, then use WITH RECURSIVE: base root row, recursive child join, and path extension.",
-      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.path AS path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(category_id) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path\n  FROM tree\n) tree_walk ORDER BY category_id",
+      "expectedSql": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.path FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT\n      c.category_id,\n      c.name,\n      CASE\n        WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id\n        ELSE NULL\n      END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT\n      cleaned.category_id,\n      cleaned.name,\n      1 AS depth,\n      cleaned.name AS path\n    FROM cleaned\n    WHERE cleaned.category_id = (SELECT MIN(category_id) FROM cleaned WHERE parent_category_id IS NULL)\n    UNION ALL\n    SELECT\n      child.category_id,\n      child.name,\n      parent.depth + 1,\n      parent.path || ' > ' || child.name\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT category_id, name, depth, path\n  FROM tree\n) tree_walk ORDER BY category_id",
       "orderMatters": true,
       "rowCeiling": 60,
       "fingerprint": {
@@ -5333,8 +5333,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Walk cleaned categories and return category_id, name, depth, and is_leaf. Order by: category_id.",
       "starterSql": {
-        "full": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_2__",
-        "half": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
+        "full": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT __BLANK_0__ FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT __BLANK_1__, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_2__",
+        "half": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY __BLANK_0__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -5347,13 +5347,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "category_id"
         },
         "blank": {
-          "__BLANK_0__": "tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf",
+          "__BLANK_0__": "tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.is_leaf",
           "__BLANK_1__": "(\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk",
           "__BLANK_2__": "category_id"
         }
       },
       "hint": "After the recursive walk, NOT EXISTS can identify categories without cleaned children.",
-      "expectedSql": "SELECT\n  tree_walk.category_id AS category_id, tree_walk.name AS name, tree_walk.depth AS depth, tree_walk.is_leaf AS is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY category_id",
+      "expectedSql": "SELECT\n  tree_walk.category_id, tree_walk.name, tree_walk.depth, tree_walk.is_leaf FROM (\n  WITH RECURSIVE cleaned AS (\n    SELECT c.category_id, c.name,\n           CASE WHEN c.parent_category_id IN (SELECT category_id FROM categories) THEN c.parent_category_id ELSE NULL END AS parent_category_id\n    FROM categories c\n  ),\n  tree AS (\n    SELECT category_id, name, 1 AS depth\n    FROM cleaned\n    WHERE parent_category_id IS NULL\n    UNION ALL\n    SELECT child.category_id, child.name, parent.depth + 1\n    FROM cleaned child\n    JOIN tree parent ON child.parent_category_id = parent.category_id\n  )\n  SELECT tree.category_id, tree.name, tree.depth,\n         NOT EXISTS (SELECT 1 FROM cleaned child WHERE child.parent_category_id = tree.category_id) AS is_leaf\n  FROM tree\n) tree_walk ORDER BY category_id",
       "orderMatters": true,
       "rowCeiling": 60,
       "fingerprint": {
@@ -5376,7 +5376,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Regex-clean contacts in city 2: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5386,12 +5386,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 2 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5399,7 +5399,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 2 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5419,7 +5419,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 7, return customer_id, phone_digits, and clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5429,12 +5429,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 7 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5442,7 +5442,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 7 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5462,7 +5462,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Regex-clean contacts in city 8: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5472,12 +5472,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 8 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5485,7 +5485,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 8 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5505,7 +5505,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 5, return customer_id, phone_digits, and clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5515,12 +5515,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 5 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5528,7 +5528,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 5 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5548,7 +5548,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Regex-clean contacts in city 4: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5558,12 +5558,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 4 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5571,7 +5571,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 4 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5591,7 +5591,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 1, return customer_id, phone_digits, and clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5601,12 +5601,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 1 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5614,7 +5614,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 1 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5634,7 +5634,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 3, return customer_id, phone_digits, and clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5644,12 +5644,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 3 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5657,7 +5657,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 3 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -5677,7 +5677,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Regex-clean contacts in city 6: keep phone digits and normalize email text. Return columns: customer_id, phone_digits, clean_email. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__, __BLANK_1__ FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -5687,12 +5687,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
+          "__BLANK_0__": "c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 6 AND c.phone IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -5700,7 +5700,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "REGEXP_REPLACE(phone, '[^0-9]', '', 'g') keeps only digits; strip a leading mailto: from email.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, REGEXP_REPLACE(c.phone, '[^0-9]', '', 'g') AS phone_digits, LOWER(TRIM(REGEXP_REPLACE(c.email, '^mailto:', ''))) AS clean_email FROM customers c\nWHERE c.signup_city_id = 6 AND c.phone IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -6068,7 +6068,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Add a city-level running_gross_cents window value to order rows for city 1 in the 30 days starting 2020-01-02T16:56:31.000Z. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6077,12 +6077,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6090,7 +6090,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T16:56:31.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T16:56:31.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6112,7 +6112,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Add a city-level running_gross_cents window value to order rows for city 1 in the 30 days starting 2020-01-01T21:12:07.000Z. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6121,12 +6121,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6134,7 +6134,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-01T21:12:07.000Z'::timestamp\n  AND o.placed_at < '2020-01-01T21:12:07.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6156,7 +6156,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-03T02:16:38.000Z, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6165,12 +6165,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6178,7 +6178,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T02:16:38.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T02:16:38.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6200,7 +6200,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-02T01:55:27.000Z, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6209,12 +6209,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6222,7 +6222,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T01:55:27.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T01:55:27.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6244,7 +6244,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Add a city-level running_gross_cents window value to order rows for city 1 in the 30 days starting 2020-01-02T02:17:04.000Z. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6253,12 +6253,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6266,7 +6266,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T02:17:04.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T02:17:04.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6288,7 +6288,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Add a city-level running_gross_cents window value to order rows for city 1 in the 30 days starting 2020-01-03T01:21:56.000Z. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6297,12 +6297,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6310,7 +6310,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-03T01:21:56.000Z'::timestamp\n  AND o.placed_at < '2020-01-03T01:21:56.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6332,7 +6332,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-02T22:39:14.000Z, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6341,12 +6341,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6354,7 +6354,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T22:39:14.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T22:39:14.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6376,7 +6376,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1 over the 30 days starting 2020-01-02T06:48:22.000Z, return order_id, placed_at, amount_cents, and running_gross_cents. Return columns: order_id, city_id, placed_at, amount_cents, running_gross_cents. Order by: city_id, order_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+        "full": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6385,12 +6385,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "city_id, order_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
+          "__BLANK_0__": "o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents",
           "__BLANK_1__": "orders o",
           "__BLANK_2__": "o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days'",
           "__BLANK_3__": "city_id, order_id",
@@ -6398,7 +6398,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "SUM(amount_cents) OVER (PARTITION BY city_id) keeps row detail while adding a city-level total.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.city_id AS city_id, o.placed_at AS placed_at, o.amount_cents AS amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
+      "expectedSql": "SELECT\n  o.order_id, o.city_id, o.placed_at, o.amount_cents, SUM(o.amount_cents) OVER (PARTITION BY o.city_id) AS running_gross_cents FROM orders o\nWHERE o.city_id = 1\n  AND o.placed_at >= '2020-01-02T06:48:22.000Z'::timestamp\n  AND o.placed_at < '2020-01-02T06:48:22.000Z'::timestamp + INTERVAL '30 days' ORDER BY city_id, order_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6422,7 +6422,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Sessionize events in city 5; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6433,12 +6433,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6446,7 +6446,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 5\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6469,7 +6469,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6480,12 +6480,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6493,7 +6493,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 4\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6516,7 +6516,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Sessionize events in city 1; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6527,12 +6527,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6540,7 +6540,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 1\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6563,7 +6563,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Sessionize events in city 3; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6574,12 +6574,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6587,7 +6587,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 3\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6610,7 +6610,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6621,12 +6621,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6634,7 +6634,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 8\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6657,7 +6657,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Sessionize events in city 7; return session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6668,12 +6668,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6681,7 +6681,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 7\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6704,7 +6704,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6715,12 +6715,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6728,7 +6728,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 6\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6751,7 +6751,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, split events into 30-minute-gap sessions and summarize each session. Return columns: session_id, customer_id, session_seq, session_start, session_end, event_count. Order by: session_id. Limit: first 100 rows.",
       "starterSql": {
-        "full": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+        "full": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, __BLANK_0__, __BLANK_1__, __BLANK_2__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
         "half": "SELECT\n  __BLANK_0__ FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -6762,12 +6762,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "session_id",
           "__BLANK_2__": "100"
         },
         "blank": {
-          "__BLANK_0__": "sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
+          "__BLANK_0__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count",
           "__BLANK_1__": "(\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned",
           "__BLANK_2__": "sessioned.session_id, sessioned.customer_id, sessioned.session_seq",
           "__BLANK_3__": "session_id",
@@ -6775,7 +6775,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Flag a new session when LAG(event_ts) is NULL or the gap exceeds INTERVAL '30 minutes', then sum the flags into session_seq.",
-      "expectedSql": "SELECT\n  sessioned.session_id AS session_id, sessioned.customer_id AS customer_id, sessioned.session_seq AS session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
+      "expectedSql": "SELECT\n  sessioned.session_id, sessioned.customer_id, sessioned.session_seq, MIN(sessioned.event_ts) AS session_start, MAX(sessioned.event_ts) AS session_end, COUNT(*) AS event_count FROM (\n  SELECT\n    flagged.session_id,\n    flagged.customer_id,\n    flagged.event_ts,\n    SUM(flagged.is_new_session) OVER (PARTITION BY flagged.customer_id, flagged.session_id) AS session_seq\n  FROM (\n    SELECT\n      e.session_id,\n      e.customer_id,\n      e.event_ts,\n      CASE\n        WHEN LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) IS NULL\n          OR e.event_ts - LAG(e.event_ts) OVER (PARTITION BY e.customer_id, e.session_id) > INTERVAL '30 minutes'\n        THEN 1 ELSE 0\n      END AS is_new_session\n    FROM event_log e\n    WHERE e.city_id = 2\n  ) flagged\n) sessioned\nGROUP BY sessioned.session_id, sessioned.customer_id, sessioned.session_seq ORDER BY session_id LIMIT 100",
       "orderMatters": true,
       "rowCeiling": 100,
       "fingerprint": {
@@ -6800,8 +6800,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report non-deleted support ticket counts by category for city 8. Return columns: category, valid_tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -6815,7 +6815,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 8 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -6824,7 +6824,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 8 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 8 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -6843,8 +6843,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -6858,7 +6858,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 5 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -6867,7 +6867,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 5 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 5 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -6886,8 +6886,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -6901,7 +6901,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 3 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -6910,7 +6910,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 3 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 3 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -6929,8 +6929,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -6944,7 +6944,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 7 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -6953,7 +6953,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 7 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 7 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -6972,8 +6972,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report non-deleted support ticket counts by category for city 4. Return columns: category, valid_tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -6987,7 +6987,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 4 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -6996,7 +6996,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 4 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 4 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7015,8 +7015,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report non-deleted support ticket counts by category for city 2. Return columns: category, valid_tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -7030,7 +7030,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 2 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -7039,7 +7039,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 2 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 2 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7058,8 +7058,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, count valid_tickets per support ticket category, excluding soft-deleted tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -7073,7 +7073,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 1 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -7082,7 +7082,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 1 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 1 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7101,8 +7101,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Report non-deleted support ticket counts by category for city 6. Return columns: category, valid_tickets. Order by: category. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
-        "half": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "full": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY t.category ORDER BY category LIMIT 200",
+        "half": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE __BLANK_0__\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__ LIMIT __BLANK_5__"
       },
       "blankMap": {
@@ -7116,7 +7116,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_3__": "200"
         },
         "blank": {
-          "__BLANK_0__": "t.category AS category, COUNT(*) AS valid_tickets",
+          "__BLANK_0__": "t.category, COUNT(*) AS valid_tickets",
           "__BLANK_1__": "support_tickets t\nJOIN orders o ON o.order_id = t.order_id",
           "__BLANK_2__": "o.city_id = 6 AND t.is_deleted = false",
           "__BLANK_3__": "t.category",
@@ -7125,7 +7125,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Soft-deleted tickets still exist; filter t.is_deleted = false before counting. LIMIT bounds noisy category variants.",
-      "expectedSql": "SELECT\n  t.category AS category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 6 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
+      "expectedSql": "SELECT\n  t.category, COUNT(*) AS valid_tickets FROM support_tickets t\nJOIN orders o ON o.order_id = t.order_id\nWHERE o.city_id = 6 AND t.is_deleted = false\nGROUP BY t.category ORDER BY category LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7146,7 +7146,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Normalize customer names in signup city 8 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7155,12 +7155,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 8 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7168,7 +7168,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 8 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7187,7 +7187,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 1, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7196,12 +7196,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 1 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7209,7 +7209,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 1 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7228,7 +7228,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 7, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7237,12 +7237,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 7 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7250,7 +7250,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 7 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7269,7 +7269,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 5, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7278,12 +7278,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 5 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7291,7 +7291,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 5 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7310,7 +7310,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Normalize customer names in signup city 6 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7319,12 +7319,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 6 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7332,7 +7332,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 6 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7351,7 +7351,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For signup city 3, return customer_id and clean_name as the trimmed, lowercased full_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7360,12 +7360,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 3 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7373,7 +7373,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 3 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7392,7 +7392,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Normalize customer names in signup city 2 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 2 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 2 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 2 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7401,12 +7401,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 2 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7414,7 +7414,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 2 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 2 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7433,7 +7433,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Normalize customer names in signup city 4 with TRIM plus LOWER. Return columns: customer_id, clean_name. Order by: customer_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  c.customer_id AS customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+        "full": "SELECT\n  c.customer_id, __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7442,12 +7442,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "LOWER(TRIM(c.full_name)) AS clean_name"
         },
         "half": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customer_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
+          "__BLANK_0__": "c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name",
           "__BLANK_1__": "customers c",
           "__BLANK_2__": "c.signup_city_id = 4 AND c.full_name IS NOT NULL",
           "__BLANK_3__": "customer_id",
@@ -7455,7 +7455,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "LOWER(TRIM(full_name)) collapses casing and whitespace variants.",
-      "expectedSql": "SELECT\n  c.customer_id AS customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
+      "expectedSql": "SELECT\n  c.customer_id, LOWER(TRIM(c.full_name)) AS clean_name FROM customers c\nWHERE c.signup_city_id = 4 AND c.full_name IS NOT NULL ORDER BY customer_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7476,7 +7476,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Convert courier applied_at timestamps through the joined city timezone. Return columns: home_city_id, iana_timezone, first_application_utc, courier_count. Order by: home_city_id.",
       "starterSql": {
-        "full": "SELECT\n  c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, __BLANK_0__, __BLANK_1__ FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY c.home_city_id, ci.timezone ORDER BY home_city_id",
+        "full": "SELECT\n  c.home_city_id, ci.timezone AS iana_timezone, __BLANK_0__, __BLANK_1__ FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY c.home_city_id, ci.timezone ORDER BY home_city_id",
         "half": "SELECT\n  __BLANK_0__ FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -7486,19 +7486,19 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS courier_count"
         },
         "half": {
-          "__BLANK_0__": "c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count",
+          "__BLANK_0__": "c.home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count",
           "__BLANK_1__": "c.home_city_id, ci.timezone",
           "__BLANK_2__": "home_city_id"
         },
         "blank": {
-          "__BLANK_0__": "c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count",
+          "__BLANK_0__": "c.home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count",
           "__BLANK_1__": "couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id",
           "__BLANK_2__": "c.home_city_id, ci.timezone",
           "__BLANK_3__": "home_city_id"
         }
       },
       "hint": "home_city_id determines which IANA timezone should convert applied_at.",
-      "expectedSql": "SELECT\n  c.home_city_id AS home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY c.home_city_id, ci.timezone ORDER BY home_city_id",
+      "expectedSql": "SELECT\n  c.home_city_id, ci.timezone AS iana_timezone, MIN(c.applied_at AT TIME ZONE ci.timezone) AS first_application_utc, COUNT(*) AS courier_count FROM couriers c\nJOIN cities ci ON ci.city_id = c.home_city_id\nGROUP BY c.home_city_id, ci.timezone ORDER BY home_city_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7519,7 +7519,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join city timezone data for every city and convert placed_at with AT TIME ZONE. Return columns: city_id, city_name, iana_timezone, earliest_utc_instant, orders_placed. Order by: city_id.",
       "starterSql": {
-        "full": "SELECT\n  o.city_id AS city_id, ci.name AS city_name, ci.timezone AS iana_timezone, __BLANK_0__, __BLANK_1__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nGROUP BY o.city_id, ci.name, ci.timezone ORDER BY city_id",
+        "full": "SELECT\n  o.city_id, ci.name AS city_name, ci.timezone AS iana_timezone, __BLANK_0__, __BLANK_1__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nGROUP BY o.city_id, ci.name, ci.timezone ORDER BY city_id",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -7529,19 +7529,19 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS orders_placed"
         },
         "half": {
-          "__BLANK_0__": "o.city_id AS city_id, ci.name AS city_name, ci.timezone AS iana_timezone, MIN(o.placed_at AT TIME ZONE ci.timezone) AS earliest_utc_instant, COUNT(*) AS orders_placed",
+          "__BLANK_0__": "o.city_id, ci.name AS city_name, ci.timezone AS iana_timezone, MIN(o.placed_at AT TIME ZONE ci.timezone) AS earliest_utc_instant, COUNT(*) AS orders_placed",
           "__BLANK_1__": "o.city_id, ci.name, ci.timezone",
           "__BLANK_2__": "city_id"
         },
         "blank": {
-          "__BLANK_0__": "o.city_id AS city_id, ci.name AS city_name, ci.timezone AS iana_timezone, MIN(o.placed_at AT TIME ZONE ci.timezone) AS earliest_utc_instant, COUNT(*) AS orders_placed",
+          "__BLANK_0__": "o.city_id, ci.name AS city_name, ci.timezone AS iana_timezone, MIN(o.placed_at AT TIME ZONE ci.timezone) AS earliest_utc_instant, COUNT(*) AS orders_placed",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id, ci.name, ci.timezone",
           "__BLANK_3__": "city_id"
         }
       },
       "hint": "Join cities to read timezone, then convert placed_at with AT TIME ZONE; do not trust the offset column.",
-      "expectedSql": "SELECT\n  o.city_id AS city_id, ci.name AS city_name, ci.timezone AS iana_timezone, MIN(o.placed_at AT TIME ZONE ci.timezone) AS earliest_utc_instant, COUNT(*) AS orders_placed FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nGROUP BY o.city_id, ci.name, ci.timezone ORDER BY city_id",
+      "expectedSql": "SELECT\n  o.city_id, ci.name AS city_name, ci.timezone AS iana_timezone, MIN(o.placed_at AT TIME ZONE ci.timezone) AS earliest_utc_instant, COUNT(*) AS orders_placed FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nGROUP BY o.city_id, ci.name, ci.timezone ORDER BY city_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7563,7 +7563,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join event_log to cities and convert event_ts with the city IANA timezone. Return columns: city_id, city_name, first_event_utc, event_count. Order by: city_id.",
       "starterSql": {
-        "full": "SELECT\n  e.city_id AS city_id, ci.name AS city_name, __BLANK_0__, __BLANK_1__ FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY e.city_id, ci.name ORDER BY city_id",
+        "full": "SELECT\n  e.city_id, ci.name AS city_name, __BLANK_0__, __BLANK_1__ FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY e.city_id, ci.name ORDER BY city_id",
         "half": "SELECT\n  __BLANK_0__ FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nGROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
@@ -7573,19 +7573,19 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS event_count"
         },
         "half": {
-          "__BLANK_0__": "e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count",
+          "__BLANK_0__": "e.city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count",
           "__BLANK_1__": "e.city_id, ci.name",
           "__BLANK_2__": "city_id"
         },
         "blank": {
-          "__BLANK_0__": "e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count",
+          "__BLANK_0__": "e.city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count",
           "__BLANK_1__": "event_log e\nJOIN cities ci ON ci.city_id = e.city_id",
           "__BLANK_2__": "e.city_id, ci.name",
           "__BLANK_3__": "city_id"
         }
       },
       "hint": "The event timestamp is local to the city, so join to cities before converting.",
-      "expectedSql": "SELECT\n  e.city_id AS city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY e.city_id, ci.name ORDER BY city_id",
+      "expectedSql": "SELECT\n  e.city_id, ci.name AS city_name, MIN(e.event_ts AT TIME ZONE ci.timezone) AS first_event_utc, COUNT(*) AS event_count FROM event_log e\nJOIN cities ci ON ci.city_id = e.city_id\nGROUP BY e.city_id, ci.name ORDER BY city_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7606,7 +7606,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join city timezone data to convert each order placed_at in city 5. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7615,12 +7615,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 5",
           "__BLANK_3__": "order_id",
@@ -7628,7 +7628,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 5 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7649,7 +7649,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 8, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7658,12 +7658,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 8",
           "__BLANK_3__": "order_id",
@@ -7671,7 +7671,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 8 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7692,7 +7692,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 4, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7701,12 +7701,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 4",
           "__BLANK_3__": "order_id",
@@ -7714,7 +7714,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 4 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7735,7 +7735,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join city timezone data to convert each order placed_at in city 3. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7744,12 +7744,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 3",
           "__BLANK_3__": "order_id",
@@ -7757,7 +7757,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 3 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7778,7 +7778,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 2, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7787,12 +7787,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 2",
           "__BLANK_3__": "order_id",
@@ -7800,7 +7800,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 2 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7821,7 +7821,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join city timezone data to convert each order placed_at in city 1. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7830,12 +7830,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 1",
           "__BLANK_3__": "order_id",
@@ -7843,7 +7843,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 1 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7864,7 +7864,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join orders to cities and convert delivered_at to each city timezone before finding the latest delivery instant. Return columns: city_id, iana_timezone, latest_delivery_utc, delivered_orders. Order by: city_id.",
       "starterSql": {
-        "full": "SELECT\n  o.city_id AS city_id, ci.timezone AS iana_timezone, __BLANK_0__, __BLANK_1__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY o.city_id, ci.timezone ORDER BY city_id",
+        "full": "SELECT\n  o.city_id, ci.timezone AS iana_timezone, __BLANK_0__, __BLANK_1__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY o.city_id, ci.timezone ORDER BY city_id",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__\nGROUP BY __BLANK_3__ ORDER BY __BLANK_4__"
       },
@@ -7874,12 +7874,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "COUNT(*) AS delivered_orders"
         },
         "half": {
-          "__BLANK_0__": "o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "o.city_id, ci.timezone",
           "__BLANK_2__": "city_id"
         },
         "blank": {
-          "__BLANK_0__": "o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders",
+          "__BLANK_0__": "o.city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.delivered_at IS NOT NULL",
           "__BLANK_3__": "o.city_id, ci.timezone",
@@ -7887,7 +7887,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Use cities.timezone with AT TIME ZONE instead of the denormalized offset column.",
-      "expectedSql": "SELECT\n  o.city_id AS city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY o.city_id, ci.timezone ORDER BY city_id",
+      "expectedSql": "SELECT\n  o.city_id, ci.timezone AS iana_timezone, MAX(o.delivered_at AT TIME ZONE ci.timezone) AS latest_delivery_utc, COUNT(*) AS delivered_orders FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.delivered_at IS NOT NULL\nGROUP BY o.city_id, ci.timezone ORDER BY city_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7908,7 +7908,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Join city timezone data to convert each order placed_at in city 7. Return columns: order_id, local_placed_at, placed_utc, iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7917,12 +7917,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 7",
           "__BLANK_3__": "order_id",
@@ -7930,7 +7930,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 7 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7951,7 +7951,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 6, return order_id, local_placed_at, placed_utc, and iana_timezone. Order by: order_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
+        "full": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, __BLANK_0__, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
         "half": "SELECT\n  __BLANK_0__ FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
@@ -7960,12 +7960,12 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "o.placed_at AT TIME ZONE ci.timezone AS placed_utc"
         },
         "half": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "order_id",
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
+          "__BLANK_0__": "o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone",
           "__BLANK_1__": "orders o\nJOIN cities ci ON ci.city_id = o.city_id",
           "__BLANK_2__": "o.city_id = 6",
           "__BLANK_3__": "order_id",
@@ -7973,7 +7973,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Convert the local placed_at timestamp with the timezone from the joined city row.",
-      "expectedSql": "SELECT\n  o.order_id AS order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
+      "expectedSql": "SELECT\n  o.order_id, o.placed_at AS local_placed_at, o.placed_at AT TIME ZONE ci.timezone AS placed_utc, ci.timezone AS iana_timezone FROM orders o\nJOIN cities ci ON ci.city_id = o.city_id\nWHERE o.city_id = 6 ORDER BY order_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -7996,8 +7996,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 7, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8010,7 +8010,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8018,7 +8018,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 7\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8038,8 +8038,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 3, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8052,7 +8052,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8060,7 +8060,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 3\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8080,8 +8080,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 1, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8094,7 +8094,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8102,7 +8102,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 1\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8122,8 +8122,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "For city 5, return three merchant rows with city_id, merchant_id, and order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8136,7 +8136,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8144,7 +8144,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 5\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8164,8 +8164,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 4. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8178,7 +8178,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8186,7 +8186,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 4\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8206,8 +8206,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 6. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8220,7 +8220,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8228,7 +8228,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 6\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8248,8 +8248,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 8. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8262,7 +8262,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8270,7 +8270,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 8\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -8290,8 +8290,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "rove",
       "task": "Use ROW_NUMBER per city to keep a bounded merchant slice for city 2. Return columns: city_id, merchant_id, order_count. Order by: city_id, merchant_id. Limit: first 200 rows.",
       "starterSql": {
-        "full": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
-        "half": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
+        "full": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY city_id, merchant_id LIMIT 200",
+        "half": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE __BLANK_0__ ORDER BY __BLANK_1__ LIMIT __BLANK_2__",
         "blank": "SELECT\n  __BLANK_0__ FROM __BLANK_1__\nWHERE __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -8304,7 +8304,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "200"
         },
         "blank": {
-          "__BLANK_0__": "top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count",
+          "__BLANK_0__": "top3.city_id, top3.merchant_id, top3.order_count",
           "__BLANK_1__": "(\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3",
           "__BLANK_2__": "top3.rn <= 3",
           "__BLANK_3__": "city_id, merchant_id",
@@ -8312,7 +8312,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Aggregate by city_id and merchant_id, add ROW_NUMBER() OVER (PARTITION BY city_id), then keep rn <= 3.",
-      "expectedSql": "SELECT\n  top3.city_id AS city_id, top3.merchant_id AS merchant_id, top3.order_count AS order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
+      "expectedSql": "SELECT\n  top3.city_id, top3.merchant_id, top3.order_count FROM (\n  SELECT\n    o.city_id,\n    o.merchant_id,\n    COUNT(*) AS order_count,\n    ROW_NUMBER() OVER (PARTITION BY o.city_id) AS rn\n  FROM orders o\n  WHERE o.city_id = 2\n  GROUP BY o.city_id, o.merchant_id\n) top3\nWHERE top3.rn <= 3 ORDER BY city_id, merchant_id LIMIT 200",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {

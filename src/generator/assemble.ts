@@ -1,5 +1,5 @@
 import { fnv1a } from '../datasets/framework/prng';
-import { emitSql } from './emit';
+import { emitSql, stripRedundantAliases } from './emit';
 import { buildScaffold } from './scaffold';
 import { renderHint } from './hint';
 import { renderTask } from './task-text';
@@ -69,7 +69,13 @@ function outputAliases(sql: string): string[] {
   const list = topLevelSelectList(sql);
   if (!list) return [];
   return splitTopLevel(list)
-    .map((raw) => raw.match(/\s+as\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i)?.[1])
+    .map((raw) => {
+      const aliased = raw.match(/\s+as\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i);
+      if (aliased) return aliased[1];
+      // A bare or table-qualified column outputs its own name without needing AS.
+      const natural = raw.trim().match(/^(?:[a-zA-Z_][a-zA-Z0-9_]*\.)?([a-zA-Z_][a-zA-Z0-9_]*)$/);
+      return natural ? natural[1] : undefined;
+    })
     .filter((alias): alias is string => !!alias);
 }
 
@@ -141,9 +147,13 @@ export function assembleExercise(
   binding: Binding,
   catalog: Catalog
 ): DraftExercise {
-  const expectedSql = emitSql(template, binding, catalog).trim();
+  // The canonical (fully aliased) form is what ids have always hashed; keep hashing it so
+  // cosmetic SQL changes never churn exercise ids, which learner progress records point at.
+  // Everything the learner sees uses the clean form with redundant self-aliases stripped.
+  const canonicalSql = emitSql(template, binding, catalog).trim();
+  const expectedSql = stripRedundantAliases(canonicalSql);
   const { starterSql, blankMap } = buildScaffold(expectedSql, binding, template);
-  const id = `${template.skill}-${fnv1a(`${template.skill}::${canonicalBinding(binding)}::${expectedSql}`).toString(36)}`;
+  const id = `${template.skill}-${fnv1a(`${template.skill}::${canonicalBinding(binding)}::${canonicalSql}`).toString(36)}`;
   return {
     id,
     skill: template.skill,

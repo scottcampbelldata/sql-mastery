@@ -118,6 +118,25 @@ function aliasProjections(sql: string): string {
   return `${pre}${prefix}${out.join(', ')} ${post}`;
 }
 
+// AS should mean something. Drop the alias when it merely repeats the column's own output
+// name (star_id AS star_id, ranked.courier_id AS courier_id); keep it for real renames
+// (name AS team_name) and expression names (COUNT(*) AS n). Applied at every depth - a
+// self-alias is an identity rewrite in any clause - while string literals are left alone.
+// The result set is identical either way, so grading fingerprints do not move.
+export function stripRedundantAliases(sql: string): string {
+  return sql
+    .split(/('(?:[^']|'')*')/)
+    .map((segment, index) => {
+      if (index % 2 === 1) return segment; // inside a quoted literal
+      return segment.replace(
+        /\b((?:[a-zA-Z_][a-zA-Z0-9_]*\.)?([a-zA-Z_][a-zA-Z0-9_]*))\s+AS\s+([a-zA-Z_][a-zA-Z0-9_]*)/gi,
+        (full, expr: string, column: string, alias: string) =>
+          column.toLowerCase() === alias.toLowerCase() ? expr : full
+      );
+    })
+    .join('');
+}
+
 function projectionAliases(sql: string): string[] {
   const { list } = splitSelect(sql);
   const { body } = splitDistinct(list);
