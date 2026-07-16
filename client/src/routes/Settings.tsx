@@ -22,7 +22,9 @@ function AccountCard() {
   async function runSync() {
     setSyncState('busy');
     try {
-      await syncNow();
+      // If the pull brought in newer progress, reload so it shows right away; otherwise the
+      // save (push) succeeded and there is nothing new to display.
+      if (await syncNow()) { window.location.reload(); return; }
       setSyncState('done');
     } catch {
       setSyncState('failed');

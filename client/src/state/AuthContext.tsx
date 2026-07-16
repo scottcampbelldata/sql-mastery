@@ -33,7 +33,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) { setStatus('ready'); return; }
     setAuthToken(token);
     api.me()
-      .then((r) => { if (alive) { setUser(r.user); setStatus('ready'); } })
+      .then(async (r) => {
+        if (!alive) return;
+        setUser(r.user);
+        setStatus('ready');
+        // Pull this account's progress on load; if it brings anything newer than what is in
+        // this browser, reload so the pulled state shows immediately (the learning state is
+        // read once at mount and would otherwise sit stale until a manual refresh).
+        try { if (await syncNow()) window.location.reload(); } catch { /* offline is fine */ }
+      })
       .catch(() => { if (alive) { writeToken(null); setAuthToken(null); setStatus('ready'); } });
     return () => { alive = false; };
   }, []);
@@ -58,7 +66,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     writeToken(res.token);
     setAuthToken(res.token);
     setUser(res.user);
-    await syncNow();
+    // Merge this browser's progress with the account, then reload if the account brought in
+    // anything newer so the just-signed-in device lands on the synced spot.
+    const changed = await syncNow();
+    if (changed) window.location.reload();
   }, []);
 
   const signOut = useCallback(() => {
