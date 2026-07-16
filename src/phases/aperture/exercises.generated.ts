@@ -197,8 +197,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Alias name as facility_name, and include facility_id. Order by: facility_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS facility_id, name AS facility_name FROM facility ORDER BY __BLANK_1__",
-        "half": "SELECT facility_id AS facility_id, name AS facility_name FROM facility ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__, name AS facility_name FROM facility ORDER BY __BLANK_1__",
+        "half": "SELECT facility_id, name AS facility_name FROM facility ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -210,13 +210,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "facility_id"
         },
         "blank": {
-          "__BLANK_0__": "facility_id AS facility_id, name AS facility_name",
+          "__BLANK_0__": "facility_id, name AS facility_name",
           "__BLANK_1__": "facility",
           "__BLANK_2__": "facility_id"
         }
       },
       "hint": "Use AS to rename name as facility_name.",
-      "expectedSql": "SELECT facility_id AS facility_id, name AS facility_name FROM facility ORDER BY facility_id",
+      "expectedSql": "SELECT facility_id, name AS facility_name FROM facility ORDER BY facility_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -235,8 +235,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Alias star_name as name and distance_ly as light_years, and include star_id. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS name, distance_ly AS light_years FROM stars ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS name, distance_ly AS light_years FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__, star_name AS name, distance_ly AS light_years FROM stars ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name AS name, distance_ly AS light_years FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -248,13 +248,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS name, distance_ly AS light_years",
+          "__BLANK_0__": "star_id, star_name AS name, distance_ly AS light_years",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_id"
         }
       },
       "hint": "AS changes the output header for a column.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS name, distance_ly AS light_years FROM stars ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name AS name, distance_ly AS light_years FROM stars ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -274,8 +274,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Alias planet_name as name and planet_type as type, and include planet_id. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__, planet_name AS name, planet_type AS type FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -287,13 +287,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS name, planet_type AS type",
+          "__BLANK_0__": "planet_id, planet_name AS name, planet_type AS type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_id"
         }
       },
       "hint": "AS changes the column headers in the result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name AS name, planet_type AS type FROM planets ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -313,8 +313,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Alias spectral_type as star_class and temperature_k as kelvin, and include star_id. Order by: temperature_k, star_id.",
       "starterSql": {
-        "full": "SELECT star_id AS star_id, spectral_type AS star_class, __BLANK_0__ AS kelvin FROM stars ORDER BY __BLANK_1__, star_id",
-        "half": "SELECT star_id AS star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT star_id, spectral_type AS star_class, __BLANK_0__ AS kelvin FROM stars ORDER BY __BLANK_1__, star_id",
+        "half": "SELECT star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -326,13 +326,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "temperature_k, star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, spectral_type AS star_class, temperature_k AS kelvin",
+          "__BLANK_0__": "star_id, spectral_type AS star_class, temperature_k AS kelvin",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k, star_id"
         }
       },
       "hint": "AS gives the output column a new name.",
-      "expectedSql": "SELECT star_id AS star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars ORDER BY temperature_k, star_id",
+      "expectedSql": "SELECT star_id, spectral_type AS star_class, temperature_k AS kelvin FROM stars ORDER BY temperature_k, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -352,8 +352,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Alias mass_earth as earth_masses and radius_earth as earth_radii, and include planet_id. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, __BLANK_0__ AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY __BLANK_1__, planet_id",
-        "half": "SELECT planet_id AS planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT planet_id, __BLANK_0__ AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -365,13 +365,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "mass_earth, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii",
+          "__BLANK_0__": "planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "mass_earth, planet_id"
         }
       },
       "hint": "The alias is the output name, not a table change.",
-      "expectedSql": "SELECT planet_id AS planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY mass_earth, planet_id",
+      "expectedSql": "SELECT planet_id, mass_earth AS earth_masses, radius_earth AS earth_radii FROM planets ORDER BY mass_earth, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -393,8 +393,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and axis_km (semi_major_axis_au * 149597870.7) from planets. Order by: semi_major_axis_au, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_1__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id, planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -406,13 +406,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "semi_major_axis_au, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km",
+          "__BLANK_0__": "planet_id, planet_name, semi_major_axis_au * 149597870.7 AS axis_km",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "semi_major_axis_au, planet_id"
         }
       },
       "hint": "A computed column can multiply a stored value by a constant.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY semi_major_axis_au, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, semi_major_axis_au * 149597870.7 AS axis_km FROM planets ORDER BY semi_major_axis_au, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -432,8 +432,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and temp_c (equilibrium_temp_k - 273.15) from planets. Order by: equilibrium_temp_k, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ - 273.15 AS temp_c FROM planets ORDER BY __BLANK_1__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ - 273.15 AS temp_c FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id, planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -445,13 +445,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "equilibrium_temp_k, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c",
+          "__BLANK_0__": "planet_id, planet_name, equilibrium_temp_k - 273.15 AS temp_c",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "equilibrium_temp_k, planet_id"
         }
       },
       "hint": "A computed column can subtract a constant from a stored value.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY equilibrium_temp_k, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, equilibrium_temp_k - 273.15 AS temp_c FROM planets ORDER BY equilibrium_temp_k, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -471,8 +471,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and radius_km (radius_earth * 6371) from planets. Order by: radius_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ * 6371 AS radius_km FROM planets ORDER BY __BLANK_1__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ * 6371 AS radius_km FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id, planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -484,13 +484,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "radius_earth, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km",
+          "__BLANK_0__": "planet_id, planet_name, radius_earth * 6371 AS radius_km",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "radius_earth, planet_id"
         }
       },
       "hint": "Put radius_earth * 6371 in the SELECT list and name it with AS.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY radius_earth, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, radius_earth * 6371 AS radius_km FROM planets ORDER BY radius_earth, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -510,8 +510,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and orbital_years (orbital_period_days / 365.0) from planets. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__, planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT planet_id, planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -523,13 +523,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, orbital_period_days / 365.0 AS orbital_years",
+          "__BLANK_0__": "planet_id, planet_name, orbital_period_days / 365.0 AS orbital_years",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_id"
         }
       },
       "hint": "Put orbital_period_days / 365.0 in the SELECT list and name it with AS.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, orbital_period_days / 365.0 AS orbital_years FROM planets ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -549,8 +549,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show planet_id, planet_name, and mass_per_radius (mass_earth / radius_earth) from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_1__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_1__, planet_id",
+        "half": "SELECT planet_id, planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -562,13 +562,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "mass_earth, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth / radius_earth AS mass_per_radius",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "mass_earth, planet_id"
         }
       },
       "hint": "A computed column can divide one numeric column by another.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY mass_earth, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth / radius_earth AS mass_per_radius FROM planets ORDER BY mass_earth, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -590,8 +590,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show each unique spectral_type from stars once. Order by: spectral_type.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS spectral_type FROM stars ORDER BY __BLANK_1__",
-        "half": "SELECT DISTINCT spectral_type AS spectral_type FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT DISTINCT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT spectral_type FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -603,13 +603,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "spectral_type"
         },
         "blank": {
-          "__BLANK_0__": "DISTINCT spectral_type AS spectral_type",
+          "__BLANK_0__": "DISTINCT spectral_type",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "spectral_type"
         }
       },
       "hint": "SELECT DISTINCT keeps one row for each unique spectral_type.",
-      "expectedSql": "SELECT DISTINCT spectral_type AS spectral_type FROM stars ORDER BY spectral_type",
+      "expectedSql": "SELECT DISTINCT spectral_type FROM stars ORDER BY spectral_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -627,8 +627,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List every distinct star_name value in stars. Order by: star_name.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS star_name FROM stars ORDER BY __BLANK_1__",
-        "half": "SELECT DISTINCT star_name AS star_name FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT DISTINCT __BLANK_0__ FROM stars ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT star_name FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -640,13 +640,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "star_name"
         },
         "blank": {
-          "__BLANK_0__": "DISTINCT star_name AS star_name",
+          "__BLANK_0__": "DISTINCT star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name"
         }
       },
       "hint": "SELECT DISTINCT keeps one row for each unique star_name.",
-      "expectedSql": "SELECT DISTINCT star_name AS star_name FROM stars ORDER BY star_name",
+      "expectedSql": "SELECT DISTINCT star_name FROM stars ORDER BY star_name",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -664,8 +664,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show each unique planet_type from planets once. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS planet_type FROM planets ORDER BY __BLANK_1__",
-        "half": "SELECT DISTINCT planet_type AS planet_type FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT DISTINCT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT planet_type FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -677,13 +677,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_type"
         },
         "blank": {
-          "__BLANK_0__": "DISTINCT planet_type AS planet_type",
+          "__BLANK_0__": "DISTINCT planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_type"
         }
       },
       "hint": "SELECT DISTINCT keeps one row for each unique planet_type.",
-      "expectedSql": "SELECT DISTINCT planet_type AS planet_type FROM planets ORDER BY planet_type",
+      "expectedSql": "SELECT DISTINCT planet_type FROM planets ORDER BY planet_type",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -701,8 +701,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List every distinct planet_name value in planets. Order by: planet_name.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS planet_name FROM planets ORDER BY __BLANK_1__",
-        "half": "SELECT DISTINCT planet_name AS planet_name FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT DISTINCT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT planet_name FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -714,13 +714,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "planet_name"
         },
         "blank": {
-          "__BLANK_0__": "DISTINCT planet_name AS planet_name",
+          "__BLANK_0__": "DISTINCT planet_name",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_name"
         }
       },
       "hint": "SELECT DISTINCT keeps one row for each unique planet_name.",
-      "expectedSql": "SELECT DISTINCT planet_name AS planet_name FROM planets ORDER BY planet_name",
+      "expectedSql": "SELECT DISTINCT planet_name FROM planets ORDER BY planet_name",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -738,8 +738,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List every distinct discovery_method value in planets. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT DISTINCT __BLANK_0__ AS discovery_method FROM planets ORDER BY __BLANK_1__",
-        "half": "SELECT DISTINCT discovery_method AS discovery_method FROM planets ORDER BY __BLANK_0__",
+        "full": "SELECT DISTINCT __BLANK_0__ FROM planets ORDER BY __BLANK_1__",
+        "half": "SELECT DISTINCT discovery_method FROM planets ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -751,13 +751,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "discovery_method"
         },
         "blank": {
-          "__BLANK_0__": "DISTINCT discovery_method AS discovery_method",
+          "__BLANK_0__": "DISTINCT discovery_method",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_method"
         }
       },
       "hint": "SELECT DISTINCT keeps one row for each unique discovery_method.",
-      "expectedSql": "SELECT DISTINCT discovery_method AS discovery_method FROM planets ORDER BY discovery_method",
+      "expectedSql": "SELECT DISTINCT discovery_method FROM planets ORDER BY discovery_method",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -777,8 +777,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "For each planet_type value, count the planets as n, returning planet_type and n. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -792,14 +792,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_type"
         },
         "blank": {
-          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_0__": "planet_type, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_type",
           "__BLANK_3__": "planet_type"
         }
       },
       "hint": "GROUP BY planet_type creates one bucket per value, then COUNT(*) counts the bucket.",
-      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type",
+      "expectedSql": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -818,8 +818,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "For each discovery_year value, count the planets as n, returning discovery_year and n. Order by: discovery_year.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_year, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT discovery_year, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -833,14 +833,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "discovery_year"
         },
         "blank": {
-          "__BLANK_0__": "discovery_year AS discovery_year, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_year, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year",
           "__BLANK_3__": "discovery_year"
         }
       },
       "hint": "GROUP BY discovery_year creates one bucket per value, then COUNT(*) counts the bucket.",
-      "expectedSql": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year ORDER BY discovery_year",
+      "expectedSql": "SELECT discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year ORDER BY discovery_year",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -859,8 +859,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return facility_id and n by counting planets for each facility_id. Order by: facility_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT facility_id, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -874,14 +874,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "facility_id"
         },
         "blank": {
-          "__BLANK_0__": "facility_id AS facility_id, COUNT(*) AS n",
+          "__BLANK_0__": "facility_id, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "facility_id",
           "__BLANK_3__": "facility_id"
         }
       },
       "hint": "GROUP BY facility_id creates one bucket per value, then COUNT(*) counts the bucket.",
-      "expectedSql": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id ORDER BY facility_id",
+      "expectedSql": "SELECT facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id ORDER BY facility_id",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -900,8 +900,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "For each in_habitable_zone value, count the planets as n, returning in_habitable_zone and n. Order by: in_habitable_zone.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -915,14 +915,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "in_habitable_zone"
         },
         "blank": {
-          "__BLANK_0__": "in_habitable_zone AS in_habitable_zone, COUNT(*) AS n",
+          "__BLANK_0__": "in_habitable_zone, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone",
           "__BLANK_3__": "in_habitable_zone"
         }
       },
       "hint": "GROUP BY in_habitable_zone creates one bucket per value, then COUNT(*) counts the bucket.",
-      "expectedSql": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone ORDER BY in_habitable_zone",
+      "expectedSql": "SELECT in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone ORDER BY in_habitable_zone",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -941,8 +941,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return discovery_method and n by counting planets for each discovery_method. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -956,14 +956,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "discovery_method"
         },
         "blank": {
-          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_method, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_method",
           "__BLANK_3__": "discovery_method"
         }
       },
       "hint": "GROUP BY discovery_method creates one bucket per value, then COUNT(*) counts the bucket.",
-      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method",
+      "expectedSql": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -984,8 +984,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show the first 10 discovery_method groups with their count n. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
-        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -1000,7 +1000,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "10"
         },
         "blank": {
-          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_method, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_method",
           "__BLANK_3__": "discovery_method",
@@ -1008,7 +1008,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Group first, then keep only 10 grouped rows.",
-      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 10",
+      "expectedSql": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 10",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1027,8 +1027,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show the first 3 discovery_method groups with their count n. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
-        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -1043,7 +1043,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "3"
         },
         "blank": {
-          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_method, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_method",
           "__BLANK_3__": "discovery_method",
@@ -1051,7 +1051,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Group first, then keep only 3 grouped rows.",
-      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 3",
+      "expectedSql": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 3",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1070,8 +1070,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return the first 5 grouped rows with discovery_method and n. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS discovery_method, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
-        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -1086,7 +1086,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "5"
         },
         "blank": {
-          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_method, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_method",
           "__BLANK_3__": "discovery_method",
@@ -1094,7 +1094,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Group first, then keep only 5 grouped rows.",
-      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 5",
+      "expectedSql": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method ORDER BY discovery_method LIMIT 5",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1113,8 +1113,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show the first 5 planet_type groups with their count n. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
-        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -1129,7 +1129,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "5"
         },
         "blank": {
-          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_0__": "planet_type, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_type",
           "__BLANK_3__": "planet_type",
@@ -1137,7 +1137,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Group first, then keep only 5 grouped rows.",
-      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 5",
+      "expectedSql": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 5",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1156,8 +1156,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return the first 10 grouped rows with planet_type and n. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
-        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -1172,7 +1172,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "10"
         },
         "blank": {
-          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_0__": "planet_type, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_type",
           "__BLANK_3__": "planet_type",
@@ -1180,7 +1180,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Group first, then keep only 10 grouped rows.",
-      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 10",
+      "expectedSql": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 10",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1199,8 +1199,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return the first 3 grouped rows with planet_type and n. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_type, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
-        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT __BLANK_0__, COUNT(*) AS n FROM planets GROUP BY __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__",
+        "half": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ ORDER BY __BLANK_3__ LIMIT __BLANK_4__"
       },
       "blankMap": {
@@ -1215,7 +1215,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "3"
         },
         "blank": {
-          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_0__": "planet_type, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_type",
           "__BLANK_3__": "planet_type",
@@ -1223,7 +1223,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "Group first, then keep only 3 grouped rows.",
-      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 3",
+      "expectedSql": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type ORDER BY planet_type LIMIT 3",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1244,8 +1244,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Group planets by planet_type, keep groups with COUNT(*) >= 1, and return planet_type and n. Order by: planet_type.",
       "starterSql": {
-        "full": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING __BLANK_0__ ORDER BY planet_type",
-        "half": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING __BLANK_0__ ORDER BY planet_type",
+        "half": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
@@ -1257,7 +1257,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_type"
         },
         "blank": {
-          "__BLANK_0__": "planet_type AS planet_type, COUNT(*) AS n",
+          "__BLANK_0__": "planet_type, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_type",
           "__BLANK_3__": "COUNT(*) >= 1",
@@ -1265,7 +1265,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "HAVING filters aggregate groups after GROUP BY.",
-      "expectedSql": "SELECT planet_type AS planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING COUNT(*) >= 1 ORDER BY planet_type",
+      "expectedSql": "SELECT planet_type, COUNT(*) AS n FROM planets GROUP BY planet_type HAVING COUNT(*) >= 1 ORDER BY planet_type",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1284,8 +1284,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return discovery_method and n for groups with COUNT(*) at least 1. Order by: discovery_method.",
       "starterSql": {
-        "full": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING __BLANK_0__ ORDER BY discovery_method",
-        "half": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING __BLANK_0__ ORDER BY discovery_method",
+        "half": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
@@ -1297,7 +1297,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "discovery_method"
         },
         "blank": {
-          "__BLANK_0__": "discovery_method AS discovery_method, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_method, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_method",
           "__BLANK_3__": "COUNT(*) >= 1",
@@ -1305,7 +1305,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "HAVING filters aggregate groups after GROUP BY.",
-      "expectedSql": "SELECT discovery_method AS discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING COUNT(*) >= 1 ORDER BY discovery_method",
+      "expectedSql": "SELECT discovery_method, COUNT(*) AS n FROM planets GROUP BY discovery_method HAVING COUNT(*) >= 1 ORDER BY discovery_method",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1324,8 +1324,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return facility_id and n for groups with COUNT(*) at least 1. Order by: facility_id.",
       "starterSql": {
-        "full": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY facility_id",
-        "half": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY facility_id",
+        "half": "SELECT facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
@@ -1337,7 +1337,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "facility_id"
         },
         "blank": {
-          "__BLANK_0__": "facility_id AS facility_id, COUNT(*) AS n",
+          "__BLANK_0__": "facility_id, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "facility_id",
           "__BLANK_3__": "COUNT(*) >= 1",
@@ -1345,7 +1345,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "HAVING filters aggregate groups after GROUP BY.",
-      "expectedSql": "SELECT facility_id AS facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING COUNT(*) >= 1 ORDER BY facility_id",
+      "expectedSql": "SELECT facility_id, COUNT(*) AS n FROM planets GROUP BY facility_id HAVING COUNT(*) >= 1 ORDER BY facility_id",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1364,8 +1364,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Group planets by discovery_year, keep groups with COUNT(*) >= 1, and return discovery_year and n. Order by: discovery_year.",
       "starterSql": {
-        "full": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY discovery_year",
-        "half": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY discovery_year",
+        "half": "SELECT discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
@@ -1377,7 +1377,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "discovery_year"
         },
         "blank": {
-          "__BLANK_0__": "discovery_year AS discovery_year, COUNT(*) AS n",
+          "__BLANK_0__": "discovery_year, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year",
           "__BLANK_3__": "COUNT(*) >= 1",
@@ -1385,7 +1385,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "HAVING filters aggregate groups after GROUP BY.",
-      "expectedSql": "SELECT discovery_year AS discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING COUNT(*) >= 1 ORDER BY discovery_year",
+      "expectedSql": "SELECT discovery_year, COUNT(*) AS n FROM planets GROUP BY discovery_year HAVING COUNT(*) >= 1 ORDER BY discovery_year",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1404,8 +1404,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Group planets by in_habitable_zone, keep groups with COUNT(*) >= 1, and return in_habitable_zone and n. Order by: in_habitable_zone.",
       "starterSql": {
-        "full": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY in_habitable_zone",
-        "half": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY in_habitable_zone",
+        "half": "SELECT in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ GROUP BY __BLANK_2__ HAVING __BLANK_3__ ORDER BY __BLANK_4__"
       },
       "blankMap": {
@@ -1417,7 +1417,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "in_habitable_zone"
         },
         "blank": {
-          "__BLANK_0__": "in_habitable_zone AS in_habitable_zone, COUNT(*) AS n",
+          "__BLANK_0__": "in_habitable_zone, COUNT(*) AS n",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone",
           "__BLANK_3__": "COUNT(*) >= 1",
@@ -1425,7 +1425,7 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
         }
       },
       "hint": "HAVING filters aggregate groups after GROUP BY.",
-      "expectedSql": "SELECT in_habitable_zone AS in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING COUNT(*) >= 1 ORDER BY in_habitable_zone",
+      "expectedSql": "SELECT in_habitable_zone, COUNT(*) AS n FROM planets GROUP BY in_habitable_zone HAVING COUNT(*) >= 1 ORDER BY in_habitable_zone",
       "orderMatters": false,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1446,8 +1446,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year 1995. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1995 ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1995 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1460,14 +1460,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_year = 1995",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 1995 ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 1995 ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1489,8 +1489,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2004. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2004 ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2004 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1503,14 +1503,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_year = 2004",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2004 ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2004 ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1532,8 +1532,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2000. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2000 ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2000 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1546,14 +1546,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_year = 2000",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2000 ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2000 ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1575,8 +1575,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year 1999. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1999 ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 1999 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1589,14 +1589,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_year = 1999",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 1999 ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 1999 ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1618,8 +1618,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, and star_name where in_habitable_zone is true. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = true ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = true ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1632,14 +1632,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.in_habitable_zone = true",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id to attach each planet to its host star.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = true ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = true ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1659,8 +1659,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, and discovery_method where discovery_method is Radial Velocity. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Radial Velocity' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Radial Velocity' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1673,14 +1673,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_method = 'Radial Velocity'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Keep the ON clause for the relationship, then filter planets.discovery_method.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Radial Velocity' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Radial Velocity' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1701,8 +1701,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, spectral_type, and discovery_year where discovery_year is 2002. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2002 ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2002 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1715,14 +1715,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_year = 2002",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2002 ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2002 ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1744,8 +1744,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, spectral_type, and discovery_year for joined rows with discovery_year 2001. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2001 ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE planets.discovery_year = 2001 ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1758,14 +1758,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_year = 2001",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id, then filter the planet discovery_year.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, stars.spectral_type AS spectral_type, planets.discovery_year AS discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2001 ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, stars.spectral_type, planets.discovery_year FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_year = 2001 ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1787,8 +1787,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and star_name for joined rows where in_habitable_zone = false. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = false ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM __BLANK_0__ WHERE planets.in_habitable_zone = false ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1801,14 +1801,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.in_habitable_zone = false",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Join on planets.star_id = stars.star_id to attach each planet to its host star.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = false ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.in_habitable_zone = false ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1828,8 +1828,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows with discovery_method Eclipse Timing Variations. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1842,14 +1842,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_method = 'Eclipse Timing Variations'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Keep the ON clause for the relationship, then filter planets.discovery_method.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Eclipse Timing Variations' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1870,8 +1870,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is Neptune-like. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Neptune-like' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Neptune-like' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1884,14 +1884,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.planet_type = 'Neptune-like'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Neptune-like' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Neptune-like' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1912,8 +1912,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows with planet_type Gas Giant. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1926,14 +1926,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.planet_type = 'Gas Giant'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Gas Giant' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1954,8 +1954,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Join planets to stars and list planet_id, planet_name, star_name, and planet_type where planet_type is Terrestrial. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Terrestrial' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Terrestrial' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -1968,14 +1968,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.planet_type = 'Terrestrial'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Terrestrial' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Terrestrial' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -1996,8 +1996,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and planet_type for joined rows with planet_type Super-Earth. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2010,14 +2010,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.planet_type = 'Super-Earth'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "The join attaches star_name before the WHERE filter keeps matching planet rows.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.planet_type AS planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.planet_type FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.planet_type = 'Super-Earth' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2038,8 +2038,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, star_name, and discovery_method for joined rows with discovery_method Transit. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
-        "half": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
+        "full": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM __BLANK_0__ WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
+        "half": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM __BLANK_0__ WHERE __BLANK_1__ ORDER BY __BLANK_2__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2052,14 +2052,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_2__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method",
+          "__BLANK_0__": "planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method",
           "__BLANK_1__": "planets JOIN stars ON planets.star_id = stars.star_id",
           "__BLANK_2__": "planets.discovery_method = 'Transit'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Keep the ON clause for the relationship, then filter planets.discovery_method.",
-      "expectedSql": "SELECT planets.planet_id AS planet_id, planets.planet_name AS planet_name, stars.star_name AS star_name, planets.discovery_method AS discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
+      "expectedSql": "SELECT planets.planet_id, planets.planet_name, stars.star_name, planets.discovery_method FROM planets JOIN stars ON planets.star_id = stars.star_id WHERE planets.discovery_method = 'Transit' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2082,8 +2082,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show the first 5 rows of planet_id, planet_name, and mass_earth. Order by: radius_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
+        "half": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
@@ -2096,14 +2096,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "5"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "radius_earth, planet_id",
           "__BLANK_3__": "5"
         }
       },
       "hint": "LIMIT 5 keeps only the first 5 rows of the ordered result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 5",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 5",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2123,8 +2123,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show the first 3 rows of planet_id, planet_name, and mass_earth. Order by: radius_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
+        "half": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
@@ -2137,14 +2137,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "3"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "radius_earth, planet_id",
           "__BLANK_3__": "3"
         }
       },
       "hint": "LIMIT 3 keeps only the first 3 rows of the ordered result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 3",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 3",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2164,8 +2164,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return 10 rows with planet_id, planet_name, and mass_earth from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS mass_earth FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
@@ -2179,14 +2179,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "10"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "mass_earth, planet_id",
           "__BLANK_3__": "10"
         }
       },
       "hint": "LIMIT 10 keeps only the first 10 rows of the ordered result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 10",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 10",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2206,8 +2206,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return 5 rows with planet_id, planet_name, and mass_earth from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS mass_earth FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
@@ -2221,14 +2221,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "5"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "mass_earth, planet_id",
           "__BLANK_3__": "5"
         }
       },
       "hint": "LIMIT 5 keeps only the first 5 rows of the ordered result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 5",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 5",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2248,8 +2248,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Show the first 10 rows of planet_id, planet_name, and mass_earth. Order by: radius_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__, planet_id LIMIT __BLANK_1__",
+        "half": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
@@ -2262,14 +2262,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "10"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "radius_earth, planet_id",
           "__BLANK_3__": "10"
         }
       },
       "hint": "LIMIT 10 keeps only the first 10 rows of the ordered result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 10",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY radius_earth, planet_id LIMIT 10",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2289,8 +2289,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return 3 rows with planet_id, planet_name, and mass_earth from planets. Order by: mass_earth, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS mass_earth FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ FROM planets ORDER BY __BLANK_1__, planet_id LIMIT __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY __BLANK_0__ LIMIT __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__ LIMIT __BLANK_3__"
       },
       "blankMap": {
@@ -2304,14 +2304,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "3"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth",
+          "__BLANK_0__": "planet_id, planet_name, mass_earth",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "mass_earth, planet_id",
           "__BLANK_3__": "3"
         }
       },
       "hint": "LIMIT 3 keeps only the first 3 rows of the ordered result.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, mass_earth AS mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 3",
+      "expectedSql": "SELECT planet_id, planet_name, mass_earth FROM planets ORDER BY mass_earth, planet_id LIMIT 3",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2333,8 +2333,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and radius_solar for rows with missing radius_solar. Order by: radius_solar, star_id.",
       "starterSql": {
-        "full": "SELECT star_id AS star_id, star_name AS star_name, __BLANK_0__ AS radius_solar FROM stars WHERE __BLANK_1__ IS NULL ORDER BY __BLANK_2__, star_id",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, radius_solar AS radius_solar FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT star_id, star_name, __BLANK_0__ FROM stars WHERE __BLANK_1__ IS NULL ORDER BY __BLANK_2__, star_id",
+        "half": "SELECT star_id, star_name, radius_solar FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2348,14 +2348,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "radius_solar, star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, radius_solar AS radius_solar",
+          "__BLANK_0__": "star_id, star_name, radius_solar",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "radius_solar IS NULL",
           "__BLANK_3__": "radius_solar, star_id"
         }
       },
       "hint": "Use IS NULL to test for missing star radius values.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, radius_solar AS radius_solar FROM stars WHERE radius_solar IS NULL ORDER BY radius_solar, star_id",
+      "expectedSql": "SELECT star_id, star_name, radius_solar FROM stars WHERE radius_solar IS NULL ORDER BY radius_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2375,8 +2375,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and semi_major_axis_au for rows with missing semi_major_axis_au. Order by: semi_major_axis_au, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS semi_major_axis_au FROM planets WHERE __BLANK_1__ IS NULL ORDER BY __BLANK_2__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ FROM planets WHERE __BLANK_1__ IS NULL ORDER BY __BLANK_2__, planet_id",
+        "half": "SELECT planet_id, planet_name, semi_major_axis_au FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2390,14 +2390,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "semi_major_axis_au, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au",
+          "__BLANK_0__": "planet_id, planet_name, semi_major_axis_au",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "semi_major_axis_au IS NULL",
           "__BLANK_3__": "semi_major_axis_au, planet_id"
         }
       },
       "hint": "Use IS NULL rather than = NULL.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NULL ORDER BY semi_major_axis_au, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NULL ORDER BY semi_major_axis_au, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2417,8 +2417,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and semi_major_axis_au for rows with present semi_major_axis_au. Order by: semi_major_axis_au, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS semi_major_axis_au FROM planets WHERE __BLANK_1__ IS NOT NULL ORDER BY __BLANK_2__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ FROM planets WHERE __BLANK_1__ IS NOT NULL ORDER BY __BLANK_2__, planet_id",
+        "half": "SELECT planet_id, planet_name, semi_major_axis_au FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2432,14 +2432,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "semi_major_axis_au, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au",
+          "__BLANK_0__": "planet_id, planet_name, semi_major_axis_au",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "semi_major_axis_au IS NOT NULL",
           "__BLANK_3__": "semi_major_axis_au, planet_id"
         }
       },
       "hint": "IS NOT NULL checks whether the value is present.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, semi_major_axis_au AS semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NOT NULL ORDER BY semi_major_axis_au, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, semi_major_axis_au FROM planets WHERE semi_major_axis_au IS NOT NULL ORDER BY semi_major_axis_au, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2459,8 +2459,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and equilibrium_temp_k for rows with missing equilibrium_temp_k. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NULL ORDER BY __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NULL ORDER BY __BLANK_1__",
+        "half": "SELECT planet_id, planet_name, equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2473,14 +2473,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k",
+          "__BLANK_0__": "planet_id, planet_name, equilibrium_temp_k",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "equilibrium_temp_k IS NULL",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "Use IS NULL to find missing values.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NULL ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NULL ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2500,8 +2500,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and equilibrium_temp_k for rows with present equilibrium_temp_k. Order by: equilibrium_temp_k, planet_id.",
       "starterSql": {
-        "full": "SELECT planet_id AS planet_id, planet_name AS planet_name, __BLANK_0__ AS equilibrium_temp_k FROM planets WHERE __BLANK_1__ IS NOT NULL ORDER BY __BLANK_2__, planet_id",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT planet_id, planet_name, __BLANK_0__ FROM planets WHERE __BLANK_1__ IS NOT NULL ORDER BY __BLANK_2__, planet_id",
+        "half": "SELECT planet_id, planet_name, equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -2515,14 +2515,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "equilibrium_temp_k, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k",
+          "__BLANK_0__": "planet_id, planet_name, equilibrium_temp_k",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "equilibrium_temp_k IS NOT NULL",
           "__BLANK_3__": "equilibrium_temp_k, planet_id"
         }
       },
       "hint": "Use IS NOT NULL to keep rows where equilibrium_temp_k is present.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NOT NULL ORDER BY equilibrium_temp_k, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, equilibrium_temp_k FROM planets WHERE equilibrium_temp_k IS NOT NULL ORDER BY equilibrium_temp_k, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2544,8 +2544,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k. Order by: distance_ly, star_id.",
       "starterSql": {
-        "full": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2556,13 +2556,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "distance_ly, star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "distance_ly, star_id"
         }
       },
       "hint": "ORDER BY distance_ly sorts the rows; keeping star_id after it makes the order stable when values tie.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY distance_ly, star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY distance_ly, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2582,8 +2582,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k from stars. Order by: radius_solar, star_id.",
       "starterSql": {
-        "full": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2594,13 +2594,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "radius_solar, star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "radius_solar, star_id"
         }
       },
       "hint": "ORDER BY radius_solar sorts the rows; keeping star_id after it makes the order stable when values tie.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY radius_solar, star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY radius_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2620,8 +2620,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2633,13 +2633,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_id"
         }
       },
       "hint": "ORDER BY star_id sorts the rows; keeping star_id after it makes the order stable when values tie.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2659,8 +2659,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k from stars. Order by: temperature_k, star_id.",
       "starterSql": {
-        "full": "SELECT star_id AS star_id, star_name AS star_name, __BLANK_0__ AS temperature_k FROM stars ORDER BY __BLANK_1__, star_id",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT star_id, star_name, __BLANK_0__ FROM stars ORDER BY __BLANK_1__, star_id",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2672,13 +2672,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "temperature_k, star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k, star_id"
         }
       },
       "hint": "ORDER BY temperature_k sorts the rows; keeping star_id after it makes the order stable when values tie.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY temperature_k, star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY temperature_k, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2698,8 +2698,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k. Order by: mass_solar, star_id.",
       "starterSql": {
-        "full": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY __BLANK_0__",
+        "full": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__, star_id",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY __BLANK_0__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ ORDER BY __BLANK_2__"
       },
       "blankMap": {
@@ -2710,13 +2710,13 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_0__": "mass_solar, star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "mass_solar, star_id"
         }
       },
       "hint": "ORDER BY mass_solar sorts the rows; keeping star_id after it makes the order stable when values tie.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars ORDER BY mass_solar, star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars ORDER BY mass_solar, star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -2961,22 +2961,22 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id",
-          "__BLANK_1__": "planet_name AS planet_name",
-          "__BLANK_2__": "planet_type AS planet_type"
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_name",
+          "__BLANK_2__": "planet_type"
         },
         "half": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "planet_id"
         }
       },
       "hint": "Put the exact columns you need after SELECT, separated by commas.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, planet_type FROM planets ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3002,22 +3002,22 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id",
-          "__BLANK_1__": "planet_name AS planet_name",
-          "__BLANK_2__": "planet_type AS planet_type"
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_name",
+          "__BLANK_2__": "planet_type"
         },
         "half": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "mass_earth, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "mass_earth, planet_id"
         }
       },
       "hint": "Put the exact columns you need after SELECT, separated by commas.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY mass_earth, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, planet_type FROM planets ORDER BY mass_earth, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3043,22 +3043,22 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id",
-          "__BLANK_1__": "planet_name AS planet_name",
-          "__BLANK_2__": "planet_type AS planet_type"
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_name",
+          "__BLANK_2__": "planet_type"
         },
         "half": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "star_id, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "star_id, planet_id"
         }
       },
       "hint": "Put the exact columns you need after SELECT, separated by commas.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY star_id, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, planet_type FROM planets ORDER BY star_id, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3084,22 +3084,22 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id",
-          "__BLANK_1__": "planet_name AS planet_name",
-          "__BLANK_2__": "planet_type AS planet_type"
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_name",
+          "__BLANK_2__": "planet_type"
         },
         "half": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "orbital_period_days, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "orbital_period_days, planet_id"
         }
       },
       "hint": "Put the exact columns you need after SELECT, separated by commas.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY orbital_period_days, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, planet_type FROM planets ORDER BY orbital_period_days, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3125,22 +3125,22 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       },
       "blankMap": {
         "full": {
-          "__BLANK_0__": "planet_id AS planet_id",
-          "__BLANK_1__": "planet_name AS planet_name",
-          "__BLANK_2__": "planet_type AS planet_type"
+          "__BLANK_0__": "planet_id",
+          "__BLANK_1__": "planet_name",
+          "__BLANK_2__": "planet_type"
         },
         "half": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "radius_earth, planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "radius_earth, planet_id"
         }
       },
       "hint": "Put the exact columns you need after SELECT, separated by commas.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, planet_type AS planet_type FROM planets ORDER BY radius_earth, planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, planet_type FROM planets ORDER BY radius_earth, planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3162,8 +3162,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (2003). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3177,14 +3177,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (2003)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2003) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (2003) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3204,8 +3204,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (1995). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3219,14 +3219,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (1995)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (1995) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (1995) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3246,8 +3246,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (2000). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3261,14 +3261,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (2000)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2000) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (2000) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3288,8 +3288,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (1999). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3303,14 +3303,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (1999)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (1999) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (1999) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3330,8 +3330,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, and discovery_year where discovery_year is IN (2001). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3345,14 +3345,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (2001)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2001) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (2001) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3372,8 +3372,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (2004). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3387,14 +3387,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (2004)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2004) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (2004) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3414,8 +3414,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (1996). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3429,14 +3429,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (1996)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (1996) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (1996) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3456,8 +3456,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, and discovery_year for discovery_year IN (2002). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, discovery_year FROM planets WHERE discovery_year IN (__BLANK_1__) ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3471,14 +3471,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year",
+          "__BLANK_0__": "planet_id, planet_name, discovery_year",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "discovery_year IN (2002)",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "IN checks whether discovery_year appears inside the parenthesized list.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, discovery_year AS discovery_year FROM planets WHERE discovery_year IN (2002) ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, discovery_year FROM planets WHERE discovery_year IN (2002) ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3500,8 +3500,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is true and planet_type is Terrestrial. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Terrestrial' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Terrestrial' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3515,14 +3515,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Terrestrial'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Terrestrial' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Terrestrial' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3543,8 +3543,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is true and planet_type is Neptune-like. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Neptune-like' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Neptune-like' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3558,14 +3558,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Neptune-like'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Neptune-like' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Neptune-like' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3586,8 +3586,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, in_habitable_zone, and equilibrium_temp_k for rows where in_habitable_zone = true or equilibrium_temp_k is missing (NULL). Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY __BLANK_1__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY __BLANK_1__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, equilibrium_temp_k FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3600,14 +3600,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, equilibrium_temp_k",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = true OR equilibrium_temp_k IS NULL",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "OR keeps a row when either condition is true.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, equilibrium_temp_k AS equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, equilibrium_temp_k FROM planets WHERE in_habitable_zone = true OR equilibrium_temp_k IS NULL ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3628,8 +3628,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = true and planet_type equals Gas Giant. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3643,14 +3643,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Gas Giant'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Gas Giant' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Gas Giant' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3671,8 +3671,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is false and planet_type is Terrestrial. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Terrestrial' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Terrestrial' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3686,14 +3686,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Terrestrial'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Terrestrial' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Terrestrial' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3714,8 +3714,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List planet_id, planet_name, in_habitable_zone, and planet_type where in_habitable_zone is false and planet_type is Neptune-like. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Neptune-like' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Neptune-like' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3729,14 +3729,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Neptune-like'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Neptune-like' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Neptune-like' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3757,8 +3757,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = true and planet_type equals Super-Earth. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3772,14 +3772,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = true AND planet_type = 'Super-Earth'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Super-Earth' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = true AND planet_type = 'Super-Earth' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3800,8 +3800,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = false and planet_type equals Gas Giant. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Gas Giant' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3815,14 +3815,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Gas Giant'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Gas Giant' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Gas Giant' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3843,8 +3843,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return planet_id, planet_name, in_habitable_zone, and planet_type for rows where in_habitable_zone = false and planet_type equals Super-Earth. Order by: planet_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
-        "half": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = __BLANK_1__ AND planet_type = 'Super-Earth' ORDER BY __BLANK_2__",
+        "half": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3858,14 +3858,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "planet_id"
         },
         "blank": {
-          "__BLANK_0__": "planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type",
+          "__BLANK_0__": "planet_id, planet_name, in_habitable_zone, planet_type",
           "__BLANK_1__": "planets",
           "__BLANK_2__": "in_habitable_zone = false AND planet_type = 'Super-Earth'",
           "__BLANK_3__": "planet_id"
         }
       },
       "hint": "AND means both WHERE conditions must be true for the same row.",
-      "expectedSql": "SELECT planet_id AS planet_id, planet_name AS planet_name, in_habitable_zone AS in_habitable_zone, planet_type AS planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Super-Earth' ORDER BY planet_id",
+      "expectedSql": "SELECT planet_id, planet_name, in_habitable_zone, planet_type FROM planets WHERE in_habitable_zone = false AND planet_type = 'Super-Earth' ORDER BY planet_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3888,8 +3888,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 2566. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3903,14 +3903,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 2566",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 2566.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2566 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 2566 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3930,8 +3930,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 581. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3945,14 +3945,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 581",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 581.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 581 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 581 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -3972,8 +3972,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 3101. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -3987,14 +3987,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 3101",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 3101.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 3101 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 3101 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4014,8 +4014,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 2620. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4029,14 +4029,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 2620",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 2620.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2620 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 2620 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4056,8 +4056,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 3034. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4071,14 +4071,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 3034",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 3034.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 3034 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 3034 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4098,8 +4098,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id, star_name, and temperature_k for stars where temperature_k equals 2900. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4113,14 +4113,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 2900",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 2900.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2900 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 2900 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4140,8 +4140,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 2953. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4155,14 +4155,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 2953",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 2953.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 2953 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 2953 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4182,8 +4182,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id, star_name, and temperature_k for stars matching temperature_k = 3096. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name, temperature_k FROM stars WHERE temperature_k = __BLANK_1__ ORDER BY __BLANK_2__",
+        "half": "SELECT star_id, star_name, temperature_k FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4197,14 +4197,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k",
+          "__BLANK_0__": "star_id, star_name, temperature_k",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "temperature_k = 3096",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "Put the comparison in WHERE: temperature_k = 3096.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name, temperature_k AS temperature_k FROM stars WHERE temperature_k = 3096 ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name, temperature_k FROM stars WHERE temperature_k = 3096 ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4226,8 +4226,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id and star_name for stars whose star_name matches 47 UMa%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '47 UMa%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE '47 UMa%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4240,14 +4240,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE '47 UMa%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern 47 UMa%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '47 UMa%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE '47 UMa%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4266,8 +4266,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id and star_name for stars whose star_name matches AT2021ueyL%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4280,14 +4280,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE 'AT2021ueyL%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern AT2021ueyL%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE 'AT2021ueyL%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4306,8 +4306,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id and star_name where star_name LIKE Aldebaran%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4320,14 +4320,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE 'Aldebaran%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern Aldebaran%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE 'Aldebaran%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4346,8 +4346,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id and star_name where star_name LIKE Arcturus%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4360,14 +4360,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE 'Arcturus%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern Arcturus%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE 'Arcturus%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4386,8 +4386,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id and star_name where star_name LIKE 51 Peg%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '51 Peg%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE '51 Peg%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4400,14 +4400,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE '51 Peg%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern 51 Peg%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '51 Peg%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE '51 Peg%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4426,8 +4426,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id and star_name for stars whose star_name matches Antares%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4440,14 +4440,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE 'Antares%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern Antares%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE 'Antares%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4466,8 +4466,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "List star_id and star_name where star_name LIKE 61 Vir%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '61 Vir%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE '61 Vir%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4480,14 +4480,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE '61 Vir%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern 61 Vir%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '61 Vir%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE '61 Vir%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
@@ -4506,8 +4506,8 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
       "database": "aperture",
       "task": "Return star_id and star_name for stars whose star_name matches 55 Cnc%. Order by: star_id.",
       "starterSql": {
-        "full": "SELECT __BLANK_0__ AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '55 Cnc%' ORDER BY __BLANK_1__",
-        "half": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
+        "full": "SELECT __BLANK_0__, star_name FROM stars WHERE star_name LIKE '55 Cnc%' ORDER BY __BLANK_1__",
+        "half": "SELECT star_id, star_name FROM stars WHERE __BLANK_0__ ORDER BY __BLANK_1__",
         "blank": "SELECT __BLANK_0__ FROM __BLANK_1__ WHERE __BLANK_2__ ORDER BY __BLANK_3__"
       },
       "blankMap": {
@@ -4520,14 +4520,14 @@ export const GENERATED_EXERCISES: Record<string, Exercise[]> = {
           "__BLANK_1__": "star_id"
         },
         "blank": {
-          "__BLANK_0__": "star_id AS star_id, star_name AS star_name",
+          "__BLANK_0__": "star_id, star_name",
           "__BLANK_1__": "stars",
           "__BLANK_2__": "star_name LIKE '55 Cnc%'",
           "__BLANK_3__": "star_id"
         }
       },
       "hint": "LIKE compares star_name against the text pattern 55 Cnc%.",
-      "expectedSql": "SELECT star_id AS star_id, star_name AS star_name FROM stars WHERE star_name LIKE '55 Cnc%' ORDER BY star_id",
+      "expectedSql": "SELECT star_id, star_name FROM stars WHERE star_name LIKE '55 Cnc%' ORDER BY star_id",
       "orderMatters": true,
       "rowCeiling": 200,
       "fingerprint": {
