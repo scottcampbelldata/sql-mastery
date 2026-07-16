@@ -13,8 +13,14 @@
 .brand-mark { font-family: var(--font-display); font-weight: 700; color: var(--ink-strong); font-size: 1.02rem; white-space: nowrap; }
 .brand-mark span { color: var(--brand); }
 .collapsed .brand-mark { display: none; }
-.collapse-btn { border: 1px solid var(--line); background: none; color: var(--ink-dim); border-radius: var(--r-sm); width: 24px; height: 24px; cursor: pointer; }
-.collapse-btn:hover { color: var(--ink-strong); border-color: var(--line-strong); }
+.collapse-btn {
+  display: grid; place-items: center; width: 28px; height: 28px; flex: none;
+  border: 1px solid var(--line); background: var(--surface-1); color: var(--ink-dim);
+  border-radius: var(--r-sm); cursor: pointer;
+  transition: color var(--ease), border-color var(--ease), background var(--ease);
+}
+.collapse-btn:hover { color: var(--brand); border-color: var(--line-strong); }
+.collapse-btn svg { transition: transform var(--ease); display: block; }
 
 .side-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .nav-item {
