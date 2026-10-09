@@ -1,4 +1,4 @@
-// Rove mess injection layer (task 11). Applied OVER the already-committed clean core
+// Rove mess injection layer. Applied OVER the already-committed clean core
 // (generateClean in ./generate). Every defect here is DERIVED from the clean value already
 // sitting in the row, so it is provably reversible: nothing here invents a fact the clean core
 // did not already establish. All randomness comes from the single `rng` passed into injectMess

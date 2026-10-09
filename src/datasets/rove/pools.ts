@@ -1,7 +1,7 @@
 // Curated value pools for the Rove dataset (cities, merchants, promos, customers, couriers,
 // orders, payments, event_log, promo_redemption, ratings, support_tickets). Everything here is a
 // plain, real-sounding value with no banned tokens; the generator's seeded streams combine these
-// deterministically. Every column that the mess taxonomy later dirties (Task 11) stays canonical
+// deterministically. Every column that the mess taxonomy later dirties stays canonical
 // here: one spelling per concept, no whitespace, no synonyms.
 
 export interface RoveCitySeed {

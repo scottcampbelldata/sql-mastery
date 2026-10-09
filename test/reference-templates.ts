@@ -1,4 +1,4 @@
-// Worked aperture reference templates for Task 4 (emit/bind convention).
+// Worked aperture reference templates (emit/bind convention).
 // T7 copies this exact shape. NOT a *.test.ts file, so node --test ignores it.
 import type { Template } from '../src/generator/types';
 import type { Catalog } from '../src/generator/schema-catalog';

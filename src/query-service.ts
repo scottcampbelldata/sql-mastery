@@ -529,7 +529,7 @@ function createQueryService(options: any = {}): any {
     const database = input.database;
     // seed_meta is an internal seeding/provenance artifact, not curriculum data. Hide it from
     // the learner-facing schema (autocomplete, schema browser, lesson table peek) by default,
-    // but let the snapshot guard include it — its recorded fingerprints cover the full schema.
+    // but let the snapshot guard include it - its recorded fingerprints cover the full schema.
     const internalTableFilter = input.includeInternal ? '' : "AND t.table_name <> 'seed_meta'";
     const sql = `
       WITH base_tables AS (

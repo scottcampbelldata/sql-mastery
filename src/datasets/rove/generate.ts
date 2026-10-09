@@ -1221,7 +1221,7 @@ function patchCourierStats(couriers: CouriersResult, orders: OrdersResult, ratin
   }
 }
 
-// The clean, fully consistent core (Task 10). Every column that the mess layer (Task 11, ./mess)
+// The clean, fully consistent core. Every column that the mess layer (./mess)
 // later dirties is exactly correct here: canonical enum spellings, real distinct
 // master_customer_id per row, plain decimal money-as-text, no orphaned FKs, no sentinel text, a
 // clean stars domain, one row per customer/payment/event. This is the answer key mess.ts's

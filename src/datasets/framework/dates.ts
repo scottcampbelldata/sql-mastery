@@ -34,7 +34,7 @@ export function formatDate(ms: number): string {
 
 // Inverse of formatTimestamp: parses a naive "YYYY-MM-DD HH:MM:SS" string back to the integer ms
 // it was formatted from. Pure field extraction plus Date.UTC (not "new Date()"), so this stays
-// TZ-independent like the rest of this file. Added for the Rove mess layer (task 11), which needs
+// TZ-independent like the rest of this file. Added for the Rove mess layer, which needs
 // to shift an already-formatted event_ts/authorized_at string by a bounded number of seconds
 // (clock-skew, retried-payment offsets) without introducing a second, ad hoc parsing convention
 // outside this file.

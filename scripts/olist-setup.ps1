@@ -1,7 +1,7 @@
 <#
   olist-setup.ps1
   Downloads the Olist Brazilian e-commerce dataset (CSV) and loads it into a local
-  PostgreSQL database named "olist" — the advanced dataset for the senior analytics phases.
+  PostgreSQL database named "olist" - the advanced dataset for the senior analytics phases.
 
   Requirements:
     - PostgreSQL client tools (psql) on PATH  (e.g. C:\Program Files\PostgreSQL\16\bin)

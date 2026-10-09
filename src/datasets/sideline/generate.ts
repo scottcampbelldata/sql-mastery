@@ -121,7 +121,7 @@ const MEGABRAND_TEAM_COUNT = 10; // one energy-drink megabrand across ~10 teams
 const ENDED_SPONSOR_TEAM_COUNT = 4; // one sponsor with all contracts ended
 const ZERO_MATCH_TOURNAMENT_COUNT = 2; // edge case: 1-2 tournaments with zero matches
 
-// Guaranteed edge entities for the intermediate join/anti-join templates (Task 10).
+// Guaranteed edge entities for the intermediate join/anti-join templates.
 // Team 40 is a ghost org: present in team, but in no match, with no players, and no sponsor.
 // Sponsor 30 is reserved to have zero team_sponsor rows (team-less sponsor).
 const NEVER_PLAYED_TEAM_ID = TEAM_COUNT; // 40

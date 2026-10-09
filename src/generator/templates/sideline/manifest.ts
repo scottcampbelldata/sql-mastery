@@ -1,5 +1,5 @@
 // Confirmed-unmatched-rows manifest for the sideline intermediate templates. These entities are
-// GUARANTEED by the sideline seed generator (Task 10 edits) and CONFIRMED against the seeded DB by
+// GUARANTEED by the sideline seed generator and CONFIRMED against the seeded DB by
 // test/sideline-manifest.test.ts. The anti/semi/full-outer/self-join-compare templates draw from
 // this curated set (not a blind cross-product) so every emitted exercise is non-empty (gate g2).
 export interface SidelineUnmatchedManifest {
