@@ -14,7 +14,7 @@
   --ink: #1b2433;            /* body text */
   --ink-strong: #0e1726;     /* headings */
   --ink-dim: #59647a;        /* secondary text */
-  --ink-faint: #8b96ab;      /* placeholders, captions */
+  --ink-faint: #656d7c;      /* placeholders, captions */
 
   /* brand: professional blue */
   --brand: #2563eb;
@@ -25,7 +25,7 @@
   --ok: #15925f;   --ok-soft: #e1f4ec;
   --err: #d13b3b;  --err-soft: #fbe9e9;
   --info: #2563eb; --info-soft: #e7efff;
-  --accent2: #d97a1e;  --accent2-soft: #fbeedb;   /* amber: active / in-progress */
+  --accent2: #a05a16;  --accent2-soft: #fbeedb;   /* amber: active / in-progress */
 
   /* syntax (light editor: readable ink on white) */
   --syn-keyword: #2563eb;

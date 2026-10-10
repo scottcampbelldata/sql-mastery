@@ -70,7 +70,7 @@ export function ProgressMeter({ value, label, className }: ProgressMeterProps) {
   return (
     <div className={cx('meter', className)} role="progressbar"
       aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}
-      aria-label={label ? undefined : 'progress'}>
+      aria-label={typeof label === 'string' ? label : 'progress'}>
       {label ? <div className="meter-head"><span>{label}</span><strong>{value}%</strong></div> : null}
       <div className="meter-track"><div className="meter-fill" style={{ width: `${value}%` }} /></div>
     </div>
