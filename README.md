@@ -1,5 +1,9 @@
 # SQL Mastery Path
 
+**An interactive SQL course with 36 weeks of lessons and exercises that run against real PostgreSQL databases.**
+
+Live at [sql-mastery.scottcampbell.io](https://sql-mastery.scottcampbell.io). More of my work is at [scottcampbell.io](https://scottcampbell.io).
+
 A three-band SQL training app: a React + Vite client (in `client/`) served by an Express back end with a local PostgreSQL runner. The curriculum is generated from the owned `aperture` beginner, `sideline` intermediate, and `rove` advanced databases.
 
 Both the client and the server are written in TypeScript. The client is type-checked and bundled by Vite; the server is compiled with `tsc` to `dist/` and run from there.

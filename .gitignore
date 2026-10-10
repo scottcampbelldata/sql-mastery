@@ -7,3 +7,9 @@ data/
 # binary data archives
 *.zip
 scripts/archive.zip
+
+# Local files
+.DS_Store
+*.log
+*.err
+/*.png
